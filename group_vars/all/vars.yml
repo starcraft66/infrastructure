@@ -1,0 +1,14 @@
+---
+docker_version: "18.*"
+docker_compose_version: "1.24.0-rc1"
+chrony_version: "3.*"
+
+docker_users:
+  - "tristan"
+
+dehydrated_lexicon_dns:
+  LEXICON_CLOUDFLARE_USERNAME: "{{ vault_LEXICON_CLOUDFLARE_USERNAME }}"
+  LEXICON_CLOUDFLARE_TOKEN: "{{ vault_LEXICON_CLOUDFLARE_PASSWORD }}"
+
+nginx_server_tokens: "off"
+nginx_remove_default_vhost: true

@@ -1,0 +1,25 @@
+---
+  - name: Create a login user
+    user:
+      name: tristan
+      update_password: on_create
+      group: tristan
+      uid: 1000
+      groups:
+       - docker
+       - sudo
+      state: present
+      shell: /bin/bash
+      system: no
+      createhome: yes
+      home: /home/tristan
+
+  - name: Install packages
+    apt:
+      name: "{{ packages }}"
+    vars:
+      packages:
+        - htop
+        - tcpdump
+        - python
+        - python-pip

@@ -1,0 +1,9 @@
+---
+mediaserver_installation_server: "/opt/mediaserver"
+plex_media_folder: "/opt/mediaserver/media"
+deluge_config_folder: "/opt/mediaserver/deluge"
+jackett_config_folder: "/opt/mediaserver/jackett"
+sonarr_config_folder: "/opt/mediaserver/sonarr"
+radarr_config_folder: "/opt/mediaserver/radarr"
+plex_config_folder: "/opt/mediaserver/plex"
+plex_transcode_folder: "/opt/mediaserver/plex_transcode"

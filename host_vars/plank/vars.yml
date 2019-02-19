@@ -1,0 +1,23 @@
+---
+mediaserver_installation_server: "/opt/mediaserver"
+plex_media_folder: "/opt/mediaserver/media"
+deluge_config_folder: "/opt/mediaserver/deluge"
+jackett_config_folder: "/opt/mediaserver/jackett"
+sonarr_config_folder: "/opt/mediaserver/sonarr"
+radarr_config_folder: "/opt/mediaserver/radarr"
+plex_config_folder: "/opt/mediaserver/plex"
+plex_transcode_folder: "/opt/mediaserver/plex_transcode"
+
+dehydrated_accept_letsencrypt_terms: yes
+dehydrated_challengetype: dns-01
+dehydrated_contactemail: starcraft66@gmail.com
+dehydrated_domains: |
+  plank.tdude.co
+dehydrated_deploycert: |
+  systemctl reload nginx
+
+plex_claim_token: "{{ valut_plex_claim_token }}"
+sonarr_api_key: "{{ valut_sonarr_api_key }}"
+radarr_api_key: "{{ valut_radarr_api_key }}"
+jackett_api_key: "{{ valut_jackett_api_key }}"
+jackett_admin_password: "{{ valut_jackett_admin_password }}"

@@ -1,0 +1,11 @@
+- src: azavea.docker
+
+- src: azavea.pip
+
+- src: ericsysmin.chrony
+
+- src: manala.apt
+
+- src: clutterbox.dehydrated
+
+- src: geerlingguy.nginx

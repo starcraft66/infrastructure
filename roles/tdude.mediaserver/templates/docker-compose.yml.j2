@@ -1,0 +1,90 @@
+version: '2.3'
+services:
+  deluge:
+    container_name: deluge
+    image: linuxserver/deluge:latest
+    restart: always
+    ports:
+      - "127.0.0.1:8112:8112"
+    environment:
+      - PUID=949 # default user id, for downloaded files access rights
+      - PGID=949 # default group id, for downloaded files access rights
+      - TZ=Europe/Paris # timezone
+    volumes:
+      - {{ plex_media_folder }}/ongoing:/downloads # download folder
+      - {{ deluge_config_folder }}:/config # config files
+
+  jackett:
+    container_name: jackett
+    image: linuxserver/jackett:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9117:9117"
+    environment:
+      - PUID=949 # default user id, for downloaded files access rights
+      - PGID=949 # default group id, for downloaded files access rights
+      - TZ=Europe/Paris # timezone
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ plex_media_folder }}/ongoing/torrent-blackhole:/downloads # place where to put .torrent files
+      - {{ jackett_config_folder }}:/config # config files
+
+  sonarr:
+    container_name: sonarr
+    image: linuxserver/sonarr:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8989:8989"
+    environment:
+      - PUID=949 # default user id, for downloaded files access rights
+      - PGID=949 # default group id, for downloaded files access rights
+      - TZ=Europe/Paris # timezone
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ sonarr_config_folder }}:/config # config files
+      - {{ plex_media_folder }}/series:/tv # tv shows folder
+      - {{ plex_media_folder }}/ongoing:/downloads # download folder
+
+  radarr:
+    container_name: radarr
+    image: linuxserver/radarr:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:7878:7878"
+    environment:
+      - PUID=949 # default user id, for downloaded files access rights
+      - PGID=949 # default group id, for downloaded files access rights
+      - TZ=Europe/Paris # timezone
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ radarr_config_folder }}:/config # config files
+      - {{ plex_media_folder }}/movies:/movies # movies folder
+      - {{ plex_media_folder }}/ongoing:/downloads # download folder
+
+  plex-server:
+    container_name: plex-server
+    hostname: plank-plex
+    image: plexinc/pms-docker:latest
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Paris # timezone
+      - PLEX_UID=949
+      - PLEX_GID=949
+      - PLEX_CLAIM="{{ plex_claim_token }}"
+      - ADVERTISE_IP="https://62.210.251.78:32400/"
+    ports:
+#      - "2001:bc8:2517::2:32400:32400"
+      - "62.210.251.78:32400:32400/tcp"
+      - "62.210.251.78:3005:3005/tcp"
+      - "62.210.251.78:8324:8324/tcp"
+      - "62.210.251.78:32469:32469/tcp"
+      - "62.210.251.78:1900:1900/udp"
+      - "62.210.251.78:32410:32410/udp"
+      - "62.210.251.78:32412:32412/udp"
+      - "62.210.251.78:32413:32413/udp"
+      - "62.210.251.78:32414:32414/udp"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ plex_config_folder }}:/config # plex database
+      - {{ plex_transcode_folder }}:/transcode # temp transcoded files
+      - {{ plex_media_folder }}:/data # media library

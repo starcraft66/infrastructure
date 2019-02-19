@@ -1,0 +1,79 @@
+server {
+    listen 62.210.251.78:80 default_server;
+    listen [2001:bc8:2517::1]:80 default_server;
+    
+    server_name plank.tdude.co;
+
+    location ~ ^/ {
+        return 301 https://$server_name$request_uri;
+    }
+}
+
+server {
+    listen 62.210.251.78:443 ssl http2;
+    listen [2001:bc8:2517::1]:443 ssl http2;
+
+    server_name plank.tdude.co;
+
+    ssl on;
+    ssl_certificate /etc/dehydrated/certs/plank.tdude.co/fullchain.pem;
+    ssl_certificate_key /etc/dehydrated/certs/plank.tdude.co/privkey.pem;
+
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+
+    location /deluge {
+        access_log  /var/log/nginx/deluge_access.log;
+        error_log   /var/log/nginx/deluge_error.log;
+
+        proxy_set_header X-Deluge-Base "/deluge/";
+        add_header X-Frame-Options SAMEORIGIN;
+
+        proxy_set_header        x-real-ip $remote_addr;
+        proxy_set_header        x-forwarded-for $proxy_add_x_forwarded_for;
+        proxy_set_header        x-forwarded-proto $scheme;
+        proxy_set_header        x-forwarded-ssl: on;
+        proxy_set_header        x-url-scheme: https;
+
+        proxy_pass             http://localhost:8112/;
+    }
+
+    location /radarr {
+        access_log  /var/log/nginx/radarr_access.log;
+        error_log   /var/log/nginx/radarr_error.log;
+
+        proxy_set_header        x-real-ip $remote_addr;
+        proxy_set_header        x-forwarded-for $proxy_add_x_forwarded_for;
+        proxy_set_header        x-forwarded-proto $scheme;
+        proxy_set_header        x-forwarded-ssl: on;
+        proxy_set_header        x-url-scheme: https;
+
+        proxy_pass             http://localhost:7878/radarr;
+    }
+
+    location /sonarr {
+        access_log  /var/log/nginx/sonarr_access.log;
+        error_log   /var/log/nginx/sonarr_error.log;
+
+        proxy_set_header        x-real-ip $remote_addr;
+        proxy_set_header        x-forwarded-for $proxy_add_x_forwarded_for;
+        proxy_set_header        x-forwarded-proto $scheme;
+        proxy_set_header        x-forwarded-ssl: on;
+        proxy_set_header        x-url-scheme: https;
+
+        proxy_pass             http://localhost:8989/sonarr;
+    }
+
+    location /jackett {
+        access_log  /var/log/nginx/jackett_access.log;
+        error_log   /var/log/nginx/jackett_error.log;
+
+        proxy_set_header        x-real-ip $remote_addr;
+	proxy_set_header	x-forwarded-host $http_host;
+        proxy_set_header        x-forwarded-for $proxy_add_x_forwarded_for;
+        proxy_set_header        x-forwarded-proto $scheme;
+        proxy_set_header        x-forwarded-ssl: on;
+        proxy_set_header        x-url-scheme: https;
+
+        proxy_pass             http://localhost:9117/jackett;
+    }
+}
