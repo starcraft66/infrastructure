@@ -8,7 +8,7 @@ docker_users:
 
 dehydrated_lexicon_dns:
   LEXICON_CLOUDFLARE_USERNAME: "{{ vault_LEXICON_CLOUDFLARE_USERNAME }}"
-  LEXICON_CLOUDFLARE_TOKEN: "{{ vault_LEXICON_CLOUDFLARE_PASSWORD }}"
+  LEXICON_CLOUDFLARE_TOKEN: "{{ vault_LEXICON_CLOUDFLARE_TOKEN }}"
 
 nginx_server_tokens: "off"
 nginx_remove_default_vhost: true

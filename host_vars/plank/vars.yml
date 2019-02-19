@@ -16,8 +16,8 @@ dehydrated_domains: |
 dehydrated_deploycert: |
   systemctl reload nginx
 
-plex_claim_token: "{{ valut_plex_claim_token }}"
-sonarr_api_key: "{{ valut_sonarr_api_key }}"
-radarr_api_key: "{{ valut_radarr_api_key }}"
-jackett_api_key: "{{ valut_jackett_api_key }}"
-jackett_admin_password: "{{ valut_jackett_admin_password }}"
+plex_claim_token: "{{ vault_plex_claim_token }}"
+sonarr_api_key: "{{ vault_sonarr_api_key }}"
+radarr_api_key: "{{ vault_radarr_api_key }}"
+jackett_api_key: "{{ vault_jackett_api_key }}"
+jackett_admin_password: "{{ vault_jackett_admin_password }}"
