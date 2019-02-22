@@ -1,0 +1,16 @@
+{% set ifname = 'wg0' %}
+[Interface]
+{% for address in wireguard[ifname]['addresses'] %}
+Address = {{ address }}
+{% endfor %}
+PostUp = {{ wireguard[ifname]['post-up'] }}
+PostDown = {{ wireguard[ifname]['post-down'] }}
+PrivateKey = {{ wireguard[ifname]['private_key'] }}
+ListenPort = {{ wireguard[ifname]['port'] }}
+
+{% for peer in wireguard[ifname]['peers'] %}
+[Peer]
+PublicKey = {{ peer['public_key'] }}
+AllowedIps = {{ peer['allowed_ips']|join(', ') }}
+
+{% endfor %}

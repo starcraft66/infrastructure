@@ -21,3 +21,18 @@ sonarr_api_key: "{{ vault_sonarr_api_key }}"
 radarr_api_key: "{{ vault_radarr_api_key }}"
 jackett_api_key: "{{ vault_jackett_api_key }}"
 jackett_admin_password: "{{ vault_jackett_admin_password }}"
+
+wireguard:
+  wg0:
+    addresses:
+      - "10.255.239.1/24"
+      - "2001:bc8:2517:f::1/64"
+    post-up: "iptables -A FORWARD -i wg0 -j ACCEPT; iptables -A FORWARD -o wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eno1 -j MASQUERADE;"
+    post-down: "iptables -D FORWARD -i wg0 -j ACCEPT; iptables -D FORWARD -o wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eno1 -j MASQUERADE;"
+    port: 51820
+    private_key: "{{ vault_wireguard_keys['wg0'] }}"
+    peers:
+      - public_key: "lJoAVNs9uHu9vNOws12ZmEXIOSTYx5HlsEB/x+L3iV8="
+        allowed_ips:
+          - "10.255.239.2/24"
+          - "2001:bc8:2517:f::2/128"
