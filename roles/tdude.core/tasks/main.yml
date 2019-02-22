@@ -16,10 +16,10 @@
 
   - name: Install packages
     apt:
-      name: "{{ packages }}"
-    vars:
-      packages:
+      pkg:
         - htop
         - tcpdump
         - python
         - python-pip
+      state: present
+        
