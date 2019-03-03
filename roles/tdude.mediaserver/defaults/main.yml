@@ -1,5 +1,5 @@
 ---
-mediaserver_installation_server: "/opt/mediaserver"
+mediaserver_installation_folder: "/opt/mediaserver"
 plex_media_folder: "/opt/mediaserver/media"
 deluge_config_folder: "/opt/mediaserver/deluge"
 jackett_config_folder: "/opt/mediaserver/jackett"

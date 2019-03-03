@@ -27,6 +27,7 @@
     group: mediaserver
     mode: 0770
   with_items:
+    - "{{ mediaserver_installation_folder }}"
     - "{{ plex_media_folder }}"
     - "{{ deluge_config_folder }}"
     - "{{ jackett_config_folder }}"
