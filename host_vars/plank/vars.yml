@@ -34,5 +34,5 @@ wireguard:
     peers:
       - public_key: "lJoAVNs9uHu9vNOws12ZmEXIOSTYx5HlsEB/x+L3iV8="
         allowed_ips:
-          - "10.255.239.2/24"
+          - "10.255.239.2/32"
           - "2001:bc8:2517:f::2/128"
