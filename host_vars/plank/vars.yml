@@ -13,6 +13,7 @@ dehydrated_challengetype: dns-01
 dehydrated_contactemail: starcraft66@gmail.com
 dehydrated_domains: |
   plank.tdude.co
+  status.tdude.co
 dehydrated_deploycert: |
   systemctl reload nginx
 
@@ -36,3 +37,8 @@ wireguard:
         allowed_ips:
           - "10.255.239.2/32"
           - "2001:bc8:2517:f::2/128"
+
+statusfy_installation_folder: "/opt/statusfy"
+statusfy_data_folder: "/opt/statusfy/data"
+statusfy_webserver_port: 2992
+statusfy_docker_version: "v0.3.0-alpha.2"

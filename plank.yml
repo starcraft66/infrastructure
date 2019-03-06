@@ -15,3 +15,4 @@
     - { role: clutterbox.dehydrated }
     - { role: tdude.mediaserver }
     - { role: tdude.wireguard }
+    - { role: tdude.statusfy }
