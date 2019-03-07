@@ -1,0 +1,78 @@
+---
+
+- name: Create gitlab group
+  group:
+    name: gitlab
+    state: present
+    gid: 947
+
+- name: Create gitlab user
+  user:
+    name: gitlab
+    password: "!"
+    update_password: on_create
+    group: gitlab
+    uid: 947
+    state: present
+    shell: /bin/bash
+    system: yes
+    createhome: yes
+    home: /home/gitlab
+
+- name: Create the gitlab folder
+  file:
+    name: "{{ item }}"
+    state: directory
+    owner: gitlab
+    group: gitlab
+    mode: 0770
+  with_items:
+    - "{{ gitlab_installation_folder }}"
+
+# The gitlab docker image is really bad and has hardcoded
+# uid/gid crap so we have to create these folders as root
+- name: Create the gitlab subfolders
+  file:
+    name: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
+  with_items:
+    - "{{ gitlab_config_folder }}"
+    - "{{ gitlab_logs_folder }}"
+    - "{{ gitlab_data_folder }}"
+    - "{{ gitlab_runner_config_folder }}"
+
+- name: Install the production compose file
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "{{ gitlab_installation_folder }}/docker-compose.yml"
+    mode: 0660
+    owner: gitlab
+    group: gitlab
+
+- name: Update the docker service
+  docker_service:
+    project_src: "{{ gitlab_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    recreate: smart
+    pull: yes
+    remove_orphans: yes
+
+- name: Add gitlab Nginx config
+  template:
+    src: gitlab.conf.j2
+    dest: /etc/nginx/sites-available/gitlab.conf
+  notify:
+    - reload nginx
+
+- name: Enable gitlab Nginx config
+  file:
+    src: /etc/nginx/sites-available/gitlab.conf
+    dest: /etc/nginx/sites-enabled/gitlab
+    state: link
+  notify:
+    - reload nginx
+

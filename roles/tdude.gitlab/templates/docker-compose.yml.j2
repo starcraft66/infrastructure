@@ -1,0 +1,40 @@
+version: '2'
+services:
+  web:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    hostname: '{{ gitlab_hostname }}'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url '{{ gitlab_external_url }}'
+        nginx['listen_port'] = 80
+        nginx['listen_https'] = false
+        nginx['proxy_set_headers'] = {
+          "X-Forwarded-Proto" => "https",
+          "X-Forwarded-Ssl" => "on"
+        }
+        nginx['real_ip_header'] = 'X-Real-IP'
+        nginx['real_ip_recursive'] = 'on'
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = "{{ gitlab_smtp_server }}"
+        gitlab_rails['smtp_port'] = {{ gitlab_smtp_port }}
+        gitlab_rails['gitlab_email_from'] = '{{ gitlab_email_from }}'
+        gitlab_rails['gitlab_email_reply_to'] = '{{ gitlab_email_reply_to }}'
+        gitlab_rails['gitlab_shell_ssh_port'] = {{ gitlab_ssh_port }}
+    ports:
+      - '127.0.0.1:{{ gitlab_webserver_port }}:80'
+      - '62.210.251.78:{{ gitlab_ssh_port }}:22'
+      - '2001:bc8:2517::3:22:22'
+      - '2001:bc8:2517::3:{{ gitlab_ssh_port }}:22'
+    volumes:
+      - '{{ gitlab_config_folder }}:/etc/gitlab'
+      - '{{ gitlab_logs_folder }}:/var/log/gitlab'
+      - '{{ gitlab_data_folder }}:/var/opt/gitlab'
+      - '/etc/timezone:/etc/timezone:ro'
+      - '/etc/localtime:/etc/localtime:ro'
+  runner:
+    image: gitlab/gitlab-runner:latest
+    restart: unless-stopped
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '{{ gitlab_runner_config_folder }}:/etc/gitlab-runner'

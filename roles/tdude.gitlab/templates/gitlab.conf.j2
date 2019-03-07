@@ -1,0 +1,37 @@
+server {
+    listen 62.210.251.78:80;
+    listen [2001:bc8:2517::3]:80;
+    
+    server_name git.tdude.co;
+
+    location ~ ^/ {
+        return 301 https://$server_name$request_uri;
+    }
+}
+
+server {
+    listen 62.210.251.78:443 ssl http2;
+    listen [2001:bc8:2517::3]:443 ssl http2;
+
+    server_name git.tdude.co;
+
+    ssl on;
+    ssl_certificate /etc/dehydrated/certs/git.tdude.co/fullchain.pem;
+    ssl_certificate_key /etc/dehydrated/certs/git.tdude.co/privkey.pem;
+
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+
+    access_log  /var/log/nginx/gitlab_access.log;
+    error_log   /var/log/nginx/gitlab_error.log;
+
+    location / {
+        proxy_set_header        x-real-ip $remote_addr;
+        proxy_set_header	    x-forwarded-host $http_host;
+        proxy_set_header        x-forwarded-for $proxy_add_x_forwarded_for;
+        proxy_set_header        x-forwarded-proto $scheme;
+        proxy_set_header        x-forwarded-ssl: on;
+        proxy_set_header        x-url-scheme: https;
+
+        proxy_pass             http://localhost:{{ gitlab_webserver_port }}/;
+    }
+}
