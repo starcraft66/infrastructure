@@ -42,6 +42,6 @@
   replace:
     path: /etc/ssh/sshd_config
     regexp: '^#Banner\ none'
-    replace: 'Banner\ \/etc\/issue.net'
+    replace: 'Banner /etc/issue.net'
     backup: yes
   notify: reload sshd
