@@ -1,4 +1,13 @@
 ---
+login_banner: "
+  \ \ +----+        _             _\n
+  \ /    /|  _ __ | | __ _ _ __ | | __\n
+  +----+ | | '_ \\| |/ _` | '_ \\| |/ /\n
+  |    | + | |_) | | (_| | | | |   < \n
+  | 5  |/  | .__/|_|\\__,_|_| |_|_|\\_\\\n
+  +----+   |_| plank.tdude.co\n"
+           
+
 mediaserver_installation_server: "/opt/mediaserver"
 plex_media_folder: "/opt/mediaserver/media"
 deluge_config_folder: "/opt/mediaserver/deluge"

@@ -22,4 +22,26 @@
       - python
       - python-pip
     state: present
+
+- name: Enable passwordless sudo
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    line: 'tristan ALL=(ALL:ALL) NOPASSWD: ALL'
+    validate: '/usr/sbin/visudo -cf %s'
         
+- name: Add login banner
+  template:
+    src: "issue.j2"
+    dest: "/etc/issue.net"
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Enable login banner
+  replace:
+    path: /etc/ssh/sshd_config
+    regexp: '^#Banner\ none'
+    replace: 'Banner\ \/etc\/issue.net'
+    backup: yes
+  notify: reload sshd
