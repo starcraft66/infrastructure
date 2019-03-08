@@ -4,7 +4,7 @@
   group:
     name: gitlab
     state: present
-    gid: 947
+    gid: 998
 
 - name: Create gitlab user
   user:
@@ -12,7 +12,7 @@
     password: "!"
     update_password: on_create
     group: gitlab
-    uid: 947
+    uid: 998
     state: present
     shell: /bin/bash
     system: yes
@@ -37,12 +37,23 @@
     state: directory
     owner: root
     group: root
-    mode: 0777
+    mode: 0755
   with_items:
     - "{{ gitlab_config_folder }}"
-    - "{{ gitlab_logs_folder }}"
     - "{{ gitlab_data_folder }}"
     - "{{ gitlab_runner_config_folder }}"
+  notify: restart gitlab
+
+- name: Create the gitlab logs folder
+  file:
+    name: "{{ item }}"
+    state: directory
+    owner: gitlab
+    group: gitlab
+    mode: 0755
+  with_items:
+    - "{{ gitlab_logs_folder }}"
+  notify: restart gitlab
 
 - name: Install the production compose file
   template:
