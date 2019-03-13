@@ -2,7 +2,7 @@ version: '2'
 services:
   web:
     image: 'gitlab/gitlab-ce:latest'
-    restart: always
+    restart: unless-stopped
     hostname: '{{ gitlab_hostname }}'
     environment:
       GITLAB_OMNIBUS_CONFIG: |

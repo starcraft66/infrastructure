@@ -7,3 +7,4 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - "{{ statusfy_data_folder }}:/usr/src/app"
+    restart: unless-stopped
