@@ -1,0 +1,8 @@
+---
+traefik_installation_folder: "/opt/traefik"
+traefik_data_folder: "/opt/traefik/data"
+traefik_webserver_port: 2981
+traefik_docker_version: "latest"
+traefik_monitor_username: "admin"
+#secure_password
+traefik_monitor_password: "$apr1$/ejSwW4C$bulv4nSEXGmCwMiTo9BFC/"

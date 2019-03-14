@@ -2,9 +2,18 @@ version: '2'
 services:
   statusfy:
     image: bazzite/statusfy:{{ statusfy_docker_version }}
-    ports:
-      - "127.0.0.1:{{ statusfy_webserver_port }}:3000"
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - "{{ statusfy_data_folder }}:/usr/src/app"
     restart: unless-stopped
+    networks:
+      - status
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:status.tdude.co"
+      - "traefik.port=3000"
+
+networks:
+  status:
+    external:
+      name: status

@@ -1,0 +1,7 @@
+---
+- name: restart traefik
+  docker_service:
+    project_src: "{{ traefik_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes

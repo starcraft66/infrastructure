@@ -68,6 +68,11 @@
     owner: mediaserver
     group: mediaserver
 
+- name: Create the mediaserver network
+  docker_network:
+    name: mediaserver
+    state: present
+
 - name: Update the docker service
   docker_service:
     project_src: "{{ mediaserver_installation_server }}"
@@ -76,19 +81,3 @@
     recreate: smart
     pull: yes
     remove_orphans: yes
-
-- name: Add mediaserver Nginx config
-  template:
-    src: mediaserver.conf.j2
-    dest: /etc/nginx/sites-available/mediaserver.conf
-  notify:
-    - reload nginx
-
-- name: Enable mediaserver Nginx config
-  file:
-    src: /etc/nginx/sites-available/mediaserver.conf
-    dest: /etc/nginx/sites-enabled/mediaserver
-    state: link
-  notify:
-    - reload nginx
-

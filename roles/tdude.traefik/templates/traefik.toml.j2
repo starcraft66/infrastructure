@@ -1,0 +1,40 @@
+defaultEntryPoints = ["http", "https"]
+
+[entryPoints]
+  [entryPoints.dashboard]
+    address = ":8081"
+    [entryPoints.dashboard.auth]
+      [entryPoints.dashboard.auth.basic]
+        users = ["{{ traefik_monitor_username }}:{{ traefik_monitor_password }}"]
+  [entryPoints.prom]
+    address = ":8082"
+  [entryPoints.http]
+    address = ":8080"
+      [entryPoints.http.redirect]
+        entryPoint = "https"
+  [entryPoints.https]
+    address = ":8443"
+      [entryPoints.https.tls]
+
+[api]
+entrypoint="dashboard"
+
+# Metrics definition
+[metrics]
+  [metrics.prometheus]
+    entryPoint = "prom"
+
+[acme]
+email = "starcraft66@gmail.com"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+  [acme.dnsChallenge]
+  provider = "cloudflare"
+  delayBeforeCheck = 15
+
+[docker]
+domain = "plank.tdude.co"
+watch = true
+network = "monitoring"
+exposedByDefault = false

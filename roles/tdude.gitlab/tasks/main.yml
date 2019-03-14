@@ -63,6 +63,11 @@
     owner: gitlab
     group: gitlab
 
+- name: Create the gitlab network
+  docker_network:
+    name: gitlab
+    state: present
+
 - name: Update the docker service
   docker_service:
     project_src: "{{ gitlab_installation_folder }}"
@@ -71,19 +76,3 @@
     recreate: smart
     pull: yes
     remove_orphans: yes
-
-- name: Add gitlab Nginx config
-  template:
-    src: gitlab.conf.j2
-    dest: /etc/nginx/sites-available/gitlab.conf
-  notify:
-    - reload nginx
-
-- name: Enable gitlab Nginx config
-  file:
-    src: /etc/nginx/sites-available/gitlab.conf
-    dest: /etc/nginx/sites-enabled/gitlab
-    state: link
-  notify:
-    - reload nginx
-

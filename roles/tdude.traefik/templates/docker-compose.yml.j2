@@ -1,0 +1,56 @@
+version: '2'
+services:
+  traefik:
+    image: traefik:{{ traefik_docker_version }}
+    restart: unless-stopped
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "{{ traefik_data_folder }}/traefik.toml:/traefik.toml"
+      - "{{ traefik_data_folder }}/acme.json:/acme.json"
+    ports:
+      - "62.210.251.78:80:8080"
+      - "62.210.251.78:443:8443"
+      - "2001:bc8:2517::1:80:8080"
+      - "2001:bc8:2517::1:443:8443"
+      - "2001:bc8:2517::2:80:8080"
+      - "2001:bc8:2517::2:443:8443"
+      - "2001:bc8:2517::3:80:8080"
+      - "2001:bc8:2517::3:443:8443"
+      - "2001:bc8:2517::4:80:8080"
+      - "2001:bc8:2517::4:443:8443"
+      - "2001:bc8:2517::5:80:8080"
+      - "2001:bc8:2517::5:443:8443"
+      - "2001:bc8:2517::6:80:8080"
+      - "2001:bc8:2517::6:443:8443"
+      - "2001:bc8:2517::7:80:8080"
+      - "2001:bc8:2517::7:443:8443"
+      - "2001:bc8:2517::8:80:8080"
+      - "2001:bc8:2517::8:443:8443"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:monitor.plank.tdude.co"
+      - "traefik.port=8081"
+# Commented out for the moment because the docker socket
+# requires root access. Simply granting the traefik user
+# access to the docker group appears not to be enough.
+# Will have to look into exposing the docker daemon via
+# TLS.
+#    user: "939:939"
+    environment:
+      CF_API_EMAIL: {{ dehydrated_lexicon_dns["LEXICON_CLOUDFLARE_USERNAME"] }}
+      CF_API_KEY: {{ dehydrated_lexicon_dns["LEXICON_CLOUDFLARE_TOKEN"] }}
+    networks:
+      - mediaserver
+      - status
+      - gitlab
+
+networks:
+  mediaserver:
+    external:
+      name: mediaserver
+  status:
+    external:
+      name: status
+  gitlab:
+    external:
+      name: gitlab

@@ -18,3 +18,4 @@
     - { role: tdude.wireguard }
     - { role: tdude.statusfy }
     - { role: tdude.gitlab }
+    - { role: tdude.traefik }

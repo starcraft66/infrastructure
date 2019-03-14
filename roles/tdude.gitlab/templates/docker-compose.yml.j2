@@ -22,7 +22,6 @@ services:
         gitlab_rails['gitlab_email_reply_to'] = '{{ gitlab_email_reply_to }}'
         gitlab_rails['gitlab_shell_ssh_port'] = {{ gitlab_ssh_port }}
     ports:
-      - '127.0.0.1:{{ gitlab_webserver_port }}:80'
       - '62.210.251.78:{{ gitlab_ssh_port }}:22'
       - '2001:bc8:2517::3:22:22'
       - '2001:bc8:2517::3:{{ gitlab_ssh_port }}:22'
@@ -32,9 +31,23 @@ services:
       - '{{ gitlab_data_folder }}:/var/opt/gitlab'
       - '/etc/timezone:/etc/timezone:ro'
       - '/etc/localtime:/etc/localtime:ro'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:git.tdude.co"
+      - "traefik.docker.network=gitlab"
+      - "traefik.port=80"
+    networks:
+      - gitlab
   runner:
     image: gitlab/gitlab-runner:latest
     restart: unless-stopped
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - '{{ gitlab_runner_config_folder }}:/etc/gitlab-runner'
+    networks:
+      - gitlab
+
+networks:
+  gitlab:
+    external:
+      name: gitlab

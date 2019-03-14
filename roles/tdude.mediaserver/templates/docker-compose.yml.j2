@@ -4,8 +4,6 @@ services:
     container_name: deluge
     image: linuxserver/deluge:latest
     restart: always
-    ports:
-      - "127.0.0.1:8112:8112"
     environment:
       - PUID=949 # default user id, for downloaded files access rights
       - PGID=949 # default group id, for downloaded files access rights
@@ -13,13 +11,18 @@ services:
     volumes:
       - {{ plex_media_folder }}/ongoing:/downloads # download folder
       - {{ deluge_config_folder }}:/config # config files
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:deluge.plank.tdude.co"
+      - "traefik.docker.network=mediaserver"
+      - "traefik.port=8112"
+    networks:
+      - mediaserver
 
   jackett:
     container_name: jackett
     image: linuxserver/jackett:latest
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:9117:9117"
     environment:
       - PUID=949 # default user id, for downloaded files access rights
       - PGID=949 # default group id, for downloaded files access rights
@@ -28,13 +31,18 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - {{ plex_media_folder }}/ongoing/torrent-blackhole:/downloads # place where to put .torrent files
       - {{ jackett_config_folder }}:/config # config files
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:jackett.plank.tdude.co"
+      - "traefik.docker.network=mediaserver"
+      - "traefik.port=9117"
+    networks:
+      - mediaserver
 
   sonarr:
     container_name: sonarr
     image: linuxserver/sonarr:latest
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:8989:8989"
     environment:
       - PUID=949 # default user id, for downloaded files access rights
       - PGID=949 # default group id, for downloaded files access rights
@@ -44,13 +52,18 @@ services:
       - {{ sonarr_config_folder }}:/config # config files
       - {{ plex_media_folder }}/series:/tv # tv shows folder
       - {{ plex_media_folder }}/ongoing:/downloads # download folder
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:sonarr.plank.tdude.co"
+      - "traefik.docker.network=mediaserver"
+      - "traefik.port=8989"
+    networks:
+      - mediaserver
 
   radarr:
     container_name: radarr
     image: linuxserver/radarr:latest
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:7878:7878"
     environment:
       - PUID=949 # default user id, for downloaded files access rights
       - PGID=949 # default group id, for downloaded files access rights
@@ -60,6 +73,13 @@ services:
       - {{ radarr_config_folder }}:/config # config files
       - {{ plex_media_folder }}/movies:/movies # movies folder
       - {{ plex_media_folder }}/ongoing:/downloads # download folder
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:radarr.plank.tdude.co"
+      - "traefik.docker.network=mediaserver"
+      - "traefik.port=7878"
+    networks:
+      - mediaserver
 
   plex-server:
     container_name: plex-server
@@ -88,3 +108,10 @@ services:
       - {{ plex_config_folder }}:/config # plex database
       - {{ plex_transcode_folder }}:/transcode # temp transcoded files
       - {{ plex_media_folder }}:/data # media library
+    networks:
+      - mediaserver
+
+networks:
+  mediaserver:
+    external:
+      name: mediaserver

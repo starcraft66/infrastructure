@@ -1,0 +1,66 @@
+---
+
+- name: Create traefik group
+  group:
+    name: traefik
+    state: present
+    gid: 939
+
+- name: Create traefik user
+  user:
+    name: traefik
+    password: "!"
+    update_password: on_create
+    group: traefik
+    uid: 939
+    state: present
+    shell: /bin/bash
+    system: yes
+    createhome: yes
+    home: /home/traefik
+
+- name: Create the traefik folders
+  file:
+    name: "{{ item }}"
+    state: directory
+    owner: traefik
+    group: traefik
+    mode: 0770
+  with_items:
+    - "{{ traefik_installation_folder }}"
+    - "{{ traefik_data_folder }}"
+
+- name: Install the production compose file
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "{{ traefik_installation_folder }}/docker-compose.yml"
+    mode: 0660
+    owner: traefik
+    group: traefik
+
+- name: Configure the acme.json file
+  file:
+    path: "{{ traefik_data_folder }}/acme.json"
+    mode: 0600
+    state: touch
+    owner: traefik
+    group: traefik
+  notify: restart traefik
+
+- name: Template traefik.toml
+  template:
+    src: "traefik.toml.j2"
+    dest: "{{ traefik_data_folder }}/traefik.toml"
+    mode: 0660
+    owner: traefik
+    group: traefik
+  notify: restart traefik
+
+- name: Update the docker service
+  docker_service:
+    project_src: "{{ traefik_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    recreate: smart
+    pull: yes
+    remove_orphans: yes

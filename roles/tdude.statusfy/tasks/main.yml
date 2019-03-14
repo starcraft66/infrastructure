@@ -46,6 +46,11 @@
   notify: restart statusfy
   become_user: statusfy
 
+- name: Create the status network
+  docker_network:
+    name: status
+    state: present
+
 - name: Update the docker service
   docker_service:
     project_src: "{{ statusfy_installation_folder }}"
@@ -54,19 +59,3 @@
     recreate: smart
     pull: yes
     remove_orphans: yes
-
-- name: Add statusfy Nginx config
-  template:
-    src: statusfy.conf.j2
-    dest: /etc/nginx/sites-available/statusfy.conf
-  notify:
-    - reload nginx
-
-- name: Enable statusfy Nginx config
-  file:
-    src: /etc/nginx/sites-available/statusfy.conf
-    dest: /etc/nginx/sites-enabled/statusfy
-    state: link
-  notify:
-    - reload nginx
-
