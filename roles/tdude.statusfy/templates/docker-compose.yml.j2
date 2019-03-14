@@ -11,6 +11,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.frontend.rule=Host:status.tdude.co"
+      - "traefik.docker.network=status"
       - "traefik.port=3000"
 
 networks:
