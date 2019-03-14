@@ -50,9 +50,10 @@ services:
     image: thomseddon/traefik-forward-auth
     environment:
       - CLIENT_ID={{ traefik_oauth2_client_id }}
-      - CLIENT_SECRET={{ traefik_oauth2_client_secret }}}
+      - CLIENT_SECRET={{ traefik_oauth2_client_secret }}
       - SECRET={{ traefik_oauth2_secret }}
       - COOKIE_SECURE=true
+      - COOKIE_DOMAINS=plank.tdude.co
       - WHITELIST=starcraft66@gmail.com
       - AUTH_HOST=auth.plank.tdude.co
     networks:
@@ -63,6 +64,8 @@ services:
       - traefik.backend=traefik-forward-auth
       - traefik.backend.network=traefik
       - traefik.frontend.rule=Host:auth.plank.tdude.co
+      - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
+      - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
 
 networks:
   traefik:
