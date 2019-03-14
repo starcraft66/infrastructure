@@ -1,7 +1,12 @@
 ---
 - name: restart traefik
-  docker_service:
-    project_src: "{{ traefik_installation_folder }}"
-    files: docker-compose.yml
-    state: present
-    restarted: yes
+  docker_container:
+    name: traefik
+    state: started
+    restart: yes
+
+- name: restart traefik-forward-auth
+  docker_container:
+    name: traefik-forward-auth
+    state: started
+    restart: yes

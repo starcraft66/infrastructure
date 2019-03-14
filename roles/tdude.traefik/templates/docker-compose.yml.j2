@@ -2,6 +2,7 @@ version: '2'
 services:
   traefik:
     image: traefik:{{ traefik_docker_version }}
+    container_name: traefik
     restart: unless-stopped
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
@@ -48,6 +49,7 @@ services:
 
   traefik-forward-auth:
     image: thomseddon/traefik-forward-auth
+    container_name: traefik-forward-auth
     environment:
       - CLIENT_ID={{ traefik_oauth2_client_id }}
       - CLIENT_SECRET={{ traefik_oauth2_client_secret }}
