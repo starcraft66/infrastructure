@@ -43,6 +43,7 @@
     mode: 0660
     owner: mediaserver
     group: mediaserver
+  notify: restart jackett
 
 - name: Install the radarr config
   template:
@@ -51,6 +52,7 @@
     mode: 0660
     owner: mediaserver
     group: mediaserver
+  notify: restart radarr
 
 - name: Install the sonarr config
   template:
@@ -59,6 +61,7 @@
     mode: 0660
     owner: mediaserver
     group: mediaserver
+  notify: restart sonarr
 
 - name: Install the production compose file
   template:

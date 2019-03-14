@@ -1,0 +1,30 @@
+---
+- name: restart jackett
+  docker_container:
+    name: mediaserver_jackett
+    state: started
+    restart: yes
+
+- name: restart sonarr
+  docker_container:
+    name: mediaserver_sonarr
+    state: started
+    restart: yes
+
+- name: restart radarr
+  docker_container:
+    name: mediaserver_radarr
+    state: started
+    restart: yes
+
+- name: restart deluge
+  docker_container:
+    name: mediaserver_deluge
+    state: started
+    restart: yes
+
+- name: restart plex
+  docker_container:
+    name: mediaserver_plex
+    state: started
+    restart: yes

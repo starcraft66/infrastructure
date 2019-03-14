@@ -16,6 +16,8 @@ services:
       - "traefik.frontend.rule=Host:deluge.plank.tdude.co"
       - "traefik.docker.network=mediaserver"
       - "traefik.port=8112"
+      - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
+      - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
     networks:
       - mediaserver
 
@@ -36,6 +38,8 @@ services:
       - "traefik.frontend.rule=Host:jackett.plank.tdude.co"
       - "traefik.docker.network=mediaserver"
       - "traefik.port=9117"
+      - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
+      - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
     networks:
       - mediaserver
 
@@ -57,6 +61,8 @@ services:
       - "traefik.frontend.rule=Host:sonarr.plank.tdude.co"
       - "traefik.docker.network=mediaserver"
       - "traefik.port=8989"
+      - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
+      - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
     networks:
       - mediaserver
 
@@ -78,6 +84,8 @@ services:
       - "traefik.frontend.rule=Host:radarr.plank.tdude.co"
       - "traefik.docker.network=mediaserver"
       - "traefik.port=7878"
+      - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
+      - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
     networks:
       - mediaserver
 
