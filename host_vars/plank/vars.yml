@@ -6,7 +6,41 @@ login_banner: "
   |    | + | |_) | | (_| | | | |   < \n
   | 5  |/  | .__/|_|\\__,_|_| |_|_|\\_\\\n
   +----+   |_| plank.tdude.co\n"
-           
+
+
+ufw_applications:
+  - { name: "OpenSSH" }   
+ufw_rules:
+  - { port: 22, to_ip: '62.210.251.78', rule: allow, comment: 'Allow SSH v4' }
+  - { port: 22, to_ip: '2001:bc8:2517::/64', rule: allow, comment: 'Allow SSH v6' }
+  - { port: 80, to_ip: '62.210.251.78', rule: allow, comment: 'Allow HTTP v4' }
+  - { port: 80, to_ip: '2001:bc8:2517::/64', rule: allow, comment: 'Allow HTTP v6' }
+  - { port: 443, to_ip: '62.210.251.78', rule: allow, comment: 'Allow HTTPS v4' }
+  - { port: 443, to_ip: '2001:bc8:2517::/64', rule: allow, comment: 'Allow HTTPS v6' }
+  - { port: 51280, to_ip: '62.210.251.78', rule: allow, comment: 'Allow WireGuard v4' }
+  - { port: 51280, to_ip: '2001:bc8:2517::/64', rule: allow, comment: 'Allow WireGuard v6' }
+  - { port: 34200, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
+  - { port: 3005, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
+  - { port: 8324, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
+  - { port: 32469, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
+  - { port: 1900, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
+  - { port: 32410, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
+  - { port: 32412, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
+  - { port: 32413, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
+  - { port: 32414, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
+  - { from_ip: '127.0.0.1/8', comment: 'Allow localhost v4' }
+  - { from_ip: '::1/128', comment: 'Allow localhost v6' }
+  - { from_ip: '172.16.0.0/12', comment: 'Allow RFC1918' }
+  - { from_ip: '192.168.0.0/16', comment: 'Allow RFC1918' }
+      
+ufw_ipv6: "yes"
+ufw_default_input_policy: DROP
+ufw_default_output_policy: ACCEPT
+ufw_default_forward_policy: DROP
+ufw_default_application_policy: SKIP
+ufw_state: enabled
+ufw_logging: "off"
+ufw_reset: no
 
 mediaserver_installation_server: "/opt/mediaserver"
 plex_media_folder: "/opt/mediaserver/media"

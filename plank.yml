@@ -8,6 +8,7 @@
       apt: update_cache=yes cache_valid_time=3600
 
   roles:
+    - { role: weareinteractive.ufw }
     - { role: manala.apt }
     - { role: azavea.docker }
     - { role: ericsysmin.chrony }

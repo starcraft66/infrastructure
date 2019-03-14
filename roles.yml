@@ -9,3 +9,5 @@
 - src: clutterbox.dehydrated
 
 - src: geerlingguy.nginx
+
+- src: weareinteractive.ufw
