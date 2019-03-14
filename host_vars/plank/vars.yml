@@ -17,8 +17,8 @@ ufw_rules:
   - { port: 80, to_ip: '2001:bc8:2517::/64', rule: allow, comment: 'Allow HTTP v6' }
   - { port: 443, to_ip: '62.210.251.78', rule: allow, comment: 'Allow HTTPS v4' }
   - { port: 443, to_ip: '2001:bc8:2517::/64', rule: allow, comment: 'Allow HTTPS v6' }
-  - { port: 51280, to_ip: '62.210.251.78', rule: allow, comment: 'Allow WireGuard v4' }
-  - { port: 51280, to_ip: '2001:bc8:2517::/64', rule: allow, comment: 'Allow WireGuard v6' }
+  - { port: 51820, to_ip: '62.210.251.78', rule: allow, comment: 'Allow WireGuard v4' }
+  - { port: 51820, to_ip: '2001:bc8:2517::/64', rule: allow, comment: 'Allow WireGuard v6' }
   - { port: 34200, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
   - { port: 3005, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
   - { port: 8324, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
@@ -28,6 +28,11 @@ ufw_rules:
   - { port: 32412, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
   - { port: 32413, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
   - { port: 32414, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
+#  - { from_ip: '2001:bc8:2517:1000::/56', to_ip: '::/0', direction: 'routed', comment: 'Allow Wireguard Routing' }
+  - { from_ip: '2001:bc8:2517:1000::/56', route: 'yes', interface: 'wg0', direction: 'in', comment: 'Allow Wireguard Peers IPv6 outbound' }
+  - { from_ip: '2001:bc8:2517:1000::/56', route: 'yes', interface: 'eno1', direction: 'out', comment: 'Allow Wireguard Peers IPv6 outbound' }
+  - { to_ip: '2001:bc8:2517:1000::/56', route: 'yes', interface: 'wg0', direction: 'out', comment: 'Allow Wireguard Peers IPv6 inbound' }
+  - { to_ip: '2001:bc8:2517:1000::/56', route: 'yes', interface: 'eno1', direction: 'in', comment: 'Allow Wireguard Peers IPv6 inbound' }
   - { from_ip: '127.0.0.1/8', comment: 'Allow localhost v4' }
   - { from_ip: '::1/128', comment: 'Allow localhost v6' }
   - { from_ip: '172.16.0.0/12', comment: 'Allow RFC1918' }
@@ -36,11 +41,11 @@ ufw_rules:
 ufw_ipv6: "yes"
 ufw_default_input_policy: DROP
 ufw_default_output_policy: ACCEPT
-ufw_default_forward_policy: DROP
+ufw_default_forward_policy: ACCEPT
 ufw_default_application_policy: SKIP
 ufw_state: enabled
-ufw_logging: "off"
-ufw_reset: no
+ufw_logging: "on"
+ufw_reset: yes
 
 mediaserver_installation_server: "/opt/mediaserver"
 plex_media_folder: "/opt/mediaserver/media"
