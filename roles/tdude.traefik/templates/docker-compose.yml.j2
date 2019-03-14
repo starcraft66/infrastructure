@@ -40,11 +40,15 @@ services:
       CF_API_EMAIL: {{ dehydrated_lexicon_dns["LEXICON_CLOUDFLARE_USERNAME"] }}
       CF_API_KEY: {{ dehydrated_lexicon_dns["LEXICON_CLOUDFLARE_TOKEN"] }}
     networks:
+      - monitoring
       - mediaserver
       - status
       - gitlab
 
 networks:
+  monitoring:
+    external:
+      name: monitoring
   mediaserver:
     external:
       name: mediaserver

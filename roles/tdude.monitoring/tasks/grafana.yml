@@ -1,0 +1,31 @@
+---
+
+- name: Grafana > Create grafana group
+  group:
+    name: grafana
+    state: present
+    gid: 942
+
+- name: Grafana > Create grafana user
+  user:
+    name: grafana
+    password: "!"
+    update_password: on_create
+    group: grafana
+    uid: 942
+    state: present
+    shell: /bin/bash
+    system: yes
+    createhome: yes
+    home: /home/grafana
+
+- name: Grafana > Create the grafana folders
+  file:
+    name: "{{ item }}"
+    state: directory
+    owner: grafana
+    group: grafana
+    mode: 0770
+  with_items:
+    - "{{ grafana_installation_folder }}"
+    - "{{ grafana_data_folder }}"

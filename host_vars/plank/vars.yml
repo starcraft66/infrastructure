@@ -100,3 +100,20 @@ gitlab_webserver_port: 5000
 gitlab_ssh_port: 5001
 gitlab_external_url: "https://git.tdude.co"
 gitlab_hostname: "git.tdude.co"
+
+traefik_installation_folder: "/opt/traefik"
+traefik_data_folder: "/opt/traefik/data"
+traefik_docker_version: "latest"
+traefik_monitor_username: "admin"
+traefik_monitor_password: "{{ vault_traefik_monitor_password }}"
+
+monitoring_installation_folder: "/opt/monitoring"
+prometheus_installation_folder: "/opt/monitoring/prometheus"
+prometheus_data_folder: "/opt/monitoring/prometheus/data"
+prometheus_config_folder: "/opt/monitoring/prometheus/config"
+prometheus_docker_version: "latest"
+grafana_installation_folder: "/opt/monitoring/grafana"
+grafana_data_folder: "/opt/monitoring/grafana/data"
+grafana_docker_version: "latest"
+cadvisor_docker_version: "latest"
+cadvisor_redis_docker_version: "latest"

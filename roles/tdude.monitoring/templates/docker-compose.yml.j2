@@ -1,0 +1,83 @@
+version: '2'
+services:
+  prometheus:
+    image: prom/prometheus:{{ prometheus_docker_version }}
+    container_name: monitoring_prometheus
+    volumes:
+      - "{{ prometheus_data_folder }}:/prometheus"
+      - "{{ prometheus_config_folder }}:/etc/prometheus"
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    user: "945:945"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:prometheus.plank.tdude.co"
+      - "traefik.docker.network=monitoring"
+      - "traefik.port=9090"
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    networks:
+      - monitoring
+  grafana:
+    image: grafana/grafana:{{ grafana_docker_version }}
+    container_name: monitoring_grafana
+    environment:
+      GF_SERVER_HTTP_PORT: 3000
+      GF_SERVER_HTTP_PROTOCOL: http
+      GF_SERVER_DOMAIN: grafana.plank.tdude.co
+      GF_SERVER_ROOT_URL: https://grafana.plank.tdude.co/
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_NAME: "anonymous"
+      TZ: "Europe/Paris"
+    volumes:
+      - "{{ grafana_data_folder }}:/var/lib/grafana"
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    user: "942:942"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:grafana.plank.tdude.co"
+      - "traefik.docker.network=monitoring"
+      - "traefik.port=3000"
+    restart: unless-stopped
+    networks:
+      - monitoring
+  cadvisor:
+    image: google/cadvisor:{{ cadvisor_docker_version }}
+    container_name: monitoring_cadvisor
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:cadvisor.plank.tdude.co"
+      - "traefik.docker.network=monitoring"
+      - "traefik.port=8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - redis
+    networks:
+      - monitoring
+  redis:
+    image: redis:{{ cadvisor_redis_docker_version }}
+    restart: unless-stopped
+    container_name: monitoring_redis
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    external:
+      name: monitoring

@@ -1,0 +1,11 @@
+---
+monitoring_installation_folder: "/opt/monitoring"
+prometheus_installation_folder: "/opt/monitoring/prometheus"
+prometheus_data_folder: "/opt/monitoring/prometheus/data"
+prometheus_config_folder: "/opt/monitoring/prometheus/config"
+prometheus_docker_version: "latest"
+grafana_installation_folder: "/opt/monitoring/grafana"
+grafana_data_folder: "/opt/monitoring/grafana/data"
+grafana_docker_version: "latest"
+cadvisor_docker_version: "latest"
+cadvisor_redis_docker_version: "latest"
