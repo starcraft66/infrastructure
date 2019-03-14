@@ -1,5 +1,5 @@
 ---
-docker_version: "18.*"
+docker_version: "*"
 docker_compose_version: "1.24.0-rc1"
 chrony_version: "3.*"
 
