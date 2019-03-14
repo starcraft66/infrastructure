@@ -12,6 +12,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.frontend.rule=Host:prometheus.plank.tdude.co"
+      - "traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181"
+      - "traefik.frontend.auth.forward.authResponseHeaders=X-Forwarded-User"
       - "traefik.docker.network=monitoring"
       - "traefik.port=9090"
     restart: unless-stopped
@@ -42,6 +44,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.frontend.rule=Host:grafana.plank.tdude.co"
+      - "traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181"
+      - "traefik.frontend.auth.forward.authResponseHeaders=X-Forwarded-User"
       - "traefik.docker.network=monitoring"
       - "traefik.port=3000"
     restart: unless-stopped
@@ -54,6 +58,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.frontend.rule=Host:cadvisor.plank.tdude.co"
+      - "traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181"
+      - "traefik.frontend.auth.forward.authResponseHeaders=X-Forwarded-User"
       - "traefik.docker.network=monitoring"
       - "traefik.port=8080"
     volumes:

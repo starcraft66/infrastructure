@@ -44,8 +44,28 @@ services:
       - mediaserver
       - status
       - gitlab
+      - traefik
+
+  traefik-forward-auth:
+    image: thomseddon/traefik-forward-auth
+    environment:
+      - CLIENT_ID={{ traefik_oauth2_client_id }}
+      - CLIENT_SECRET={{ traefik_oauth2_client_secret }}}
+      - SECRET={{ traefik_oauth2_secret }}
+      - COOKIE_SECURE=true
+      - WHITELIST=starcraft66@gmail.com
+      - AUTH_HOST=auth.plank.tdude.co
+    networks:
+      - traefik
+    labels:
+      - traefik.enable=true
+      - traefik.port=4181
+      - traefik.backend=traefik-forward-auth
+      - traefik.backend.network=traefik
+      - traefik.frontend.rule=Host:auth.plank.tdude.co
 
 networks:
+  traefik:
   monitoring:
     external:
       name: monitoring
