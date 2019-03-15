@@ -19,3 +19,5 @@
     files: docker-compose.yml
     state: present
     restarted: yes
+    services:
+        - grafana
