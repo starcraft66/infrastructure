@@ -4,8 +4,9 @@ defaultEntryPoints = ["http", "https"]
   [entryPoints.dashboard]
     address = ":8081"
     [entryPoints.dashboard.auth]
-      [entryPoints.dashboard.auth.basic]
-        users = ["{{ traefik_monitor_username }}:{{ traefik_monitor_password }}"]
+      [entryPoints.dashboard.auth.forward]
+        address = "http://traefik-forward-auth:4181"
+        authResponseHeaders = ["X-Forwarded-User"]
   [entryPoints.prom]
     address = ":8082"
   [entryPoints.http]
