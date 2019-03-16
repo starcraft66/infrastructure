@@ -1,0 +1,32 @@
+---
+- name: restart elasticsearch
+  docker_service:
+    project_src: "{{ elk_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes
+    services:
+      - elasticsearch
+
+- name: restart logstash
+  docker_service:
+    project_src: "{{ elk_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes
+    services:
+      - logstash
+
+- name: restart kibana
+  docker_service:
+    project_src: "{{ elk_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes
+    services:
+      - kibana
+
+- name: restart rsyslog
+  systemd:
+    name: rsyslog
+    state: restarted

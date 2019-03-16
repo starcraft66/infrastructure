@@ -19,4 +19,5 @@
     - { role: tdude.statusfy }
     - { role: tdude.gitlab }
     - { role: tdude.monitoring }
+    - { role: tdude.elk }
     - { role: tdude.traefik }

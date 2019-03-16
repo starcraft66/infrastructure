@@ -1,0 +1,61 @@
+version: '2'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:{{ elk_version }}
+    container_name: elasticsearch
+#    user: "946:946"
+    volumes:
+      - {{ elk_elasticsearch_folder }}/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - {{ elk_elasticsearch_folder }}/data:/usr/share/elasticsearch/data
+#    ports:
+#      - "9200:9200"
+#      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      TZ: Europe/Paris
+    networks:
+      - {{ elk_docker_network }}
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash-oss:{{ elk_version }}
+    container_name: logstash
+#    user: "946:946"
+    volumes:
+      - {{ elk_logstash_folder }}/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - {{ elk_logstash_pipeline_folder }}/:/usr/share/logstash/pipeline:ro
+    ports:
+      - "127.0.0.1:5000:5000"
+#      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      TZ: Europe/Paris
+    networks:
+      - {{ elk_docker_network }}
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:{{ elk_version }}
+    container_name: kibana
+#    user: "946:946"
+    volumes:
+      - {{ elk_kibana_folder }}/:/usr/share/kibana/config:ro
+    environment:
+      TZ: Europe/Paris
+    networks:
+      - {{ elk_docker_network }}
+    depends_on:
+      - elasticsearch
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:kibana.plank.tdude.co"
+      - "traefik.docker.network={{ elk_docker_network }}"
+      - "traefik.port=5601"
+{{ traefik_sts_header_labels }}
+{{ traefik_forward_auth_labels }}
+
+networks:
+  {{ elk_docker_network }}:
+    external:
+      name: {{ elk_docker_network }}
