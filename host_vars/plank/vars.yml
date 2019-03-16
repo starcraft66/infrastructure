@@ -124,3 +124,7 @@ cadvisor_redis_docker_version: "latest"
 traefik_oauth2_client_id: "{{ vault_traefik_oauth2_client_id }}"
 traefik_oauth2_client_secret: "{{ vault_traefik_oauth2_client_secret }}"
 traefik_oauth2_secret: "{{ vault_traefik_oauth2_secret }}"
+
+traefik_forward_auth_labels: |2
+        - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
+        - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]

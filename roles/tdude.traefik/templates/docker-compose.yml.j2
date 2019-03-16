@@ -68,8 +68,7 @@ services:
       - traefik.backend.network=traefik
       - traefik.frontend.rule=Host:auth.plank.tdude.co
 {{ traefik_sts_header_labels }}
-      - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
-      - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
+{{ traefik_forward_auth_labels }}
 
 networks:
   traefik:

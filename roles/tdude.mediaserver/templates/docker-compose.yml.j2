@@ -17,8 +17,7 @@ services:
       - "traefik.docker.network=mediaserver"
       - "traefik.port=8112"
 {{ traefik_sts_header_labels }}
-      - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
-      - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
+{{ traefik_forward_auth_labels }}
     networks:
       - mediaserver
 
@@ -40,8 +39,7 @@ services:
       - "traefik.docker.network=mediaserver"
       - "traefik.port=9117"
 {{ traefik_sts_header_labels }}
-      - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
-      - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
+{{ traefik_forward_auth_labels }}
     networks:
       - mediaserver
 
@@ -64,8 +62,7 @@ services:
       - "traefik.docker.network=mediaserver"
       - "traefik.port=8989"
 {{ traefik_sts_header_labels }}
-      - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
-      - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
+{{ traefik_forward_auth_labels }}
     networks:
       - mediaserver
 
@@ -88,8 +85,7 @@ services:
       - "traefik.docker.network=mediaserver"
       - "traefik.port=7878"
 {{ traefik_sts_header_labels }}
-      - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
-      - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
+{{ traefik_forward_auth_labels }}
     networks:
       - mediaserver
 
