@@ -13,6 +13,7 @@ services:
       - "traefik.frontend.rule=Host:status.tdude.co"
       - "traefik.docker.network=status"
       - "traefik.port=3000"
+{{ traefik_sts_header_labels }}
 
 networks:
   status:

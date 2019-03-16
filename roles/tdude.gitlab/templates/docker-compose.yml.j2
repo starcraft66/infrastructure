@@ -36,6 +36,8 @@ services:
       - "traefik.frontend.rule=Host:git.tdude.co"
       - "traefik.docker.network=gitlab"
       - "traefik.port=80"
+{{ traefik_sts_header_labels }}
+
     networks:
       - gitlab
   runner:

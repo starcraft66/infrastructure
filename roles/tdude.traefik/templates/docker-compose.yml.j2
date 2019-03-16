@@ -31,6 +31,7 @@ services:
       - "traefik.enable=true"
       - "traefik.frontend.rule=Host:monitor.plank.tdude.co"
       - "traefik.port=8081"
+{{ traefik_sts_header_labels }}
 # Commented out for the moment because the docker socket
 # requires root access. Simply granting the traefik user
 # access to the docker group appears not to be enough.
@@ -66,6 +67,7 @@ services:
       - traefik.backend=traefik-forward-auth
       - traefik.backend.network=traefik
       - traefik.frontend.rule=Host:auth.plank.tdude.co
+{{ traefik_sts_header_labels }}
       - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
       - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
 

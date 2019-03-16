@@ -16,6 +16,7 @@ services:
       - "traefik.frontend.rule=Host:deluge.plank.tdude.co"
       - "traefik.docker.network=mediaserver"
       - "traefik.port=8112"
+{{ traefik_sts_header_labels }}
       - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
       - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
     networks:
@@ -38,6 +39,7 @@ services:
       - "traefik.frontend.rule=Host:jackett.plank.tdude.co"
       - "traefik.docker.network=mediaserver"
       - "traefik.port=9117"
+{{ traefik_sts_header_labels }}
       - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
       - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
     networks:
@@ -61,6 +63,7 @@ services:
       - "traefik.frontend.rule=Host:sonarr.plank.tdude.co"
       - "traefik.docker.network=mediaserver"
       - "traefik.port=8989"
+{{ traefik_sts_header_labels }}
       - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
       - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
     networks:
@@ -84,6 +87,7 @@ services:
       - "traefik.frontend.rule=Host:radarr.plank.tdude.co"
       - "traefik.docker.network=mediaserver"
       - "traefik.port=7878"
+{{ traefik_sts_header_labels }}
       - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
       - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
     networks:
@@ -101,7 +105,6 @@ services:
       - PLEX_CLAIM="{{ plex_claim_token }}"
       - ADVERTISE_IP="https://62.210.251.78:32400/"
     ports:
-#      - "2001:bc8:2517::2:32400:32400"
       - "62.210.251.78:32400:32400/tcp"
       - "62.210.251.78:3005:3005/tcp"
       - "62.210.251.78:8324:8324/tcp"
