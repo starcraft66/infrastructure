@@ -10,11 +10,11 @@ defaultEntryPoints = ["http", "https"]
   [entryPoints.prom]
     address = ":8082"
   [entryPoints.http]
-    address = ":8080"
+    address = ":80"
       [entryPoints.http.redirect]
         entryPoint = "https"
   [entryPoints.https]
-    address = ":8443"
+    address = ":443"
       [entryPoints.https.tls]
       sniStrict = true
       minVersion = "VersionTLS12"
