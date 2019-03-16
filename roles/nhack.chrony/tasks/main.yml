@@ -1,3 +1,0 @@
----
-- name: Install Chrony
-  apt: name="chrony={{ chrony_version }}"
