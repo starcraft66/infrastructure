@@ -4,6 +4,7 @@ services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:{{ elk_version }}
     container_name: elasticsearch
+    restart: unless-stopped
 #    user: "946:946"
     volumes:
       - {{ elk_elasticsearch_folder }}/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
@@ -20,6 +21,7 @@ services:
   logstash:
     image: docker.elastic.co/logstash/logstash-oss:{{ elk_version }}
     container_name: logstash
+    restart: unless-stopped
 #    user: "946:946"
     volumes:
       - {{ elk_logstash_folder }}/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
@@ -38,6 +40,7 @@ services:
   kibana:
     image: docker.elastic.co/kibana/kibana-oss:{{ elk_version }}
     container_name: kibana
+    restart: unless-stopped
 #    user: "946:946"
     volumes:
       - {{ elk_kibana_folder }}/:/usr/share/kibana/config:ro
