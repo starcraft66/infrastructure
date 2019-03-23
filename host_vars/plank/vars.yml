@@ -12,13 +12,13 @@ ufw_applications:
   - { name: "OpenSSH" }   
 ufw_rules:
   - { port: 22, to_ip: '62.210.251.78', rule: allow, comment: 'Allow SSH v4' }
-  - { port: 22, to_ip: '2001:bc8:2517::/64', rule: allow, comment: 'Allow SSH v6' }
+  - { port: 22, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow SSH v6' }
   - { port: 80, to_ip: '62.210.251.78', rule: allow, comment: 'Allow HTTP v4' }
-  - { port: 80, to_ip: '2001:bc8:2517::/64', rule: allow, comment: 'Allow HTTP v6' }
+  - { port: 80, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow HTTP v6' }
   - { port: 443, to_ip: '62.210.251.78', rule: allow, comment: 'Allow HTTPS v4' }
-  - { port: 443, to_ip: '2001:bc8:2517::/64', rule: allow, comment: 'Allow HTTPS v6' }
+  - { port: 443, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow HTTPS v6' }
   - { port: 51820, to_ip: '62.210.251.78', rule: allow, comment: 'Allow WireGuard v4' }
-  - { port: 51820, to_ip: '2001:bc8:2517::/64', rule: allow, comment: 'Allow WireGuard v6' }
+  - { port: 51820, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow WireGuard v6' }
   - { port: 34200, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
   - { port: 3005, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
   - { port: 8324, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
