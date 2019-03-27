@@ -1,0 +1,50 @@
+---
+- name: restart riot
+  docker_service:
+    project_src: "{{ matrix_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes
+    services:
+      - jackett
+
+- name: restart synapse
+  docker_service:
+    project_src: "{{ matrix_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes
+    services:
+      - synapse
+
+- name: restart postgres
+  docker_service:
+    project_src: "{{ matrix_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes
+    services:
+      - postgres
+
+- name: restart nginx
+  docker_service:
+    project_src: "{{ matrix_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes
+    services:
+      - nginx_riot
+
+- name: restart appservice_webhooks
+  docker_service:
+    project_src: "{{ matrix_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes
+    services:
+      - appservice_webhooks
+
+- name: restart coturn
+  systemd:
+    name: coturn
+    state: restarted

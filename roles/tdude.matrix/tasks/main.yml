@@ -1,0 +1,190 @@
+---
+
+- name: (Temporary) Firewall the bridge
+  ufw:
+    rule: "deny"
+    interface: "eno1"
+    direction: "in"
+    to_ip: "2001:bc8:2517:106::/64"
+    protocol: "any"
+    route: "yes"
+    log: false
+
+- name: Create matrix group
+  group:
+    name: matrix
+    state: present
+    gid: 927
+
+- name: Create matrix user
+  user:
+    name: matrix
+    password: "!"
+    update_password: on_create
+    group: matrix
+    uid: 927
+    state: present
+    shell: /bin/bash
+    system: yes
+    createhome: yes
+    home: /home/matrix
+
+- name: Create the matrix folders
+  file:
+    name: "{{ item }}"
+    state: directory
+    owner: matrix
+    group: matrix
+    mode: 0770
+  with_items:
+    - "{{ matrix_installation_folder }}"
+    - "{{ matrix_appservice_webhooks_data_folder }}"
+    - "{{ matrix_synapse_data_folder }}"
+    - "{{ matrix_riot_data_folder }}"
+    - "{{ matrix_riot_usercontent_folder }}"
+    - "{{ matrix_nginx_data_folder }}"
+
+- name: Create the postgres folder
+  file:
+    name: "{{ item }}"
+    state: directory
+    owner: 999
+    group: 999
+    mode: 0770
+  with_items:
+    - "{{ matrix_postgres_data_folder }}" 
+
+- name: Install the riot config
+  template:
+    src: "riot/config.json.j2"
+    dest: "{{ matrix_riot_data_folder }}/config.json"
+    mode: 0660
+    owner: 101
+    group: 101
+  notify: restart riot
+
+- name: Install the homeserver config
+  template:
+    src: "synapse/homeserver.yaml.j2"
+    dest: "{{ matrix_synapse_data_folder }}/homeserver.yaml"
+    mode: 0660
+    owner: matrix
+    group: matrix
+  notify: restart synapse
+
+- name: Install the logging config
+  template:
+    src: "synapse/config.logging.j2"
+    dest: "{{ matrix_synapse_data_folder }}/config.logging"
+    mode: 0660
+    owner: matrix
+    group: matrix
+  notify: restart synapse
+
+- name: Install the webhook bridge registration config
+  template:
+    src: "matrix-appservice-webhooks/appservice-registration-webhooks.yaml.j2"
+    dest: "{{ item }}"
+    mode: 0660
+    owner: matrix
+    group: matrix
+  with_items:
+    - "{{ matrix_appservice_webhooks_data_folder }}/appservice-registration-webhooks.yaml"
+    - "{{ matrix_synapse_data_folder }}/appservice-registration-webhooks.yaml"
+  notify: restart synapse
+
+- name: Install the webhook bridge config
+  template:
+    src: "matrix-appservice-webhooks/config.yml.j2"
+    dest: "{{ matrix_appservice_webhooks_data_folder }}/config.yaml"
+    mode: 0660
+    owner: matrix
+    group: matrix
+  notify: restart synapse
+
+- name: Install the webhook bridge database config
+  template:
+    src: "matrix-appservice-webhooks/database.json.j2"
+    dest: "{{ matrix_appservice_webhooks_data_folder }}/database.json"
+    mode: 0660
+    owner: matrix
+    group: matrix
+  notify: restart synapse
+
+- name: Install the nginx config
+  template:
+    src: "nginx/matrix.conf.j2"
+    dest: "{{ matrix_nginx_data_folder }}/matrix.conf"
+    mode: 0660
+    owner: 101
+    group: 101
+  notify: restart nginx
+
+- name: Copy the usercontent v1.html file
+  copy:
+    src: "riot/v1.html"
+    dest: "{{ matrix_riot_usercontent_folder }}/v1.html"
+    mode: 0660
+    owner: 101
+    group: 101
+  notify: restart nginx
+
+- name: Install the production compose file
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "{{ matrix_installation_folder }}/docker-compose.yml"
+    mode: 0660
+    owner: matrix
+    group: matrix
+
+#- name: Create the matrix network
+#  docker_network:
+#    name: matrix
+#    state: present
+
+- name: Install coturn
+  apt:
+    name: coturn
+    state: present
+
+- name: Install the coturn service (debian workaround)
+  template:
+    src: "coturn/coturn.service.j2"
+    dest: "/etc/systemd/system/coturn.service"
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Fix coturn permissions
+  file:
+    path: "/var/run/turnserver"
+    state: directory
+    mode: 0755
+    owner: turnserver
+    group: turnserver
+
+- name: Install the coturn config
+  template:
+    src: "coturn/turnserver.conf.j2"
+    dest: "/etc/turnserver.conf"
+    mode: 0644
+    owner: root
+    group: root
+  notify: restart coturn
+
+- name: Enable and start coturn
+  systemd:
+    name: coturn
+    state: started
+    enabled: yes
+    daemon_reload: yes
+    force: yes
+
+- name: Update the docker service
+  docker_service:
+    project_src: "{{ matrix_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    recreate: smart
+    pull: yes
+    remove_orphans: yes

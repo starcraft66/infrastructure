@@ -20,4 +20,4 @@
     - { role: tdude.gitlab }
     - { role: tdude.monitoring }
     - { role: tdude.elk }
-    - { role: tdude.traefik }
+    - { role: tdude.matrix }

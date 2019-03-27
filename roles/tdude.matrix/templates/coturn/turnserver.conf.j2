@@ -1,0 +1,15 @@
+lt-cred-mech
+use-auth-secret
+static-auth-secret={{ matrix_synapse_turn_secret }}
+realm=turn.{{ matrix_synapse_server_name }}
+cert=/etc/dehydrated/certs/turn.nerdsin.space/fullchain.pem
+pkey=/etc/dehydrated/certs/turn.nerdsin.space/privkey.pem
+cipher-list="HIGH"
+no-tcp-relay
+denied-peer-ip=10.0.0.0-10.255.255.255
+denied-peer-ip=192.168.0.0-192.168.255.255
+denied-peer-ip=172.16.0.0-172.31.255.255
+denied-peer-ip=2001:bc8:2517::-2001:bc8:2517:ffff::
+no-cli
+listening-ip=62.210.251.78
+listening-ip=2001:bc8:2517:100::19

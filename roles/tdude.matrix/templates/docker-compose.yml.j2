@@ -1,0 +1,95 @@
+version: '2.3'
+services:
+  synapse:
+    container_name: matrix_synapse
+    image: matrixdotorg/synapse:{{ matrix_synapse_version }}
+    volumes:
+      - {{ matrix_synapse_data_folder }}:/data
+    environment:
+      UID: 927
+      GID: 927
+      SYNAPSE_CONFIG_PATH: "/data/homeserver.yaml"
+    # In case a new configuration needs to be generated
+      SYNAPSE_SERVER_NAME: "{{ matrix_synapse_server_name }}"
+      SYNAPSE_REPORT_STATS: "{{ matrix_synapse_report_stats }}"
+      SYNAPSE_NO_TLS: "{{ matrix_synapse_no_tls }}"
+      SYNAPSE_ENABLE_REGISTRATION: "{{ matrix_synapse_enable_registration }}"
+      SYNAPSE_ALLOW_GUEST: "{{ matrix_synapse_allow_guest }}"
+      SYNAPSE_EVENT_CACHE_SIZE: "{{ matrix_synapse_event_cache_size }}"
+      SYNAPSE_RECAPTCHA_PUBLIC_KEY: "{{ matrix_synapse_recaptcha_public_key }}"
+      SYNAPSE_RECAPTCHA_PRIVATE_KEY: "{{ matrix_synapse_recaptcha_private_key }}"
+      SYNAPSE_TURN_URIS: "{{ matrix_synapse_turn_uris|join(', ') }}"
+      SYNAPSE_TURN_SECRET: "{{ matrix_synapse_turn_secret }}"
+      SYNAPSE_MAX_UPLOAD_SIZE: "{{ matrix_synapse_max_upload_size }}"
+      SYNAPSE_ACME: "{{ matrix_synapse_acme }}"
+      SYNAPSE_REGISTRATION_SHARED_SECRET: "{{ matrix_synapse_registration_shared_secret }}"
+      SYNAPSE_MACAROON_SECRET_KEY: "{{ matrix_synapse_macaroon_secret_key }}"
+      POSTGRES_DB: "{{ matrix_synapse_postgres_db }}"
+      POSTGRES_HOST: "{{ matrix_synapse_postgres_host }}"
+      POSTGRES_USER: "{{ matrix_synapse_postgres_user }}"
+      POSTGRES_PASSWORD: "{{ matrix_synapse_postgres_password }}"
+    networks:
+      matrix:
+        ipv4_address: "10.72.128.4"
+        ipv6_address: "2001:bc8:2517:106::4"
+    restart: unless-stopped
+  postgres:
+    container_name: matrix_postgres
+    image: postgres:{{ matrix_postgres_version }}
+    volumes:
+      - {{ matrix_postgres_data_folder }}:/var/lib/postgresql/data
+    restart: unless-stopped
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: {{ matrix_synapse_postgres_db }}
+      POSTGRES_USER: {{ matrix_synapse_postgres_user }}
+      POSTGRES_PASSWORD: {{ matrix_synapse_postgres_password }}
+    networks:
+      matrix:
+        ipv4_address: "10.72.128.3"
+        ipv6_address: "2001:bc8:2517:106::3"
+  appservice_webhooks:
+    user: "927:927"
+    container_name: matrix_appservice_webhooks
+    image: starcraft66/matrix-appservice-webhooks:{{ matrix_appservice_webhooks_version }}
+    volumes:
+      - "{{ matrix_appservice_webhooks_data_folder }}:/data"
+    restart: unless-stopped
+    networks:
+      matrix:
+        ipv4_address: "10.72.128.5"
+        ipv6_address: "2001:bc8:2517:106::5"
+  nginx_riot:
+    container_name: matrix_nginx
+    image: bubuntux/riot-web:{{ matrix_synapse_version }}
+    volumes:
+      - "{{ matrix_riot_data_folder }}/config.json:/etc/riot-web/config.json:ro"
+      - "{{ matrix_riot_usercontent_folder }}:/usr/share/nginx/html/usercontent:ro"
+      - "{{ matrix_nginx_data_folder }}/matrix.conf:/etc/nginx/conf.d/default.conf:ro"
+      #- "{{ matrix_riot_data_folder }}/dhparam.pem:/etc/nginx/dhparam.pem:ro"
+    networks:
+      matrix:
+        ipv4_address: 10.72.128.6
+        ipv6_address: "2001:bc8:2517:106::6"
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.port=80
+      - traefik.backend=matrix_nginx_riot
+      - traefik.backend.network=matrix
+      - traefik.frontend.rule=Host:staging.nerdsin.space,nerdsin.space,usercontent.nerdsin.space
+
+networks:
+  matrix:
+    #name: matrix
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-matrix
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.72.128.0/24
+          gateway: 10.72.128.1
+        - subnet: "2001:bc8:2517:106::/64"
+          gateway: "2001:bc8:2517:106::1"
