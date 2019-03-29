@@ -96,7 +96,7 @@ wireguard:
 statusfy_installation_folder: "/opt/statusfy"
 statusfy_data_folder: "/opt/statusfy/data"
 statusfy_webserver_port: 2992
-statusfy_docker_version: "unstable"
+statusfy_docker_version: "v0.3.1"
 
 gitlab_installation_folder: "/opt/gitlab"
 gitlab_config_folder: "/opt/gitlab/config"
