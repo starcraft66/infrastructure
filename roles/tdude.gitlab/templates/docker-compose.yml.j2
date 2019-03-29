@@ -23,8 +23,8 @@ services:
         gitlab_rails['gitlab_shell_ssh_port'] = {{ gitlab_ssh_port }}
     ports:
       - '62.210.251.78:{{ gitlab_ssh_port }}:22'
-      - '2001:bc8:2517::3:22:22'
-      - '2001:bc8:2517::3:{{ gitlab_ssh_port }}:22'
+      - '2001:bc8:2517:100::3:22:22'
+      - '2001:bc8:2517:100::3:{{ gitlab_ssh_port }}:22'
     volumes:
       - '{{ gitlab_config_folder }}:/etc/gitlab'
       - '{{ gitlab_logs_folder }}:/var/log/gitlab'
