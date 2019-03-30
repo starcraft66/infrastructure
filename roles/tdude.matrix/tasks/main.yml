@@ -121,8 +121,8 @@
   notify: restart nginx
 
 - name: Copy the usercontent v1.html file
-  copy:
-    src: "riot/v1.html"
+  get_url:
+    url: "https://raw.githubusercontent.com/matrix-org/usercontent/master/v1.html"
     dest: "{{ matrix_riot_usercontent_folder }}/v1.html"
     mode: 0660
     owner: 101
