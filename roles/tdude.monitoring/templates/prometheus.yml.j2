@@ -13,8 +13,7 @@ alerting:
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
-  # - "first_rules.yml"
-  # - "second_rules.yml"
+  - "/etc/prometheus/synapse-v2.rules"
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
@@ -39,3 +38,8 @@ scrape_configs:
   - job_name: 'grafana'
     static_configs:
     - targets: ['grafana:3000']
+
+  - job_name: 'synapse'
+    metrics_path: '/_synapse/metrics'
+    static_configs:
+    - targets: ['synapse:8009']

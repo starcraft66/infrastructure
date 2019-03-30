@@ -55,6 +55,11 @@ listeners:
         compress: true
       - names: [federation]
         compress: false
+  
+  - port: 8009
+    tls: false
+    bind_addresses: ['0.0.0.0']
+    type: metrics
 
 ## Database ##
 

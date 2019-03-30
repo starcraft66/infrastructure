@@ -29,6 +29,7 @@ services:
       POSTGRES_USER: "{{ matrix_synapse_postgres_user }}"
       POSTGRES_PASSWORD: "{{ matrix_synapse_postgres_password }}"
     networks:
+      monitoring:
       matrix:
         ipv4_address: "10.72.128.4"
         ipv6_address: "2001:bc8:2517:106::4"
@@ -80,6 +81,9 @@ services:
       - traefik.frontend.rule=Host:staging.nerdsin.space,nerdsin.space,usercontent.nerdsin.space
 
 networks:
+  monitoring:
+    external:
+      name: monitoring
   matrix:
     #name: matrix
     driver: bridge
