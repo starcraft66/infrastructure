@@ -6,6 +6,7 @@ ARGS="-collector.diskstats.ignored-devices=^(ram|loop|fd)\d+$ \
 #      -collector.netstat.fields=(.*) \
 #      -collector.vmstat.fields=(.*)  \
 #      -collector.interrupts \
+      -collector.netdev.ignored-devices=^(veth.+)$ \
       -web.listen-address=62.210.251.78:9100"
 
 # Prometheus-node-exporter supports the following options:
