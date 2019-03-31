@@ -1,6 +1,6 @@
 ---
 matrix_synapse_version: latest
-matrix_synapse_server_name: staging.nerdsin.space
+matrix_synapse_server_name: nerdsin.space
 matrix_synapse_report_stats: "no"
 matrix_synapse_no_tls: true
 matrix_synapse_enable_registration: true
