@@ -61,7 +61,7 @@
     mode: 0660
     owner: 101
     group: 101
-  notify: restart riot
+  notify: restart nginx
 
 - name: Install the homeserver config
   template:
