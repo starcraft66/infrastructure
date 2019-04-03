@@ -44,6 +44,8 @@ services:
 #    user: "946:946"
     volumes:
       - {{ elk_kibana_folder }}/:/usr/share/kibana/config:ro
+    ports:
+      - "::1:5601:5601"
     environment:
       TZ: Europe/Paris
     networks:
