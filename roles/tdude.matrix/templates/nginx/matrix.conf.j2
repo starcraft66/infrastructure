@@ -84,8 +84,6 @@ server {
     location /.well-known {
         location /.well-known/matrix {
             location /.well-known/matrix/client {
-                add_header 'Access-Control-Allow-Origin' '*';
-                add_header 'Access-Control-Allow-Methods' 'GET';
                 proxy_set_header    Host                $http_host;
                 proxy_set_header    X-FORWARDED-HOST    $http_host;
                 proxy_set_header    X-FORWARDED-PORT    $http_port;
