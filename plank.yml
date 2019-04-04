@@ -13,6 +13,7 @@
     - { role: azavea.docker }
     - { role: ericsysmin.chrony }
     - { role: tdude.core }
+    - { role: tdude.kerio }
     - { role: clutterbox.dehydrated }
     - { role: tdude.mediaserver }
     - { role: tdude.wireguard }

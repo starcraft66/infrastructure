@@ -1,0 +1,9 @@
+---
+- name: restart kerio
+  docker_service:
+    project_src: "{{ kerio_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes
+    services:
+      - kerio-connect

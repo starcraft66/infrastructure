@@ -1,0 +1,99 @@
+---
+
+- name: Create kerio group
+  group:
+    name: kerio
+    state: present
+    gid: 944
+
+- name: Create kerio user
+  user:
+    name: kerio
+    password: "!"
+    update_password: on_create
+    groups:
+      - kerio
+    uid: 944
+    state: present
+    shell: /bin/bash
+    system: yes
+    createhome: yes
+    home: /home/kerio
+
+- name: Create the kerio folders
+  file:
+    name: "{{ item }}"
+    state: directory
+    owner: kerio
+    group: kerio
+    mode: 0770
+  with_items:
+    - "{{ kerio_installation_folder }}"
+    - "{{ kerio_license_folder }}"
+    - "{{ kerio_store_folder }}"
+    - "{{ kerio_sslcert_folder }}"
+
+- name: Install the mailserver config
+  copy:
+    src: "mailserver.cfg"
+    dest: "{{ kerio_installation_folder }}/mailserver.cfg"
+    mode: 0660
+    owner: kerio
+    group: kerio
+  notify: restart kerio
+
+- name: Install the license key
+  copy:
+    src: "license.key"
+    dest: "{{ kerio_license_folder }}/license.key"
+    mode: 0660
+    owner: kerio
+    group: kerio
+  notify: restart kerio
+
+- name: Install the cluster config
+  copy:
+    src: "cluster.cfg"
+    dest: "{{ kerio_installation_folder }}/cluster.cfg"
+    mode: 0660
+    owner: kerio
+    group: kerio
+  notify: restart kerio
+
+- name: Install the users config
+  copy:
+    src: "users.cfg"
+    dest: "{{ kerio_installation_folder }}/users.cfg"
+    mode: 0660
+    owner: kerio
+    group: kerio
+  notify: restart kerio
+
+- name: Touch kerio stats files
+  file:
+    path: "{{ kerio_installation_folder }}/{{ item }}"
+    mode: 0660
+    state: touch
+    owner: kerio
+    group: kerio
+  notify: restart kerio
+  with_items:
+    - "charts.dat"
+    - "stats.dat"
+
+- name: Install the production compose file
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "{{ kerio_installation_folder }}/docker-compose.yml"
+    mode: 0660
+    owner: kerio
+    group: kerio
+
+- name: Update the docker service
+  docker_service:
+    project_src: "{{ kerio_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    recreate: smart
+    pull: yes
+    remove_orphans: yes

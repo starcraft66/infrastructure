@@ -36,6 +36,22 @@ ufw_rules:
   - { port: 32412, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
   - { port: 32413, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
   - { port: 32414, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
+  - { port: 4040, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 25, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 80, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 110, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 119, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 143, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 389, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 443, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 465, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 563, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 587, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 636, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 993, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 995, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 5222, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 5223, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
 #  - { from_ip: '2001:bc8:2517:1000::/56', to_ip: '::/0', direction: 'routed', comment: 'Allow Wireguard Routing' }
   - { from_ip: '2001:bc8:2517:1000::/56', route: 'yes', interface: 'wg0', direction: 'in', comment: 'Allow Wireguard Peers IPv6 outbound' }
   - { from_ip: '2001:bc8:2517:1000::/56', route: 'yes', interface: 'eno1', direction: 'out', comment: 'Allow Wireguard Peers IPv6 outbound' }
@@ -69,8 +85,13 @@ dehydrated_challengetype: dns-01
 dehydrated_contactemail: starcraft66@gmail.com
 dehydrated_domains: |
   turn.nerdsin.space
+  cgbpi.com www.cgbpi.com
 dehydrated_deploycert: |
   systemctl restart coturn
+  cp /etc/dehydrated/certs/cgbpi.com/fullchain.pem {{ kerio_sslcert_folder }}/server.crt
+  cp /etc/dehydrated/certs/cgbpi.com/privkey.pem {{ kerio_sslcert_folder }}/server.key
+  chown -R kerio:kerio {{ kerio_sslcert_folder }}
+  docker-compose -f "{{ kerio_installation_folder }}/docker-compose.yml" restart
 
 plex_claim_token: "{{ vault_plex_claim_token }}"
 sonarr_api_key: "{{ vault_sonarr_api_key }}"
@@ -178,3 +199,9 @@ matrix_postgres_data_folder: "{{ matrix_installation_folder }}/postgres"
 
 matrix_appservice_webhooks_hs_token: "{{ vault_matrix_appservice_webhooks_hs_token }}"
 matrix_appservice_webhooks_as_token: "{{ vault_matrix_appservice_webhooks_as_token }}"
+
+kerio_installation_folder: "/opt/kerio"
+kerio_license_folder: "{{ kerio_installation_folder }}/license"
+kerio_store_folder: "{{ kerio_installation_folder }}/store"
+kerio_sslcert_folder: "{{ kerio_installation_folder }}/sslcert"
+kerio_connect_version: "latest"
