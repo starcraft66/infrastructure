@@ -163,6 +163,14 @@
     owner: turnserver
     group: turnserver
 
+- name: Create the coturn
+  file:
+    name: "/usr/local/etc/turn"
+    state: directory
+    owner: turnserver
+    group: turnserver
+    mode: 0770
+
 - name: Install the coturn config
   template:
     src: "coturn/turnserver.conf.j2"

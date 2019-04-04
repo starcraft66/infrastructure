@@ -25,6 +25,14 @@ ufw_rules:
   - { port: 3479, to_ip: '2001:bc8:2517:100::19', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
   - { port: 3479, to_ip: '62.210.251.78', protocol: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
   - { port: 3479, to_ip: '2001:bc8:2517:100::19', protocol: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
+  - { port: 5349, to_ip: '62.210.251.78', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
+  - { port: 5349, to_ip: '2001:bc8:2517:100::19', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
+  - { port: 5349, to_ip: '62.210.251.78', protocol: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
+  - { port: 5349, to_ip: '2001:bc8:2517:100::19', protocol: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
+  - { port: 5350, to_ip: '62.210.251.78', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
+  - { port: 5350, to_ip: '2001:bc8:2517:100::19', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
+  - { port: 5350, to_ip: '62.210.251.78', protocol: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
+  - { port: 5350, to_ip: '2001:bc8:2517:100::19', protocol: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
   - { port: 51820, to_ip: '62.210.251.78', rule: allow, comment: 'Allow WireGuard v4' }
   - { port: 51820, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow WireGuard v6' }
   - { port: 34200, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
@@ -87,6 +95,10 @@ dehydrated_domains: |
   turn.nerdsin.space
   cgbpi.com www.cgbpi.com
 dehydrated_deploycert: |
+  cp /etc/dehydrated/certs/turn.nerdsin.space/fullchain.pem /usr/local/etc/turn/fullchain.pem
+  cp /etc/dehydrated/certs/turn.nerdsin.space/privkey.pem /usr/local/etc/turn/privkey.pem
+  chmod 600 /usr/local/etc/turn/*.pem
+  chown -R turnserver:turnserver /usr/local/etc/turn/
   systemctl restart coturn
   cp /etc/dehydrated/certs/cgbpi.com/fullchain.pem {{ kerio_sslcert_folder }}/server.crt
   cp /etc/dehydrated/certs/cgbpi.com/privkey.pem {{ kerio_sslcert_folder }}/server.key
@@ -167,8 +179,8 @@ matrix_synapse_event_cache_size: "10K"
 matrix_synapse_recaptcha_public_key: 6LeQKZoUAAAAAHlq30wePb12urXZWKwGdJ3h1Gpl
 matrix_synapse_recaptcha_private_key: "{{ vault_matrix_synapse_recaptcha_private_key }}"
 matrix_synapse_turn_uris:
-  - "turn:turn.nerdsin.space:3478?transport=udp"
-  - "turn:turn.nerdsin.space:3478?transport=tcp"
+  - "turn:turn.nerdsin.space:5349?transport=udp"
+  - "turn:turn.nerdsin.space:5349?transport=tcp"
 matrix_synapse_turn_secret: "{{ vault_matrix_synapse_turn_secret }}"
 matrix_synapse_max_upload_size: 100M
 matrix_synapse_acme: false
