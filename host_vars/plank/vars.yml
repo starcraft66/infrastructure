@@ -44,6 +44,7 @@ ufw_rules:
   - { port: 32412, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
   - { port: 32413, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
   - { port: 32414, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
+  - { port: 9822, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Minecraft Discord Bridge' }
   - { port: 4040, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
   - { port: 25, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
   - { port: 80, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
