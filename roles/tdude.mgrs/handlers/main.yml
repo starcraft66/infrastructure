@@ -1,0 +1,7 @@
+---
+- name: restart statusfy
+  docker_service:
+    project_src: "{{ statusfy_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes

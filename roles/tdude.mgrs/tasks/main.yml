@@ -1,0 +1,44 @@
+---
+
+- name: Create the mgrs folders
+  file:
+    name: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+  with_items:
+    - "{{ mgrs_installation_folder }}"
+    - "{{ mgrs_static_root }}"
+
+- name: Copy the MGRS static files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ mgrs_static_root }}/{{ item | basename }}"
+    owner: root
+    group: root
+    mode: 0664
+  with_fileglob:
+    - ../files/*
+
+- name: Install the production compose file
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "{{ mgrs_installation_folder }}/docker-compose.yml"
+    mode: 0664
+    owner: root
+    group: root
+
+- name: Create the mgrs network
+  docker_network:
+    name: mgrs
+    state: present
+
+- name: Update the docker service
+  docker_service:
+    project_src: "{{ mgrs_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    recreate: smart
+    pull: yes
+    remove_orphans: yes

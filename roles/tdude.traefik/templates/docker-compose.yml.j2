@@ -39,6 +39,7 @@ services:
       - status
       - gitlab
       - traefik
+      - mgrs
 
   traefik-forward-auth:
     image: thomseddon/traefik-forward-auth
@@ -79,3 +80,6 @@ networks:
   gitlab:
     external:
       name: gitlab
+  mgrs:
+    external:
+      name: mgrs
