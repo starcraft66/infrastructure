@@ -12,7 +12,6 @@ ufw_applications:
   - { name: "OpenSSH" }   
 ufw_rules:
   - { port: 22, to_ip: '62.210.251.78', rule: allow, comment: 'Allow SSH v4' }
-  - { port: 5001, to_ip: '2001:bc8:2517:100::3', rule: allow, comment: 'Allow SSH v6 Gitlab 5001' }
   - { port: 22, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow SSH v6' }
   - { port: 80, to_ip: '62.210.251.78', rule: allow, comment: 'Allow HTTP v4' }
   - { port: 80, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow HTTP v6' }
@@ -45,7 +44,6 @@ ufw_rules:
   - { port: 32412, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
   - { port: 32413, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
   - { port: 32414, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
-  - { port: 9822, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Minecraft Discord Bridge' }
   - { port: 4040, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
   - { port: 25, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
   - { port: 80, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
@@ -79,7 +77,7 @@ ufw_default_forward_policy: ACCEPT
 ufw_default_application_policy: SKIP
 ufw_state: enabled
 ufw_logging: "on"
-ufw_reset: yes
+ufw_reset: no
 
 mediaserver_installation_folder: "/opt/mediaserver"
 plex_media_folder: "/opt/mediaserver/media"
@@ -117,7 +115,7 @@ wireguard:
   wg0:
     addresses:
       - "10.255.239.1/24"
-      - "2001:bc8:2517:1df::1/64"
+      - "2001:bc8:2517:f::1/64"
     post-up: "iptables -A FORWARD -i wg0 -j ACCEPT; iptables -A FORWARD -o wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eno1 -j MASQUERADE;"
     post-down: "iptables -D FORWARD -i wg0 -j ACCEPT; iptables -D FORWARD -o wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eno1 -j MASQUERADE;"
     port: 51820
@@ -126,11 +124,7 @@ wireguard:
       - public_key: "lJoAVNs9uHu9vNOws12ZmEXIOSTYx5HlsEB/x+L3iV8="
         allowed_ips:
           - "10.255.239.2/32"
-          - "2001:bc8:2517:1d0::1/64"
-      - public_key: "FBeasvRfcF55Gx9YsDD/cvjQujrwM4NVkKrkefPaqWE="
-        allowed_ips:
-          - "10.255.239.3/32"
-          - "2001:bc8:2517:1d1::1/64"
+          - "2001:bc8:2517:1000::1/64"
 
 statusfy_installation_folder: "/opt/statusfy"
 statusfy_data_folder: "/opt/statusfy/data"
@@ -185,8 +179,8 @@ matrix_synapse_event_cache_size: "10K"
 matrix_synapse_recaptcha_public_key: 6LeQKZoUAAAAAHlq30wePb12urXZWKwGdJ3h1Gpl
 matrix_synapse_recaptcha_private_key: "{{ vault_matrix_synapse_recaptcha_private_key }}"
 matrix_synapse_turn_uris:
-  - "turn:turn.nerdsin.space:5349?transport=udp"
-  - "turn:turn.nerdsin.space:5349?transport=tcp"
+  - "turn:turn.nerdsin.space:3478?transport=udp"
+  - "turn:turn.nerdsin.space:3478?transport=tcp"
 matrix_synapse_turn_secret: "{{ vault_matrix_synapse_turn_secret }}"
 matrix_synapse_max_upload_size: 100M
 matrix_synapse_acme: false
