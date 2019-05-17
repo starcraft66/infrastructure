@@ -1,0 +1,29 @@
+version: '2.3'
+services:
+  lolisafe:
+    container_name: lolisafe
+    image: starcraft66/lolisafe:{{ lolisafe_version }}
+    restart: always
+    environment:
+      - TZ=Europe/Paris # timezone
+    volumes:
+      - {{ lolisafe_installation_folder }}/config.js:/usr/src/lolisafe/config.js:ro
+      - {{ lolisafe_database_folder }}/db.sqlite:/usr/src/lolisafe/database/db.sqlite
+      - {{ lolisafe_store_folder }}:/usr/src/lolisafe/uploads
+      - {{ lolisafe_custom_pages_folder }}:/usr/src/lolisafe/custom
+      - {{ lolisafe_logs_folder }}:/usr/src/lolisafe/logs
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:lolisafe.tdude.co,l.trs.tn"
+      - "traefik.docker.network=lolisafe"
+      - "traefik.port=9999"
+{{ traefik_sts_header_labels }}
+    networks:
+      - lolisafe
+
+networks:
+  lolisafe:
+    external:
+      name: lolisafe

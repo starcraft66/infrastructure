@@ -1,0 +1,9 @@
+---
+- name: restart lolisafe
+  docker_service:
+    project_src: "{{ lolisafe_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes
+    services:
+      - lolisafe
