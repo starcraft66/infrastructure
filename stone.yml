@@ -1,0 +1,6 @@
+---
+- hosts: stone
+  become: True
+
+  roles:
+    - { role: tdude.wireguard }

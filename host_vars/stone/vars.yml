@@ -1,0 +1,27 @@
+---
+login_banner: "
+  \ \ +----+  ____  _\n
+  \ /    /| / ___|| |_ ___  _ __   ___\n
+  +----+ | \\___ \\| __/ _ \\| '_ \\ / _ \\n
+  |    | +  ___) | || (_) | | | |  __/\n
+  | 1  |/  |____/ \\__\\___/|_| |_|\\___|\\n
+  +----+   Stone.tdude.co"
+
+wireguard:
+  wg1:
+    addresses:
+      - "172.32.3.1/24"
+      # - "fc00:32::3/112"
+    port: 51821
+    private_key: "{{ vault_wireguard_keys['wg1'] }}"
+    peers:
+      - public_key: "p3gKcljBrNJ5zWflkdzFEMvlIeP2qO1NLQqikW17LWw="
+        allowed_ips:
+          - "172.32.1.0/24"
+          # - "fc00:32::/112"
+        endpoint: 235-gw.235.tdude.co:51820
+      - public_key: "ZOGtWLzpIKxUA0sbJrm7qs3DwtuCoX219ABuz6K2Ijo="
+        allowed_ips:
+          - "172.32.2.0/24"
+          # - "fc00:32::/112"
+        endpoint: plank.tdude.co:51821
