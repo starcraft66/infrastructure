@@ -45,7 +45,6 @@ services:
       - "traefik.enable=true"
       - "traefik.frontend.rule=Host:grafana.plank.tdude.co"
 {{ traefik_sts_header_labels }}
-{{ traefik_forward_auth_labels }}
       - "traefik.docker.network=monitoring"
       - "traefik.port=3000"
     restart: unless-stopped
