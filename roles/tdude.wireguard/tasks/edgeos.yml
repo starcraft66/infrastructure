@@ -1,0 +1,14 @@
+---
+
+# Install every time because we can't properly check for package due to not using the ssh connection
+- name: Download wireguard for edgerouter poe
+  edgeos_command:
+    commands: sh -c 'curl -L https://github.com/Lochnair/vyatta-wireguard/releases/download/0.0.20190406-1/wireguard-v2.0-e100-0.0.20190406-1.deb > /tmp/wg.deb'
+
+- name: Install wireguard
+  edgeos_command:
+    commands: sudo dpkg -i /tmp/wg.deb
+  
+- name: Configure wireguard interfaces
+  edgeos_config:
+    lines: "{{ wireguard_edgeos_config_lines }}"

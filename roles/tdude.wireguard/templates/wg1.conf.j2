@@ -1,4 +1,4 @@
-{% set ifname = 'wg0' %}
+{% set ifname = 'wg1' %}
 [Interface]
 {% for address in wireguard[ifname]['addresses'] %}
 Address = {{ address }}
