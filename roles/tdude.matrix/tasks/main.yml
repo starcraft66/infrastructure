@@ -1,15 +1,5 @@
 ---
 
-- name: (Temporary) Firewall the bridge
-  ufw:
-    rule: "deny"
-    interface: "eno1"
-    direction: "in"
-    to_ip: "2001:bc8:2517:106::/64"
-    protocol: "any"
-    route: "yes"
-    log: false
-
 - name: Create matrix group
   group:
     name: matrix
