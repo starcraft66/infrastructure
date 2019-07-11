@@ -30,3 +30,8 @@
   systemd:
     name: rsyslog
     state: restarted
+
+- name: restart journalbeat
+  systemd:
+    name: journalbeat
+    state: restarted

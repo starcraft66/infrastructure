@@ -13,7 +13,7 @@ services:
 #      - "9200:9200"
 #      - "9300:9300"
     environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ES_JAVA_OPTS: "-Xmx8G -Xms1G"
       TZ: Europe/Paris
     networks:
       - {{ elk_docker_network }}
@@ -28,9 +28,10 @@ services:
       - {{ elk_logstash_pipeline_folder }}/:/usr/share/logstash/pipeline:ro
     ports:
       - "127.0.0.1:5000:5000"
+      - "::1:5044:5044"
 #      - "9600:9600"
     environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      LS_JAVA_OPTS: "-Xmx2G -Xms256M"
       TZ: Europe/Paris
     networks:
       - {{ elk_docker_network }}
@@ -44,8 +45,6 @@ services:
 #    user: "946:946"
     volumes:
       - {{ elk_kibana_folder }}/:/usr/share/kibana/config:ro
-    ports:
-      - "::1:5601:5601"
     environment:
       TZ: Europe/Paris
     networks:

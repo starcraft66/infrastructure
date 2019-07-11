@@ -1,0 +1,115 @@
+---
+
+- name: Create elk group
+  group:
+    name: elk
+    state: present
+    gid: 946
+
+- name: Create elk user
+  user:
+    name: elk
+    password: "!"
+    update_password: on_create
+    group: elk
+    uid: 946
+    state: present
+    shell: /bin/bash
+    system: yes
+    createhome: yes
+    home: /home/elk
+
+- name: Create the elk folders
+  file:
+    name: "{{ item }}"
+    state: directory
+    owner: elk
+    group: elk
+    mode: 0770
+  with_items:
+    - "{{ elk_installation_folder }}"
+
+- name: Create the elk folders
+  file:
+    name: "{{ item }}"
+    state: directory
+    owner: 1000
+    group: 1000
+    mode: 0770
+  with_items:
+    - "{{ elk_kibana_folder }}"
+    - "{{ elk_logstash_folder }}"
+    - "{{ elk_logstash_pipeline_folder }}"
+    - "{{ elk_elasticsearch_folder }}"
+    - "{{ elk_elasticsearch_data_folder }}"
+
+- name: Install the elasticsearch config
+  template:
+    src: "elasticsearch.yml.j2"
+    dest: "{{ elk_elasticsearch_folder }}/elasticsearch.yml"
+    mode: 0660
+    owner: 1000
+    group: 1000
+  notify: restart elasticsearch
+
+- name: Install the Logstash config
+  template:
+    src: "logstash.yml.j2"
+    dest: "{{ elk_logstash_folder }}/logstash.yml"
+    mode: 0660
+    owner: 1000
+    group: 1000
+  notify: restart logstash
+
+- name: Install the Logstash pipelines
+  template:
+    src: "pipelines/{{ item }}"
+    dest: "{{ elk_logstash_pipeline_folder }}/{{ (item | basename)[:-3] }}"
+    owner: 1000
+    group: 1000
+    mode: 0660
+  with_items:
+    - "syslog.conf.j2"
+    - "output.conf.j2"
+#  with_fileglob:
+#    - ../templates/pipelines/*.conf.j2
+
+- name: Install the Kibana config
+  template:
+    src: "kibana.yml.j2"
+    dest: "{{ elk_kibana_folder }}/kibana.yml"
+    mode: 0660
+    owner: 1000
+    group: 1000
+  notify: restart kibana
+
+- name: Install the production compose file
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "{{ elk_installation_folder }}/docker-compose.yml"
+    mode: 0660
+    owner: elk
+    group: elk
+
+- name: Create the elk network
+  docker_network:
+    name: "{{ elk_docker_network }}"
+    state: present
+
+- name: Update the docker service
+  docker_service:
+    project_src: "{{ elk_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    recreate: smart
+    pull: yes
+    remove_orphans: yes
+
+- name: Configure rsyslog redirection
+  copy:
+    src: "20-lancache.conf"
+    dest: "/etc/rsyslog.d/20-logstash.conf"
+    mode: 0644
+    owner: root
+    group: root
+  notify: restart rsyslog
