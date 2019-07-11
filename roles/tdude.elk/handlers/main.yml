@@ -1,6 +1,6 @@
 ---
 - name: restart elasticsearch
-  docker_service:
+  docker_compose:
     project_src: "{{ elk_installation_folder }}"
     files: docker-compose.yml
     state: present
@@ -9,7 +9,7 @@
       - elasticsearch
 
 - name: restart logstash
-  docker_service:
+  docker_compose:
     project_src: "{{ elk_installation_folder }}"
     files: docker-compose.yml
     state: present
@@ -18,7 +18,7 @@
       - logstash
 
 - name: restart kibana
-  docker_service:
+  docker_compose:
     project_src: "{{ elk_installation_folder }}"
     files: docker-compose.yml
     state: present

@@ -1,6 +1,6 @@
 ---
 - name: restart gitlab
-  docker_service:
+  docker_compose:
     project_src: "{{ gitlab_installation_folder }}"
     files: docker-compose.yml
     state: present

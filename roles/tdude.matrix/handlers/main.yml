@@ -1,7 +1,7 @@
 ---
 
 - name: restart synapse
-  docker_service:
+  docker_compose:
     project_src: "{{ matrix_installation_folder }}"
     files: docker-compose.yml
     state: present
@@ -10,7 +10,7 @@
       - synapse
 
 - name: restart postgres
-  docker_service:
+  docker_compose:
     project_src: "{{ matrix_installation_folder }}"
     files: docker-compose.yml
     state: present
@@ -19,7 +19,7 @@
       - postgres
 
 - name: restart nginx
-  docker_service:
+  docker_compose:
     project_src: "{{ matrix_installation_folder }}"
     files: docker-compose.yml
     state: present
@@ -28,7 +28,7 @@
       - nginx_riot
 
 - name: restart appservice_webhooks
-  docker_service:
+  docker_compose:
     project_src: "{{ matrix_installation_folder }}"
     files: docker-compose.yml
     state: present

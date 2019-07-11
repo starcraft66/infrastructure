@@ -90,7 +90,7 @@
     group: kerio
 
 - name: Update the docker service
-  docker_service:
+  docker_compose:
     project_src: "{{ kerio_installation_folder }}"
     files: docker-compose.yml
     state: present

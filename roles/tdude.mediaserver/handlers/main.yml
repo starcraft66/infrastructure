@@ -1,6 +1,6 @@
 ---
 - name: restart jackett
-  docker_service:
+  docker_compose:
     project_src: "{{ mediaserver_installation_folder }}"
     files: docker-compose.yml
     state: present
@@ -9,7 +9,7 @@
       - jackett
 
 - name: restart radarr
-  docker_service:
+  docker_compose:
     project_src: "{{ mediaserver_installation_folder }}"
     files: docker-compose.yml
     state: present
@@ -18,7 +18,7 @@
       - radarr
 
 - name: restart sonarr
-  docker_service:
+  docker_compose:
     project_src: "{{ mediaserver_installation_folder }}"
     files: docker-compose.yml
     state: present
@@ -27,7 +27,7 @@
       - sonarr
 
 - name: restart deluge
-  docker_service:
+  docker_compose:
     project_src: "{{ mediaserver_installation_folder }}"
     files: docker-compose.yml
     state: present
@@ -36,7 +36,7 @@
       - deluge
 
 - name: restart plex
-  docker_service:
+  docker_compose:
     project_src: "{{ mediaserver_installation_folder }}"
     files: docker-compose.yml
     state: present
