@@ -41,6 +41,7 @@ services:
       - traefik
       - mgrs
       - lolisafe
+      - {{ elk_docker_network }}
 
   traefik-forward-auth:
     image: thomseddon/traefik-forward-auth
@@ -87,3 +88,6 @@ networks:
   mgrs:
     external:
       name: mgrs
+  {{ elk_docker_network }}:
+    external:
+      name: {{ elk_docker_network }}
