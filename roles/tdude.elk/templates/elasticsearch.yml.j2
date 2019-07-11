@@ -3,6 +3,7 @@
 ## from https://github.com/elastic/elasticsearch-docker/blob/master/build/elasticsearch/elasticsearch.yml
 #
 cluster.name: "docker-cluster"
+cluster.max_shards_per_node: 1500
 network.host: 0.0.0.0
 
 # minimum_master_nodes need to be explicitly set when bound on a public IP

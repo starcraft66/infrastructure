@@ -116,6 +116,16 @@ radarr_api_key: "{{ vault_radarr_api_key }}"
 jackett_api_key: "{{ vault_jackett_api_key }}"
 jackett_admin_password: "{{ vault_jackett_admin_password }}"
 
+elk_installation_folder: "/opt/elk"
+elk_kibana_folder: "/opt/elk/kibana"
+elk_logstash_folder: "/opt/elk/logstash"
+elk_logstash_pipeline_folder: "/opt/elk/logstash/pipelines"
+elk_elasticsearch_folder: "/opt/elk/elasticsearch"
+elk_elasticsearch_data_folder: "/opt/elk/elasticsearch/data"
+elk_collect_rsyslogd: true
+elk_docker_network: "elk"
+elk_version: "7.2.0"
+
 wireguard:
   wg0:
     addresses:
