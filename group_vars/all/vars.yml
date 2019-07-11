@@ -1,6 +1,6 @@
 ---
 docker_version: "*"
-docker_compose_version: "1.24.0-rc1"
+docker_compose_version: "1.24.1"
 chrony_version: "3.*"
 
 docker_users:
