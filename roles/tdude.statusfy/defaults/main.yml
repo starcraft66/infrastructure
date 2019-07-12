@@ -1,5 +1,3 @@
 ---
 statusfy_installation_folder: "/opt/statusfy"
-statusfy_data_folder: "/opt/statusfy/data"
-statusfy_webserver_port: 2992
-statusfy_docker_version: "unstable"
+statusfy_docker_version: "latest"

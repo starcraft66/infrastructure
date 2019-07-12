@@ -1,10 +1,9 @@
 version: '2'
 services:
   statusfy:
-    image: bazzite/statusfy:{{ statusfy_docker_version }}
+    image: starcraft66/tdude-status:{{ statusfy_docker_version }}
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - "{{ statusfy_data_folder }}:/usr/src/app"
     restart: unless-stopped
     networks:
       - status

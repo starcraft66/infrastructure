@@ -37,15 +37,6 @@
     owner: statusfy
     group: statusfy
 
-- name: Clone the latest status page data
-  git:
-    repo: https://github.com/starcraft66/status.tdude.co.git
-    dest: "{{ statusfy_data_folder }}"
-    force: yes
-  become: yes
-  notify: restart statusfy
-  become_user: statusfy
-
 - name: Create the status network
   docker_network:
     name: status
