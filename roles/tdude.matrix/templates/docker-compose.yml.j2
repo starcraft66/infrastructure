@@ -8,26 +8,8 @@ services:
     environment:
       UID: 927
       GID: 927
+      TZ: "Europe/Paris"
       SYNAPSE_CONFIG_PATH: "/data/homeserver.yaml"
-    # In case a new configuration needs to be generated
-      SYNAPSE_SERVER_NAME: "{{ matrix_synapse_server_name }}"
-      SYNAPSE_REPORT_STATS: "{{ matrix_synapse_report_stats }}"
-      SYNAPSE_NO_TLS: "{{ matrix_synapse_no_tls }}"
-      SYNAPSE_ENABLE_REGISTRATION: "{{ matrix_synapse_enable_registration }}"
-      SYNAPSE_ALLOW_GUEST: "{{ matrix_synapse_allow_guest }}"
-      SYNAPSE_EVENT_CACHE_SIZE: "{{ matrix_synapse_event_cache_size }}"
-      SYNAPSE_RECAPTCHA_PUBLIC_KEY: "{{ matrix_synapse_recaptcha_public_key }}"
-      SYNAPSE_RECAPTCHA_PRIVATE_KEY: "{{ matrix_synapse_recaptcha_private_key }}"
-      SYNAPSE_TURN_URIS: "{{ matrix_synapse_turn_uris|join(', ') }}"
-      SYNAPSE_TURN_SECRET: "{{ matrix_synapse_turn_secret }}"
-      SYNAPSE_MAX_UPLOAD_SIZE: "{{ matrix_synapse_max_upload_size }}"
-      SYNAPSE_ACME: "{{ matrix_synapse_acme }}"
-      SYNAPSE_REGISTRATION_SHARED_SECRET: "{{ matrix_synapse_registration_shared_secret }}"
-      SYNAPSE_MACAROON_SECRET_KEY: "{{ matrix_synapse_macaroon_secret_key }}"
-      POSTGRES_DB: "{{ matrix_synapse_postgres_db }}"
-      POSTGRES_HOST: "{{ matrix_synapse_postgres_host }}"
-      POSTGRES_USER: "{{ matrix_synapse_postgres_user }}"
-      POSTGRES_PASSWORD: "{{ matrix_synapse_postgres_password }}"
     networks:
       monitoring:
       matrix:
