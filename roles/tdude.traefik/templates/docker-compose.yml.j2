@@ -1,4 +1,4 @@
-version: '2'
+version: '2.3'
 services:
   traefik:
     image: traefik:{{ traefik_docker_version }}
@@ -11,12 +11,9 @@ services:
     ports:
       - "62.210.251.78:80:80"
       - "62.210.251.78:443:443"
-{% filter indent(width=6, first=True) %}
-{% for n in range(20) %}
-- "2001:bc8:2517:100::{{ n+1 }}:80:80"
-- "2001:bc8:2517:100::{{ n+1 }}:443:443"
-{% endfor %}
-{% endfilter %}
+      # 2001:bc8:2517:100::3 is still required until I figure out a fix for the gitlab ssh port
+      - "2001:bc8:2517:100::3:80:80"
+      - "2001:bc8:2517:100::3:443:443"
 
     labels:
       - "traefik.enable=true"
@@ -33,29 +30,34 @@ services:
       CF_API_EMAIL: {{ dehydrated_lexicon_dns["LEXICON_CLOUDFLARE_USERNAME"] }}
       CF_API_KEY: {{ dehydrated_lexicon_dns["LEXICON_CLOUDFLARE_TOKEN"] }}
     networks:
-      - matrix
-      - monitoring
-      - mediaserver
-      - status
-      - gitlab
-      - traefik
-      - mgrs
-      - lolisafe
-      - {{ elk_docker_network }}
+      traefik:
+        ipv4_address: 10.44.0.2
+        ipv6_address: "2001:bc8:2517:122::2"
+      matrix:
+      monitoring:
+      mediaserver:
+      status:
+      gitlab:
+      traefik:
+      mgrs:
+      lolisafe:
+      {{ elk_docker_network }}:
 
   traefik-forward-auth:
-    image: thomseddon/traefik-forward-auth
+    image: thomseddon/traefik-forward-auth:2
     container_name: traefik-forward-auth
     environment:
-      - CLIENT_ID={{ traefik_oauth2_client_id }}
-      - CLIENT_SECRET={{ traefik_oauth2_client_secret }}
-      - SECRET={{ traefik_oauth2_secret }}
-      - COOKIE_SECURE=true
-      - COOKIE_DOMAINS=plank.tdude.co
-      - WHITELIST=starcraft66@gmail.com
-      - AUTH_HOST=auth.plank.tdude.co
+      PROVIDERS_GOOGLE_CLIENT_ID: {{ traefik_oauth2_client_id }}
+      PROVIDERS_GOOGLE_CLIENT_SECRET: {{ traefik_oauth2_client_secret }}
+      SECRET: {{ traefik_oauth2_secret }}
+      INSECURE_COOKIE: "false"
+      COOKIE_DOMAINS: plank.tdude.co
+      WHITELIST: starcraft66@gmail.com
+      AUTH_HOST: auth.plank.tdude.co
     networks:
-      - traefik
+      traefik:
+        ipv4_address: 10.44.0.3
+        ipv6_address: "2001:bc8:2517:122::3"
     labels:
       - traefik.enable=true
       - traefik.port=4181
@@ -67,6 +69,17 @@ services:
 
 networks:
   traefik:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-traefik
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.44.0.0/24
+          gateway: 10.44.0.1
+        - subnet: "2001:bc8:2517:122::/64"
+          gateway: "2001:bc8:2517:122::1"
   matrix:
     external:
       name: matrix_matrix

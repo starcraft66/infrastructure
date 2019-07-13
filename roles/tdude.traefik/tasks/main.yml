@@ -45,7 +45,6 @@
     state: touch
     owner: traefik
     group: traefik
-  notify: restart traefik
 
 - name: Template traefik.toml
   template:

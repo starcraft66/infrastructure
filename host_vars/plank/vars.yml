@@ -18,6 +18,8 @@ ufw_rules:
   - { port: 80, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow HTTP v6' }
   - { port: 443, to_ip: '62.210.251.78', rule: allow, comment: 'Allow HTTPS v4' }
   - { port: 443, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow HTTPS v6' }
+  - { port: 443, to_ip: '2001:bc8:2517:122::2', rule: allow, comment: 'Allow HTTPS v6 to traefik' }
+  - { port: 443, to_ip: '2001:bc8:2517:122::2', rule: allow, route: yes, comment: 'Allow HTTPS v6 to traefik (route)' }
   - { to_ip: '2001:bc8:2517:106::/64', proto: any, rule: deny, route: yes, interface: 'eno1', direction: 'in', comment: 'Firewall Matrix' }
   - { port: 3478, to_ip: '62.210.251.78', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
   - { port: 3478, to_ip: '2001:bc8:2517:100::19', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
