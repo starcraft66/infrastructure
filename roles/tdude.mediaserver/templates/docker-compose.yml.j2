@@ -45,7 +45,7 @@ services:
 
   sonarr:
     container_name: sonarr
-    image: linuxserver/sonarr:latest
+    image: linuxserver/sonarr:preview
     restart: unless-stopped
     environment:
       PUID: 949 # default user id, for downloaded files access rights
