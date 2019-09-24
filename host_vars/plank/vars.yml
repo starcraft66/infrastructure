@@ -110,7 +110,7 @@ dehydrated_deploycert: |
   cp /etc/dehydrated/certs/cgbpi.com/fullchain.pem {{ kerio_sslcert_folder }}/server.crt
   cp /etc/dehydrated/certs/cgbpi.com/privkey.pem {{ kerio_sslcert_folder }}/server.key
   chown -R kerio:kerio {{ kerio_sslcert_folder }}
-  docker-compose -f "{{ kerio_installation_folder }}/docker-compose.yml" restart
+  /usr/local/bin/docker-compose -f "{{ kerio_installation_folder }}/docker-compose.yml" restart
 
 plex_claim_token: "{{ vault_plex_claim_token }}"
 sonarr_api_key: "{{ vault_sonarr_api_key }}"
