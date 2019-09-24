@@ -1,0 +1,6 @@
+tdude_core_username: tristan
+tdude_core_uid: 1000
+tdude_core_groups:
+  - sudo
+tdude_core_shell: /bin/bash
+tdude_core_authorized_keys:

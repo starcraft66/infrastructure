@@ -86,6 +86,10 @@ ufw_state: enabled
 ufw_logging: "on"
 ufw_reset: yes
 
+tdude_core_groups:
+  - sudo
+  - docker
+
 mediaserver_installation_folder: "/opt/mediaserver"
 plex_media_folder: "/opt/mediaserver/media"
 deluge_config_folder: "/opt/mediaserver/deluge"

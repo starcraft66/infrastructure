@@ -3,4 +3,5 @@
   become: True
 
   roles:
+    - { role: tdude.core }
     - { role: tdude.wireguard }
