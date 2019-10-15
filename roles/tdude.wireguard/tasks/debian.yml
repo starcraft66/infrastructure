@@ -56,11 +56,13 @@
 
 - name: Configuring wireguard
   template:
-    src: "../templates/{{ item.key }}.conf.j2"
+    src: "../templates/interface.conf.j2"
     dest: /etc/wireguard/{{ item.key }}.conf
     owner: root
     group: root
     mode: 600
+  vars:
+    interface_name: "{{ item.key }}"
   loop: "{{ lookup('dict', wireguard, wantlist=True) }}"
 
 - name: Starting wireguard

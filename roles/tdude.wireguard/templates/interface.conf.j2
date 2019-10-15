@@ -1,0 +1,22 @@
+[Interface]
+{% for address in wireguard[interface_name]['addresses'] %}
+Address = {{ address }}
+{% endfor %}
+{% if 'post-up' in wireguard[interface_name] %}
+PostUp = {{ wireguard[interface_name]['post-up'] }}
+{% endif %}
+{% if 'post-down' in wireguard[interface_name] %}
+PostDown = {{ wireguard[interface_name]['post-down'] }}
+{% endif %}
+PrivateKey = {{ wireguard[interface_name]['private_key'] }}
+ListenPort = {{ wireguard[interface_name]['port'] }}
+
+{% for peer in wireguard[interface_name]['peers'] %}
+[Peer]
+PublicKey = {{ peer['public_key'] }}
+AllowedIps = {{ peer['allowed_ips']|join(', ') }}
+{% if 'endpoint' in peer %}
+Endpoint = {{ peer['endpoint'] }}
+{% endif %}
+
+{% endfor %}
