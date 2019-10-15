@@ -21,35 +21,26 @@ ufw_rules:
   - { port: 443, to_ip: '2001:bc8:2517:122::2', rule: allow, comment: 'Allow HTTPS v6 to traefik' }
   - { port: 443, to_ip: '2001:bc8:2517:122::2', rule: allow, route: yes, comment: 'Allow HTTPS v6 to traefik (route)' }
   - { to_ip: '2001:bc8:2517:106::/64', proto: any, rule: deny, route: yes, interface: 'eno1', direction: 'in', comment: 'Firewall Matrix' }
-  - { port: 3478, to_ip: '62.210.251.78', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
-  - { port: 3478, to_ip: '2001:bc8:2517:100::19', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
-  - { port: 3478, to_ip: '62.210.251.78', protocol: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
-  - { port: 3478, to_ip: '2001:bc8:2517:100::19', protocol: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
-  - { port: 3479, to_ip: '62.210.251.78', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
-  - { port: 3479, to_ip: '2001:bc8:2517:100::19', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
-  - { port: 3479, to_ip: '62.210.251.78', protocol: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
-  - { port: 3479, to_ip: '2001:bc8:2517:100::19', protocol: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
-  - { port: 5349, to_ip: '62.210.251.78', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
-  - { port: 5349, to_ip: '2001:bc8:2517:100::19', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
-  - { port: 5349, to_ip: '62.210.251.78', protocol: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
-  - { port: 5349, to_ip: '2001:bc8:2517:100::19', protocol: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
-  - { port: 5350, to_ip: '62.210.251.78', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
-  - { port: 5350, to_ip: '2001:bc8:2517:100::19', protocol: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
-  - { port: 5350, to_ip: '62.210.251.78', protocol: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
-  - { port: 5350, to_ip: '2001:bc8:2517:100::19', protocol: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
+  - { port: 3478, to_ip: '62.210.251.78', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
+  - { port: 3478, to_ip: '2001:bc8:2517:100::19', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
+  - { port: 3478, to_ip: '62.210.251.78', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
+  - { port: 3478, to_ip: '2001:bc8:2517:100::19', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
+  - { port: 3479, to_ip: '62.210.251.78', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
+  - { port: 3479, to_ip: '2001:bc8:2517:100::19', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
+  - { port: 3479, to_ip: '62.210.251.78', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
+  - { port: 3479, to_ip: '2001:bc8:2517:100::19', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
+  - { port: 5349, to_ip: '62.210.251.78', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
+  - { port: 5349, to_ip: '2001:bc8:2517:100::19', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
+  - { port: 5349, to_ip: '62.210.251.78', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
+  - { port: 5349, to_ip: '2001:bc8:2517:100::19', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
+  - { port: 5350, to_ip: '62.210.251.78', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
+  - { port: 5350, to_ip: '2001:bc8:2517:100::19', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
+  - { port: 5350, to_ip: '62.210.251.78', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
+  - { port: 5350, to_ip: '2001:bc8:2517:100::19', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
   - { port: 51820, to_ip: '62.210.251.78', rule: allow, comment: 'Allow WireGuard v4' }
   - { port: 51820, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow WireGuard v6' }
   - { port: 51821, to_ip: '62.210.251.78', rule: allow, comment: 'Allow WireGuard v4 tunnel (mesh)' }
   - { port: 51821, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow WireGuard v6 tunnel (mesh)' }
-  - { port: 34200, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
-  - { port: 3005, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
-  - { port: 8324, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
-  - { port: 32469, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Plex' }
-  - { port: 1900, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
-  - { port: 32410, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
-  - { port: 32412, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
-  - { port: 32413, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
-  - { port: 32414, to_ip: '62.210.251.78', proto: udp, rule: allow, comment: 'Allow Plex' }
   - { port: 9822, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Minecraft Discord Bridge' }
   - { port: 4040, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
   - { port: 25, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
@@ -67,11 +58,6 @@ ufw_rules:
   - { port: 995, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
   - { port: 5222, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
   - { port: 5223, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-#  - { from_ip: '2001:bc8:2517:1000::/56', to_ip: '::/0', direction: 'routed', comment: 'Allow Wireguard Routing' }
-  - { from_ip: '2001:bc8:2517:1000::/56', route: 'yes', interface: 'wg0', direction: 'in', comment: 'Allow Wireguard Peers IPv6 outbound' }
-  - { from_ip: '2001:bc8:2517:1000::/56', route: 'yes', interface: 'eno1', direction: 'out', comment: 'Allow Wireguard Peers IPv6 outbound' }
-  - { to_ip: '2001:bc8:2517:1000::/56', route: 'yes', interface: 'wg0', direction: 'out', comment: 'Allow Wireguard Peers IPv6 inbound' }
-  - { to_ip: '2001:bc8:2517:1000::/56', route: 'yes', interface: 'eno1', direction: 'in', comment: 'Allow Wireguard Peers IPv6 inbound' }
   - { from_ip: '127.0.0.1/8', comment: 'Allow localhost v4' }
   - { from_ip: '::1/128', comment: 'Allow localhost v6' }
   - { from_ip: '172.16.0.0/12', comment: 'Allow RFC1918' }
