@@ -1,0 +1,24 @@
+---
+- name: Install ndppd
+  apt:
+    pkg:
+      - ndppd
+    state: present
+
+- name: Create /etc/ndppd
+  file:
+    name: /etc/ndppd
+    state: directory
+    owner: root
+    group: root
+    mode: 0770
+  notify: restart ndppd
+
+- name: Template ndppd.conf
+  template:
+    src: ndppd.conf.j2
+    dest: /etc/ndppd/ndppd.conf
+    owner: root
+    group: root
+    mode: 600
+  notify: restart ndppd

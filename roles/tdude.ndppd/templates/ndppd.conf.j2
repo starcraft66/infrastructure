@@ -1,0 +1,6 @@
+{% for interface in ndppd %}
+proxy {{ interface }} {
+{% for rule in ndppd[interface] %}    rule {{ rule["subnet"] }} {
+        iface {{ rule["interface"] }}
+    }
+{% endfor %}}{% endfor %}
