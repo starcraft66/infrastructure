@@ -1,63 +1,76 @@
 ---
 login_banner: "
-  \ \ +----+        _             _\n
-  \ /    /|  _ __ | | __ _ _ __ | | __\n
-  +----+ | | '_ \\| |/ _` | '_ \\| |/ /\n
-  |    | + | |_) | | (_| | | | |   < \n
-  | 5  |/  | .__/|_|\\__,_|_| |_|_|\\_\\\n
-  +----+   |_| plank.tdude.co\n"
+  \ \ +----+                  _ _             \n
+  \ /    /|  ___  __ _ _ __ | (_)_ __   __ _ \n
+  +----+ | / __|/ _` | '_ \\| | | '_ \\ / _` |\n
+  |    | + \\__ \\ (_| | |_) | | | | | | (_| |\n
+  | 6  |/  |___/\\__,_| .__/|_|_|_| |_|\\__, |\n
+  +----+     sapling |_| .tdude.co    |___/ \n"
 
 
 ufw_applications:
   - { name: "OpenSSH" }   
 ufw_rules:
-  - { port: 22, to_ip: '62.210.251.78', rule: allow, comment: 'Allow SSH v4' }
-  - { port: 5001, to_ip: '2001:bc8:2517:100::3', rule: allow, comment: 'Allow SSH v6 Gitlab 5001' }
-  - { port: 22, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow SSH v6' }
-  - { port: 80, to_ip: '62.210.251.78', rule: allow, comment: 'Allow HTTP v4' }
-  - { port: 80, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow HTTP v6' }
-  - { port: 443, to_ip: '62.210.251.78', rule: allow, comment: 'Allow HTTPS v4' }
-  - { port: 443, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow HTTPS v6' }
-  - { port: 443, to_ip: '2001:bc8:2517:122::2', rule: allow, comment: 'Allow HTTPS v6 to traefik' }
-  - { port: 443, to_ip: '2001:bc8:2517:122::2', rule: allow, route: yes, comment: 'Allow HTTPS v6 to traefik (route)' }
-  - { to_ip: '2001:bc8:2517:106::/64', proto: any, rule: deny, route: yes, interface: 'eno1', direction: 'in', comment: 'Firewall Matrix' }
-  - { port: 3478, to_ip: '62.210.251.78', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
-  - { port: 3478, to_ip: '2001:bc8:2517:100::19', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
-  - { port: 3478, to_ip: '62.210.251.78', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
-  - { port: 3478, to_ip: '2001:bc8:2517:100::19', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
-  - { port: 3479, to_ip: '62.210.251.78', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
-  - { port: 3479, to_ip: '2001:bc8:2517:100::19', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
-  - { port: 3479, to_ip: '62.210.251.78', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
-  - { port: 3479, to_ip: '2001:bc8:2517:100::19', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
-  - { port: 5349, to_ip: '62.210.251.78', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
-  - { port: 5349, to_ip: '2001:bc8:2517:100::19', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
-  - { port: 5349, to_ip: '62.210.251.78', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
-  - { port: 5349, to_ip: '2001:bc8:2517:100::19', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
-  - { port: 5350, to_ip: '62.210.251.78', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
-  - { port: 5350, to_ip: '2001:bc8:2517:100::19', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
-  - { port: 5350, to_ip: '62.210.251.78', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
-  - { port: 5350, to_ip: '2001:bc8:2517:100::19', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
-  - { port: 51820, to_ip: '62.210.251.78', rule: allow, comment: 'Allow WireGuard v4' }
-  - { port: 51820, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow WireGuard v6' }
-  - { port: 51821, to_ip: '62.210.251.78', rule: allow, comment: 'Allow WireGuard v4 tunnel (mesh)' }
-  - { port: 51821, to_ip: '2001:bc8:2517:100::/64', rule: allow, comment: 'Allow WireGuard v6 tunnel (mesh)' }
-  - { port: 9822, to_ip: '62.210.251.78', proto: tcp, rule: allow, comment: 'Allow Minecraft Discord Bridge' }
-  - { port: 4040, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 25, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 80, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 110, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 119, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 143, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 389, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 443, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 465, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 563, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 587, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 636, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 993, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 995, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 5222, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
-  - { port: 5223, to_ip: '212.83.139.100', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 22, to_ip: '158.69.118.62', rule: allow, comment: 'Allow SSH v4' }
+  - { port: 5001, to_ip: '2607:5300:60:873e::1', rule: allow, comment: 'Allow SSH v6 Gitlab 5001' }
+  - { port: 22, to_ip: '2607:5300:60:873e::', rule: allow, comment: 'Allow SSH v6' }
+  - { port: 80, to_ip: '158.69.118.62', rule: allow, comment: 'Allow HTTP v4' }
+  - { port: 443, to_ip: '158.69.118.62', rule: allow, comment: 'Allow HTTPS v4' }
+  - { port: 443, to_ip: '2607:5300:60:873e:8::2', rule: allow, comment: 'Allow HTTPS v6 to traefik' }
+  - { port: 443, to_ip: '2607:5300:60:873e:8::2', rule: allow, route: yes, comment: 'Allow HTTPS v6 to traefik (route)' }
+  - { to_ip: '2607:5300:60:873e:7::/80', proto: any, rule: deny, route: yes, interface: 'eno1', direction: 'in', comment: 'Firewall Matrix' }
+  - { port: 3478, to_ip: '158.69.118.62', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
+  - { port: 3478, to_ip: '2607:5300:60:873e::2', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
+  - { port: 3478, to_ip: '158.69.118.62', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
+  - { port: 3478, to_ip: '2607:5300:60:873e::2', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
+  - { port: 3479, to_ip: '158.69.118.62', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
+  - { port: 3479, to_ip: '2607:5300:60:873e::2', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
+  - { port: 3479, to_ip: '158.69.118.62', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
+  - { port: 3479, to_ip: '2607:5300:60:873e::2', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
+  - { port: 5349, to_ip: '158.69.118.62', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
+  - { port: 5349, to_ip: '2607:5300:60:873e::2', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
+  - { port: 5349, to_ip: '158.69.118.62', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
+  - { port: 5349, to_ip: '2607:5300:60:873e::2', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
+  - { port: 5350, to_ip: '158.69.118.62', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v4' }
+  - { port: 5350, to_ip: '2607:5300:60:873e::2', proto: 'tcp', rule: allow, comment: 'Allow TURN TCP v6' }
+  - { port: 5350, to_ip: '158.69.118.62', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v4' }
+  - { port: 5350, to_ip: '2607:5300:60:873e::2', proto: 'udp', rule: allow, comment: 'Allow TURN UDP v6' }
+  - { port: 51820, to_ip: '158.69.118.62', rule: allow, comment: 'Allow WireGuard v4' }
+  - { port: 51820, to_ip: '2607:5300:60:873e::/64', rule: allow, comment: 'Allow WireGuard v6' }
+  - { port: 51821, to_ip: '158.69.118.62', rule: allow, comment: 'Allow WireGuard v4 tunnel (mesh)' }
+  - { port: 51821, to_ip: '2607:5300:60:873e::/64', rule: allow, comment: 'Allow WireGuard v6 tunnel (mesh)' }
+  - { port: 9822, to_ip: '158.69.118.62', proto: tcp, rule: allow, comment: 'Allow Minecraft Discord Bridge' }
+  - { port: 4040, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 25, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 80, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 110, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 119, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 143, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 389, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 443, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 465, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 563, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 587, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 636, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 993, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 995, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 5222, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 5223, to_ip: '167.114.177.177', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 25, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 80, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 110, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 119, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 143, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 389, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 443, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 465, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 563, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 587, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 636, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 993, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 995, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 5222, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
+  - { port: 5223, to_ip: '2607:5300:60:873e:9::2', proto: any, rule: allow, comment: 'Kerio' }
   - { from_ip: '127.0.0.1/8', comment: 'Allow localhost v4' }
   - { from_ip: '::1/128', comment: 'Allow localhost v6' }
   - { from_ip: '172.16.0.0/12', comment: 'Allow RFC1918' }
@@ -70,7 +83,14 @@ ufw_default_forward_policy: ACCEPT
 ufw_default_application_policy: SKIP
 ufw_state: enabled
 ufw_logging: "on"
-ufw_reset: yes
+ufw_reset: no
+
+manala_apt_install_packages:
+  - apt-transport-https
+  - ca-certificates
+  - openssl
+  - python-requests
+  - python-docker
 
 tdude_core_groups:
   - sudo
@@ -92,8 +112,10 @@ dehydrated_domains: |
   turn.nerdsin.space
   cgbpi.com www.cgbpi.com
 dehydrated_deploycert: |
+  mkdir -p /etc/dehydrated/certs/turn.nerdsin.space
   cp /etc/dehydrated/certs/turn.nerdsin.space/fullchain.pem /usr/local/etc/turn/fullchain.pem
   cp /etc/dehydrated/certs/turn.nerdsin.space/privkey.pem /usr/local/etc/turn/privkey.pem
+  mkdir -p /usr/local/etc/turn
   chmod 600 /usr/local/etc/turn/*.pem
   chown -R turnserver:turnserver /usr/local/etc/turn/
   systemctl restart coturn
@@ -118,11 +140,26 @@ elk_collect_rsyslogd: true
 elk_docker_network: "elk"
 elk_version: "7.2.0"
 
+ndppd:
+  eno1:
+#    - subnet: 2607:5300:60:873e:7::/80
+#      interface: br-matrix
+    - subnet: 2607:5300:60:873e:8::/80
+      interface: br-traefik
+    - subnet: 2607:5300:60:873e:9::/80
+      interface: br-kerio
+    - subnet: 2607:5300:60:873e:1d0::/80
+      interface: wg0
+    - subnet: 2607:5300:60:873e:1d1::/80
+      interface: wg0
+    - subnet: 2607:5300:60:873e:1df::/80
+      interface: wg0
+
 wireguard:
   wg0:
     addresses:
       - "10.255.239.1/24"
-      - "2001:bc8:2517:1df::1/64"
+      - "2607:5300:60:873e:1d1::1/80"
     post-up: "iptables -A FORWARD -i wg0 -j ACCEPT; iptables -A FORWARD -o wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eno1 -j MASQUERADE;"
     post-down: "iptables -D FORWARD -i wg0 -j ACCEPT; iptables -D FORWARD -o wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eno1 -j MASQUERADE;"
     port: 51820
@@ -131,11 +168,11 @@ wireguard:
       - public_key: "lJoAVNs9uHu9vNOws12ZmEXIOSTYx5HlsEB/x+L3iV8="
         allowed_ips:
           - "10.255.239.2/32"
-          - "2001:bc8:2517:1d0::1/64"
+          - "2607:5300:60:873e:1d0::1/80"
       - public_key: "FBeasvRfcF55Gx9YsDD/cvjQujrwM4NVkKrkefPaqWE="
         allowed_ips:
           - "10.255.239.3/32"
-          - "2001:bc8:2517:1d1::1/64"
+          - "2607:5300:60:873e:1d1::1/80"
   wg1:
     addresses:
       - "172.32.2.1/24"
@@ -157,6 +194,7 @@ wireguard:
 statusfy_installation_folder: "/opt/statusfy"
 statusfy_docker_version: "latest"
 
+gitlab_docker_version: "12.6.0-ce.0"
 gitlab_installation_folder: "/opt/gitlab"
 gitlab_config_folder: "/opt/gitlab/config"
 gitlab_logs_folder: "/opt/gitlab/logs"
@@ -173,7 +211,7 @@ gitlab_hostname: "git.tdude.co"
 
 traefik_installation_folder: "/opt/traefik"
 traefik_data_folder: "/opt/traefik/data"
-traefik_docker_version: "latest"
+traefik_docker_version: "1.7"
 
 monitoring_installation_folder: "/opt/monitoring"
 prometheus_installation_folder: "/opt/monitoring/prometheus"

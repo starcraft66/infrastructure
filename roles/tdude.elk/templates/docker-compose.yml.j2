@@ -53,7 +53,7 @@ services:
       - elasticsearch
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:kibana.plank.tdude.co"
+      - "traefik.frontend.rule=Host:kibana.sapling.tdude.co"
       - "traefik.docker.network={{ elk_docker_network }}"
       - "traefik.port=5601"
 {{ traefik_sts_header_labels }}

@@ -15,7 +15,7 @@ services:
       monitoring:
       matrix:
         ipv4_address: "10.72.128.4"
-        ipv6_address: "2001:bc8:2517:106::4"
+        ipv6_address: "2607:5300:60:873e:7::4"
     restart: unless-stopped
   postgres:
     container_name: matrix_postgres
@@ -31,7 +31,7 @@ services:
     networks:
       matrix:
         ipv4_address: "10.72.128.3"
-        ipv6_address: "2001:bc8:2517:106::3"
+        ipv6_address: "2607:5300:60:873e:7::3"
   appservice_webhooks:
     user: "927:927"
     container_name: matrix_appservice_webhooks
@@ -42,7 +42,7 @@ services:
     networks:
       matrix:
         ipv4_address: "10.72.128.5"
-        ipv6_address: "2001:bc8:2517:106::5"
+        ipv6_address: "2607:5300:60:873e:7::5"
   nginx_riot:
     container_name: matrix_nginx
     image: bubuntux/riot-web:{{ matrix_synapse_version }}
@@ -54,7 +54,7 @@ services:
     networks:
       matrix:
         ipv4_address: 10.72.128.6
-        ipv6_address: "2001:bc8:2517:106::6"
+        ipv6_address: "2607:5300:60:873e:7::6"
     restart: unless-stopped
     labels:
       - traefik.enable=true
@@ -78,5 +78,5 @@ networks:
       config:
         - subnet: 10.72.128.0/24
           gateway: 10.72.128.1
-        - subnet: "2001:bc8:2517:106::/64"
-          gateway: "2001:bc8:2517:106::1"
+        - subnet: "2607:5300:60:873e:7::/80"
+          gateway: "2607:5300:60:873e:7::1"

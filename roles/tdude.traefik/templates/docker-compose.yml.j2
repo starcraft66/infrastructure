@@ -9,15 +9,15 @@ services:
       - "{{ traefik_data_folder }}/traefik.toml:/traefik.toml"
       - "{{ traefik_data_folder }}/acme.json:/acme.json"
     ports:
-      - "62.210.251.78:80:80"
-      - "62.210.251.78:443:443"
-      # 2001:bc8:2517:100::3 is still required until I figure out a fix for the gitlab ssh port
-      - "2001:bc8:2517:100::3:80:80"
-      - "2001:bc8:2517:100::3:443:443"
+      - "158.69.118.62:80:80"
+      - "158.69.118.62:443:443"
+      # 2607:5300:60:873e::1 is still required until I figure out a fix for the gitlab ssh port
+      - "2607:5300:60:873e::1:80:80"
+      - "2607:5300:60:873e::1:443:443"
 
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:monitor.plank.tdude.co"
+      - "traefik.frontend.rule=Host:monitor.sapling.tdude.co"
       - "traefik.port=8081"
 {{ traefik_sts_header_labels }}
 # Commented out for the moment because the docker socket
@@ -32,7 +32,7 @@ services:
     networks:
       traefik:
         ipv4_address: 10.44.0.2
-        ipv6_address: "2001:bc8:2517:122::2"
+        ipv6_address: "2607:5300:60:873e:8::2"
       matrix:
       monitoring:
       mediaserver:
@@ -50,19 +50,19 @@ services:
       PROVIDERS_GOOGLE_CLIENT_SECRET: {{ traefik_oauth2_client_secret }}
       SECRET: {{ traefik_oauth2_secret }}
       INSECURE_COOKIE: "false"
-      COOKIE_DOMAINS: plank.tdude.co
+      COOKIE_DOMAINS: sapling.tdude.co
       WHITELIST: starcraft66@gmail.com
-      AUTH_HOST: auth.plank.tdude.co
+      AUTH_HOST: auth.sapling.tdude.co
     networks:
       traefik:
         ipv4_address: 10.44.0.3
-        ipv6_address: "2001:bc8:2517:122::3"
+        ipv6_address: "2607:5300:60:873e:8::3"
     labels:
       - traefik.enable=true
       - traefik.port=4181
       - traefik.backend=traefik-forward-auth
       - traefik.backend.network=traefik
-      - traefik.frontend.rule=Host:auth.plank.tdude.co
+      - traefik.frontend.rule=Host:auth.sapling.tdude.co
 {{ traefik_sts_header_labels }}
 {{ traefik_forward_auth_labels }}
 
@@ -77,8 +77,8 @@ networks:
       config:
         - subnet: 10.44.0.0/24
           gateway: 10.44.0.1
-        - subnet: "2001:bc8:2517:122::/64"
-          gateway: "2001:bc8:2517:122::1"
+        - subnet: "2607:5300:60:873e:8::/80"
+          gateway: "2607:5300:60:873e:8::1"
   matrix:
     external:
       name: matrix_matrix

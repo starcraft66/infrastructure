@@ -13,7 +13,7 @@ services:
       - {{ deluge_config_folder }}:/config # config files
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:deluge.plank.tdude.co"
+      - "traefik.frontend.rule=Host:deluge.sapling.tdude.co"
       - "traefik.docker.network=mediaserver"
       - "traefik.port=8112"
 {{ traefik_sts_header_labels }}
@@ -35,7 +35,7 @@ services:
       - {{ jackett_config_folder }}:/config # config files
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:jackett.plank.tdude.co"
+      - "traefik.frontend.rule=Host:jackett.sapling.tdude.co"
       - "traefik.docker.network=mediaserver"
       - "traefik.port=9117"
 {{ traefik_sts_header_labels }}
@@ -58,7 +58,7 @@ services:
       - {{ plex_media_folder }}/ongoing:/downloads # download folder
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:sonarr.plank.tdude.co"
+      - "traefik.frontend.rule=Host:sonarr.sapling.tdude.co"
       - "traefik.docker.network=mediaserver"
       - "traefik.port=8989"
 {{ traefik_sts_header_labels }}
@@ -81,7 +81,7 @@ services:
       - {{ plex_media_folder }}/ongoing:/downloads # download folder
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:radarr.plank.tdude.co"
+      - "traefik.frontend.rule=Host:radarr.sapling.tdude.co"
       - "traefik.docker.network=mediaserver"
       - "traefik.port=7878"
 {{ traefik_sts_header_labels }}
@@ -91,7 +91,7 @@ services:
 
   plex-server:
     container_name: plex-server
-    hostname: plank-plex
+    hostname: sapling-plex
     image: plexinc/pms-docker:latest
     restart: unless-stopped
     environment:
@@ -99,10 +99,10 @@ services:
       PLEX_UID: 949
       PLEX_GID: 949
       PLEX_CLAIM: {{ plex_claim_token }}
-      ADVERTISE_IP: https://plex.plank.tdude.co
+      ADVERTISE_IP: https://plex.sapling.tdude.co
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:plex.plank.tdude.co"
+      - "traefik.frontend.rule=Host:plex.sapling.tdude.co"
       - "traefik.docker.network=mediaserver"
       - "traefik.port=32400"
 {{ traefik_sts_header_labels }}
