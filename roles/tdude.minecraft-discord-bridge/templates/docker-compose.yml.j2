@@ -1,0 +1,22 @@
+version: '2'
+services:
+  minecraft-discord-bridge:
+    image: starcraft66/minecraft-discord-bridge:{{ minecraft_discord_bridge_docker_version }}
+    ports:
+      - "158.69.118.62:9822:9822"
+#    user: "932:932"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - "{{ minecraft_discord_bridge_installation_folder }}/config.json:/app/config.json"
+      - "{{ minecraft_discord_bridge_installation_folder }}/bridge.log:/app/bridge_log.log"
+      - "{{ minecraft_discord_bridge_installation_folder }}/db.sqlite:/data/db.sqlite"
+    restart: unless-stopped
+    networks:
+      - minecraft-discord-bridge
+
+
+networks:
+  minecraft-discord-bridge:
+    external:
+      name: minecraft-discord-bridge
