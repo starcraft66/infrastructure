@@ -25,8 +25,19 @@
       - htop
       - tcpdump
       - python
+      - python3
       - python-pip
+      - python3-pip
     state: present
+
+- name: Install python packages
+  pip:
+    name:
+      - docker
+      - requests
+      - docker-compose
+    state: present
+    executable: pip3
 
 - name: Enable passwordless sudo
   lineinfile:
