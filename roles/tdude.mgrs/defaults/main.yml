@@ -1,4 +1,0 @@
----
-mgrs_installation_folder: "/opt/mgrs"
-mgrs_static_root: "{{ mgrs_installation_folder }}/static"
-mgrs_nginx_version: latest
