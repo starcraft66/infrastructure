@@ -1,4 +1,5 @@
 ---
+gitlab_docker_version: "latest"
 gitlab_installation_folder: "/opt/gitlab"
 gitlab_config_folder: "/opt/gitlab/config"
 gitlab_logs_folder: "/opt/gitlab/logs"

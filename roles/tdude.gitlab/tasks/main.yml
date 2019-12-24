@@ -4,7 +4,7 @@
   group:
     name: gitlab
     state: present
-    gid: 998
+    gid: 997
 
 - name: Create gitlab user
   user:
@@ -12,7 +12,7 @@
     password: "!"
     update_password: on_create
     group: gitlab
-    uid: 998
+    uid: 997
     state: present
     shell: /bin/bash
     system: yes
