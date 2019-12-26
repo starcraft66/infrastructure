@@ -29,6 +29,15 @@
   with_items:
     - "{{ minecraft_discord_bridge_installation_folder }}"
 
+- name: Install the bridge config file
+  template:
+    src: "config.json.j2"
+    dest: "{{ minecraft_discord_bridge_installation_folder }}/config.json"
+    mode: 0660
+    owner: minecraftdiscordbridge
+    group: minecraftdiscordbridge
+  notify: restart minecraft-discord-bridge
+
 - name: Install the production compose file
   template:
     src: "docker-compose.yml.j2"

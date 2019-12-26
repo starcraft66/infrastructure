@@ -292,3 +292,26 @@ lolisafe_store_folder: "{{ lolisafe_installation_folder }}/store"
 lolisafe_database_folder: "{{ lolisafe_installation_folder }}/database"
 lolisafe_custom_pages_folder: "{{ lolisafe_installation_folder }}/custom"
 lolisafe_logs_folder: "{{ lolisafe_installation_folder }}/logs"
+
+minecraft_discord_bridge_installation_folder: "/opt/minecraft-discord-bridge"
+minecraft_discord_bridge_docker_version: "latest"
+minecraft_discord_bridge_minecraft_username: "{{ vault_minecraft_discord_bridge_minecraft_username }}"
+minecraft_discord_bridge_minecraft_password: "{{ vault_minecraft_discord_bridge_minecraft_password }}"
+minecraft_discord_bridge_minecraft_server: "constantiam.net"
+minecraft_discord_bridge_minecraft_port: 25565
+minecraft_discord_bridge_minecraft_online: true
+minecraft_discord_bridge_discord_app_token: "{{ vault_minecraft_discord_bridge_discord_app_token }}"
+minecraft_discord_bridge_log_level: "INFO"
+minecraft_discord_bridge_message_delay: 1.5
+minecraft_discord_bridge_failsafe_retries: 3
+minecraft_discord_bridge_admins:
+  - 283983554051047425
+minecraft_discord_bridge_auth_bind_ip: "0.0.0.0"
+minecraft_discord_bridge_auth_port: 9822
+minecraft_discord_bridge_auth_dns_wildcard: "mc.auth.tdude.co"
+minecraft_discord_bridge_database_connection_string: "sqlite:////data/db.sqlite?check_same_thread=False"
+minecraft_discord_bridge_elastricsearch_enabled: true
+minecraft_discord_bridge_elasticsearch_url: "https://elasticsearch.elk.nhackindustries.com/"
+minecraft_discord_bridge_elasticsearch_auth: true
+minecraft_discord_bridge_elasticsearch_auth_username: "nhack"
+minecraft_discord_bridge_elasticsearch_auth_password: "{{ vault_minecraft_discord_bridge_elasticsearch_auth_password }}"
