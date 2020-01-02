@@ -142,8 +142,8 @@ elk_version: "7.2.0"
 
 ndppd:
   eno1:
-#    - subnet: 2607:5300:60:873e:7::/80
-#      interface: br-matrix
+    - subnet: 2607:5300:60:873e:7::/80
+      interface: br-matrix
     - subnet: 2607:5300:60:873e:8::/80
       interface: br-traefik
     - subnet: 2607:5300:60:873e:9::/80
