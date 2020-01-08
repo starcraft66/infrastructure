@@ -2,8 +2,8 @@ lt-cred-mech
 use-auth-secret
 static-auth-secret={{ matrix_synapse_turn_secret }}
 realm=turn.{{ matrix_synapse_server_name }}
-cert=/etc/dehydrated/certs/turn.nerdsin.space/fullchain.pem
-pkey=/etc/dehydrated/certs/turn.nerdsin.space/privkey.pem
+cert=/usr/local/etc/turn/fullchain.pem
+pkey=/usr/local/etc/turn/privkey.pem
 cipher-list="HIGH"
 no-tcp-relay
 # Not sure about these options. They prevent clients behind NAT from connecting??
