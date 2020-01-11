@@ -11,9 +11,9 @@ services:
     ports:
       - "158.69.118.62:80:80"
       - "158.69.118.62:443:443"
-      # 2607:5300:60:873e::1 is still required until I figure out a fix for the gitlab ssh port
-      - "2607:5300:60:873e::1:80:80"
-      - "2607:5300:60:873e::1:443:443"
+      # 2607:5300:60:873e::3 is still required until I figure out a fix for the gitlab ssh port
+      - "2607:5300:60:873e::3:80:80"
+      - "2607:5300:60:873e::3:443:443"
 
     labels:
       - "traefik.enable=true"

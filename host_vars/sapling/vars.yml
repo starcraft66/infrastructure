@@ -12,7 +12,10 @@ ufw_applications:
   - { name: "OpenSSH" }   
 ufw_rules:
   - { port: 22, to_ip: '158.69.118.62', rule: allow, comment: 'Allow SSH v4' }
-  - { port: 5001, to_ip: '2607:5300:60:873e::1', rule: allow, comment: 'Allow SSH v6 Gitlab 5001' }
+  - { port: 5001, to_ip: '2607:5300:60:873e::3', rule: allow, comment: 'Allow SSH v6 Gitlab 5001' }
+  - { port: 22, to_ip: '2607:5300:60:873e::3', rule: allow, comment: 'Allow SSH v6 Gitlab 22' }
+  - { port: 80, to_ip: '2607:5300:60:873e::3', rule: allow, comment: 'Allow HTTP v6 Gitlab' }
+  - { port: 443, to_ip: '2607:5300:60:873e::3', rule: allow, comment: 'Allow HTTPS v6 Gitlab' }
   - { port: 22, to_ip: '2607:5300:60:873e::', rule: allow, comment: 'Allow SSH v6' }
   - { port: 80, to_ip: '158.69.118.62', rule: allow, comment: 'Allow HTTP v4' }
   - { port: 443, to_ip: '158.69.118.62', rule: allow, comment: 'Allow HTTPS v4' }
