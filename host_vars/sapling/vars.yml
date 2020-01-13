@@ -197,7 +197,7 @@ wireguard:
 statusfy_installation_folder: "/opt/statusfy"
 statusfy_docker_version: "latest"
 
-gitlab_docker_version: "12.6.0-ce.0"
+gitlab_docker_version: "12.6.4-ce.0"
 gitlab_installation_folder: "/opt/gitlab"
 gitlab_config_folder: "/opt/gitlab/config"
 gitlab_logs_folder: "/opt/gitlab/logs"
