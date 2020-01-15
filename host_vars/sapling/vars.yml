@@ -205,12 +205,20 @@ gitlab_data_folder: "/opt/gitlab/data"
 gitlab_runner_config_folder: "/opt/gitlab-runner/config"
 gitlab_smtp_server: "smtp.tdude.co"
 gitlab_smtp_port: 587
+gitlab_smtp_username: "git@tdude.co"
+gitlab_smtp_password: "{{ vault_gitlab_smtp_password }}"
+gitlab_smtp_authentication: "login"
 gitlab_email_from: "git@tdude.co"
 gitlab_email_reply_to: "noreply@tdude.co"
 gitlab_webserver_port: 5000
 gitlab_ssh_port: 5001
 gitlab_external_url: "https://git.tdude.co"
 gitlab_hostname: "git.tdude.co"
+gitlab_incoming_email_address: "git+%{key}@tdude.co"
+gitlab_incoming_email_email: "git@tdude.co"
+gitlab_incoming_email_password: "{{ vault_gitlab_incoming_email_password }}"
+gitlab_incoming_email_host: "imap.tdude.co"
+gitlab_incoming_email_port: 143
 
 traefik_installation_folder: "/opt/traefik"
 traefik_data_folder: "/opt/traefik/data"

@@ -18,9 +18,24 @@ services:
         gitlab_rails['smtp_enable'] = true
         gitlab_rails['smtp_address'] = "{{ gitlab_smtp_server }}"
         gitlab_rails['smtp_port'] = {{ gitlab_smtp_port }}
+        gitlab_rails['smtp_authentication'] = "login"
+        gitlab_rails['smtp_user_name'] = "{{ gitlab_smtp_username }}"
+        gitlab_rails['smtp_password'] = "{{ gitlab_smtp_password }}"
+        gitlab_rails['smtp_authentication'] = "{{ gitlab_smtp_authentication }}"
+        gitlab_rails['smtp_enable_starttls_auto'] = true
         gitlab_rails['gitlab_email_from'] = '{{ gitlab_email_from }}'
         gitlab_rails['gitlab_email_reply_to'] = '{{ gitlab_email_reply_to }}'
         gitlab_rails['gitlab_shell_ssh_port'] = {{ gitlab_ssh_port }}
+        gitlab_rails['incoming_email_enabled'] = true
+        gitlab_rails['incoming_email_address'] = "{{ gitlab_incoming_email_address }}"
+        gitlab_rails['incoming_email_email'] = "{{ gitlab_incoming_email_email }}"
+        gitlab_rails['incoming_email_password'] = "{{ gitlab_incoming_email_password }}"
+        gitlab_rails['incoming_email_host'] = "{{ gitlab_incoming_email_host }}"
+        gitlab_rails['incoming_email_port'] = {{ gitlab_incoming_email_port }}
+        gitlab_rails['incoming_email_ssl'] = false
+        gitlab_rails['incoming_email_start_tls'] = true
+        gitlab_rails['incoming_email_mailbox_name'] = "inbox"
+        gitlab_rails['incoming_email_idle_timeout'] = 60
     ports:
       - '158.69.118.62:{{ gitlab_ssh_port }}:22'
       - '2607:5300:60:873e::3:22:22'
