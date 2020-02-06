@@ -1,0 +1,15 @@
+[http.middlewares]
+  [http.middlewares.https.chain]
+      middlewares = ["https-redirect", "sts-headers"]
+  [http.middlewares.https-redirect.redirectScheme]
+    scheme = "https"
+    port = "443"
+    permanent = true
+  [http.middlewares.sts-headers.headers]
+    stsincludesubdomains = true
+    stspreload = true
+    stsseconds = 315360000
+    forcestsheader = true
+  [http.middlewares.fwauth.forwardAuth]
+    address = "http://traefik-forward-auth:4181"
+    authResponseHeaders = ["X-Forwarded-User"]

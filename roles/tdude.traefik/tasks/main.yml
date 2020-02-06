@@ -46,14 +46,17 @@
     owner: traefik
     group: traefik
 
-- name: Template traefik.toml
+- name: Template traefik toml files
   template:
-    src: "traefik.toml.j2"
-    dest: "{{ traefik_data_folder }}/traefik.toml"
+    src: "{{ item }}.j2"
+    dest: "{{ traefik_data_folder }}/{{ item }}"
     mode: 0660
     owner: traefik
     group: traefik
   notify: restart traefik
+  with_items:
+    - traefik.toml
+    - http.toml
 
 - name: Update the docker service
   docker_compose:

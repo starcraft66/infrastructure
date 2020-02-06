@@ -13,11 +13,13 @@ services:
       - {{ deluge_config_folder }}:/config # config files
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:deluge.sapling.tdude.co"
+      - "traefik.http.routers.deluge.rule=Host(`deluge.sapling.tdude.co`)"
       - "traefik.docker.network=mediaserver"
-      - "traefik.port=8112"
-{{ traefik_sts_header_labels }}
-{{ traefik_forward_auth_labels }}
+      - "traefik.http.services.deluge.loadbalancer.server.port=8112"
+      - "traefik.http.routers.deluge.entryPoints=web,web-secure"
+      - "traefik.http.routers.deluge.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.deluge.tls=true"
+      - "traefik.http.routers.deluge.tls.certresolver=le"
     networks:
       - mediaserver
 
@@ -35,11 +37,13 @@ services:
       - {{ jackett_config_folder }}:/config # config files
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:jackett.sapling.tdude.co"
+      - "traefik.http.routers.jackett.rule=Host(`jackett.sapling.tdude.co`)"
       - "traefik.docker.network=mediaserver"
-      - "traefik.port=9117"
-{{ traefik_sts_header_labels }}
-{{ traefik_forward_auth_labels }}
+      - "traefik.http.services.jackett.loadbalancer.server.port=9117"
+      - "traefik.http.routers.jackett.entryPoints=web,web-secure"
+      - "traefik.http.routers.jackett.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.jackett.tls=true"
+      - "traefik.http.routers.jackett.tls.certresolver=le"
     networks:
       - mediaserver
 
@@ -58,11 +62,13 @@ services:
       - {{ plex_media_folder }}/ongoing:/downloads # download folder
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:sonarr.sapling.tdude.co"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.sapling.tdude.co`)"
       - "traefik.docker.network=mediaserver"
-      - "traefik.port=8989"
-{{ traefik_sts_header_labels }}
-{{ traefik_forward_auth_labels }}
+      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
+      - "traefik.http.routers.sonarr.entryPoints=web,web-secure"
+      - "traefik.http.routers.sonarr.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.sonarr.tls=true"
+      - "traefik.http.routers.sonarr.tls.certresolver=le"
     networks:
       - mediaserver
 
@@ -81,11 +87,13 @@ services:
       - {{ plex_media_folder }}/ongoing:/downloads # download folder
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:radarr.sapling.tdude.co"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.sapling.tdude.co`)"
       - "traefik.docker.network=mediaserver"
-      - "traefik.port=7878"
-{{ traefik_sts_header_labels }}
-{{ traefik_forward_auth_labels }}
+      - "traefik.http.services.radarr.loadbalancer.server.port=7878"
+      - "traefik.http.routers.radarr.entryPoints=web,web-secure"
+      - "traefik.http.routers.radarr.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.radarr.tls=true"
+      - "traefik.http.routers.radarr.tls.certresolver=le"
     networks:
       - mediaserver
 
@@ -102,10 +110,12 @@ services:
       ADVERTISE_IP: https://plex.sapling.tdude.co
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:plex.sapling.tdude.co"
+      - "traefik.http.routers.plex.rule=Host(`plex.sapling.tdude.co`)"
       - "traefik.docker.network=mediaserver"
-      - "traefik.port=32400"
-{{ traefik_sts_header_labels }}
+      - "traefik.http.services.plex.loadbalancer.server.port=32400"
+      - "traefik.http.routers.plex.entryPoints=web,web-secure,plex"
+      - "traefik.http.routers.plex.tls=true"
+      - "traefik.http.routers.plex.tls.certresolver=le"
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ plex_config_folder }}:/config # plex database

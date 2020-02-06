@@ -13,12 +13,6 @@ dehydrated_lexicon_dns:
 nginx_server_tokens: "off"
 nginx_remove_default_vhost: true
 
-traefik_sts_header_labels: |2
-        - "traefik.frontend.headers.STSSeconds=315360000"
-        - "traefik.frontend.headers.STSIncludeSubdomains=true"
-        - "traefik.frontend.headers.STSPreload=true"
-        - "traefik.frontend.headers.forceSTSHeader=true"
-
 elk_docker_network: "monitoring"
 
 tdude_core_username: tristan

@@ -16,10 +16,13 @@ services:
       - /etc/localtime:/etc/localtime:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:lolisafe.tdude.co,l.trs.tn"
+      - "traefik.http.routers.lolisafe.rule=Host(`lolisafe.tdude.co`,`l.trs.tn`)"
       - "traefik.docker.network=lolisafe"
-      - "traefik.port=9999"
-{{ traefik_sts_header_labels }}
+      - "traefik.http.services.lolisafe.loadbalancer.server.port=9999"
+      - "traefik.http.routers.lolisafe.entryPoints=web,web-secure"
+      - "traefik.http.routers.lolisafe.middlewares=https@file"
+      - "traefik.http.routers.lolisafe.tls=true"
+      - "traefik.http.routers.lolisafe.tls.certresolver=le"
     networks:
       - lolisafe
 

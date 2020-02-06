@@ -9,10 +9,13 @@ services:
       - status
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:status.tdude.co"
+      - "traefik.http.routers.statusfy.rule=Host(`status.tdude.co`)"
       - "traefik.docker.network=status"
-      - "traefik.port=3000"
-{{ traefik_sts_header_labels }}
+      - "traefik.http.services.statusfy.loadbalancer.server.port=3000"
+      - "traefik.http.routers.statusfy.entryPoints=web,web-secure"
+      - "traefik.http.routers.statusfy.middlewares=https@file"
+      - "traefik.http.routers.statusfy.tls=true"
+      - "traefik.http.routers.statusfy.tls.certresolver=le"
 
 networks:
   status:

@@ -57,11 +57,14 @@ services:
         ipv6_address: "2607:5300:60:873e:7::6"
     restart: unless-stopped
     labels:
-      - traefik.enable=true
-      - traefik.port=80
-      - traefik.backend=matrix_nginx_riot
-      - traefik.backend.network=matrix
-      - traefik.frontend.rule=Host:nerdsin.space,usercontent.nerdsin.space
+      - "traefik.enable=true"
+      - "traefik.http.services.matrix.loadbalancer.server.port=80"
+      - "traefik.docker.network=matrix_matrix"
+      - "traefik.http.routers.matrix.rule=Host(`nerdsin.space`,`usercontent.nerdsin.space`)"
+      - "traefik.http.routers.matrix.entryPoints=web,web-secure"
+      - "traefik.http.routers.matrix.middlewares=https@file"
+      - "traefik.http.routers.matrix.tls=true"
+      - "traefik.http.routers.matrix.tls.certresolver=le"
 
 networks:
   monitoring:

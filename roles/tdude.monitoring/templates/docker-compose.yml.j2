@@ -11,11 +11,13 @@ services:
     user: "945:945"
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:prometheus.sapling.tdude.co"
-{{ traefik_sts_header_labels }}
-{{ traefik_forward_auth_labels }}
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.sapling.tdude.co`)"
+      - "traefik.http.routers.prometheus.middlewares=https@file,fwauth@file"
       - "traefik.docker.network=monitoring"
-      - "traefik.port=9090"
+      - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
+      - "traefik.http.routers.prometheus.entryPoints=web,web-secure"
+      - "traefik.http.routers.prometheus.tls=true"
+      - "traefik.http.routers.prometheus.tls.certresolver=le"
     restart: unless-stopped
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -43,10 +45,13 @@ services:
     user: "942:942"
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:grafana.sapling.tdude.co"
-{{ traefik_sts_header_labels }}
+      - "traefik.http.routers.grafana.rule=Host(`grafana.sapling.tdude.co`)"
+      - "traefik.http.routers.grafana.middlewares=https@file"
       - "traefik.docker.network=monitoring"
-      - "traefik.port=3000"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+      - "traefik.http.routers.grafana.entryPoints=web,web-secure"
+      - "traefik.http.routers.grafana.tls=true"
+      - "traefik.http.routers.grafana.tls.certresolver=le"
     restart: unless-stopped
     networks:
       - monitoring
@@ -56,11 +61,13 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:cadvisor.sapling.tdude.co"
-{{ traefik_sts_header_labels }}
-{{ traefik_forward_auth_labels }}
+      - "traefik.http.routers.cadvisor.rule=Host(`cadvisor.sapling.tdude.co`)"
+      - "traefik.http.routers.cadvisor.middlewares=https@file,fwauth@file"
       - "traefik.docker.network=monitoring"
-      - "traefik.port=8080"
+      - "traefik.http.services.cadvisor.loadbalancer.server.port=8080"
+      - "traefik.http.routers.cadvisor.entryPoints=web,web-secure"
+      - "traefik.http.routers.cadvisor.tls=true"
+      - "traefik.http.routers.cadvisor.tls.certresolver=le"
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw

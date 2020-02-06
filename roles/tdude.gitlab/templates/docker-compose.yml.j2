@@ -48,11 +48,13 @@ services:
       - '/etc/localtime:/etc/localtime:ro'
     labels:
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:git.tdude.co"
+      - "traefik.http.services.gitlab.loadbalancer.server.port=80"
       - "traefik.docker.network=gitlab"
-      - "traefik.port=80"
-{{ traefik_sts_header_labels }}
-
+      - "traefik.http.routers.gitlab.entryPoints=web,web-secure"
+      - "traefik.http.routers.lolisafe.middlewares=https@file"
+      - "traefik.http.routers.gitlab.rule=Host(`git.tdude.co`)"
+      - "traefik.http.routers.gitlab.tls=true"
+      - "traefik.http.routers.gitlab.tls.certresolver=le"
     networks:
       - gitlab
   runner:

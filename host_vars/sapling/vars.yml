@@ -222,7 +222,7 @@ gitlab_incoming_email_port: 143
 
 traefik_installation_folder: "/opt/traefik"
 traefik_data_folder: "/opt/traefik/data"
-traefik_docker_version: "1.7"
+traefik_docker_version: "2.1"
 
 monitoring_installation_folder: "/opt/monitoring"
 prometheus_installation_folder: "/opt/monitoring/prometheus"
@@ -238,10 +238,6 @@ cadvisor_redis_docker_version: "latest"
 traefik_oauth2_client_id: "{{ vault_traefik_oauth2_client_id }}"
 traefik_oauth2_client_secret: "{{ vault_traefik_oauth2_client_secret }}"
 traefik_oauth2_secret: "{{ vault_traefik_oauth2_secret }}"
-
-traefik_forward_auth_labels: |2
-        - traefik.frontend.auth.forward.address=http://traefik-forward-auth:4181
-        - traefik.frontend.auth.forward.authResponseHeaders = ["X-Forwarded-User"]
 
 matrix_synapse_version: latest
 matrix_synapse_server_name: nerdsin.space
