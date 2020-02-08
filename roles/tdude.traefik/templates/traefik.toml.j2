@@ -13,7 +13,7 @@
 
 [certificatesResolvers.le.acme]
   email = "starcraft66@gmail.com"
-  keyType = "EC384"
+  keyType = "RSA4096"
   storage = "/etc/traefik/acme.json"
 {% if development is defined and development == true %}
   caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
@@ -34,12 +34,12 @@
         "TLS_AES_256_GCM_SHA384",
         "TLS_CHACHA20_POLY1305_SHA256",
         "TLS_AES_128_GCM_SHA256",
-        "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
-#        "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
-        "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305",
-#        "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305",
-        "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
-#        "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+#        "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+        "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+#       "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305",
+        "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305",
+#        "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+        "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
       ]
 
 [log]
