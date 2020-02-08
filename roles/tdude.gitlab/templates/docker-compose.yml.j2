@@ -51,7 +51,7 @@ services:
       - "traefik.http.services.gitlab.loadbalancer.server.port=80"
       - "traefik.docker.network=gitlab"
       - "traefik.http.routers.gitlab.entryPoints=web,web-secure"
-      - "traefik.http.routers.lolisafe.middlewares=https@file"
+      - "traefik.http.routers.gitlab.middlewares=https@file"
       - "traefik.http.routers.gitlab.rule=Host(`git.tdude.co`)"
       - "traefik.http.routers.gitlab.tls=true"
       - "traefik.http.routers.gitlab.tls.certresolver=le"
