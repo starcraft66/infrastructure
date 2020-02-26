@@ -5,8 +5,8 @@ server {
     server_name usercontent.{{ matrix_synapse_server_name }};
     server_tokens off;
 
-    access_log  /var/log/nginx/usercontent_access.log;
-    error_log   /var/log/nginx/usercontent_error.log;
+    access_log  /dev/stdout;
+    error_log   /dev/stderr;
 
     location / {
         root   /usr/share/nginx/html/usercontent;
@@ -27,8 +27,8 @@ server {
     server_name {{ matrix_synapse_server_name }};
     server_tokens off;
 
-    access_log  /var/log/nginx/matrix_access.log;
-    error_log   /var/log/nginx/matrix_error.log;
+    access_log  /dev/stdout;
+    error_log   /dev/stderr;
 
     # disable any limits to avoid HTTP 413 for large image uploads
     client_max_body_size 0;

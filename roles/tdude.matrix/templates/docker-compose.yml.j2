@@ -17,6 +17,11 @@ services:
         ipv4_address: "10.72.128.4"
         ipv6_address: "2607:5300:60:873e:7::4"
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "50m"
   postgres:
     container_name: matrix_postgres
     image: postgres:{{ matrix_postgres_version }}
@@ -56,6 +61,11 @@ services:
         ipv4_address: 10.72.128.6
         ipv6_address: "2607:5300:60:873e:7::6"
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "50m"
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.matrix.loadbalancer.server.port=80"
