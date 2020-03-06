@@ -322,3 +322,22 @@ minecraft_discord_bridge_elasticsearch_url: "https://elasticsearch.elk.nhackindu
 minecraft_discord_bridge_elasticsearch_auth: true
 minecraft_discord_bridge_elasticsearch_auth_username: "nhack"
 minecraft_discord_bridge_elasticsearch_auth_password: "{{ vault_minecraft_discord_bridge_elasticsearch_auth_password }}"
+
+borg_excludes:
+  - "/var/cache/*"
+  - "/var/tmp/*"
+  - "/var/lib/docker/btrfs"
+
+borg_root_path: "/"
+
+borg_server_repo_path: "/var/backup"
+borg_server_backup_user: "backup"
+borg_server_backup_group: "backup"
+
+borg_client_ssh_key_location: "/usr/local/etc"
+
+borg_keep_daily: "7"
+borg_keep_weekly: "4"
+borg_keep_monthly: "6"
+
+borg_repokey: "{{ vault_borg_repokey }}"
