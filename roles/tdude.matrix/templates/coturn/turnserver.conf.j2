@@ -6,11 +6,12 @@ cert=/usr/local/etc/turn/fullchain.pem
 pkey=/usr/local/etc/turn/privkey.pem
 cipher-list="HIGH"
 no-tcp-relay
-# Not sure about these options. They prevent clients behind NAT from connecting??
-#denied-peer-ip=10.0.0.0-10.255.255.255
-#denied-peer-ip=192.168.0.0-192.168.255.255
-#denied-peer-ip=172.16.0.0-172.31.255.255
-#denied-peer-ip=2607:5300:60:873e::-2607:5300:60:873e:ffff::
+denied-peer-ip=10.0.0.0-10.255.255.255
+denied-peer-ip=192.168.0.0-192.168.255.255
+denied-peer-ip=172.16.0.0-172.31.255.255
+denied-peer-ip=2607:5300:60:873e::-2607:5300:60:873e:ffff:ffff:ffff:ffff
+allowed-peer-ip=158.69.118.62
+allowed-peer-ip=2607:5300:60:873e::2
 no-cli
 listening-ip=158.69.118.62
 listening-ip=2607:5300:60:873e::2
