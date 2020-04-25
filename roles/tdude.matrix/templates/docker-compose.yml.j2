@@ -78,7 +78,7 @@ services:
   minio:
     container_name: matrix_minio
     image: minio/minio:{{ matrix_minio_version }}
-    command: minio gateway b2
+    command: "minio gateway b2 --compat"
     environment:
       MINIO_ACCESS_KEY: "{{ matrix_minio_b2_account_id }}"
       MINIO_SECRET_KEY: "{{ matrix_minio_b2_application_key }}"
