@@ -38,8 +38,8 @@
   file:
     name: "{{ item }}"
     state: directory
-    owner: 999
-    group: 999
+    owner: "999"
+    group: "999"
     mode: 0770
   with_items:
     - "{{ matrix_postgres_data_folder }}" 
@@ -49,8 +49,8 @@
     src: "riot/config.json.j2"
     dest: "{{ matrix_riot_data_folder }}/config.json"
     mode: 0660
-    owner: 101
-    group: 101
+    owner: "101"
+    group: "101"
   notify: restart nginx
 
 - name: Install the homeserver config
