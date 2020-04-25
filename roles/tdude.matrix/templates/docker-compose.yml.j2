@@ -78,7 +78,7 @@ services:
   minio:
     container_name: matrix_minio
     image: minio/minio:{{ matrix_minio_version }}
-    command: "minio gateway b2 --compat"
+    command: "minio gateway b2 --compat --address \":80\""
     environment:
       MINIO_ACCESS_KEY: "{{ matrix_minio_b2_account_id }}"
       MINIO_SECRET_KEY: "{{ matrix_minio_b2_application_key }}"
@@ -94,7 +94,7 @@ services:
         max-size: "50m"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.services.matrix-minio.loadbalancer.server.port=9000"
+      - "traefik.http.services.matrix-minio.loadbalancer.server.port=80"
       - "traefik.docker.network=matrix_matrix"
       - "traefik.http.routers.matrix-minio.rule=Host(`minio.nerdsin.space`)"
       - "traefik.http.routers.matrix-minio.entryPoints=web,web-secure"
