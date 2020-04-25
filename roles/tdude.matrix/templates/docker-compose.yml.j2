@@ -75,6 +75,32 @@ services:
       - "traefik.http.routers.matrix.middlewares=https@file"
       - "traefik.http.routers.matrix.tls=true"
       - "traefik.http.routers.matrix.tls.certresolver=le"
+  minio:
+    container_name: matrix_minio
+    image: minio/minio:{{ matrix_minio_version }}
+    command: minio gateway b2
+    environment:
+      MINIO_ACCESS_KEY: "{{ matrix_minio_b2_account_id }}"
+      MINIO_SECRET_KEY: "{{ matrix_minio_b2_application_key }}"
+    networks:
+      matrix:
+        ipv4_address: 10.72.128.7
+        ipv6_address: "2607:5300:60:873e:7::7"
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "50m"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.matrix-minio.loadbalancer.server.port=9000"
+      - "traefik.docker.network=matrix_matrix"
+      - "traefik.http.routers.matrix-minio.rule=Host(`minio.nerdsin.space`)"
+      - "traefik.http.routers.matrix-minio.entryPoints=web,web-secure"
+      - "traefik.http.routers.matrix-minio.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.matrix-minio.tls=true"
+      - "traefik.http.routers.matrix-minio.tls.certresolver=le"
 
 networks:
   monitoring:

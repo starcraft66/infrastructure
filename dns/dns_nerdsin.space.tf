@@ -85,6 +85,24 @@ resource "cloudflare_record" "nerdsin_space-b40126e8c919a22ec1d75a8090179a23" {
   proxied  = false
 }
 
+resource "cloudflare_record" "minio_nerdsin_space_A" {
+  zone_id = cloudflare_zone.nerdsin_space.id
+  name    = "minio"
+  value   = "158.69.118.62"
+  type    = "A"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "minio_nerdsin_space_AAAA" {
+  zone_id = cloudflare_zone.nerdsin_space.id
+  name    = "minio"
+  value   = "2607:5300:60:873e:8::2"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "_matrix__tcp_nerdsin_space-aa2b554a2832c865d14945123b62160a" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "_matrix._tcp"
