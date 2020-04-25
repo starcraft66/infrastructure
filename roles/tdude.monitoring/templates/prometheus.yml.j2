@@ -43,3 +43,9 @@ scrape_configs:
     metrics_path: '/_synapse/metrics'
     static_configs:
     - targets: ['synapse:8009']
+
+  - job_name: 'minio-matrix-s3-b2-gateway'
+    metrics_path: '/minio/prometheus/metrics'
+    scheme: 'http'
+    static_configs:
+    - targets: ['minio:80']

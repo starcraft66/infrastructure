@@ -82,6 +82,7 @@ services:
     environment:
       MINIO_ACCESS_KEY: "{{ matrix_minio_b2_account_id }}"
       MINIO_SECRET_KEY: "{{ matrix_minio_b2_application_key }}"
+      MINIO_PROMETHEUS_AUTH_TYPE: "public" # minio is hidden behind forward auth so this is "acceptable"
     networks:
       matrix:
         ipv4_address: 10.72.128.7
