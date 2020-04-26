@@ -84,6 +84,7 @@ services:
       MINIO_SECRET_KEY: "{{ matrix_minio_b2_application_key }}"
       MINIO_PROMETHEUS_AUTH_TYPE: "public" # minio is hidden behind forward auth so this is "acceptable"
     networks:
+      monitoring:
       matrix:
         ipv4_address: 10.72.128.7
         ipv6_address: "2607:5300:60:873e:7::7"
@@ -102,6 +103,22 @@ services:
       - "traefik.http.routers.matrix-minio.middlewares=https@file,fwauth@file"
       - "traefik.http.routers.matrix-minio.tls=true"
       - "traefik.http.routers.matrix-minio.tls.certresolver=le"
+  matrix-media-repo:
+    container_name: matrix_media_repo
+    image: turt2live/matrix-media-repo:{{ matrix_media_repo_version }}
+    volumes:
+      - "{{ matrix_media_repo_data_folder }}:/data"
+    networks:
+      monitoring:
+      matrix:
+        ipv4_address: 10.72.128.8
+        ipv6_address: "2607:5300:60:873e:7::8"
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "50m"
 
 networks:
   monitoring:

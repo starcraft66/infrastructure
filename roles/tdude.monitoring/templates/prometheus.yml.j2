@@ -49,3 +49,7 @@ scrape_configs:
     scheme: 'http'
     static_configs:
     - targets: ['minio:80']
+
+  - job_name: 'matrix-media-repo'
+    static_configs:
+    - targets: ['matrix-media-repo:9000']

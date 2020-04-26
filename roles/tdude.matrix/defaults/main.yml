@@ -38,6 +38,7 @@ matrix_riot_data_folder: "{{ matrix_installation_folder }}/riot"
 matrix_riot_usercontent_folder: "{{ matrix_riot_data_folder }}/usercontent"
 matrix_nginx_data_folder: "{{ matrix_installation_folder }}/nginx"
 matrix_postgres_data_folder: "{{ matrix_installation_folder }}/postgres"
+matrix_media_repo_data_folder: "{{ matrix_installation_folder }}/matrix-media-repo"
 
 matrix_appservice_webhooks_hs_token: "{{ vault_matrix_appservice_webhooks_hs_token }}"
 matrix_appservice_webhooks_as_token: "{{ vault_matrix_appservice_webhooks_as_token }}"
@@ -45,3 +46,14 @@ matrix_appservice_webhooks_as_token: "{{ vault_matrix_appservice_webhooks_as_tok
 matrix_minio_version: "latest"
 matrix_minio_b2_account_id: "{{ vault_matrix_minio_b2_account_id }}"
 matrix_minio_b2_application_key: "{{ vault_matrix_minio_b2_application_key }}"
+
+matrix_media_repo_version: "v1.1.2"
+matrix_media_repo_postgres_db: matrix_media_repo
+matrix_media_repo_postgres_host: matrix_postgres
+matrix_media_repo_postgres_user: matrix_media_repo_user
+matrix_media_repo_postgres_port: 5432
+matrix_media_repo_postgres_password: "{{ vault_matrix_media_repo_postgres_password }}"
+matrix_media_repo_s3_endpoint: minio
+matrix_media_repo_s3_tls: "false"
+matrix_media_repo_s3_bucket: "nerdsinspace-matrix-media-repo-prod"
+matrix_media_repo_shared_secret_auth: "{{ vault_matrix_media_repo_shared_secret_auth }}"
