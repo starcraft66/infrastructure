@@ -18,7 +18,6 @@
     - { role: tdude.statusfy }
     - { role: tdude.gitlab }
     - { role: tdude.monitoring }
-    - { role: tdude.elk }
     - { role: tdude.matrix }
     - { role: tdude.lolisafe }
     - { role: tdude.traefik }
