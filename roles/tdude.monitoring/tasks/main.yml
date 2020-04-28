@@ -2,6 +2,7 @@
 - include: prometheus.yml
 - include: node_exporter.yml
 - include: grafana.yml
+- include: influxdb.yml
 
 - name: Install the production compose file
   template:

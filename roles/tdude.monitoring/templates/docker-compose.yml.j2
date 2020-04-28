@@ -88,6 +88,14 @@ services:
       - /etc/localtime:/etc/localtime:ro
     networks:
       - monitoring
+  influxdb:
+    image: influxdb:{{ influxdb_docker_version }}
+    container_name: monitoring_influxdb
+    restart: unless-stopped
+    volumes:
+      - "{{ influxdb_data_folder }}:/var/lib/influxdb"
+    networks:
+      - monitoring
 
 networks:
   monitoring:
