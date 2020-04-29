@@ -37,7 +37,8 @@ services:
       GF_USERS_ALLOW_SIGN_UP: "false"
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_AUTH_ANONYMOUS_ORG_NAME: "anonymous"
-      TZ: "Europe/Paris"
+      GF_INSTALL_PLUGINS: "grafana-piechart-panel,grafana-worldmap-panel"
+      TZ: "America/Toronto"
     volumes:
       - "{{ grafana_data_folder }}:/var/lib/grafana"
       - /etc/timezone:/etc/timezone:ro
