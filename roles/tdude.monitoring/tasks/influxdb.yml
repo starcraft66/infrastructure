@@ -29,3 +29,7 @@
   with_items:
     - "{{ influxdb_data_folder }}"
 
+- name: InfluxDB > Install InfluxDB python library
+  pip:
+    name:
+      - influxdb

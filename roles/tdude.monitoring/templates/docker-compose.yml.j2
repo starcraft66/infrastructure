@@ -92,6 +92,10 @@ services:
     image: influxdb:{{ influxdb_docker_version }}
     container_name: monitoring_influxdb
     restart: unless-stopped
+    environment:
+      INFLUXDB_HTTP_AUTH_ENABLED: "{{ influxdb_auth_enabled }}"
+      INFLUXDB_ADMIN_USER: "{{ influxdb_admin_user }}"
+      INFLUXDB_ADMIN_PASSWORD: "{{ influxdb_admin_password }}"
     volumes:
       - "{{ influxdb_data_folder }}:/var/lib/influxdb"
     networks:
