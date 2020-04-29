@@ -24,6 +24,8 @@ matrix_synapse_postgres_password: "{{ vault_matrix_synapse_postgres_password }}"
 matrix_synapse_appservices:
   - /data/appservice-registration-webhooks.yaml
 
+matrix_synapse_enable_media_repo: true
+
 matrix_riot_version: latest
 matrix_riot_default_theme: dark
 
