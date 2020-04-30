@@ -13,7 +13,7 @@ services:
       - {{ mediaserver_deluge_config_folder }}:/config # config files
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.deluge.rule=Host(`deluge.sapling.tdude.co`)"
+      - "traefik.http.routers.deluge.rule=Host(`{{ mediaserver_deluge_hostname }}`)"
       - "traefik.docker.network=mediaserver"
       - "traefik.http.services.deluge.loadbalancer.server.port=8112"
       - "traefik.http.routers.deluge.entryPoints=web,web-secure"
@@ -37,7 +37,7 @@ services:
       - {{ mediaserver_jackett_config_folder }}:/config # config files
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.jackett.rule=Host(`jackett.sapling.tdude.co`)"
+      - "traefik.http.routers.jackett.rule=Host(`{{ mediaserver_jackett_hostname }}`)"
       - "traefik.docker.network=mediaserver"
       - "traefik.http.services.jackett.loadbalancer.server.port=9117"
       - "traefik.http.routers.jackett.entryPoints=web,web-secure"
@@ -62,7 +62,7 @@ services:
       - {{ mediaserver_plex_media_folder }}/ongoing:/downloads # download folder
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.sonarr.rule=Host(`sonarr.sapling.tdude.co`)"
+      - "traefik.http.routers.sonarr.rule=Host(`{{ mediaserver_sonarr_hostname }}`)"
       - "traefik.docker.network=mediaserver"
       - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
       - "traefik.http.routers.sonarr.entryPoints=web,web-secure"
@@ -87,7 +87,7 @@ services:
       - {{ mediaserver_plex_media_folder }}/ongoing:/downloads # download folder
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.radarr.rule=Host(`radarr.sapling.tdude.co`)"
+      - "traefik.http.routers.radarr.rule=Host(`{{ mediaserver_radarr_hostname }}`)"
       - "traefik.docker.network=mediaserver"
       - "traefik.http.services.radarr.loadbalancer.server.port=7878"
       - "traefik.http.routers.radarr.entryPoints=web,web-secure"
@@ -110,7 +110,7 @@ services:
       ADVERTISE_IP: https://plex.sapling.tdude.co
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.plex.rule=Host(`plex.sapling.tdude.co`)"
+      - "traefik.http.routers.plex.rule=Host(`{{ mediaserver_plex_hostname }}`)"
       - "traefik.docker.network=mediaserver"
       - "traefik.http.services.plex.loadbalancer.server.port=32400"
       - "traefik.http.routers.plex.entryPoints=web,web-secure,plex"
@@ -137,7 +137,7 @@ services:
       - plex-server
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.tautulli.rule=Host(`tautulli.sapling.tdude.co`)"
+      - "traefik.http.routers.tautulli.rule=Host(`{{ mediaserver_tautulli_hostname }}`)"
       - "traefik.docker.network=mediaserver"
       - "traefik.http.services.tautulli.loadbalancer.server.port=8181"
       - "traefik.http.routers.tautulli.entryPoints=web,web-secure"
