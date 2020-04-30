@@ -2,15 +2,15 @@ version: '2.3'
 services:
   deluge:
     container_name: deluge
-    image: linuxserver/deluge:latest
+    image: linuxserver/deluge:{{ mediaserver_deluge_version }}
     restart: always
     environment:
       PUID: 949 # default user id, for downloaded files access rights
       PGID: 949 # default group id, for downloaded files access rights
-      TZ: Europe/Paris # timezone
+      TZ: "{{ mediaserver_timezone }}" # timezone
     volumes:
-      - {{ plex_media_folder }}/ongoing:/downloads # download folder
-      - {{ deluge_config_folder }}:/config # config files
+      - {{ mediaserver_plex_media_folder }}/ongoing:/downloads # download folder
+      - {{ mediaserver_deluge_config_folder }}:/config # config files
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.deluge.rule=Host(`deluge.sapling.tdude.co`)"
@@ -25,16 +25,16 @@ services:
 
   jackett:
     container_name: jackett
-    image: linuxserver/jackett:latest
+    image: linuxserver/jackett:{{ mediaserver_jackett_version }}
     restart: unless-stopped
     environment:
       PUID: 949 # default user id, for downloaded files access rights
       PGID: 949 # default group id, for downloaded files access rights
-      TZ: Europe/Paris # timezone
+      TZ: "{{ mediaserver_timezone }}" # timezone
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - {{ plex_media_folder }}/ongoing/torrent-blackhole:/downloads # place where to put .torrent files
-      - {{ jackett_config_folder }}:/config # config files
+      - {{ mediaserver_plex_media_folder }}/ongoing/torrent-blackhole:/downloads # place where to put .torrent files
+      - {{ mediaserver_jackett_config_folder }}:/config # config files
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.jackett.rule=Host(`jackett.sapling.tdude.co`)"
@@ -49,17 +49,17 @@ services:
 
   sonarr:
     container_name: sonarr
-    image: linuxserver/sonarr:preview
+    image: linuxserver/sonarr:{{ mediaserver_sonarr_version }}
     restart: unless-stopped
     environment:
       PUID: 949 # default user id, for downloaded files access rights
       PGID: 949 # default group id, for downloaded files access rights
-      TZ: Europe/Paris # timezone
+      TZ: "{{ mediaserver_timezone }}" # timezone
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - {{ sonarr_config_folder }}:/config # config files
-      - {{ plex_media_folder }}/series:/tv # tv shows folder
-      - {{ plex_media_folder }}/ongoing:/downloads # download folder
+      - {{ mediaserver_sonarr_config_folder }}:/config # config files
+      - {{ mediaserver_plex_media_folder }}/series:/tv # tv shows folder
+      - {{ mediaserver_plex_media_folder }}/ongoing:/downloads # download folder
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.sonarr.rule=Host(`sonarr.sapling.tdude.co`)"
@@ -74,17 +74,17 @@ services:
 
   radarr:
     container_name: radarr
-    image: linuxserver/radarr:latest
+    image: linuxserver/radarr:{{ mediaserver_radarr_version }}
     restart: unless-stopped
     environment:
       PUID: 949 # default user id, for downloaded files access rights
       PGID: 949 # default group id, for downloaded files access rights
-      TZ: Europe/Paris # timezone
+      TZ: "{{ mediaserver_timezone }}" # timezone
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - {{ radarr_config_folder }}:/config # config files
-      - {{ plex_media_folder }}/movies:/movies # movies folder
-      - {{ plex_media_folder }}/ongoing:/downloads # download folder
+      - {{ mediaserver_radarr_config_folder }}:/config # config files
+      - {{ mediaserver_plex_media_folder }}/movies:/movies # movies folder
+      - {{ mediaserver_plex_media_folder }}/ongoing:/downloads # download folder
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.radarr.rule=Host(`radarr.sapling.tdude.co`)"
@@ -100,13 +100,13 @@ services:
   plex-server:
     container_name: plex-server
     hostname: sapling-plex
-    image: plexinc/pms-docker:latest
+    image: plexinc/pms-docker:{{ mediaserver_plex_version }}
     restart: unless-stopped
     environment:
-      TZ: Europe/Paris # timezone
+      TZ: "{{ mediaserver_timezone }}" # timezone
       PLEX_UID: 949
       PLEX_GID: 949
-      PLEX_CLAIM: {{ plex_claim_token }}
+      PLEX_CLAIM: {{ mediaserver_plex_claim_token }}
       ADVERTISE_IP: https://plex.sapling.tdude.co
     labels:
       - "traefik.enable=true"
@@ -118,13 +118,58 @@ services:
       - "traefik.http.routers.plex.tls.certresolver=le"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - {{ plex_config_folder }}:/config # plex database
-      - {{ plex_transcode_folder }}:/transcode # temp transcoded files
-      - {{ plex_media_folder }}:/data # media library
+      - {{ mediaserver_plex_config_folder }}:/config # plex database
+      - {{ mediaserver_plex_transcode_folder }}:/transcode # temp transcoded files
+      - {{ mediaserver_plex_media_folder }}:/data # media library
     networks:
       - mediaserver
+
+  tautulli:
+    container_name: tautulli
+    hostname: tautulli
+    image: linuxserver/tautulli:{{ mediaserver_tautulli_version }}
+    restart: unless-stopped
+    environment:
+      PUID: 949 # default user id, for downloaded files access rights
+      PGID: 949 # default group id, for downloaded files access rights
+      TZ: America/Toronto # timezone
+    depends_on:
+      - plex-server
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tautulli.rule=Host(`tautulli.sapling.tdude.co`)"
+      - "traefik.docker.network=mediaserver"
+      - "traefik.http.services.tautulli.loadbalancer.server.port=8181"
+      - "traefik.http.routers.tautulli.entryPoints=web,web-secure"
+      - "traefik.http.routers.tautulli.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.tautulli.tls=true"
+      - "traefik.http.routers.tautulli.tls.certresolver=le"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - {{ mediaserver_tautulli_config_folder }}:/config # tautulli database
+      - {{ mediaserver_plex_logs_folder }}:/logs # plex database
+    networks:
+      - mediaserver
+
+  varken:
+    container_name: varken
+    hostname: varken
+    image: boerderij/varken:{{ mediaserver_varken_version }}
+    restart: unless-stopped
+    environment:
+      PUID: 949 # default user id, for downloaded files access rights
+      PGID: 949 # default group id, for downloaded files access rights
+      TZ: America/Toronto # timezone
+    volumes:
+      - {{ mediaserver_varken_config_folder }}:/config
+    networks:
+      - mediaserver
+      - monitoring
 
 networks:
   mediaserver:
     external:
       name: mediaserver
+  monitoring:
+    external:
+      name: monitoring

@@ -28,13 +28,15 @@
     mode: 0770
   with_items:
     - "{{ mediaserver_installation_folder }}"
-    - "{{ plex_media_folder }}"
-    - "{{ deluge_config_folder }}"
-    - "{{ jackett_config_folder }}"
-    - "{{ sonarr_config_folder }}"
-    - "{{ radarr_config_folder }}"
-    - "{{ plex_config_folder }}"
-    - "{{ plex_transcode_folder }}"
+    - "{{ mediaserver_plex_media_folder }}"
+    - "{{ mediaserver_deluge_config_folder }}"
+    - "{{ mediaserver_jackett_config_folder }}"
+    - "{{ mediaserver_sonarr_config_folder }}"
+    - "{{ mediaserver_radarr_config_folder }}"
+    - "{{ mediaserver_plex_config_folder }}"
+    - "{{ mediaserver_plex_transcode_folder }}"
+    - "{{ mediaserver_tautulli_config_folder }}"
+    - "{{ mediaserver_varken_config_folder }}"
 
 - name: Install the jackett config
   template:
@@ -63,6 +65,24 @@
     group: mediaserver
   notify: restart sonarr
 
+- name: Install the tautulli config
+  template:
+    src: "tautulli.j2"
+    dest: "{{ mediaserver_tautulli_config_folder }}/config.ini"
+    mode: 0660
+    owner: mediaserver
+    group: mediaserver
+  notify: restart tautulli
+
+- name: Install the varken config
+  template:
+    src: "varken.j2"
+    dest: "{{ mediaserver_varken_config_folder }}/varken.ini"
+    mode: 0660
+    owner: mediaserver
+    group: mediaserver
+  notify: restart varken
+
 - name: Install the production compose file
   template:
     src: "docker-compose.yml.j2"
@@ -70,6 +90,32 @@
     mode: 0660
     owner: mediaserver
     group: mediaserver
+
+- name: Get InfluxDB IP address
+  command: "{% raw %}docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' monitoring_influxdb{% endraw %}"
+  register: influxdb_ip
+
+- name: Create varken InfluxDB database
+  influxdb_database:
+    use_udp: no
+    udp_port: 4444 # https://github.com/ansible-collections/community.general/issues/244
+    hostname: "{{ influxdb_ip.stdout }}"
+    username: "{{ influxdb_admin_user }}"
+    password: "{{ influxdb_admin_password }}"
+    database_name: "{{ mediaserver_varken_influxdb_database_name }}"
+
+- name: Create varken InfluxDB user
+  influxdb_user:
+    use_udp: no
+    udp_port: 4444 # https://github.com/ansible-collections/community.general/issues/244
+    hostname: "{{ influxdb_ip.stdout }}"
+    user_name: "{{ mediaserver_varken_influxdb_username }}"
+    user_password: "{{ mediaserver_varken_influxdb_password }}"
+    login_username: "{{ influxdb_admin_user }}"
+    login_password: "{{ influxdb_admin_password }}"
+    grants:
+      - database: "{{ mediaserver_varken_influxdb_database_name }}"
+        privilege: "ALL"
 
 - name: Create the mediaserver network
   docker_network:

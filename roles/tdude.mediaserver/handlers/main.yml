@@ -43,3 +43,21 @@
     restarted: yes
     services:
       - plex
+
+- name: restart tautulli
+  docker_compose:
+    project_src: "{{ mediaserver_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes
+    services:
+      - tautulli
+
+- name: restart varken
+  docker_compose:
+    project_src: "{{ mediaserver_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes
+    services:
+      - varken
