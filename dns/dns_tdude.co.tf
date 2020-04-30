@@ -228,6 +228,15 @@ resource "cloudflare_record" "plex_sapling_tdude_co-22776aada2f4b80110b76a14a879
   proxied = false
 }
 
+resource "cloudflare_record" "tautulli_sapling_tdude_co-A" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "tautulli.sapling"
+  value   = "158.69.118.62"
+  type    = "A"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "pomf-files_tdude_co-fb3af32c70d3bd5cde57cb9afa4f385b" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "pomf-files"
@@ -627,6 +636,15 @@ resource "cloudflare_record" "plank_tdude_co-25805463805ad327f2a594b5d78ff0cf" {
 resource "cloudflare_record" "plex_sapling_tdude_co-cc8e48931282ecb8338a0a274380c960" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "plex.sapling"
+  value   = "2607:5300:60:873e:8::2"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "tautulli_sapling_tdude_co-AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "tautulli.sapling"
   value   = "2607:5300:60:873e:8::2"
   type    = "AAAA"
   ttl     = 1
