@@ -101,7 +101,7 @@ tdude_core_groups:
 
 mediaserver_uid: 949
 mediaserver_gid: "{{ mediaserver_uid }}"
-mediaserver_timezone: "America/Toronto"
+timezone: "America/Toronto"
 
 mediaserver_installation_folder: "/opt/mediaserver"
 mediaserver_plex_media_folder: "{{ mediaserver_installation_folder }}/media"

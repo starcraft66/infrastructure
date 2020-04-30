@@ -1,4 +1,5 @@
 ---
+timezone: "America/Toronto"
 elk_installation_folder: "/opt/elk"
 elk_kibana_folder: "/opt/elk/kibana"
 elk_logstash_folder: "/opt/elk/logstash"

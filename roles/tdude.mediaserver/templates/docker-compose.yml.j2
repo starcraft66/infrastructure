@@ -7,7 +7,7 @@ services:
     environment:
       PUID: 949 # default user id, for downloaded files access rights
       PGID: 949 # default group id, for downloaded files access rights
-      TZ: "{{ mediaserver_timezone }}" # timezone
+      TZ: "{{ timezone }}" # timezone
     volumes:
       - {{ mediaserver_plex_media_folder }}/ongoing:/downloads # download folder
       - {{ mediaserver_deluge_config_folder }}:/config # config files
@@ -30,7 +30,7 @@ services:
     environment:
       PUID: 949 # default user id, for downloaded files access rights
       PGID: 949 # default group id, for downloaded files access rights
-      TZ: "{{ mediaserver_timezone }}" # timezone
+      TZ: "{{ timezone }}" # timezone
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ mediaserver_plex_media_folder }}/ongoing/torrent-blackhole:/downloads # place where to put .torrent files
@@ -54,7 +54,7 @@ services:
     environment:
       PUID: 949 # default user id, for downloaded files access rights
       PGID: 949 # default group id, for downloaded files access rights
-      TZ: "{{ mediaserver_timezone }}" # timezone
+      TZ: "{{ timezone }}" # timezone
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ mediaserver_sonarr_config_folder }}:/config # config files
@@ -79,7 +79,7 @@ services:
     environment:
       PUID: 949 # default user id, for downloaded files access rights
       PGID: 949 # default group id, for downloaded files access rights
-      TZ: "{{ mediaserver_timezone }}" # timezone
+      TZ: "{{ timezone }}" # timezone
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ mediaserver_radarr_config_folder }}:/config # config files
@@ -103,7 +103,7 @@ services:
     image: plexinc/pms-docker:{{ mediaserver_plex_version }}
     restart: unless-stopped
     environment:
-      TZ: "{{ mediaserver_timezone }}" # timezone
+      TZ: "{{ timezone }}" # timezone
       PLEX_UID: 949
       PLEX_GID: 949
       PLEX_CLAIM: {{ mediaserver_plex_claim_token }}
@@ -132,7 +132,7 @@ services:
     environment:
       PUID: 949 # default user id, for downloaded files access rights
       PGID: 949 # default group id, for downloaded files access rights
-      TZ: America/Toronto # timezone
+      TZ: "{{ timezone }}"  # timezone
     depends_on:
       - plex-server
     labels:
@@ -159,7 +159,7 @@ services:
     environment:
       PUID: 949 # default user id, for downloaded files access rights
       PGID: 949 # default group id, for downloaded files access rights
-      TZ: America/Toronto # timezone
+      TZ: "{{ timezone }}"  # timezone
     volumes:
       - {{ mediaserver_varken_config_folder }}:/config
     networks:

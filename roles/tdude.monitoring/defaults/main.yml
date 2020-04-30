@@ -1,4 +1,5 @@
 ---
+timezone: "America/Toronto"
 monitoring_installation_folder: "/opt/monitoring"
 prometheus_installation_folder: "{{ monitoring_installation_folder }}/prometheus"
 prometheus_data_folder: "{{ monitoring_installation_folder }}/prometheus/data"

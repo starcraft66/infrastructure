@@ -5,9 +5,9 @@ services:
     image: starcraft66/kerio-connect:{{ kerio_connect_version }}
     restart: always
     environment:
-      - PUID=944 # default user id, for downloaded files access rights
-      - PGID=944 # default group id, for downloaded files access rights
-      - TZ=Europe/Paris # timezone
+      PUID: 944 # default user id, for downloaded files access rights
+      PGID: 944 # default group id, for downloaded files access rights
+      TZ: "{{ timezone }}" # timezone
     volumes:
       - {{ kerio_installation_folder }}/cluster.cfg:/opt/kerio/mailserver/cluster.cfg
       - {{ kerio_installation_folder }}/users.cfg:/opt/kerio/mailserver/users.cfg

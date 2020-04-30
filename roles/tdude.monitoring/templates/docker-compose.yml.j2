@@ -38,7 +38,7 @@ services:
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_AUTH_ANONYMOUS_ORG_NAME: "anonymous"
       GF_INSTALL_PLUGINS: "grafana-piechart-panel,grafana-worldmap-panel"
-      TZ: "America/Toronto"
+      TZ: "{{ timezone }}"
     volumes:
       - "{{ grafana_data_folder }}:/var/lib/grafana"
       - /etc/timezone:/etc/timezone:ro
@@ -94,6 +94,7 @@ services:
     container_name: monitoring_influxdb
     restart: unless-stopped
     environment:
+      TZ: "{{ timezone }}"
       INFLUXDB_HTTP_AUTH_ENABLED: "{{ influxdb_auth_enabled }}"
       INFLUXDB_ADMIN_USER: "{{ influxdb_admin_user }}"
       INFLUXDB_ADMIN_PASSWORD: "{{ influxdb_admin_password }}"

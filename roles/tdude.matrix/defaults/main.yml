@@ -1,4 +1,5 @@
 ---
+timezone: "America/Toronto"
 matrix_synapse_version: latest
 matrix_synapse_server_name: nerdsin.space
 matrix_synapse_report_stats: "no"

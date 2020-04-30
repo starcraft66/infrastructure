@@ -5,7 +5,7 @@ services:
     image: starcraft66/lolisafe:{{ lolisafe_version }}
     restart: always
     environment:
-      - TZ=Europe/Paris # timezone
+      TZ: "{{ timezone }}" # timezone
     volumes:
       - {{ lolisafe_installation_folder }}/config.js:/usr/src/lolisafe/config.js:ro
       - {{ lolisafe_database_folder }}/db.sqlite:/usr/src/lolisafe/database/db.sqlite
