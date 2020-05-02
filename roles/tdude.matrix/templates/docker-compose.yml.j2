@@ -50,7 +50,7 @@ services:
         ipv6_address: "2607:5300:60:873e:7::5"
   nginx_riot:
     container_name: matrix_nginx
-    image: bubuntux/riot-web:{{ matrix_synapse_version }}
+    image: bubuntux/riot-web:{{ matrix_riot_version }}
     volumes:
       - "{{ matrix_riot_data_folder }}/config.json:/etc/riot-web/config.json:ro"
       - "{{ matrix_riot_usercontent_folder }}:/usr/share/nginx/html/usercontent:ro"
