@@ -13,13 +13,15 @@ services:
       - {{ mediaserver_deluge_config_folder }}:/config # config files
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.deluge.rule=Host(`{{ mediaserver_deluge_hostname }}`)"
       - "traefik.docker.network=mediaserver"
       - "traefik.http.services.deluge.loadbalancer.server.port=8112"
-      - "traefik.http.routers.deluge.entryPoints=web,web-secure"
+      - "traefik.http.routers.deluge.entryPoints=web"
+      - "traefik.http.routers.deluge.rule=Host(`{{ mediaserver_deluge_hostname }}`)"
       - "traefik.http.routers.deluge.middlewares=https@file,fwauth@file"
-      - "traefik.http.routers.deluge.tls=true"
-      - "traefik.http.routers.deluge.tls.certresolver=le"
+      - "traefik.http.routers.deluge-secure.entryPoints=web-secure"
+      - "traefik.http.routers.deluge-secure.rule=Host(`{{ mediaserver_deluge_hostname }}`)"
+      - "traefik.http.routers.deluge-secure.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.deluge-secure.tls=true"
     networks:
       - mediaserver
 
@@ -37,13 +39,15 @@ services:
       - {{ mediaserver_jackett_config_folder }}:/config # config files
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.jackett.rule=Host(`{{ mediaserver_jackett_hostname }}`)"
       - "traefik.docker.network=mediaserver"
       - "traefik.http.services.jackett.loadbalancer.server.port=9117"
-      - "traefik.http.routers.jackett.entryPoints=web,web-secure"
+      - "traefik.http.routers.jackett.entryPoints=web"
+      - "traefik.http.routers.jackett.rule=Host(`{{ mediaserver_jackett_hostname }}`)"
       - "traefik.http.routers.jackett.middlewares=https@file,fwauth@file"
-      - "traefik.http.routers.jackett.tls=true"
-      - "traefik.http.routers.jackett.tls.certresolver=le"
+      - "traefik.http.routers.jackett-secure.entryPoints=web-secure"
+      - "traefik.http.routers.jackett-secure.rule=Host(`{{ mediaserver_jackett_hostname }}`)"
+      - "traefik.http.routers.jackett-secure.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.jackett-secure.tls=true"
     networks:
       - mediaserver
 
@@ -62,13 +66,15 @@ services:
       - {{ mediaserver_plex_media_folder }}/ongoing:/downloads # download folder
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.sonarr.rule=Host(`{{ mediaserver_sonarr_hostname }}`)"
       - "traefik.docker.network=mediaserver"
       - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
-      - "traefik.http.routers.sonarr.entryPoints=web,web-secure"
+      - "traefik.http.routers.sonarr.entryPoints=web"
+      - "traefik.http.routers.sonarr.rule=Host(`{{ mediaserver_sonarr_hostname }}`)"
       - "traefik.http.routers.sonarr.middlewares=https@file,fwauth@file"
-      - "traefik.http.routers.sonarr.tls=true"
-      - "traefik.http.routers.sonarr.tls.certresolver=le"
+      - "traefik.http.routers.sonarr-secure.entryPoints=web-secure"
+      - "traefik.http.routers.sonarr-secure.rule=Host(`{{ mediaserver_sonarr_hostname }}`)"
+      - "traefik.http.routers.sonarr-secure.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.sonarr-secure.tls=true"
     networks:
       - mediaserver
 
@@ -87,13 +93,15 @@ services:
       - {{ mediaserver_plex_media_folder }}/ongoing:/downloads # download folder
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.radarr.rule=Host(`{{ mediaserver_radarr_hostname }}`)"
       - "traefik.docker.network=mediaserver"
       - "traefik.http.services.radarr.loadbalancer.server.port=7878"
-      - "traefik.http.routers.radarr.entryPoints=web,web-secure"
+      - "traefik.http.routers.radarr.entryPoints=web"
+      - "traefik.http.routers.radarr.rule=Host(`{{ mediaserver_radarr_hostname }}`)"
       - "traefik.http.routers.radarr.middlewares=https@file,fwauth@file"
-      - "traefik.http.routers.radarr.tls=true"
-      - "traefik.http.routers.radarr.tls.certresolver=le"
+      - "traefik.http.routers.radarr-secure.entryPoints=web-secure"
+      - "traefik.http.routers.radarr-secure.rule=Host(`{{ mediaserver_radarr_hostname }}`)"
+      - "traefik.http.routers.radarr-secure.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.radarr-secure.tls=true"
     networks:
       - mediaserver
 
@@ -110,12 +118,18 @@ services:
       ADVERTISE_IP: https://plex.sapling.tdude.co
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.plex.rule=Host(`{{ mediaserver_plex_hostname }}`)"
       - "traefik.docker.network=mediaserver"
       - "traefik.http.services.plex.loadbalancer.server.port=32400"
-      - "traefik.http.routers.plex.entryPoints=web,web-secure,plex"
-      - "traefik.http.routers.plex.tls=true"
-      - "traefik.http.routers.plex.tls.certresolver=le"
+      - "traefik.http.routers.plex.entryPoints=web"
+      - "traefik.http.routers.plex.rule=Host(`{{ mediaserver_plex_hostname }}`)"
+      - "traefik.http.routers.plex.middlewares=https@file"
+      - "traefik.http.routers.plex-secure.entryPoints=web-secure"
+      - "traefik.http.routers.plex-secure.rule=Host(`{{ mediaserver_plex_hostname }}`)"
+      - "traefik.http.routers.plex-secure.middlewares=https@file"
+      - "traefik.http.routers.plex-secure.tls=true"
+      - "traefik.http.routers.plex-plexport.entryPoints=plex"
+      - "traefik.http.routers.plex-plexport.rule=Host(`{{ mediaserver_plex_hostname }}`)"
+      - "traefik.http.routers.plex-plexport.tls=true"
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ mediaserver_plex_config_folder }}:/config # plex database
@@ -137,13 +151,15 @@ services:
       - plex-server
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.tautulli.rule=Host(`{{ mediaserver_tautulli_hostname }}`)"
       - "traefik.docker.network=mediaserver"
       - "traefik.http.services.tautulli.loadbalancer.server.port=8181"
-      - "traefik.http.routers.tautulli.entryPoints=web,web-secure"
+      - "traefik.http.routers.tautulli.entryPoints=web"
+      - "traefik.http.routers.tautulli.rule=Host(`{{ mediaserver_tautulli_hostname }}`)"
       - "traefik.http.routers.tautulli.middlewares=https@file,fwauth@file"
-      - "traefik.http.routers.tautulli.tls=true"
-      - "traefik.http.routers.tautulli.tls.certresolver=le"
+      - "traefik.http.routers.tautulli-secure.entryPoints=web-secure"
+      - "traefik.http.routers.tautulli-secure.rule=Host(`{{ mediaserver_tautulli_hostname }}`)"
+      - "traefik.http.routers.tautulli-secure.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.tautulli-secure.tls=true"
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - {{ mediaserver_tautulli_config_folder }}:/config # tautulli database

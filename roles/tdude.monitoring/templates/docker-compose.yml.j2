@@ -11,13 +11,15 @@ services:
     user: "945:945"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.prometheus.rule=Host(`prometheus.sapling.tdude.co`)"
-      - "traefik.http.routers.prometheus.middlewares=https@file,fwauth@file"
       - "traefik.docker.network=monitoring"
       - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
-      - "traefik.http.routers.prometheus.entryPoints=web,web-secure"
-      - "traefik.http.routers.prometheus.tls=true"
-      - "traefik.http.routers.prometheus.tls.certresolver=le"
+      - "traefik.http.routers.prometheus.entryPoints=web"
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.sapling.tdude.co`)"
+      - "traefik.http.routers.prometheus.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.prometheus-secure.entryPoints=web-secure"
+      - "traefik.http.routers.prometheus-secure.rule=Host(`prometheus.sapling.tdude.co`)"
+      - "traefik.http.routers.prometheus-secure.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.prometheus-secure.tls=true"
     restart: unless-stopped
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -46,13 +48,15 @@ services:
     user: "942:942"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.grafana.rule=Host(`grafana.sapling.tdude.co`)"
-      - "traefik.http.routers.grafana.middlewares=https@file"
       - "traefik.docker.network=monitoring"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
-      - "traefik.http.routers.grafana.entryPoints=web,web-secure"
-      - "traefik.http.routers.grafana.tls=true"
-      - "traefik.http.routers.grafana.tls.certresolver=le"
+      - "traefik.http.routers.grafana.entryPoints=web"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.sapling.tdude.co`)"
+      - "traefik.http.routers.grafana.middlewares=https@file"
+      - "traefik.http.routers.grafana-secure.entryPoints=web-secure"
+      - "traefik.http.routers.grafana-secure.rule=Host(`grafana.sapling.tdude.co`)"
+      - "traefik.http.routers.grafana-secure.middlewares=https@file"
+      - "traefik.http.routers.grafana-secure.tls=true"
     restart: unless-stopped
     networks:
       - monitoring
@@ -62,13 +66,15 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.cadvisor.rule=Host(`cadvisor.sapling.tdude.co`)"
-      - "traefik.http.routers.cadvisor.middlewares=https@file,fwauth@file"
       - "traefik.docker.network=monitoring"
       - "traefik.http.services.cadvisor.loadbalancer.server.port=8080"
-      - "traefik.http.routers.cadvisor.entryPoints=web,web-secure"
-      - "traefik.http.routers.cadvisor.tls=true"
-      - "traefik.http.routers.cadvisor.tls.certresolver=le"
+      - "traefik.http.routers.cadvisor.entryPoints=web"
+      - "traefik.http.routers.cadvisor.rule=Host(`cadvisor.sapling.tdude.co`)"
+      - "traefik.http.routers.cadvisor.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.cadvisor-secure.entryPoints=web-secure"
+      - "traefik.http.routers.cadvisor-secure.rule=Host(`cadvisor.sapling.tdude.co`)"
+      - "traefik.http.routers.cadvisor-secure.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.cadvisor-secure.tls=true"
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw

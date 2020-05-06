@@ -12,18 +12,22 @@ services:
     ports:
       - "158.69.118.62:80:80"
       - "158.69.118.62:443:443"
+      - "158.69.118.62:32400:32400"
       # 2607:5300:60:873e::3 is still required until I figure out a fix for the gitlab ssh port
       - "2607:5300:60:873e::3:80:80"
       - "2607:5300:60:873e::3:443:443"
 
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.entryPoints=web"
       - "traefik.http.routers.dashboard.rule=Host(`monitor.sapling.tdude.co`)"
-      - "traefik.http.routers.dashboard.entryPoints=web,web-secure"
       - "traefik.http.routers.dashboard.middlewares=https@file,fwauth@file"
       - "traefik.http.routers.dashboard.service=api@internal"
-      - "traefik.http.routers.dashboard.tls=true"
-      - "traefik.http.routers.dashboard.tls.certresolver=le"
+      - "traefik.http.routers.dashboard-secure.entryPoints=web-secure"
+      - "traefik.http.routers.dashboard-secure.rule=Host(`monitor.sapling.tdude.co`)"
+      - "traefik.http.routers.dashboard-secure.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.dashboard-secure.service=api@internal"
+      - "traefik.http.routers.dashboard-secure.tls=true"
 
 # Commented out for the moment because the docker socket
 # requires root access. Simply granting the traefik user
@@ -66,11 +70,13 @@ services:
       - "traefik.enable=true"
       - "traefik.http.services.traefikforwardauth.loadbalancer.server.port=4181"
       - "traefik.docker.network=traefik_traefik"
-      - "traefik.http.routers.traefikforwardauth.entryPoints=web,web-secure"
+      - "traefik.http.routers.traefikforwardauth.entryPoints=web"
       - "traefik.http.routers.traefikforwardauth.rule=Host(`auth.sapling.tdude.co`)"
       - "traefik.http.routers.traefikforwardauth.middlewares=https@file,fwauth@file"
-      - "traefik.http.routers.traefikforwardauth.tls=true"
-      - "traefik.http.routers.traefikforwardauth.tls.certresolver=le"
+      - "traefik.http.routers.traefikforwardauth-secure.entryPoints=web-secure"
+      - "traefik.http.routers.traefikforwardauth-secure.rule=Host(`auth.sapling.tdude.co`)"
+      - "traefik.http.routers.traefikforwardauth-secure.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.traefikforwardauth-secure.tls=true"
 
 networks:
   traefik:

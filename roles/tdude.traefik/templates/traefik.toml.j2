@@ -4,12 +4,18 @@
 
   [entryPoints.web-secure]
     address = ":443"
+    [entryPoints.web-secure.http]
+      [entryPoints.web-secure.http.tls]
+      certResolver = "le"
 
   [entryPoints.metrics]
     address = ":8082"
     
   [entryPoints.plex]
     address = ":32400"
+    [entryPoints.plex.http]
+      [entryPoints.plex.http.tls]
+      certResolver = "le"
 
 [certificatesResolvers.le.acme]
   email = "starcraft66@gmail.com"

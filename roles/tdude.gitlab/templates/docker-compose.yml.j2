@@ -50,11 +50,13 @@ services:
       - "traefik.enable=true"
       - "traefik.http.services.gitlab.loadbalancer.server.port=80"
       - "traefik.docker.network=gitlab"
-      - "traefik.http.routers.gitlab.entryPoints=web,web-secure"
-      - "traefik.http.routers.gitlab.middlewares=https@file"
+      - "traefik.http.routers.gitlab.entryPoints=web"
       - "traefik.http.routers.gitlab.rule=Host(`git.tdude.co`)"
-      - "traefik.http.routers.gitlab.tls=true"
-      - "traefik.http.routers.gitlab.tls.certresolver=le"
+      - "traefik.http.routers.gitlab.middlewares=https@file"
+      - "traefik.http.routers.gitlab-secure.entryPoints=web-secure"
+      - "traefik.http.routers.gitlab-secure.rule=Host(`git.tdude.co`)"
+      - "traefik.http.routers.gitlab-secure.middlewares=https@file"
+      - "traefik.http.routers.gitlab-secure.tls=true"
     networks:
       - gitlab
   runner:

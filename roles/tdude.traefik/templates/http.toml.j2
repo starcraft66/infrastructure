@@ -1,6 +1,6 @@
 [http.middlewares]
   [http.middlewares.https.chain]
-      middlewares = ["https-redirect", "sts-headers"]
+      middlewares = ["https-redirect@file", "sts-headers@file"]
   [http.middlewares.https-redirect.redirectScheme]
     scheme = "https"
     port = "443"

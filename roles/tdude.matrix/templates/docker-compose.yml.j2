@@ -70,11 +70,13 @@ services:
       - "traefik.enable=true"
       - "traefik.http.services.matrix.loadbalancer.server.port=80"
       - "traefik.docker.network=matrix_matrix"
+      - "traefik.http.routers.matrix.entryPoints=web"
       - "traefik.http.routers.matrix.rule=Host(`nerdsin.space`,`usercontent.nerdsin.space`)"
-      - "traefik.http.routers.matrix.entryPoints=web,web-secure"
       - "traefik.http.routers.matrix.middlewares=https@file"
-      - "traefik.http.routers.matrix.tls=true"
-      - "traefik.http.routers.matrix.tls.certresolver=le"
+      - "traefik.http.routers.matrix-secure.entryPoints=web-secure"
+      - "traefik.http.routers.matrix-secure.rule=Host(`nerdsin.space`,`usercontent.nerdsin.space`)"
+      - "traefik.http.routers.matrix-secure.middlewares=https@file"
+      - "traefik.http.routers.matrix-secure.tls=true"
   minio:
     container_name: matrix_minio
     image: minio/minio:{{ matrix_minio_version }}
@@ -98,11 +100,13 @@ services:
       - "traefik.enable=true"
       - "traefik.http.services.matrix-minio.loadbalancer.server.port=80"
       - "traefik.docker.network=matrix_matrix"
+      - "traefik.http.routers.matrix-minio.entryPoints=web"
       - "traefik.http.routers.matrix-minio.rule=Host(`minio.nerdsin.space`)"
-      - "traefik.http.routers.matrix-minio.entryPoints=web,web-secure"
       - "traefik.http.routers.matrix-minio.middlewares=https@file,fwauth@file"
-      - "traefik.http.routers.matrix-minio.tls=true"
-      - "traefik.http.routers.matrix-minio.tls.certresolver=le"
+      - "traefik.http.routers.matrix-minio-secure.entryPoints=web-secure"
+      - "traefik.http.routers.matrix-minio-secure.rule=Host(`minio.nerdsin.space`)"
+      - "traefik.http.routers.matrix-minio-secure.middlewares=https@file,fwauth@file"
+      - "traefik.http.routers.matrix-minio-secure.tls=true"
   matrix-media-repo:
     container_name: matrix_media_repo
     image: turt2live/matrix-media-repo:{{ matrix_media_repo_version }}
