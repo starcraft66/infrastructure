@@ -210,15 +210,6 @@ resource "cloudflare_record" "oldintranet_tdude_co-2f4d564bdc7271e15cf2fa515993d
   proxied = false
 }
 
-resource "cloudflare_record" "plank_tdude_co-e0081d2b88aef2a57752a410cda9a7af" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "plank"
-  value   = "62.210.251.78"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "plex_sapling_tdude_co-22776aada2f4b80110b76a14a879fc04" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "plex.sapling"
@@ -303,7 +294,7 @@ resource "cloudflare_record" "sonarr_sapling_tdude_co-15e7f8ac512941d0575a1ff6cb
 resource "cloudflare_record" "status_tdude_co-759cab2fd5747721744d19e9f1b05f53" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "status"
-  value   = "62.210.251.78"
+  value   = "158.69.118.62"
   type    = "A"
   ttl     = 1
   proxied = false
@@ -624,15 +615,6 @@ resource "cloudflare_record" "oldintranet_tdude_co-7d73081223ecdfcc503925a097b40
   proxied = false
 }
 
-resource "cloudflare_record" "plank_tdude_co-25805463805ad327f2a594b5d78ff0cf" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "plank"
-  value   = "2001:bc8:2517:100::1"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "plex_sapling_tdude_co-cc8e48931282ecb8338a0a274380c960" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "plex.sapling"
@@ -708,7 +690,7 @@ resource "cloudflare_record" "sonarr_sapling_tdude_co-fe38617f9a745a5b2c48bffc2c
 resource "cloudflare_record" "status_tdude_co-53417a618617866899b88237f0a2d1b5" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "status"
-  value   = "2001:bc8:2517:122::2"
+  value   = "2607:5300:60:873e:8::2"
   type    = "AAAA"
   ttl     = 1
   proxied = false
