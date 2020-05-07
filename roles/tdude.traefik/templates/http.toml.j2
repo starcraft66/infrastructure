@@ -10,6 +10,11 @@
     stspreload = true
     stsseconds = 315360000
     forcestsheader = true
+  [http.middlewares.cringy-404.errors]
+    status = ["404"]
+    service = "cringy-404-page@docker"
+    query = "/index.html"
+#    query = "/{status}.html" This will be used in the future
   [http.middlewares.fwauth.forwardAuth]
     address = "http://traefik-forward-auth:4181"
     authResponseHeaders = ["X-Forwarded-User"]

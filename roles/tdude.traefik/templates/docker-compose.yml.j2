@@ -78,6 +78,25 @@ services:
       - "traefik.http.routers.traefikforwardauth-secure.middlewares=https@file,fwauth@file"
       - "traefik.http.routers.traefikforwardauth-secure.tls=true"
 
+  cringy-404-page:
+    image: notarock/cringy-404-page
+    container_name: cringy-404-page
+    networks:
+      traefik:
+        ipv4_address: 10.44.0.4
+        ipv6_address: "2607:5300:60:873e:8::4"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.cringy-404-page.loadbalancer.server.port=80"
+      - "traefik.docker.network=traefik_traefik"
+      - "traefik.http.routers.errorpages.entryPoints=web"
+      - "traefik.http.routers.errorpages.rule=Host(`errorpages.tdude.co`)"
+      - "traefik.http.routers.errorpages.middlewares=https@file"
+      - "traefik.http.routers.errorpages-secure.entryPoints=web-secure"
+      - "traefik.http.routers.errorpages-secure.rule=Host(`errorpages.tdude.co`)"
+      - "traefik.http.routers.errorpages-secure.middlewares=https@file"
+      - "traefik.http.routers.errorpages-secure.tls=true"
+
 networks:
   traefik:
     driver: bridge
