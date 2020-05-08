@@ -30,15 +30,6 @@ resource "cloudflare_record" "turn_nerdsin_space-772814e8fbfef2c39c8977e269d3b3a
   proxied = false
 }
 
-resource "cloudflare_record" "usercontent_nerdsin_space-b1058d837bdb8df27545e9db6e8d9b8a" {
-  zone_id = cloudflare_zone.nerdsin_space.id
-  name    = "usercontent"
-  value   = "158.69.118.62"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "nerdsin_space-3ac2691767564a8029f9dcaefe7c7b01" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "nerdsin.space"
@@ -61,15 +52,6 @@ resource "cloudflare_record" "turn_nerdsin_space-f8cb836524a131dc216fedbeabc5050
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "turn"
   value   = "2607:5300:60:873e::2"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "usercontent_nerdsin_space-16afa51e9400152963eb1f6d9a0baf28" {
-  zone_id = cloudflare_zone.nerdsin_space.id
-  name    = "usercontent"
-  value   = "2607:5300:60:873e:8::2"
   type    = "AAAA"
   ttl     = 1
   proxied = false

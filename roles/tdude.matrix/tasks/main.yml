@@ -31,7 +31,6 @@
     - "{{ matrix_appservice_webhooks_data_folder }}"
     - "{{ matrix_synapse_data_folder }}"
     - "{{ matrix_riot_data_folder }}"
-    - "{{ matrix_riot_usercontent_folder }}"
     - "{{ matrix_nginx_data_folder }}"
     - "{{ matrix_media_repo_data_folder }}"
 
@@ -115,15 +114,6 @@
   template:
     src: "nginx/matrix.conf.j2"
     dest: "{{ matrix_nginx_data_folder }}/matrix.conf"
-    mode: 0660
-    owner: 101
-    group: 101
-  notify: restart nginx
-
-- name: Copy the usercontent v1.html file
-  get_url:
-    url: "https://raw.githubusercontent.com/matrix-org/usercontent/master/v1.html"
-    dest: "{{ matrix_riot_usercontent_folder }}/v1.html"
     mode: 0660
     owner: 101
     group: 101

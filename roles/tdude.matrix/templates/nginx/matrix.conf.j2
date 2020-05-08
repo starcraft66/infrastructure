@@ -2,28 +2,6 @@ server {
 # regular vhost
     listen 0.0.0.0:80;
     listen [::]:80;
-    server_name usercontent.{{ matrix_synapse_server_name }};
-    server_tokens off;
-
-    access_log  /dev/stdout;
-    error_log   /dev/stderr;
-
-    location / {
-        root   /usr/share/nginx/html/usercontent;
-        index  v1.html;
-    }
-
-    error_page 404 /404.html;
-    error_page 500 502 503 504 /50x.html;
-    location = /50x.html {
-        root /usr/share/nginx/html;
-    }
-}
-
-server {
-# regular vhost
-    listen 0.0.0.0:80;
-    listen [::]:80;
     server_name {{ matrix_synapse_server_name }};
     server_tokens off;
 
