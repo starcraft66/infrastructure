@@ -1,6 +1,13 @@
 {
-    "default_hs_url": "https://{{ matrix_synapse_server_name }}",
-    "default_is_url": "https://vector.im",
+    "default_server_config": {
+        "m.homeserver": {
+            "base_url": "https://{{ matrix_synapse_server_name }}",
+            "server_name": "{{ matrix_synapse_server_name }}"
+        },
+        "m.identity_server": {
+            "base_url": ""
+        }
+    },
     "disable_custom_urls": false,
     "disable_guests": false,
     "disable_login_language_selector": false,
@@ -8,15 +15,23 @@
     "brand": "Riot",
     "integrations_ui_url": "https://scalar.vector.im/",
     "integrations_rest_url": "https://scalar.vector.im/api",
+    "integrations_widgets_urls": [
+        "https://scalar.vector.im/_matrix/integrations/v1",
+        "https://scalar.vector.im/api",
+        "https://scalar-staging.vector.im/_matrix/integrations/v1",
+        "https://scalar-staging.vector.im/api",
+        "https://scalar-staging.riot.im/scalar/api"
+    ],
     "bug_report_endpoint_url": "https://riot.im/bugreports/submit",
     "defaultCountryCode": "CA",
     "showLabsSettings": false,
     "features": {
-        "feature_groups": "labs",
-        "feature_pinning": "labs"
+        "feature_pinning": "labs",
+        "feature_custom_status": "labs",
+        "feature_custom_tags": "labs",
+        "feature_state_counters": "labs"
     },
     "default_federate": true,
-    "welcomePageUrl": "home.html",
     "default_theme": "{{ matrix_riot_default_theme }}",
     "roomDirectory": {
         "servers": [
@@ -28,7 +43,13 @@
     "welcomeUserId": "@riot-bot:matrix.org",
     "piwik": false,
     "enable_presence_by_hs_url": {
-        "https://matrix.org": false
+        "https://matrix.org": false,
+        "https://matrix-client.matrix.org": false
     },
-    "cross_origin_renderer_url": "https://usercontent.{{ matrix_synapse_server_name }}/v1.html"
+    "settingDefaults": {
+        "breadcrumbs": true
+    },
+    "jitsi": {
+        "preferredDomain": "jitsi.riot.im"
+    }
 }
