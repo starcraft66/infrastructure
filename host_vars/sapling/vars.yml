@@ -368,7 +368,7 @@ borg_keep_monthly: "6"
 
 borg_repokey: "{{ vault_borg_repokey }}"
 
-matrix_minio_version: "latest"
+matrix_minio_version: "RELEASE.2020-05-06T23-23-25Z" # last version with b2 gateway support
 matrix_minio_b2_account_id: "{{ vault_matrix_minio_b2_account_id }}"
 matrix_minio_b2_application_key: "{{ vault_matrix_minio_b2_application_key }}"
 
