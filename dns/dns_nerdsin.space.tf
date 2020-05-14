@@ -85,6 +85,15 @@ resource "cloudflare_record" "minio_nerdsin_space_AAAA" {
   proxied = false
 }
 
+resource "cloudflare_record" "_github-challenge-nerdsinspace_nerdsin_space_TXT" {
+  zone_id = cloudflare_zone.nerdsin_space.id
+  name    = "_github-challenge-nerdsinspace"
+  value   = "d792693e34"
+  type    = "TXT"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "_matrix__tcp_nerdsin_space-aa2b554a2832c865d14945123b62160a" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "_matrix._tcp"
