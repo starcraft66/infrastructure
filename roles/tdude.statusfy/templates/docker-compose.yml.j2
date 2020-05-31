@@ -15,6 +15,7 @@ services:
       - "traefik.http.routers.statusfy.rule=Host(`status.tdude.co`)"
       - "traefik.http.routers.statusfy.middlewares=https@file"
       - "traefik.http.routers.statusfy-secure.entryPoints=web-secure"
+      - "traefik.http.routers.statusfy-secure.tls.certresolver=le"
       - "traefik.http.routers.statusfy-secure.rule=Host(`status.tdude.co`)"
       - "traefik.http.routers.statusfy-secure.middlewares=https@file"
       - "traefik.http.routers.statusfy-secure.tls=true"

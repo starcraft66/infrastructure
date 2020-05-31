@@ -22,6 +22,7 @@ services:
       - "traefik.http.routers.lolisafe.rule=Host(`lolisafe.tdude.co`,`l.trs.tn`)"
       - "traefik.http.routers.lolisafe.middlewares=https@file,cringy-404@file"
       - "traefik.http.routers.lolisafe-secure.entryPoints=web-secure"
+      - "traefik.http.routers.lolisafe-secure.tls.certresolver=le"
       - "traefik.http.routers.lolisafe-secure.rule=Host(`lolisafe.tdude.co`,`l.trs.tn`)"
       - "traefik.http.routers.lolisafe-secure.middlewares=https@file,cringy-404@file"
       - "traefik.http.routers.lolisafe-secure.tls=true"
