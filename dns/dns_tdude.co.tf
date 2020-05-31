@@ -120,6 +120,15 @@ resource "cloudflare_record" "git_tdude_co-15e863f9cc46997d6dff0c6f6d9d6b8b" {
   proxied = false
 }
 
+resource "cloudflare_record" "registry_tdude_co-A" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "registry"
+  value   = "158.69.118.62"
+  type    = "A"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "grafana_sapling_tdude_co-c65600b97a15663df0fed97aa6f5fd33" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "grafana.sapling"
@@ -492,6 +501,15 @@ resource "cloudflare_record" "fleetfoot_235_tdude_co-0682464601437aabb4960f25ecb
 resource "cloudflare_record" "git_tdude_co-9cf4851ffe020afbb5e820e79902c356" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "git"
+  value   = "2607:5300:60:873e::3"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "registry_tdude_co-AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "registry"
   value   = "2607:5300:60:873e::3"
   type    = "AAAA"
   ttl     = 1
