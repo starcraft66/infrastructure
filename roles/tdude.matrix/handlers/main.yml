@@ -45,6 +45,15 @@
     services:
       - matrix-media-repo
 
+- name: restart mjolnir
+  docker_compose:
+    project_src: "{{ matrix_installation_folder }}"
+    files: docker-compose.yml
+    state: present
+    restarted: yes
+    services:
+      - mjolnir
+
 - name: restart coturn
   systemd:
     name: coturn

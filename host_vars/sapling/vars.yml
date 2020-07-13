@@ -399,3 +399,8 @@ matrix_media_repo_s3_endpoint: minio
 matrix_media_repo_s3_tls: false
 matrix_media_repo_s3_bucket: "nerdsinspace-matrix-media-repo-prod"
 matrix_media_repo_shared_secret_auth: "{{ vault_matrix_media_repo_shared_secret_auth }}"
+
+matrix_mjolnir_data_folder: "{{ matrix_installation_folder }}/mjolnir"
+matrix_mjolnir_config_folder: "{{ matrix_mjolnir_data_folder }}/config"
+matrix_mjolnir_management_room: "#jannies:nerdsin.space"
+matrix_mjolnir_access_token: "{{ vault_matrix_mjolnir_access_token }}"

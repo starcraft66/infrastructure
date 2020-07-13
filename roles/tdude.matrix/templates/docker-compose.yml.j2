@@ -124,6 +124,23 @@ services:
       options:
         max-file: "5"
         max-size: "50m"
+  mjolnir:
+    container_name: matrix_mjolnir
+    image: matrixdotorg/mjolnir
+    user: "927:927"
+    volumes:
+      - "{{ matrix_mjolnir_data_folder }}:/data"
+    networks:
+      monitoring:
+      matrix:
+        ipv4_address: 10.72.128.9
+        ipv6_address: "2607:5300:60:873e:7::9"
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "50m"
 
 networks:
   monitoring:
