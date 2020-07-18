@@ -64,3 +64,4 @@ matrix_mjolnir_data_folder: "{{ matrix_installation_folder }}/mjolnir"
 matrix_mjolnir_config_folder: "{{ matrix_mjolnir_data_folder }}/config"
 matrix_mjolnir_management_room: "#jannies:nerdsin.space"
 matrix_mjolnir_access_token: ""
+matrix_mjolnir_protect_all_joined_rooms: false
