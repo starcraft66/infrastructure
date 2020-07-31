@@ -1,0 +1,31 @@
+- name: Enable ipv4 forwarding
+  sysctl:
+    sysctl_file: "{{ sysctl_file_path }}"
+    name: net.ipv4.ip_forward
+    value: "1"
+    state: present
+    reload: yes
+
+- name: Enable ipv6 forwarding
+  sysctl:
+    sysctl_file: "{{ sysctl_file_path }}"
+    name: net.ipv6.conf.default.forwarding
+    value: "1"
+    state: present
+    reload: yes
+
+- name: Enable bridge nf calling iptables
+  sysctl:
+    sysctl_file: "{{ sysctl_file_path }}"
+    name: net.bridge.bridge-nf-call-iptables
+    value: "1"
+    state: present
+    reload: yes
+
+- name: Enable bridge nf calling ip6tables
+  sysctl:
+    sysctl_file: "{{ sysctl_file_path }}"
+    name: net.bridge.bridge-nf-call-ip6tables
+    value: "1"
+    state: present
+    reload: yes

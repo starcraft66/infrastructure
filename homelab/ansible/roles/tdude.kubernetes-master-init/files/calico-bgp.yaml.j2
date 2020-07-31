@@ -1,0 +1,16 @@
+apiVersion: projectcalico.org/v3
+kind: BGPConfiguration
+metadata:
+  name: default
+spec:
+  logSeverityScreen: Info
+  nodeToNodeMeshEnabled: {{ node_to_node_mesh }}
+  asNumber: {{ calico_as }}
+---
+apiVersion: projectcalico.org/v3
+kind: BGPPeer
+metadata:
+  name: "{{ router_name }}"
+spec:
+  peerIP: {{ router_peer_ip}}
+  asNumber: {{ router_as }}

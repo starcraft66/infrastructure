@@ -1,0 +1,44 @@
+
+- name: "Run the kubeadm init (first phase)"
+  shell: >-
+    kubeadm init --pod-network-cidr={{ pod-network-cidr }} \
+    --apiserver-advertise-address={{ apiserver-advertise-address }} \
+    --service-cidr={{ service-cidr }} \
+    phase control-plane all \
+    --apiserver-extra-args='bind-address=::,external-hostname='$(hostname)',etcd-servers=https://[::1]:2379' \
+    --controller-manager-extra-args='bind-address=::' \
+    --scheduler-extra-args='bind-address=::'
+
+- name: Remove IPv4 addresses in controle-plane manifests
+  replace:
+    path: "{{ item }}"
+    regexp: '127\.0\.0\.1'
+    replace: '::1'
+  with_items:
+    - /etc/kubernetes/manifests/kube-scheduler.yaml
+    - /etc/kubernetes/manifests/kube-controller-manager.yaml
+    - /etc/kubernetes/manifests/etcd.yaml
+
+- name: "Run the kubeadm init (second phase)"
+  shell: >-
+    kubeadm init phase etcd local
+
+- name: Remove IPv4 addresse in etcd manifest
+  replace:
+    path: /etc/kubernetes/manifests/etcd.yaml
+    regexp: '127\.0\.0\.1'
+    replace: '::1'
+
+- name: Fix [::1] in etcd manifest
+  replace:
+    path: "{{ item }}"
+    regexp: '\[\[::1\]\]'
+    replace: '[::1]'
+
+- name: "Run the kubeadm init (third phase)"
+  shell: >-
+    kubeadm init --pod-network-cidr={{ pod-network-cidr }} \
+    --apiserver-advertise-address={{ apiserver-advertise-address }} \
+    --service-cidr={{ service-cidr }} \
+    --skip-phases=control-plane,etcd \
+    --ignore-preflight-errors=FileAvailable--etc-kubernetes-manifests-kube-apiserver.yaml,FileAvailable--etc-kubernetes-manifests-kube-controller-manager.yaml,FileAvailable--etc-kubernetes-manifests-kube-scheduler.yaml,FileAvailable--etc-kubernetes-manifests-etcd.yaml,DirAvailable--var-lib-etcd

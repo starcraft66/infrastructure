@@ -1,0 +1,29 @@
+- name: Install kubernetes package signing key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Install kubernetes apt repo
+  apt_repository:
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+    filename: kubernetes
+
+- name: Install required packages
+  apt:
+    pkg:
+    - apt-transport-https
+    - curl
+    - kubelet
+    - kubeadm
+    - containerd
+    - kubectl
+
+- name: Hold back package upgrades for kubernetes control-plane (we will update manually as-needed)
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  with_items:
+    - kubelet
+    - kubeadm
+    - kubectl

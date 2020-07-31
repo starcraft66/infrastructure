@@ -1,0 +1,40 @@
+--- calico.yaml 2020-07-31 01:55:53.832351261 +0000
++++ calico_custom.yaml  2020-07-30 20:04:53.167646197 +0000
+@@ -32,7 +32,9 @@
+           "nodename": "__KUBERNETES_NODE_NAME__",
+           "mtu": __CNI_MTU__,
+           "ipam": {
+-              "type": "calico-ipam"
++              "type": "calico-ipam",
++              "assign_ipv4": "false",
++              "assign_ipv6": "true"
+           },
+           "policy": {
+               "type": "k8s"
+@@ -3548,10 +3550,12 @@
+               value: "k8s,bgp"
+             # Auto-detect the BGP IP address.
+             - name: IP
+-              value: "autodetect"
++              value: "none"
+             # Enable IPIP
+             - name: CALICO_IPV4POOL_IPIP
+               value: "Always"
++            - name: CALICO_ROUTER_ID
++              value: "hash"
+             # Enable or Disable VXLAN on the default IP pool.
+             - name: CALICO_IPV4POOL_VXLAN
+               value: "Never"
+@@ -3577,7 +3581,11 @@
+             # chosen from this range. Changing this value after installation will have
+             # no effect. This should fall within `--cluster-cidr`.
+             # - name: CALICO_IPV4POOL_CIDR
+-            #   value: "192.168.0.0/16"
++            #   value: "10.244.0.0/16"
++            - name: CALICO_IPV6POOL_CIDR
++              value: "::/64"
++            - name: IP6
++              value: "autodetect"
+             # Disable file logging so `kubectl logs` works.
+             - name: CALICO_DISABLE_FILE_LOGGING
+               value: "true"

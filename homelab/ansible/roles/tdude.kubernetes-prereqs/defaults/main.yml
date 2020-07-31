@@ -1,0 +1,2 @@
+---
+sysctl_file_path: "/etc/sysctl.d/100-k8s.conf"

@@ -1,0 +1,9 @@
+calicoctl_version: 3.14.2
+pod-network-cidr: "2607:fa48:6ed8:8a54:1::/80"
+apiserver-advertise-address: "2607:fa48:6ed8:8a54::100:1"
+service-cidr: "2607:fa48:6ed8:8a54:2::/112"
+router_as: 64512
+router_peer_ip: "2607:fa48:6ed8:8a54::1"
+router_name: "235-gw"
+calico_as: 64513
+node_to_node_mesh: false
