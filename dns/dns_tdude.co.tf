@@ -24,7 +24,7 @@ resource "cloudflare_record" "_235_tdude_co-e8f98ca862faaf9db482c45216a1493b" {
 resource "cloudflare_record" "_305-1700-gw_305-1700_tdude_co-44620ea4a39eb01253f28d303a47290f" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "305-1700-gw.305-1700"
-  value   = "107.190.40.244"
+  value   = "107.179.249.99"
   type    = "A"
   ttl     = 1
   proxied = false
@@ -33,7 +33,7 @@ resource "cloudflare_record" "_305-1700-gw_305-1700_tdude_co-44620ea4a39eb01253f
 resource "cloudflare_record" "_305-1700_tdude_co-f9bbec63e0fc407399c793115267c239" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "305-1700"
-  value   = "107.190.40.244"
+  value   = "107.179.249.99"
   type    = "A"
   ttl     = 1
   proxied = false
