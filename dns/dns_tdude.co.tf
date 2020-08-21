@@ -228,15 +228,6 @@ resource "cloudflare_record" "pomf-files_tdude_co-fb3af32c70d3bd5cde57cb9afa4f38
   proxied = false
 }
 
-resource "cloudflare_record" "pomf_tdude_co-86e592db9dfdb1bf1404a4c6dc21f181" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "pomf"
-  value   = "24.225.136.165"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "prometheus_sapling_tdude_co-f0e3d634958f2062196d09cb9240fc5f" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "prometheus.sapling"
@@ -636,15 +627,6 @@ resource "cloudflare_record" "tautulli_sapling_tdude_co-AAAA" {
 resource "cloudflare_record" "pomf-files_tdude_co-b45b58aad36c7c11b38bb58f121df274" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "pomf-files"
-  value   = "2607:fa48:6ed8:8a51:ca0a:a9ff:fe04:3b5e"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "pomf_tdude_co-90fff8545cb09632324adcc17f60b05d" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "pomf"
   value   = "2607:fa48:6ed8:8a51:ca0a:a9ff:fe04:3b5e"
   type    = "AAAA"
   ttl     = 1
