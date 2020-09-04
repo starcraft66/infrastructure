@@ -330,7 +330,7 @@ resource "cloudflare_record" "www_tdude_co-87e4f41d905d3b6116f38c416dbbd036" {
 resource "cloudflare_record" "xoa_tdude_co-1d4903868174411a0e2c98a1cd21d35e" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "xoa"
-  value   = "172.16.29.61"
+  value   = "172.16.29.43"
   type    = "A"
   ttl     = 1
   proxied = false
