@@ -920,6 +920,15 @@ resource "cloudflare_record" "unifi_305-1700_tdude_co-70b2c52d0250907a7823637506
   proxied = false
 }
 
+resource "cloudflare_record" "unifi_260_tdude_co" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "unifi.260"
+  value   = "unifi.tdude.co"
+  type    = "CNAME"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "unms_tdude_co-6366e7b20544a759d83e9d30cb77e84d" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "unms"
