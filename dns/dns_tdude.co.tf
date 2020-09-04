@@ -723,6 +723,15 @@ resource "cloudflare_record" "unifi_tdude_co-36df8291a214ceb05d7dd011cd08dff1" {
   proxied = false
 }
 
+resource "cloudflare_record" "unifi_tdude_co_A" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "unifi"
+  value   = "172.16.29.20"
+  type    = "A"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "www_tdude_co-110da07cb7c67be474675d1b2b7a6af6" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "www"
