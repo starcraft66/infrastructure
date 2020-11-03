@@ -389,7 +389,7 @@ matrix_minio_version: "RELEASE.2020-05-06T23-23-25Z" # last version with b2 gate
 matrix_minio_b2_account_id: "{{ vault_matrix_minio_b2_account_id }}"
 matrix_minio_b2_application_key: "{{ vault_matrix_minio_b2_application_key }}"
 
-matrix_media_repo_version: "v1.2.0"
+matrix_media_repo_version: "v1.2.1"
 matrix_media_repo_postgres_db: matrix_media_repo
 matrix_media_repo_postgres_host: matrix_postgres
 matrix_media_repo_postgres_user: matrix_media_repo_user
