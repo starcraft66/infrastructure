@@ -31,13 +31,24 @@
     - "{{ prometheus_data_folder }}"
     - "{{ prometheus_config_folder }}"
 
-- name: Prometheus > Install the synapse rules file
+- name: Prometheus > Install rules from file
   get_url:
     url: https://raw.githubusercontent.com/matrix-org/synapse/master/contrib/prometheus/synapse-v2.rules
     dest: "{{ prometheus_config_folder }}/synapse-v2.rules"
     mode: 0644
     owner: 945
     group: 945
+  notify: restart prometheus
+
+- name: Prometheus > Install rules from url
+  get_url:
+    url: https://raw.githubusercontent.com/matrix-org/synapse/master/contrib/prometheus/synapse-v2.rules
+    dest: "{{ prometheus_config_folder }}/synapse-v2.rules"
+    mode: 0644
+    owner: 945
+    group: 945
+  with_items:
+    - 
   notify: restart prometheus
 
 - name: Prometheus > Template the prometheus config

@@ -4,20 +4,20 @@
   become: True
 
   roles:
-    - { role: tdude.ndppd }
-    - { role: weareinteractive.ufw }
-    - { role: manala.apt }
-    - { role: azavea.docker }
-    - { role: ericsysmin.chrony }
-    - { role: tdude.core }
-    - { role: tdude.minecraft-discord-bridge }
-    - { role: tdude.kerio }
-    - { role: clutterbox.dehydrated }
-    - { role: tdude.mediaserver }
-    - { role: tdude.wireguard }
-    - { role: tdude.statusfy }
-    - { role: tdude.gitlab }
-    - { role: tdude.monitoring }
+    # - { role: tdude.ndppd }
+    # - { role: weareinteractive.ufw }
+    # - { role: manala.apt }
+    # - { role: azavea.docker }
+    # - { role: ericsysmin.chrony }
+    # - { role: tdude.core }
+    # - { role: tdude.minecraft-discord-bridge }
+    # - { role: tdude.kerio }
+    # - { role: clutterbox.dehydrated }
+    # - { role: tdude.mediaserver }
+    # - { role: tdude.wireguard }
+    # - { role: tdude.statusfy }
+    # - { role: tdude.gitlab }
+    # - { role: tdude.monitoring }
     - { role: tdude.matrix }
-    - { role: tdude.lolisafe }
-    - { role: tdude.traefik }
+    # - { role: tdude.lolisafe }
+    # - { role: tdude.traefik }

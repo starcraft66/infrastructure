@@ -25,10 +25,12 @@ matrix_synapse_postgres_password: "{{ vault_matrix_synapse_postgres_password }}"
 matrix_synapse_appservices:
   - /data/appservice-registration-webhooks.yaml
 
+matrix_synapse_require_email_validation: false
+
 matrix_synapse_enable_media_repo: true
 
-matrix_riot_version: latest
-matrix_riot_default_theme: dark
+matrix_element_version: latest
+matrix_element_default_theme: dark
 
 matrix_appservice_webhooks_version: latest
 
@@ -37,7 +39,7 @@ matrix_postgres_version: 10
 matrix_installation_folder: "/opt/matrix"
 matrix_appservice_webhooks_data_folder: "{{ matrix_installation_folder }}/matrix-appservice-webhooks"
 matrix_synapse_data_folder: "{{ matrix_installation_folder }}/synapse"
-matrix_riot_data_folder: "{{ matrix_installation_folder }}/riot"
+matrix_element_data_folder: "{{ matrix_installation_folder }}/element"
 matrix_nginx_data_folder: "{{ matrix_installation_folder }}/nginx"
 matrix_postgres_data_folder: "{{ matrix_installation_folder }}/postgres"
 matrix_media_repo_data_folder: "{{ matrix_installation_folder }}/matrix-media-repo"
@@ -65,3 +67,38 @@ matrix_mjolnir_config_folder: "{{ matrix_mjolnir_data_folder }}/config"
 matrix_mjolnir_management_room: "#jannies:nerdsin.space"
 matrix_mjolnir_access_token: ""
 matrix_mjolnir_protect_all_joined_rooms: false
+
+matrix_ma1sd_domain_blacklist:
+  - "mailinator.com"
+
+matrix_smtp_host:
+matrix_smtp_port:
+matrix_smtp_user:
+matrix_smtp_pass:
+
+matrix_synapse_email_enable_notifs: true
+matrix_synapse_email_enable_notifs_for_new_users: false
+matrix_synapse_email_notif_from: "Your Friendly %(app)s homeserver <noreply@example.com>"
+matrix_synapse_email_subject_message_from_person_in_room: "[%(app)s] You have a message on %(app)s from %(person)s in the %(room)s room..."
+matrix_synapse_email_subject_message_from_person: "[%(app)s] You have a message on %(app)s from %(person)s..."
+matrix_synapse_email_subject_messages_from_person: "[%(app)s] You have messages on %(app)s from %(person)s..."
+matrix_synapse_email_subject_messages_in_room: "[%(app)s] You have messages on %(app)s in the %(room)s room..."
+matrix_synapse_email_subject_messages_in_room_and_others: "[%(app)s] You have messages on %(app)s in the %(room)s room and others..."
+matrix_synapse_email_subject_messages_from_person_and_others: "[%(app)s] You have messages on %(app)s from %(person)s and others..."
+matrix_synapse_email_subject_invite_from_person_to_room: "[%(app)s] %(person)s has invited you to join the %(room)s room on %(app)s..."
+matrix_synapse_email_subject_invite_from_person: "[%(app)s] %(person)s has invited you to chat on %(app)s..."
+matrix_synapse_email_subject_password_reset: "[%(server_name)s] Password reset"
+matrix_synapse_email_subject_email_validation: "[%(server_name)s] Validate your email"
+matrix_synapse_app_name: "Nerds in Space"
+matrix_synapse_client_url: "https://{{ matrix_synapse_server_name }}"
+matrix_synapse_validation_token_lifetime: "15m"
+matrix_synapse_invite_client_location: "{{ matrix_synapse_client_url }}"
+
+matrix_ma1sd_postgres_db:
+matrix_ma1sd_postgres_host:
+matrix_ma1sd_postgres_port:
+matrix_ma1sd_postgres_user:
+matrix_ma1sd_postgres_pass:
+matrix_ma1sd_matrix_api_v1: false
+matrix_ma1sd_matrix_api_v2: true
+matrix_ma1sd_email: 
