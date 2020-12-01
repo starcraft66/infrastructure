@@ -1,4 +1,9 @@
 ---
+- name: Create tristan group
+  group:
+    name: tristan
+    state: present
+
 - name: Create a login user
   user:
     name: "{{ tdude_core_username }}"

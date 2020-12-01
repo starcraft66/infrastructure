@@ -14,11 +14,11 @@ services:
       - "traefik.docker.network=monitoring"
       - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
       - "traefik.http.routers.prometheus.entryPoints=web"
-      - "traefik.http.routers.prometheus.rule=Host(`prometheus.sapling.tdude.co`)"
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.bedrock.tdude.co`)"
       - "traefik.http.routers.prometheus.middlewares=https@file,fwauth@file"
       - "traefik.http.routers.prometheus-secure.entryPoints=web-secure"
       - "traefik.http.routers.prometheus-secure.tls.certresolver=le"
-      - "traefik.http.routers.prometheus-secure.rule=Host(`prometheus.sapling.tdude.co`)"
+      - "traefik.http.routers.prometheus-secure.rule=Host(`prometheus.bedrock.tdude.co`)"
       - "traefik.http.routers.prometheus-secure.middlewares=https@file,fwauth@file"
       - "traefik.http.routers.prometheus-secure.tls=true"
     restart: unless-stopped
@@ -35,8 +35,8 @@ services:
     environment:
       GF_SERVER_HTTP_PORT: 3000
       GF_SERVER_HTTP_PROTOCOL: http
-      GF_SERVER_DOMAIN: grafana.sapling.tdude.co
-      GF_SERVER_ROOT_URL: https://grafana.sapling.tdude.co/
+      GF_SERVER_DOMAIN: grafana.bedrock.tdude.co
+      GF_SERVER_ROOT_URL: https://grafana.bedrock.tdude.co/
       GF_USERS_ALLOW_SIGN_UP: "false"
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_AUTH_ANONYMOUS_ORG_NAME: "anonymous"
@@ -52,11 +52,11 @@ services:
       - "traefik.docker.network=monitoring"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
       - "traefik.http.routers.grafana.entryPoints=web"
-      - "traefik.http.routers.grafana.rule=Host(`grafana.sapling.tdude.co`)"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.bedrock.tdude.co`)"
       - "traefik.http.routers.grafana.middlewares=https@file"
       - "traefik.http.routers.grafana-secure.entryPoints=web-secure"
       - "traefik.http.routers.grafana-secure.tls.certresolver=le"
-      - "traefik.http.routers.grafana-secure.rule=Host(`grafana.sapling.tdude.co`)"
+      - "traefik.http.routers.grafana-secure.rule=Host(`grafana.bedrock.tdude.co`)"
       - "traefik.http.routers.grafana-secure.middlewares=https@file"
       - "traefik.http.routers.grafana-secure.tls=true"
     restart: unless-stopped
@@ -71,11 +71,11 @@ services:
       - "traefik.docker.network=monitoring"
       - "traefik.http.services.cadvisor.loadbalancer.server.port=8080"
       - "traefik.http.routers.cadvisor.entryPoints=web"
-      - "traefik.http.routers.cadvisor.rule=Host(`cadvisor.sapling.tdude.co`)"
+      - "traefik.http.routers.cadvisor.rule=Host(`cadvisor.bedrock.tdude.co`)"
       - "traefik.http.routers.cadvisor.middlewares=https@file,fwauth@file"
       - "traefik.http.routers.cadvisor-secure.entryPoints=web-secure"
       - "traefik.http.routers.cadvisor-secure.tls.certresolver=le"
-      - "traefik.http.routers.cadvisor-secure.rule=Host(`cadvisor.sapling.tdude.co`)"
+      - "traefik.http.routers.cadvisor-secure.rule=Host(`cadvisor.bedrock.tdude.co`)"
       - "traefik.http.routers.cadvisor-secure.middlewares=https@file,fwauth@file"
       - "traefik.http.routers.cadvisor-secure.tls=true"
     volumes:

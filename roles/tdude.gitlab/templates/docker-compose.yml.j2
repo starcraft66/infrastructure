@@ -54,9 +54,9 @@ services:
           }
         }
     ports:
-      - '158.69.118.62:{{ gitlab_ssh_port }}:22'
-      - '2607:5300:60:873e::3:22:22'
-      - '2607:5300:60:873e::3:{{ gitlab_ssh_port }}:22'
+      - '135.181.141.143:{{ gitlab_ssh_port }}:22'
+      - '2a01:4f9:3a:15b0::3:22:22'
+      - '2a01:4f9:3a:15b0::3:{{ gitlab_ssh_port }}:22'
     volumes:
       - '{{ gitlab_config_folder }}:/etc/gitlab'
       - '{{ gitlab_logs_folder }}:/var/log/gitlab'

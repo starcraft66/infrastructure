@@ -1,4 +1,5 @@
 [online]
+bedrock ansible_host=bedrock.tdude.co ansible_port=22 ansible_user=linuxauto ansible_python_interpreter=/usr/bin/python3
 sapling ansible_host=sapling.tdude.co ansible_port=22 ansible_user=linuxauto ansible_python_interpreter=/usr/bin/python3
 stone ansible_host=stone.tdude.co ansible_port=22 ansible_user=linuxauto
 235-gw ansible_host=235-gw.235.tdude.co ansible_port=22 ansible_user=ubnt ansible_connection=network_cli ansible_network_os=edgeos

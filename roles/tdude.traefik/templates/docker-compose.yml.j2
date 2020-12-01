@@ -10,22 +10,22 @@ services:
       - "{{ traefik_data_folder }}/http.toml:/etc/traefik/http.toml"
       - "{{ traefik_data_folder }}/acme.json:/etc/traefik/acme.json"
     ports:
-      - "158.69.118.62:80:80"
-      - "158.69.118.62:443:443"
-      - "158.69.118.62:32400:32400"
-      # 2607:5300:60:873e::3 is still required until I figure out a fix for the gitlab ssh port
-      - "2607:5300:60:873e::3:80:80"
-      - "2607:5300:60:873e::3:443:443"
+      - "135.181.141.143:80:80"
+      - "135.181.141.143:443:443"
+      - "135.181.141.143:32400:32400"
+      # 2a01:4f9:3a:15b0::3 is still required until I figure out a fix for the gitlab ssh port
+      - "2a01:4f9:3a:15b0::3:80:80"
+      - "2a01:4f9:3a:15b0::3:443:443"
 
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.dashboard.entryPoints=web"
-      - "traefik.http.routers.dashboard.rule=Host(`monitor.sapling.tdude.co`)"
+      - "traefik.http.routers.dashboard.rule=Host(`monitor.bedrock.tdude.co`)"
       - "traefik.http.routers.dashboard.middlewares=https@file,fwauth@file"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard-secure.entryPoints=web-secure"
       - "traefik.http.routers.dashboard-secure.tls.certresolver=le"
-      - "traefik.http.routers.dashboard-secure.rule=Host(`monitor.sapling.tdude.co`)"
+      - "traefik.http.routers.dashboard-secure.rule=Host(`monitor.bedrock.tdude.co`)"
       - "traefik.http.routers.dashboard-secure.middlewares=https@file,fwauth@file"
       - "traefik.http.routers.dashboard-secure.service=api@internal"
       - "traefik.http.routers.dashboard-secure.tls=true"
@@ -42,15 +42,15 @@ services:
     networks:
       traefik:
         ipv4_address: 10.44.0.2
-        ipv6_address: "2607:5300:60:873e:8::2"
+        ipv6_address: "2a01:4f9:3a:15b0:8::2"
       matrix:
       monitoring:
-      mediaserver:
+#      mediaserver:
       status:
       gitlab:
       traefik:
       lolisafe:
-      {{ elk_docker_network }}:
+#      {{ elk_docker_network }}:
 
   traefik-forward-auth:
     image: thomseddon/traefik-forward-auth:2
@@ -60,23 +60,23 @@ services:
       PROVIDERS_GOOGLE_CLIENT_SECRET: {{ traefik_oauth2_client_secret }}
       SECRET: {{ traefik_oauth2_secret }}
       INSECURE_COOKIE: "false"
-      COOKIE_DOMAINS: sapling.tdude.co
+      COOKIE_DOMAINS: bedrock.tdude.co
       WHITELIST: starcraft66@gmail.com
-      AUTH_HOST: auth.sapling.tdude.co
+      AUTH_HOST: auth.bedrock.tdude.co
     networks:
       traefik:
         ipv4_address: 10.44.0.3
-        ipv6_address: "2607:5300:60:873e:8::3"
+        ipv6_address: "2a01:4f9:3a:15b0:8::3"
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.traefikforwardauth.loadbalancer.server.port=4181"
       - "traefik.docker.network=traefik_traefik"
       - "traefik.http.routers.traefikforwardauth.entryPoints=web"
-      - "traefik.http.routers.traefikforwardauth.rule=Host(`auth.sapling.tdude.co`)"
+      - "traefik.http.routers.traefikforwardauth.rule=Host(`auth.bedrock.tdude.co`)"
       - "traefik.http.routers.traefikforwardauth.middlewares=https@file,fwauth@file"
       - "traefik.http.routers.traefikforwardauth-secure.entryPoints=web-secure"
       - "traefik.http.routers.traefikforwardauth-secure.tls.certresolver=le"
-      - "traefik.http.routers.traefikforwardauth-secure.rule=Host(`auth.sapling.tdude.co`)"
+      - "traefik.http.routers.traefikforwardauth-secure.rule=Host(`auth.bedrock.tdude.co`)"
       - "traefik.http.routers.traefikforwardauth-secure.middlewares=https@file,fwauth@file"
       - "traefik.http.routers.traefikforwardauth-secure.tls=true"
 
@@ -86,7 +86,7 @@ services:
     networks:
       traefik:
         ipv4_address: 10.44.0.4
-        ipv6_address: "2607:5300:60:873e:8::4"
+        ipv6_address: "2a01:4f9:3a:15b0:8::4"
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.cringy-404-page.loadbalancer.server.port=80"
@@ -111,8 +111,8 @@ networks:
       config:
         - subnet: 10.44.0.0/24
           gateway: 10.44.0.1
-        - subnet: "2607:5300:60:873e:8::/80"
-          gateway: "2607:5300:60:873e:8::1"
+        - subnet: "2a01:4f9:3a:15b0:8::/80"
+          gateway: "2a01:4f9:3a:15b0:8::1"
   matrix:
     external:
       name: matrix_matrix
@@ -122,15 +122,15 @@ networks:
   monitoring:
     external:
       name: monitoring
-  mediaserver:
-    external:
-      name: mediaserver
+#  mediaserver:
+#    external:
+#      name: mediaserver
   status:
     external:
       name: status
   gitlab:
     external:
       name: gitlab
-  {{ elk_docker_network }}:
-    external:
-      name: {{ elk_docker_network }}
+#  {{ elk_docker_network }}:
+#    external:
+#      name: {{ elk_docker_network }}

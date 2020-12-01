@@ -1,5 +1,5 @@
 ---
-- hosts: sapling
+- hosts: bedrock
   connection: ssh
   become: True
 
@@ -11,6 +11,7 @@
     - { role: ericsysmin.chrony }
     - { role: tdude.core }
     - { role: tdude.minecraft-discord-bridge }
+    - { role: tdude.traefik }
     - { role: tdude.kerio }
     - { role: clutterbox.dehydrated }
     - { role: tdude.mediaserver }

@@ -111,7 +111,7 @@ services:
 
   plex-server:
     container_name: plex-server
-    hostname: sapling-plex
+    hostname: bedrock-plex
     image: plexinc/pms-docker:{{ mediaserver_plex_version }}
     restart: unless-stopped
     environment:
@@ -119,7 +119,7 @@ services:
       PLEX_UID: "{{ mediaserver_uid }}" # default user id, for downloaded files access rights
       PLEX_GID: "{{ mediaserver_gid }}" # default group id, for downloaded files access rights
       PLEX_CLAIM: {{ mediaserver_plex_claim_token }}
-      ADVERTISE_IP: https://plex.sapling.tdude.co
+      ADVERTISE_IP: https://plex.bedrock.tdude.co
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=mediaserver"

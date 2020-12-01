@@ -57,11 +57,11 @@ services:
       - "traefik.http.services.kibana.loadbalancer.server.port=5601"
       - "traefik.http.routers.kibana.entryPoints=web"
       - "traefik.http.routers.kibana.middlewares=https@file,fwauth@file"
-      - "traefik.http.routers.kibana.rule=Host(`kibana.sapling.tdude.co`)"
+      - "traefik.http.routers.kibana.rule=Host(`kibana.bedrock.tdude.co`)"
       - "traefik.http.routers.kibana-secure.entryPoints=web-secure"
       - "traefik.http.routers.kibana-secure.middlewares=https@file,fwauth@file"
       - "traefik.http.routers.kibana-secure.tls.certresolver=le"
-      - "traefik.http.routers.kibana-secure.rule=Host(`kibana.sapling.tdude.co`)"
+      - "traefik.http.routers.kibana-secure.rule=Host(`kibana.bedrock.tdude.co`)"
       - "traefik.http.routers.kibana-secure.tls=true"
 networks:
   {{ elk_docker_network }}:
