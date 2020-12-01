@@ -3,29 +3,11 @@ resource "cloudflare_zone" "nerdsin_space" {
   # id = "f51e4e810b96efbadb972187038375d5"
 }
 
-resource "cloudflare_record" "nerdsin_space-36a908b801eba1800c65f9c9a961cc29" {
-  zone_id = cloudflare_zone.nerdsin_space.id
-  name    = "nerdsin.space"
-  value   = "158.69.118.62"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "staging_nerdsin_space-0c7f39270709cd0d7ae93dfdd097ce05" {
-  zone_id = cloudflare_zone.nerdsin_space.id
-  name    = "staging"
-  value   = "158.69.118.62"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "turn_nerdsin_space-772814e8fbfef2c39c8977e269d3b3aa" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "turn"
-  value   = "158.69.118.62"
-  type    = "A"
+  value   = "traefik.bedrock.tdude.co"
+  type    = "CNAME"
   ttl     = 1
   proxied = false
 }
@@ -33,26 +15,8 @@ resource "cloudflare_record" "turn_nerdsin_space-772814e8fbfef2c39c8977e269d3b3a
 resource "cloudflare_record" "nerdsin_space-3ac2691767564a8029f9dcaefe7c7b01" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "nerdsin.space"
-  value   = "2607:5300:60:873e:8::2"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "staging_nerdsin_space-0dd05bbf9fa6e4b17a191a909b484a84" {
-  zone_id = cloudflare_zone.nerdsin_space.id
-  name    = "staging"
-  value   = "2607:5300:60:873e:8::2"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "turn_nerdsin_space-f8cb836524a131dc216fedbeabc50501" {
-  zone_id = cloudflare_zone.nerdsin_space.id
-  name    = "turn"
-  value   = "2607:5300:60:873e::2"
-  type    = "AAAA"
+  value   = "traefik.bedrock.tdude.co"
+  type    = "CNAME"
   ttl     = 1
   proxied = false
 }
@@ -70,17 +34,8 @@ resource "cloudflare_record" "nerdsin_space-b40126e8c919a22ec1d75a8090179a23" {
 resource "cloudflare_record" "minio_nerdsin_space_A" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "minio"
-  value   = "158.69.118.62"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "minio_nerdsin_space_AAAA" {
-  zone_id = cloudflare_zone.nerdsin_space.id
-  name    = "minio"
-  value   = "2607:5300:60:873e:8::2"
-  type    = "AAAA"
+  value   = "traefik.bedrock.tdude.co"
+  type    = "CNAME"
   ttl     = 1
   proxied = false
 }

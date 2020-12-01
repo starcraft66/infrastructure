@@ -3,15 +3,6 @@ resource "cloudflare_zone" "trs_tn" {
   # id = "b7c58ff85f09ba3a7aeaa231c216dd84"
 }
 
-resource "cloudflare_record" "l_trs_tn-0a4f90c7f5e93d2caec4134643c0cc4e" {
-  zone_id = cloudflare_zone.trs_tn.id
-  name    = "l"
-  value   = "158.69.118.62"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "trs_tn-d7e17404cdb4a9dd8d805719fbaaa715" {
   zone_id = cloudflare_zone.trs_tn.id
   name    = "trs.tn"
@@ -42,8 +33,8 @@ resource "cloudflare_record" "www_trs_tn-8b7752d9574918a5c2fbc392ad7fb48c" {
 resource "cloudflare_record" "l_trs_tn-2c9abf3ea4a6e9cc67e15c87e8334761" {
   zone_id = cloudflare_zone.trs_tn.id
   name    = "l"
-  value   = "2607:5300:60:873e:8::2"
-  type    = "AAAA"
+  value   = "traefik.bedrock.tdude.co"
+  type    = "CNAME"
   ttl     = 1
   proxied = false
 }
