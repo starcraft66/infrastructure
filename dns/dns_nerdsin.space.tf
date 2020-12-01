@@ -6,7 +6,7 @@ resource "cloudflare_zone" "nerdsin_space" {
 resource "cloudflare_record" "turn_nerdsin_space-772814e8fbfef2c39c8977e269d3b3aa" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "turn"
-  value   = "traefik.bedrock.tdude.co"
+  value   = "bedrock.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
