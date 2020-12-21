@@ -570,6 +570,15 @@ resource "cloudflare_record" "thorn_tdude_co-cfca003a07d87facd66ae71facc3b367" {
   proxied = false
 }
 
+resource "cloudflare_record" "spitfire_tdude_co-AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "spitfire.235"
+  value   = "2607:fa48:6ed8:8a51:225:90ff:fe86:9cd6"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "trixie_tdude_co-ed6755c69142841c707ce4793f6a0a56" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "trixie"
