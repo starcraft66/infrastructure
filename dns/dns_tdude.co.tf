@@ -570,10 +570,37 @@ resource "cloudflare_record" "thorn_tdude_co-cfca003a07d87facd66ae71facc3b367" {
   proxied = false
 }
 
-resource "cloudflare_record" "spitfire_tdude_co-AAAA" {
+resource "cloudflare_record" "spitfire_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "spitfire.235"
   value   = "2607:fa48:6ed8:8a51:225:90ff:fe86:9cd6"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "spitfire_storage_235_tdude_co-AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "spitfire.storage.235"
+  value   = "2607:fa48:6ed8:8a55:e61d:2dff:fe90:80fe"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "firestreak_235_tdude_co-AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "firestreak.235"
+  value   = "2607:fa48:6ed8:8a51:225:90ff:fe86:9cd2"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "firestreak_storage_235_tdude_co-AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "firestreak.storage.235"
+  value   = "2607:fa48:6ed8:8a55:f652:14ff:fea2:89ec"
   type    = "AAAA"
   ttl     = 1
   proxied = false
