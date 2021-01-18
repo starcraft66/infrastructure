@@ -48,13 +48,13 @@ services:
       matrix:
         ipv4_address: "10.72.128.5"
         ipv6_address: "2a01:4f9:3a:15b0:7::5"
-  nginx_riot:
+  nginx_element:
     container_name: matrix_nginx
-    image: bubuntux/riot-web:{{ matrix_riot_version }}
+    image: bubuntux/element-web:{{ matrix_element_version }}
     volumes:
-      - "{{ matrix_riot_data_folder }}/config.json:/etc/riot-web/config.json:ro"
+      - "{{ matrix_element_data_folder }}/config.json:/etc/element-web/config.json:ro"
       - "{{ matrix_nginx_data_folder }}/matrix.conf:/etc/nginx/conf.d/default.conf:ro"
-      #- "{{ matrix_riot_data_folder }}/dhparam.pem:/etc/nginx/dhparam.pem:ro"
+      #- "{{ matrix_element_data_folder }}/dhparam.pem:/etc/nginx/dhparam.pem:ro"
     networks:
       matrix:
         ipv4_address: 10.72.128.6

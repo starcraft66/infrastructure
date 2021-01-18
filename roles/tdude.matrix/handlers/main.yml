@@ -25,7 +25,7 @@
     state: present
     restarted: yes
     services:
-      - nginx_riot
+      - nginx_element
 
 - name: restart appservice_webhooks
   docker_compose:

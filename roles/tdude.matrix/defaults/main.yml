@@ -27,8 +27,8 @@ matrix_synapse_appservices:
 
 matrix_synapse_enable_media_repo: true
 
-matrix_riot_version: latest
-matrix_riot_default_theme: dark
+matrix_element_version: latest
+matrix_element_default_theme: dark
 
 matrix_appservice_webhooks_version: latest
 
@@ -37,7 +37,7 @@ matrix_postgres_version: 10
 matrix_installation_folder: "/opt/matrix"
 matrix_appservice_webhooks_data_folder: "{{ matrix_installation_folder }}/matrix-appservice-webhooks"
 matrix_synapse_data_folder: "{{ matrix_installation_folder }}/synapse"
-matrix_riot_data_folder: "{{ matrix_installation_folder }}/riot"
+matrix_element_data_folder: "{{ matrix_installation_folder }}/element"
 matrix_nginx_data_folder: "{{ matrix_installation_folder }}/nginx"
 matrix_postgres_data_folder: "{{ matrix_installation_folder }}/postgres"
 matrix_media_repo_data_folder: "{{ matrix_installation_folder }}/matrix-media-repo"
