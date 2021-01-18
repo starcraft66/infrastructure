@@ -164,7 +164,7 @@
     owner: turnserver
     group: turnserver
 
-- name: Create the coturn
+- name: Create the coturn folder
   file:
     name: "/usr/local/etc/turn"
     state: directory
