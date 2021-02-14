@@ -579,6 +579,15 @@ resource "cloudflare_record" "spitfire_235_tdude_co-AAAA" {
   proxied = false
 }
 
+resource "cloudflare_record" "spitfire-bmc_235_tdude_co-AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "spitfire-bmc.235"
+  value   = "2607:fa48:6ed8:8a52:0225:90ff:fe86:fb4c"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "spitfire_storage_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "spitfire.storage.235"
@@ -592,6 +601,15 @@ resource "cloudflare_record" "firestreak_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "firestreak.235"
   value   = "2607:fa48:6ed8:8a51:225:90ff:fe86:9cd2"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "firestreak-bmc_235_tdude_co-AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "firestreak-bmc.235"
+  value   = "2607:fa48:6ed8:8a52:0225:90ff:fe86:fb4a"
   type    = "AAAA"
   ttl     = 1
   proxied = false
