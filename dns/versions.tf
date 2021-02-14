@@ -5,8 +5,5 @@ terraform {
     cloudflare = {
       source = "cloudflare/cloudflare"
     }
-    ansiblevault = {
-      source = "MeilleursAgents/ansiblevault"
-    }
   }
 }
