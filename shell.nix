@@ -31,6 +31,8 @@ mkShell rec {
       source <(kubectl completion bash) 2>/dev/null;
     fi
 
+    sops exec-env secrets/terraform-backend.yaml bash
+
     echo Need to package RBAC OIDC shit
   '';
 }
