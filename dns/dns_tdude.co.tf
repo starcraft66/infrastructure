@@ -336,15 +336,6 @@ resource "cloudflare_record" "awx_tdude_co-55633b0b6742bfaaa68b5cdbb79fb7ce" {
   proxied = false
 }
 
-resource "cloudflare_record" "blaze_tdude_co-424332459ad22e0173b54f3f1e25e5c5" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "blaze"
-  value   = "2607:fa48:6ed8:8a51:226:9eff:fe58:ec9a"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "ci_tdude_co-ca4679c66c673dfa1071f30263fa966c" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "ci"
@@ -556,15 +547,6 @@ resource "cloudflare_record" "tdude_co-c65f52f200afd91efed739ab5122adf1" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "tdude.co"
   value   = "2607:5300:201:3100::7e8c"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "thorn_tdude_co-cfca003a07d87facd66ae71facc3b367" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "thorn"
-  value   = "2607:fa48:6ed8:8a51:226:9eff:fe58:80da"
   type    = "AAAA"
   ttl     = 1
   proxied = false
