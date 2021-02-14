@@ -1,16 +1,15 @@
 { isDev ? true
-, pkgs ? import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/95a0e2fc29b850d48d2150492ff7f9158dca4cc0.tar.gz") { }
+, pkgs ? import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/1aa9b59d4c9c4d453fc4ae9663f0a4c788fdd747.tar.gz") { }
 }:
 
 with pkgs;
 mkShell rec {
-  KUBECONFIG = toString(./. + "/kubeconfig.yaml");
-
   buildInputs = [
     ansible
     kubectl                    # v1.18.1
     kubernetes-helm            # v3.2.1
-    terraform_0_12             # v0.12.28
+    terraform_0_14             # v0.12.28
+    sops
   ] ++ lib.optional isDev [
     kubectx                    # v0.9.0
     kind                       # v0.8.1
