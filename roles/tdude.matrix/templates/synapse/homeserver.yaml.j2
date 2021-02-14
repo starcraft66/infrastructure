@@ -170,6 +170,11 @@ bcrypt_rounds: 12
 allow_guest_access: {{ "True" if matrix_synapse_allow_guest else "False" }}
 enable_group_creation: true
 
+{% if matrix_synapse_require_email_validation %}
+registrations_require_3pid:
+  - email
+{% endif %}
+
 # The list of identity servers trusted to verify third party
 # identifiers by this server.
 #
@@ -229,3 +234,121 @@ enable_media_repo: {{ matrix_synapse_enable_media_repo }}
 
 allow_public_rooms_without_auth: true 
 allow_public_rooms_over_federation: true
+
+# Configuration for sending emails from Synapse.
+#
+email:
+  smtp_host: "{{ matrix_smtp_host }}"
+  smtp_port: {{ matrix_smtp_port }}
+  smtp_user: "{{ matrix_smtp_user }}"
+  smtp_pass: "{{ matrix_smtp_pass }}"
+  require_transport_security: true
+  notif_from: "{{ matrix_synapse_email_notif_from }}"
+  app_name: "{{ matrix_synapse_app_name }}"
+  enable_notifs: {{ matrix_synapse_email_enable_notifs | to_json }}
+  notif_for_new_users: {{ matrix_synapse_email_enable_notifs_for_new_users | to_json }}
+  client_base_url: "{{ matrix_synapse_client_url }}"
+  validation_token_lifetime: "{{ matrix_synapse_validation_token_lifetime }}"
+  invite_client_location: "{{ matrix_synapse_invite_client_location }}"
+
+  # Directory in which Synapse will try to find the template files below.
+  # If not set, or the files named below are not found within the template
+  # directory, default templates from within the Synapse package will be used.
+  #
+  # Synapse will look for the following templates in this directory:
+  #
+  # * The contents of email notifications of missed events: 'notif_mail.html' and
+  #   'notif_mail.txt'.
+  #
+  # * The contents of account expiry notice emails: 'notice_expiry.html' and
+  #   'notice_expiry.txt'.
+  #
+  # * The contents of password reset emails sent by the homeserver:
+  #   'password_reset.html' and 'password_reset.txt'
+  #
+  # * An HTML page that a user will see when they follow the link in the password
+  #   reset email. The user will be asked to confirm the action before their
+  #   password is reset: 'password_reset_confirmation.html'
+  #
+  # * HTML pages for success and failure that a user will see when they confirm
+  #   the password reset flow using the page above: 'password_reset_success.html'
+  #   and 'password_reset_failure.html'
+  #
+  # * The contents of address verification emails sent during registration:
+  #   'registration.html' and 'registration.txt'
+  #
+  # * HTML pages for success and failure that a user will see when they follow
+  #   the link in an address verification email sent during registration:
+  #   'registration_success.html' and 'registration_failure.html'
+  #
+  # * The contents of address verification emails sent when an address is added
+  #   to a Matrix account: 'add_threepid.html' and 'add_threepid.txt'
+  #
+  # * HTML pages for success and failure that a user will see when they follow
+  #   the link in an address verification email sent when an address is added
+  #   to a Matrix account: 'add_threepid_success.html' and
+  #   'add_threepid_failure.html'
+  #
+  # You can see the default templates at:
+  # https://github.com/matrix-org/synapse/tree/master/synapse/res/templates
+  #
+  #template_dir: "res/templates"
+
+  subjects:
+
+    # Subjects for notification emails.
+    #
+    # On top of the '%(app)s' placeholder, these can use the following
+    # placeholders:
+    #
+    #   * '%(person)s', which will be replaced by the display name of the user(s)
+    #      that sent the message(s), e.g. "Alice and Bob".
+    #   * '%(room)s', which will be replaced by the name of the room the
+    #      message(s) have been sent to, e.g. "My super room".
+    #
+    # See the example provided for each setting to see which placeholder can be
+    # used and how to use them.
+    #
+    # Subject to use to notify about one message from one or more user(s) in a
+    # room which has a name.
+    message_from_person_in_room: "{{ matrix_synapse_email_subject_message_from_person_in_room }}"
+    #
+    # Subject to use to notify about one message from one or more user(s) in a
+    # room which doesn't have a name.
+    message_from_person: "{{ matrix_synapse_email_subject_message_from_person }}"
+    #
+    # Subject to use to notify about multiple messages from one or more users in
+    # a room which doesn't have a name.
+    messages_from_person: "{{ matrix_synapse_email_subject_messages_from_person }}"
+    #
+    # Subject to use to notify about multiple messages in a room which has a
+    # name.
+    messages_in_room: "{{ matrix_synapse_email_subject_messages_in_room }}"
+    #
+    # Subject to use to notify about multiple messages in multiple rooms.
+    messages_in_room_and_others: "{{ matrix_synapse_email_subject_messages_in_room_and_others }}"
+    #
+    # Subject to use to notify about multiple messages from multiple persons in
+    # multiple rooms. This is similar to the setting above except it's used when
+    # the room in which the notification was triggered has no name.
+    messages_from_person_and_others: "{{ matrix_synapse_email_subject_messages_from_person_and_others }}"
+    #
+    # Subject to use to notify about an invite to a room which has a name.
+    invite_from_person_to_room: "{{ matrix_synapse_email_subject_invite_from_person_to_room }}"
+    #
+    # Subject to use to notify about an invite to a room which doesn't have a
+    # name.
+    invite_from_person: "{{ matrix_synapse_email_subject_invite_from_person }}"
+
+    # Subject for emails related to account administration.
+    #
+    # On top of the '%(app)s' placeholder, these one can use the
+    # '%(server_name)s' placeholder, which will be replaced by the value of the
+    # 'server_name' setting in your Synapse configuration.
+    #
+    # Subject to use when sending a password reset email.
+    password_reset: "{{ matrix_synapse_email_subject_password_reset }}"
+    #
+    # Subject to use when sending a verification email to assert an address's
+    # ownership.
+    email_validation: "{{ matrix_synapse_email_subject_email_validation }}"

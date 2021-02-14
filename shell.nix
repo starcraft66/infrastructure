@@ -1,11 +1,9 @@
 { isDev ? true
-, pkgs ? import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/95a0e2fc29b850d48d2150492ff7f9158dca4cc0.tar.gz") { }
+, pkgs ? import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/1aa9b59d4c9c4d453fc4ae9663f0a4c788fdd747.tar.gz") { }
 }:
 
 with pkgs;
 mkShell rec {
-  KUBECONFIG = toString(./. + "/kubeconfig.yaml");
-
   buildInputs = [
     ansible
     kubectl                    # v1.18.1

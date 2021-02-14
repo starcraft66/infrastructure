@@ -148,6 +148,34 @@ services:
       options:
         max-file: "5"
         max-size: "50m"
+  ma1sd:
+    container_name: matrix_ma1sd
+    image: ma1uta/ma1sd:{{ matrix_ma1sd_version }}
+    volumes:
+      - "{{ matrix_ma1sd_config_folder }}:/etc/ma1sd"
+      - "{{ matrix_ma1sd_data_folder }}:/var/ma1sd"
+    networks:
+      matrix:
+    restart: unless-stopped
+    environment:
+      MATRIX_DOMAIN: "{{ matrix_synapse_server_name }}"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "50m"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.matrix-ma1sd.loadbalancer.server.port=8090"
+      - "traefik.docker.network=matrix_matrix"
+      - "traefik.http.routers.matrix-ma1sd.entryPoints=web"
+      - "traefik.http.routers.matrix-ma1sd.rule=Host(`{{ matrix_synapse_server_name }}`) && (PathPrefix(`/_matrix/identity`) || Path(`/_matrix/client/r0/register/{id: [^/]+}/requestToken`))"
+      - "traefik.http.routers.matrix-ma1sd.middlewares=https@file"
+      - "traefik.http.routers.matrix-ma1sd-secure.entryPoints=web-secure"
+      - "traefik.http.routers.matrix-ma1sd-secure.tls.certresolver=le"
+      - "traefik.http.routers.matrix-ma1sd-secure.rule=Host(`{{ matrix_synapse_server_name }}`) && (PathPrefix(`/_matrix/identity`) || Path(`/_matrix/client/r0/register/{id: [^/]+}/requestToken`))"
+      - "traefik.http.routers.matrix-ma1sd-secure.middlewares=https@file"
+      - "traefik.http.routers.matrix-ma1sd-secure.tls=true"
 
 networks:
   monitoring:
