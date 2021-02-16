@@ -31,7 +31,8 @@ mkShell rec {
       source <(kubectl completion bash) 2>/dev/null;
     fi
 
-    sops exec-env secrets/terraform-backend.yaml bash
+    echo Touch the YubiKey.
+    eval "$(sops --decrypt --output-type dotenv secrets/terraform-backend.yaml)"
 
     echo Need to package RBAC OIDC shit
   '';
