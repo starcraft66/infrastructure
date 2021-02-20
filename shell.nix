@@ -32,7 +32,9 @@ mkShell rec {
     fi
 
     echo Touch the YubiKey.
+    set -a
     eval "$(sops --decrypt --output-type dotenv secrets/terraform-backend.yaml)"
+    set +a
 
     echo Need to package RBAC OIDC shit
   '';
