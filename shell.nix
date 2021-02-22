@@ -1,5 +1,5 @@
 { isDev ? true
-, pkgs ? import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/1aa9b59d4c9c4d453fc4ae9663f0a4c788fdd747.tar.gz") { }
+, pkgs ? import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/176690a7630f4ec253bba538fe24086750decc6e.tar.gz") { }
 }:
 
 with pkgs;
@@ -20,7 +20,7 @@ mkShell rec {
   KUSTOMIZE_PLUGIN_HOME = pkgs.buildEnv {
     name = "kustomize-plugins";
     paths =  [
-      (callPackage ~/src/nixpkgs/pkgs/development/tools/kustomize/kustomize-sops.nix {})
+      kustomize-sops
     ];
     postBuild = ''
       mv $out/lib/* $out
