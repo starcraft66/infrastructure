@@ -11,6 +11,7 @@ mkShell rec {
     terraform_0_14             # v0.12.28
     sops
     kustomize
+    kubetail
   ] ++ lib.optional isDev [
     kubectx                    # v0.9.0
     kind                       # v0.8.1
