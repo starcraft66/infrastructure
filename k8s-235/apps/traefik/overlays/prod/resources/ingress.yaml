@@ -1,0 +1,105 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: traefik
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: true
+spec:
+  controller: traefik.io/ingress-controller
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik-dashboard
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-forward-auth@kubernetescrd
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - auth.k8s.235.tdude.co
+    - dashboard.traefik.k8s.235.tdude.co
+    secretName: dashboard-traefik-k8s-235-tdude-co-tls
+  rules:
+  - host: dashboard.traefik.k8s.235.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: traefik-dashboard
+            port:
+              number: 80
+  - host: auth.k8s.235.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: traefik-forward-auth
+            port:
+              number: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: traefik
+  name: traefik-forward-auth
+spec:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+  - IPv6
+  - IPv4
+  ports:
+  - name: traefik-forward-auth
+    port: 80
+    targetPort: 4181
+  selector:
+    app.kubernetes.io/name: traefik
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: traefik
+  name: traefik-dashboard
+spec:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+  - IPv6
+  - IPv4
+  ports:
+  - name: dashboard-http
+    port: 80
+    targetPort: 9000
+  selector:
+    app.kubernetes.io/name: traefik
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/scrape: "true"
+  labels:
+    app.kubernetes.io/name: traefik
+  name: traefik-prometheus
+spec:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+  - IPv6
+  - IPv4
+  ports:
+  - name: metrics
+    port: 9100
+    targetPort: metrics
+  selector:
+    app.kubernetes.io/name: traefik
+  type: ClusterIP

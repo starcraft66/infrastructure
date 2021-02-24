@@ -1,0 +1,25 @@
+---
+# Source: traefik/templates/service.yaml
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: traefik
+      labels:
+        app.kubernetes.io/name: traefik
+      annotations:
+    spec:
+      type: LoadBalancer
+      selector:
+        app.kubernetes.io/name: traefik
+      ports:
+      - port: 80
+        name: web
+        targetPort: "web"
+        protocol: "TCP"
+      - port: 443
+        name: websecure
+        targetPort: "websecure"
+        protocol: "TCP"

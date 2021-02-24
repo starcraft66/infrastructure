@@ -1,0 +1,10 @@
+apiVersion: builtin
+kind: PrefixSuffixTransformer
+metadata:
+  name: notImportantHere
+suffix: -prod
+fieldSpecs:
+- path: subjects/name
+  kind: ClusterRoleBinding
+- path: roleRef/name
+  kind: ClusterRoleBinding

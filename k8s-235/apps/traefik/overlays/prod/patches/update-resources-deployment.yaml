@@ -1,0 +1,6 @@
+- op: replace
+  path: /spec/template/spec/containers/0/resources
+  value:
+    requests:
+      cpu: '0.125'
+      memory: 128Mi

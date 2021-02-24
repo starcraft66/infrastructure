@@ -1,0 +1,7 @@
+resources:
+- ./resources/crds.yaml
+- ./resources/deployment.yaml
+- ./resources/service.yaml
+- ./resources/service-account.yaml
+- ./resources/rbac.yaml
+- ./resources/namespace.yaml
