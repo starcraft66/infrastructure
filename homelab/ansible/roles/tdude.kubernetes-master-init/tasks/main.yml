@@ -1,3 +1,0 @@
----
-- import_tasks: kubeadm.yml
-- import_tasks: calico.yml

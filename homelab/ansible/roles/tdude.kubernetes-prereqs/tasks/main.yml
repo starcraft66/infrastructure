@@ -1,5 +1,0 @@
----
-- import_tasks: 0010-swapoff.yml
-- import_tasks: 0020-sysctl.yml
-- import_tasks: 0030-packages.yml
-- import_tasks: 0040-modules.yml
