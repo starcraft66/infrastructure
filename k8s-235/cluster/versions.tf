@@ -4,5 +4,8 @@ terraform {
     proxmox = {
       source = "telmate/proxmox"
     }
+    cloudflare = {
+      source = "cloudflare/cloudflare"
+    }
   }
 }

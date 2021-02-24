@@ -1,5 +1,5 @@
 resource "proxmox_vm_qemu" "k8s-node" {
-  count       = 8
+  count       = var.node_count
   name        = "k8s-node${count.index + 1}.235.tdude.co"
   desc        = "Kubernetes Worker Node ${count.index + 1}"
   target_node = "fleetfoot"
