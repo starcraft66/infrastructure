@@ -1,0 +1,3 @@
+- op: replace
+  path: /spec/template/spec/containers/0/args/4
+  value: "--dynamic-serving-dns-names=cert-manager-webhook,cert-manager-webhook.cert-manager,cert-manager-webhook.cert-manager,cert-manager-webhook-prod.cert-manager.svc"
