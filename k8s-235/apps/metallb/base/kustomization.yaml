@@ -1,0 +1,2 @@
+resources:
+  - github.com/metallb/metallb//manifests?ref=v0.9.5

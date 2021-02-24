@@ -1,0 +1,24 @@
+resources:
+- ../../base
+
+configMapGenerator:
+- name: config
+  files:
+  - ./configs/config
+
+generators:
+- ./generators/secrets-generator.yaml
+
+images:
+- name: metallb/controller
+  newTag: v0.9.5
+- name: metallb/speaker
+  newTag: v0.9.5
+
+namespace: metallb-system
+
+patchesStrategicMerge:
+- ./patches/disable-speaker.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
