@@ -1,3 +1,6 @@
 creation_rules:
-  - path_regex: \.yaml$
+  - path_regex: k8s-235/apps/.*/secrets/.*\.yaml$
+    encrypted_regex: '^(data|stringData)$'
+    pgp: '85974506EC695392044308059D98CDACFF04FD78'
+  - path_regex: secrets/.*\.yaml$
     pgp: '85974506EC695392044308059D98CDACFF04FD78'
