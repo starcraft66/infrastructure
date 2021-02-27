@@ -1,0 +1,37 @@
+resources:
+  - ../../base
+
+namespace: democratic-csi
+
+generators:
+- ./generators/secrets-generator.yaml
+
+images:
+- name: k8s.gcr.io/sig-storage/csi-provisioner
+  newTag: v2.1.0
+- name: k8s.gcr.io/sig-storage/csi-resizer
+  newTag: v1.1.0
+- name: k8s.gcr.io/sig-storage/csi-snapshotter
+  newTag: v4.0.0
+- name: democraticcsi/democratic-csi
+  newTag: latest
+- name: k8s.gcr.io/sig-storage/csi-node-driver-registrar
+  newTag: v2.1.0
+- name: docker.io/busybox
+  newTag: "1.32.0"
+- name: democraticcsi/democratic-csi
+  newTag: latest
+
+commonLabels:
+  app.kubernetes.io/name: democratic-csi
+
+patchesStrategicMerge:
+  - ./patches/set-secret-generation-namespace.yaml
+
+patchesJson6902:
+- path: ./patches/leader-election-namespace.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: democratic-csi-controller
+    version: v1

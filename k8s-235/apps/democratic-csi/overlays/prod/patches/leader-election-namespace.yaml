@@ -1,0 +1,9 @@
+- op: replace
+  path: /spec/template/spec/containers/0/args/2
+  value: --leader-election-namespace=democratic-csi
+- op: replace
+  path: /spec/template/spec/containers/1/args/2
+  value: --leader-election-namespace=democratic-csi
+- op: replace
+  path: /spec/template/spec/containers/2/args/2
+  value: --leader-election-namespace=democratic-csi
