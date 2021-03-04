@@ -1,3 +1,2 @@
 resources:
 - github.com/prometheus-operator/kube-prometheus?ref=v0.7.0
-# - monitoring-roles.yml
