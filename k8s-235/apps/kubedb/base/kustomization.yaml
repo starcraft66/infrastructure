@@ -1,0 +1,4 @@
+resources:
+- ./resources/kubedb.yaml
+- ./resources/kubedb-catalog.yaml
+- ./resources/namespace.yaml

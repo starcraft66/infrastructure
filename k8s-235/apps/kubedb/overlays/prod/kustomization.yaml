@@ -1,0 +1,7 @@
+resources:
+- ../../base
+
+namespace: kubedb
+
+generators:
+- ./generators/secrets-generator.yaml

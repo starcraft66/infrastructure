@@ -1,0 +1,443 @@
+---
+# Source: kubedb/templates/operator-psp.yaml
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: kubedb-community
+  labels:
+    helm.sh/chart: kubedb-v0.16.2
+    app.kubernetes.io/name: kubedb
+    app.kubernetes.io/instance: kubedb-community
+    app.kubernetes.io/version: "v0.16.2"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  privileged: true  #Allowing privileged pods is necessary for ES db
+  allowPrivilegeEscalation: true #Allowing privilege escalation is necessary for ES db
+  volumes:
+  - "*"
+  hostNetwork: false
+  hostIPC: false
+  hostPID: false
+  runAsUser:
+    rule: RunAsAny
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  fsGroup:
+    rule: RunAsAny
+  allowedCapabilities:
+  - IPC_LOCK
+  - SYS_RESOURCE
+---
+# Source: kubedb/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kubedb-community
+  namespace: kube-system
+  labels:
+    helm.sh/chart: kubedb-v0.16.2
+    app.kubernetes.io/name: kubedb
+    app.kubernetes.io/instance: kubedb-community
+    app.kubernetes.io/version: "v0.16.2"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: kubedb/templates/cluster-role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kubedb-community
+  labels:
+    helm.sh/chart: kubedb-v0.16.2
+    app.kubernetes.io/name: kubedb
+    app.kubernetes.io/instance: kubedb-community
+    app.kubernetes.io/version: "v0.16.2"
+    app.kubernetes.io/managed-by: Helm
+rules:
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs: ["*"]
+- apiGroups:
+  - apiregistration.k8s.io
+  resources:
+  - apiservices
+  verbs: ["get", "patch", "delete"]
+- apiGroups:
+  - admissionregistration.k8s.io
+  resources:
+  - mutatingwebhookconfigurations
+  - validatingwebhookconfigurations
+  verbs: ["delete", "get", "list", "watch", "patch"]
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - rolebindings
+  - roles
+  verbs: ["create", "delete", "get", "patch", "deletecollection"]
+- apiGroups:
+  - ""
+  resources:
+  - services
+  - secrets
+  verbs: ["create", "delete", "get", "patch", "list", "watch"]
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  verbs: ["create", "delete", "get", "patch", "deletecollection"]
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - statefulsets
+  verbs: ["create", "delete", "get", "list", "patch", "update", "watch", "deletecollection"]
+- apiGroups:
+  - apps
+  resources:
+  - replicasets
+  verbs: ["get"]
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs: ["create", "delete", "get", "list", "watch"]
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - storageclasses
+  verbs: ["get"]
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs: ["*"]
+- apiGroups:
+  - ""
+  resources:
+  - persistentvolumeclaims
+  verbs: ["create", "delete", "get", "list", "patch", "watch"]
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs: ["create", "delete", "get", "list", "watch", "update", "patch"]
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs: ["create"]
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs: ["get", "list", "watch"]
+- apiGroups:
+  - kubedb.com
+  - catalog.kubedb.com
+  resources:
+  - "*"
+  verbs: ["*"]
+- apiGroups:
+  - kubedb.com
+  resources:
+  - elasticsearches/finalizers
+  - etcds/finalizers
+  - mariadbs/finalizers
+  - memcacheds/finalizers
+  - mongodbs/finalizers
+  - mysqls/finalizers
+  - perconaxtradbs/finalizers
+  - pgbouncers/finalizers
+  - postgreses/finalizers
+  - proxysqls/finalizers
+  - redises/finalizers
+  verbs: ["update"]
+- apiGroups:
+  - appcatalog.appscode.com
+  resources:
+  - "*"
+  verbs: ["*"]
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - servicemonitors
+  verbs: ["*"]
+- apiGroups:
+  - ""
+  resources:
+  - "pods/exec"
+  verbs: ["create"]
+- apiGroups:
+  - ""
+  resources:
+  - "pods/status"
+  verbs: ["update"]
+- apiGroups:
+  - policy
+  resources:
+  - podsecuritypolicies
+  verbs: ["use"]
+  resourceNames:
+  - kubedb-community
+  - elasticsearch-db
+  - etcd-db
+  - memcached-db
+  - mongodb-db
+  - mysql-db
+  - percona-xtradb-db
+  - postgres-db
+  - redis-db
+  - proxysql-db
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs: ["get", "list", "create", "delete", "patch", "deletecollection"]
+- apiGroups:
+  - stash.appscode.com
+  resources:
+  - restoresessions
+  - restorebatches
+  verbs: ["get", "list", "watch"]
+- apiGroups:
+  - cert-manager.io
+  resources:
+  - "*"
+  verbs: ["get", "list", "watch"]
+---
+# Source: kubedb/templates/apiregistration.yaml
+# to delegate authentication and authorization
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubedb-community-apiserver-auth-delegator
+  labels:
+    helm.sh/chart: kubedb-v0.16.2
+    app.kubernetes.io/name: kubedb
+    app.kubernetes.io/instance: kubedb-community
+    app.kubernetes.io/version: "v0.16.2"
+    app.kubernetes.io/managed-by: Helm
+roleRef:
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+  name: system:auth-delegator
+subjects:
+- kind: ServiceAccount
+  name: kubedb-community
+  namespace: kube-system
+---
+# Source: kubedb/templates/cluster-role-binding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubedb-community
+  labels:
+    helm.sh/chart: kubedb-v0.16.2
+    app.kubernetes.io/name: kubedb
+    app.kubernetes.io/instance: kubedb-community
+    app.kubernetes.io/version: "v0.16.2"
+    app.kubernetes.io/managed-by: Helm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubedb-community
+subjects:
+- kind: ServiceAccount
+  name: kubedb-community
+  namespace: kube-system
+---
+# Source: kubedb/templates/license-checker-cluster-role-binding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubedb-community-license-checker
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: appscode:license-checker
+subjects:
+- kind: ServiceAccount
+  name: kubedb-community
+  namespace: kube-system
+---
+# Source: kubedb/templates/license-reader-cluster-role-binding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubedb-community-license-reader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: appscode:license-reader
+subjects:
+- kind: ServiceAccount
+  name: kubedb-community
+  namespace: kube-system
+---
+# Source: kubedb/templates/apiregistration.yaml
+# to read the config for terminating authentication
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kubedb-community-apiserver-extension-server-authentication-reader
+  namespace: kube-system
+  labels:
+    helm.sh/chart: kubedb-v0.16.2
+    app.kubernetes.io/name: kubedb
+    app.kubernetes.io/instance: kubedb-community
+    app.kubernetes.io/version: "v0.16.2"
+    app.kubernetes.io/managed-by: Helm
+roleRef:
+  kind: Role
+  apiGroup: rbac.authorization.k8s.io
+  name: extension-apiserver-authentication-reader
+subjects:
+- kind: ServiceAccount
+  name: kubedb-community
+  namespace: kube-system
+---
+# Source: kubedb/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubedb-community
+  namespace: kube-system
+  labels:
+    helm.sh/chart: kubedb-v0.16.2
+    app.kubernetes.io/name: kubedb
+    app.kubernetes.io/instance: kubedb-community
+    app.kubernetes.io/version: "v0.16.2"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  ports:
+  - name: operator
+    port: 443
+    targetPort: operator
+  selector:
+    app.kubernetes.io/name: kubedb
+    app.kubernetes.io/instance: kubedb-community
+---
+# Source: kubedb/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubedb-community
+  namespace: kube-system
+  labels:
+    helm.sh/chart: kubedb-v0.16.2
+    app.kubernetes.io/name: kubedb
+    app.kubernetes.io/instance: kubedb-community
+    app.kubernetes.io/version: "v0.16.2"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kubedb
+      app.kubernetes.io/instance: kubedb-community
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kubedb
+        app.kubernetes.io/instance: kubedb-community
+      annotations:
+        checksum/apiregistration.yaml: d5293f30377f840afdef817dc9e61851fe9da1dcf4311ad91de88b0d4f365078
+    spec:
+      serviceAccountName: kubedb-community
+      containers:
+      - name: operator
+        securityContext:
+          {}
+        image: kubedb/operator:v0.16.2
+        imagePullPolicy: IfNotPresent
+        args:
+        - run
+        - --v=3
+        - --secure-port=8443
+        - --audit-log-path=-
+        - --tls-cert-file=/var/serving-cert/tls.crt
+        - --tls-private-key-file=/var/serving-cert/tls.key
+        - --enable-mutating-webhook=true
+        - --enable-validating-webhook=true
+        - --bypass-validating-webhook-xray=false
+        - --use-kubeapiserver-fqdn-for-aks=true
+        - --enable-analytics=true
+        - --license-file=/var/run/secrets/appscode/license/key.txt
+        env:
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: MY_POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        ports:
+        - name: operator
+          containerPort: 8443
+        volumeMounts:
+        - mountPath: /var/serving-cert
+          name: serving-cert
+        - mountPath: /var/run/secrets/appscode/license
+          name: license
+        resources:
+          {}
+      volumes:
+      - name: serving-cert
+        secret:
+          defaultMode: 420
+          secretName: kubedb-community-apiserver-cert
+      - name: license
+        secret:
+          defaultMode: 420
+          secretName: kubedb-community-license
+      securityContext:
+        {}
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+        beta.kubernetes.io/os: linux
+---
+# Source: kubedb/templates/apiregistration.yaml
+apiVersion: apiregistration.k8s.io/v1
+kind: APIService
+metadata:
+  name: v1alpha1.validators.kubedb.com
+  labels:
+    helm.sh/chart: kubedb-v0.16.2
+    app.kubernetes.io/name: kubedb
+    app.kubernetes.io/instance: kubedb-community
+    app.kubernetes.io/version: "v0.16.2"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  group: validators.kubedb.com
+  version: v1alpha1
+  service:
+    namespace: kube-system
+    name: kubedb-community
+  caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCakNDQWU2Z0F3SUJBZ0lSQUxERTJYS1FGbElWS1ArMytZZllPd1l3RFFZSktvWklodmNOQVFFTEJRQXcKRFRFTE1Ba0dBMVVFQXhNQ1kyRXdIaGNOTWpFd016QTBNRFkwTmpJNVdoY05NekV3TXpBeU1EWTBOakk1V2pBTgpNUXN3Q1FZRFZRUURFd0pqWVRDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTG5NClBSMGNJaEIvcEpuQ3VwSjBoMUdGNGxUNHM0ZFNKZHJNZHdBMzYvMHNjVjRrck55VXFaNDdxZWlLVjVBa0ZhR24KVUVMSnVSVFJKcEhNeURPTnJhUXluZW00OVZNb0xHYjhzR0JKK20wQUkxNGxwenN0bUxoYkYvNjRqeWNSVytuagpMSHFWU0hDbDFCN0RuV3E2WjQ5OHVkS1NqSTd5b1NnR3BNOEVaMGxLUjN3RW5kSVNjM3pWd0lJaUMyQXk1SWMyCjVEK2N2MWRLeE5mbWlUQlJHNE1BVjkzVE9IVVRNOHhJUks2MlZuQ1pkWnhrN0lyWSsxenhFR3R3TTUxVHJ1LzEKd3N4dkx4bFRHUW4rN0tyYnJXaVRORjRoRGw0RmVnRlBhYkZ2UitCbWxNRzJCMXlVNGk1K21JUmpNd09ub3lnVQpDNGpOY0xTRVBIUitUSW16Wm44Q0F3RUFBYU5oTUY4d0RnWURWUjBQQVFIL0JBUURBZ0trTUIwR0ExVWRKUVFXCk1CUUdDQ3NHQVFVRkJ3TUJCZ2dyQmdFRkJRY0RBakFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQjBHQTFVZERnUVcKQkJSZmxBTzBRaTd5OGxCVC9wVWVyRkxKazJOZmR6QU5CZ2txaGtpRzl3MEJBUXNGQUFPQ0FRRUFRb2lhOWFUQworSmdUMGs4a1Jham94N3RZdEo1S3UzRm1zRDlFV3Z1RktyZUx5bFI0VkNENEVKSDNhNHFlZ3crR2Zsc2ZGRWNuCnNHcjZPNG82N25KQS9ZcW5aMmIwWjAxdjNKd29kWUZHTUhvQXdtSnVENjB5T3UrbkE3ZHR3cjBRdEd3dlM4eE0KY1B2Z3lSQWVlK3ROd1A3QTlRdlRraEh0Z2ZZNEhkVTVZV1V6ZGpmWUZHVmRCQ212dHVleHhoZjB3WTRIeWRCMwpPOTE3cDFiRUUwdTRVeG1OdGduWUVBaUhYQ0o5OHdNekZ2T0VQenBCSDNiYlp1ZUwrbVg4YllKaTF4OTVtVmlKCjFreXRnTDE0NFdPWW80U1A2Z0Njd1FWOUR0bndkNHh3dDhIZndSTUIrTVpFa0ZMNUNpWmdicmpnQ21IWXAvVTIKVkg0bGNmMUlJQjdPa3c9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+  groupPriorityMinimum: 10000
+  versionPriority: 15
+---
+# Source: kubedb/templates/apiregistration.yaml
+apiVersion: apiregistration.k8s.io/v1
+kind: APIService
+metadata:
+  name: v1alpha1.mutators.kubedb.com
+  labels:
+    helm.sh/chart: kubedb-v0.16.2
+    app.kubernetes.io/name: kubedb
+    app.kubernetes.io/instance: kubedb-community
+    app.kubernetes.io/version: "v0.16.2"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  group: mutators.kubedb.com
+  version: v1alpha1
+  service:
+    namespace: kube-system
+    name: kubedb-community
+  caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCakNDQWU2Z0F3SUJBZ0lSQUxERTJYS1FGbElWS1ArMytZZllPd1l3RFFZSktvWklodmNOQVFFTEJRQXcKRFRFTE1Ba0dBMVVFQXhNQ1kyRXdIaGNOTWpFd016QTBNRFkwTmpJNVdoY05NekV3TXpBeU1EWTBOakk1V2pBTgpNUXN3Q1FZRFZRUURFd0pqWVRDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTG5NClBSMGNJaEIvcEpuQ3VwSjBoMUdGNGxUNHM0ZFNKZHJNZHdBMzYvMHNjVjRrck55VXFaNDdxZWlLVjVBa0ZhR24KVUVMSnVSVFJKcEhNeURPTnJhUXluZW00OVZNb0xHYjhzR0JKK20wQUkxNGxwenN0bUxoYkYvNjRqeWNSVytuagpMSHFWU0hDbDFCN0RuV3E2WjQ5OHVkS1NqSTd5b1NnR3BNOEVaMGxLUjN3RW5kSVNjM3pWd0lJaUMyQXk1SWMyCjVEK2N2MWRLeE5mbWlUQlJHNE1BVjkzVE9IVVRNOHhJUks2MlZuQ1pkWnhrN0lyWSsxenhFR3R3TTUxVHJ1LzEKd3N4dkx4bFRHUW4rN0tyYnJXaVRORjRoRGw0RmVnRlBhYkZ2UitCbWxNRzJCMXlVNGk1K21JUmpNd09ub3lnVQpDNGpOY0xTRVBIUitUSW16Wm44Q0F3RUFBYU5oTUY4d0RnWURWUjBQQVFIL0JBUURBZ0trTUIwR0ExVWRKUVFXCk1CUUdDQ3NHQVFVRkJ3TUJCZ2dyQmdFRkJRY0RBakFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQjBHQTFVZERnUVcKQkJSZmxBTzBRaTd5OGxCVC9wVWVyRkxKazJOZmR6QU5CZ2txaGtpRzl3MEJBUXNGQUFPQ0FRRUFRb2lhOWFUQworSmdUMGs4a1Jham94N3RZdEo1S3UzRm1zRDlFV3Z1RktyZUx5bFI0VkNENEVKSDNhNHFlZ3crR2Zsc2ZGRWNuCnNHcjZPNG82N25KQS9ZcW5aMmIwWjAxdjNKd29kWUZHTUhvQXdtSnVENjB5T3UrbkE3ZHR3cjBRdEd3dlM4eE0KY1B2Z3lSQWVlK3ROd1A3QTlRdlRraEh0Z2ZZNEhkVTVZV1V6ZGpmWUZHVmRCQ212dHVleHhoZjB3WTRIeWRCMwpPOTE3cDFiRUUwdTRVeG1OdGduWUVBaUhYQ0o5OHdNekZ2T0VQenBCSDNiYlp1ZUwrbVg4YllKaTF4OTVtVmlKCjFreXRnTDE0NFdPWW80U1A2Z0Njd1FWOUR0bndkNHh3dDhIZndSTUIrTVpFa0ZMNUNpWmdicmpnQ21IWXAvVTIKVkg0bGNmMUlJQjdPa3c9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+  groupPriorityMinimum: 10000
+  versionPriority: 15
