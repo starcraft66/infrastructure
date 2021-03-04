@@ -16,9 +16,16 @@ patchesJson6902:
     kind: Prometheus
     name: k8s
     version: v1
+- path: patches/add-monitoring-namespaces-to-prometheus-patch.yaml
+  target:
+    group: monitoring.coreos.com
+    kind: Prometheus
+    name: k8s
+    version: v1
 
 patchesStrategicMerge:
 - patches/set-permissions-grafana-patch.yaml
+- patches/monitoring-namespace-labels.yaml
 
 generators:
 - ./generators/secrets-generator.yaml

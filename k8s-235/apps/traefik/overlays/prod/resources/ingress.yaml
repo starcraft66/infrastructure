@@ -99,7 +99,7 @@ spec:
   ports:
   - name: metrics
     port: 9100
-    targetPort: metrics
+    targetPort: traefik
   selector:
     app.kubernetes.io/name: traefik
   type: ClusterIP

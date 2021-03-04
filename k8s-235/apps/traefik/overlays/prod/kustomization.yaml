@@ -2,7 +2,7 @@ namespace: traefik
 
 images:
 - name: traefik
-  newTag: "2.4.5"
+  newTag: "2.4.6"
 - name: thomseddon/traefik-forward-auth
   newTag: "2"
 
@@ -14,6 +14,8 @@ resources:
 - ./resources/ingress.yaml
 - ./resources/middleware.yaml
 - ./resources/loadbalancer.yaml
+- ./resources/monitoring.yaml
+- ./resources/monitoring-rbac.yaml
 
 generators:
 - ./generators/secrets-generator.yaml
