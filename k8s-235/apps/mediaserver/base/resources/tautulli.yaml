@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tautulli
+  labels:
+    app.kubernetes.io/name: tautulli
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tautulli
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tautulli
+    spec:
+      containers:
+      - name: tautulli
+        image: linuxserver/tautulli:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: "http"
+          containerPort: 8181
+          protocol: TCP
+        volumeMounts:
+        - name: tautulli-config
+          mountPath: /config
+        # resources:
+        #   requests:
+        #     cpu: "100m"
+        #     memory: "250Mi"
+        #   limits:
+        #     cpu: "100m"
+        #     memory: "500Mi"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8181
+          periodSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8181
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          failureThreshold: 5
+      volumes:
+      - name: tautulli-config
+        persistentVolumeClaim:
+          claimName: tautulli-config

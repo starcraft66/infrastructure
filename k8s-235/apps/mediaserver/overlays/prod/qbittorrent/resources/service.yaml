@@ -1,0 +1,112 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbittorrent
+  labels:
+    app.kubernetes.io/name: qbittorrent
+spec:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+  - IPv6
+  - IPv4
+  ports:
+  - name: http
+    protocol: TCP
+    targetPort: 8080
+    port: 80
+  selector:
+    app.kubernetes.io/name: qbittorrent
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbt-tcp-v4
+  labels:
+    app.kubernetes.io/name: qbittorrent
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "mediaserver-qbt-v4"
+spec:
+  loadBalancerIP: 10.224.0.69
+  externalTrafficPolicy: Local
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+  - IPv4
+  ports:
+  - name: bt
+    protocol: TCP
+    targetPort: 6881
+    port: 6881
+  selector:
+    app.kubernetes.io/name: qbittorrent
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbt-udp-v4
+  labels:
+    app.kubernetes.io/name: qbittorrent
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "mediaserver-qbt-v4"
+spec:
+  loadBalancerIP: 10.224.0.69
+  externalTrafficPolicy: Local
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+  - IPv4
+  ports:
+  - name: bt
+    protocol: UDP
+    targetPort: 6881
+    port: 6881
+  selector:
+    app.kubernetes.io/name: qbittorrent
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbt-tcp-v6
+  labels:
+    app.kubernetes.io/name: qbittorrent
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "mediaserver-qbt-v6"
+spec:
+  loadBalancerIP: 2607:fa48:6ed8:8a54:3::69
+  externalTrafficPolicy: Local
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+  - IPv6
+  ports:
+  - name: bt
+    protocol: TCP
+    targetPort: 6881
+    port: 6881
+  selector:
+    app.kubernetes.io/name: qbittorrent
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbt-udp-v6
+  labels:
+    app.kubernetes.io/name: qbittorrent
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "mediaserver-qbt-v6"
+spec:
+  loadBalancerIP: 2607:fa48:6ed8:8a54:3::69
+  externalTrafficPolicy: Local
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+  - IPv6
+  ports:
+  - name: bt
+    protocol: UDP
+    targetPort: 6881
+    port: 6881
+  selector:
+    app.kubernetes.io/name: qbittorrent
+  type: LoadBalancer

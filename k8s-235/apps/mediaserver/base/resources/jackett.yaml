@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jackett
+  labels:
+    app.kubernetes.io/name: jackett
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: jackett
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: jackett
+    spec:
+      containers:
+      - name: jackett
+        image: linuxserver/jackett:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: "http"
+          containerPort: 9117
+          protocol: TCP
+        volumeMounts:
+        - name: jackett-config
+          mountPath: /config
+      # resources:
+      #   requests:
+      #     cpu: "100m"
+      #     memory: "250Mi"
+      #   limits:
+      #     cpu: "100m"
+      #     memory: "500Mi"
+        readinessProbe:
+          httpGet:
+              path: /UI/Login
+              port: 9117
+          periodSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+              path: /UI/Login
+              port: 9117
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          failureThreshold: 5
+      volumes:
+      - name: jackett-config
+        persistentVolumeClaim:
+          claimName: jackett-config

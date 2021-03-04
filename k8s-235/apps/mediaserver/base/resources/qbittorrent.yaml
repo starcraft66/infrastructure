@@ -1,0 +1,67 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent
+  labels:
+    app.kubernetes.io/name: qbittorrent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: qbittorrent
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: qbittorrent
+    spec:
+      containers:
+      - name: qbittorrent
+        image: linuxserver/qbittorrent:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: "http"
+          containerPort: 8080
+          protocol: TCP
+        - name: "bt-tcp"
+          containerPort: 6881
+          protocol: TCP
+        - name: "bt-udp"
+          containerPort: 6881
+          protocol: UDP
+        volumeMounts:
+        - name: qbittorrent-config
+          mountPath: /config
+        - name: data
+          mountPath: /downloads
+          subPath: torrents
+        envFrom:
+        - configMapRef:
+            name: mediaserver-permissions
+        # resources:
+        #   requests:
+        #     cpu: "100m"
+        #     memory: "250Mi"
+        #   limits:
+        #     cpu: "100m"
+        #     memory: "500Mi"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          periodSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          failureThreshold: 5
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: "kube-plex-data"
+      - name: qbittorrent-config
+        persistentVolumeClaim:
+          claimName: qbittorrent-config

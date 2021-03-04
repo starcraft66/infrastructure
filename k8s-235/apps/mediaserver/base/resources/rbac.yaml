@@ -1,0 +1,48 @@
+---
+# Source: kube-plex/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: kube-plex
+  labels:
+    app.kubernetes.io/name: kube-plex
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/attach
+  - pods/exec
+  - pods/portforward
+  - pods/proxy
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+---
+# Source: kube-plex/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kube-plex
+  labels:
+    app.kubernetes.io/name: kube-plex
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: kube-plex
+subjects:
+- kind: ServiceAccount
+  name: kube-plex
+  namespace: "default"
+---
+# Source: kube-plex/templates/rbac.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kube-plex

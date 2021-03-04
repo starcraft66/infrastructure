@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr
+  labels:
+    app.kubernetes.io/name: sonarr
+spec:
+  # No ipv6 in sonarr for some reason? :thumbsdown:
+  # https://github.com/Sonarr/Sonarr/issues/835
+  ipFamilyPolicy: SingleStack
+  # ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+  # - IPv6
+  - IPv4
+  ports:
+  - name: http
+    protocol: TCP
+    targetPort: 8989
+    port: 80
+  selector:
+    app.kubernetes.io/name: sonarr
+  type: ClusterIP

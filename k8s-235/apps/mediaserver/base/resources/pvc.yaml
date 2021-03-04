@@ -1,0 +1,56 @@
+---
+# Source: kube-plex/templates/volumes.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kube-plex-config
+  labels:
+    app.kubernetes.io/name: kube-plex
+spec:
+  accessModes:
+  - "ReadWriteMany"
+  resources:
+    requests:
+      storage: "20Gi"
+---
+# Source: kube-plex/templates/volumes.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kube-plex-data
+  labels:
+    app.kubernetes.io/name: kube-plex
+spec:
+  accessModes:
+  - "ReadWriteMany"
+  resources:
+    requests:
+      storage: "40Gi"
+---
+# Source: kube-plex/templates/volumes.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kube-plex-transcode
+  labels:
+    app.kubernetes.io/name: kube-plex
+spec:
+  accessModes:
+  - "ReadWriteMany"
+  resources:
+    requests:
+      storage: "40Gi"
+---
+# Source: kube-plex/templates/volumes.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kube-plex-shared
+  labels:
+    app.kubernetes.io/name: kube-plex
+spec:
+  accessModes:
+  - "ReadWriteMany"
+  resources:
+    requests:
+      storage: "10Gi"

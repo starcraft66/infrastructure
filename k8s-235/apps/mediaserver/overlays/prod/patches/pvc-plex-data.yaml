@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kube-plex-data
+  labels:
+    app.kubernetes.io/name: kube-plex
+spec:
+  storageClassName: ""
+  accessModes:
+  - "ReadWriteMany"
+  resources:
+    requests:
+      storage: "8Ti"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kube-plex-config
+spec:
+  storageClassName: freenas-nfs-csi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kube-plex-transcode
+spec:
+  storageClassName: freenas-nfs-csi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kube-plex-shared
+spec:
+  storageClassName: freenas-nfs-csi

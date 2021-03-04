@@ -1,0 +1,6 @@
+resources:
+- ./resources/volume.yaml
+- ./resources/service.yaml
+
+commonLabels:
+  app.kubernetes.io/name: radarr

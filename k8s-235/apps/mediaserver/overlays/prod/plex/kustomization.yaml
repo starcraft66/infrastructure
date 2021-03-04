@@ -1,0 +1,6 @@
+resources:
+- ./resources/nfs-volume.yaml
+- ./resources/service.yaml
+
+commonLabels:
+  app.kubernetes.io/name: kube-plex

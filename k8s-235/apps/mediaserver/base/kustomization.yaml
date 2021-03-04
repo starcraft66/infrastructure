@@ -1,0 +1,10 @@
+resources:
+- ./resources/kube-plex.yaml
+- ./resources/sonarr.yaml
+- ./resources/radarr.yaml
+- ./resources/jackett.yaml
+- ./resources/qbittorrent.yaml
+- ./resources/tautulli.yaml
+- ./resources/pvc.yaml
+- ./resources/rbac.yaml
+- ./resources/namespace.yaml

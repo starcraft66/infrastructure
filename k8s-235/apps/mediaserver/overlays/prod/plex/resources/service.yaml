@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: kube-plex
+  name: kube-plex
+spec:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+  - IPv6
+  - IPv4
+  ports:
+  - name: pms
+    port: 32400
+    targetPort: 32400
+  selector:
+    app.kubernetes.io/name: kube-plex
+  type: ClusterIP

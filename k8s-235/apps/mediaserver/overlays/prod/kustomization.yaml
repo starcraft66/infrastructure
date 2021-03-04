@@ -1,0 +1,43 @@
+resources:
+- ../../base
+- ./resources/ingress.yaml
+- ./plex
+- ./sonarr
+- ./radarr
+- ./jackett
+- ./qbittorrent
+- ./tautulli
+
+namespace: mediaserver
+
+generators:
+- ./generators/secrets-generator.yaml
+
+patchesStrategicMerge:
+- ./patches/pvc-plex-data.yaml
+
+images:
+- name: quay.io/munnerz/kube-plex
+  newTag: latest
+- name: plexinc/pms-docker
+  newTag: latest
+- name: linuxserver/jackett
+  newTag: latest
+- name: linuxserver/radarr
+  newTag: latest
+- name: linuxserver/sonarr
+  newTag: preview
+- name: linuxserver/qbittorrent
+  newTag: latest
+- name: linuxserver/tautulli
+  newTag: latest
+
+configMapGenerator:
+- name: plex-env-vars
+  literals:
+  - TZ=America/Toronto
+  - ADVERTISE_IP=https://plex.tdude.co/
+- name: mediaserver-permissions
+  literals:
+  - PUID=1014
+  - PGID=1015
