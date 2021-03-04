@@ -1,0 +1,6 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: freenas-nfs-csi
+  annotations:
+reclaimPolicy: Retain
