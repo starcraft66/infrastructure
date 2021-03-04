@@ -1,0 +1,13 @@
+- op: add
+  path: /spec/storage
+  value:
+    volumeClaimTemplate:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 50Gi
+        storageClassName: freenas-nfs-csi

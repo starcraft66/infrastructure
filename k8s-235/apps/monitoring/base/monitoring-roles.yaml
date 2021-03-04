@@ -1,0 +1,15 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: monitoring-binding
+  namespace: monitoring
+subjects:
+- kind: Group
+  name: editors@cedille.club
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  # Cela signifie que les utilisateurs du groupe ci-dessus
+  # peuvent gérer entièrement le namespace 'monitoring'.
+  kind: ClusterRole
+  name: admin
+  apiGroup: rbac.authorization.k8s.io
