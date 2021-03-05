@@ -1,3 +1,4 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -16,16 +17,6 @@ spec:
     - prometheus.tdude.co
     secretName: monitoring-cert-traefik-tls
   rules:
-  - host: monitoring.tdude.co
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: grafana
-            port:
-              number: 3000
   - host: alertmanager.tdude.co
     http:
       paths:
@@ -46,3 +37,27 @@ spec:
             name: prometheus-k8s
             port:
               number: 9090
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-public
+  namespace: monitoring
+  annotations:
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  ingressClassName: traefik
+  tls:
+  # Provisioned by cert-manager in the ingress above
+  - secretName: monitoring-cert-traefik-tls
+  rules:
+  - host: monitoring.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana
+            port:
+              number: 3000
