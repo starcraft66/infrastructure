@@ -54,3 +54,17 @@ spec:
   resources:
     requests:
       storage: "10Gi"
+---
+# Source: kube-plex/templates/volumes.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kube-plex-tmp
+  labels:
+    app.kubernetes.io/name: kube-plex
+spec:
+  accessModes:
+  - "ReadWriteMany"
+  resources:
+    requests:
+      storage: "10Gi"

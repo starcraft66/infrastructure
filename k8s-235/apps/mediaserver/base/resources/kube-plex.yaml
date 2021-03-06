@@ -21,34 +21,34 @@ spec:
     spec:
       serviceAccountName: kube-plex
       hostname: "kube-plex"
-      initContainers:
-      - name: kube-plex-install
-        image: "quay.io/munnerz/kube-plex:latest"
-        imagePullPolicy: Always
-        command:
-        - cp
-        - /kube-plex
-        - /shared/kube-plex
-        volumeMounts:
-        - name: shared
-          mountPath: /shared
+      # initContainers:
+      # - name: kube-plex-install
+      #   image: "quay.io/munnerz/kube-plex:latest"
+      #   imagePullPolicy: Always
+      #   command:
+      #   - cp
+      #   - /kube-plex
+      #   - /shared/kube-plex
+      #   volumeMounts:
+      #   - name: shared
+      #     mountPath: /shared
       containers:
       - name: plex
         image: "plexinc/pms-docker:latest"
         imagePullPolicy: IfNotPresent
         # We replace the PMS binary with a postStart hook to save having to
         # modify the default image entrypoint.
-        lifecycle:
-          postStart:
-            exec:
-              command:
-              - bash
-              - -c
-              - |
-                #!/bin/bash
-                set -e
-                rm -f '/usr/lib/plexmediaserver/Plex Transcoder'
-                cp /shared/kube-plex '/usr/lib/plexmediaserver/Plex Transcoder'
+        # lifecycle:
+        #   postStart:
+        #     exec:
+        #       command:
+        #       - bash
+        #       - -c
+        #       - |
+        #         #!/bin/bash
+        #         set -e
+        #         rm -f '/usr/lib/plexmediaserver/Plex Transcoder'
+        #         cp /shared/kube-plex '/usr/lib/plexmediaserver/Plex Transcoder'
         readinessProbe:
           httpGet:
             path: /identity
@@ -71,8 +71,6 @@ spec:
         envFrom:
         - configMapRef:
             name: plex-env-vars
-        - configMapRef:
-            name: mediaserver-permissions
         - secretRef:
             name: plex-claim-token
         env:
@@ -100,6 +98,8 @@ spec:
           mountPath: /transcode
         - name: shared
           mountPath: /shared
+        # - name: tmp
+        #   mountPath: /tmp
         resources:
           {}
       nodeSelector:
@@ -117,3 +117,6 @@ spec:
       - name: shared
         persistentVolumeClaim:
           claimName: "kube-plex-shared"
+      # - name: tmp
+      #   persistentVolumeClaim:
+      #     claimName: "kube-plex-tmp"

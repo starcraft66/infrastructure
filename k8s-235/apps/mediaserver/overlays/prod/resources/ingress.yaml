@@ -19,16 +19,6 @@ spec:
     - tautulli.tdude.co
     secretName: mediaserver-k8s-235-tdude-co-tls
   rules:
-  - host: plex.tdude.co
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: kube-plex
-            port:
-              name: pms
   - host: sonarr.tdude.co
     http:
       paths:
@@ -79,3 +69,26 @@ spec:
             name: tautulli
             port:
               name: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: plex-public
+  annotations:
+  # Provisioned by cert-manager in the ingress above
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  ingressClassName: traefik
+  tls:
+  - secretName: mediaserver-k8s-235-tdude-co-tls
+  rules:
+  - host: plex.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kube-plex
+            port:
+              name: pms

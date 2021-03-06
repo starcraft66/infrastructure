@@ -32,3 +32,10 @@ metadata:
   name: kube-plex-shared
 spec:
   storageClassName: freenas-nfs-csi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kube-plex-tmp
+spec:
+  storageClassName: freenas-nfs-csi
