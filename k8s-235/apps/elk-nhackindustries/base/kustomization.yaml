@@ -1,0 +1,3 @@
+resources:
+- ./resources/kibana.yaml
+- ./resources/namespace.yaml

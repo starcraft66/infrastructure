@@ -1,0 +1,30 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Elasticsearch
+metadata:
+  name: es-nhackindustries
+  namespace: nhackindustries
+spec:
+  version: "7.9.1-xpack"
+  storageType: "Durable"
+  storage:
+    storageClassName: "freenas-nfs-csi"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+  monitor:
+    agent: prometheus.io/operator
+    prometheus:
+      serviceMonitor:
+        labels:
+          app.kubernetes.io/name: elk-nhackindustries
+        interval: 10s
+  podTemplate:
+    metadata:
+      annotations:
+        app.kubernetes.io/name: elk-nhackindustries
+    controller:
+      annotations:
+        app.kubernetes.io/name: elk-nhackindustries
+  terminationPolicy: Halt

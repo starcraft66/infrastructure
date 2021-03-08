@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kibana
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kibana
+    spec:
+      containers:
+      - name: kibana
+        image: kibana:7.9.1
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name:  kibana-config
+          mountPath: /usr/share/kibana/config
+        ports:
+        - name: kibana
+          containerPort: 5601
+          protocol: TCP
+      volumes:
+      - name: kibana-config
+        secret:
+          secretName: kibana-config
