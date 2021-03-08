@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guacamole-app
+  namespace: netboot-guacamole
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: guacamole-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: guacamole-app
+    spec:
+      containers:
+      - name: guacamole-app
+        image: guacamole/guacamole
+        imagePullPolicy: Always
+        envFrom:
+        - secretRef:
+            name: mysql-config
+        env:
+        - name: GUACD_HOSTNAME
+          value: "guacamole-daemon"
+        - name: GUACD_PORT
+          value: "4822"
+        ports:
+        - name: guacamole-app
+          containerPort: 8080
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 20

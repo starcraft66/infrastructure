@@ -1,0 +1,6 @@
+resources:
+- ./resources/app-deployment.yaml
+- ./resources/daemon-deployment.yaml
+- ./resources/app-service.yaml
+- ./resources/daemon-service.yaml
+- ./resources/namespace.yaml

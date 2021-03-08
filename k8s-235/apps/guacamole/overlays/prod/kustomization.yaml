@@ -1,0 +1,16 @@
+resources:
+- ../../base
+- ./resources/database.yaml
+- ./resources/ingress.yaml
+- ./resources/monitoring-rbac.yaml
+
+namespace: guacamole
+
+generators:
+- ./generators/secrets-generator.yaml
+
+images:
+- name: guacamole/guacamole
+  newTag: latest
+- name: guacamole/guacd
+  newTag: latest

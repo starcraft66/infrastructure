@@ -1,0 +1,47 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MySQL
+metadata:
+  name: guacamole-mysql
+  namespace: demo
+spec:
+  version: "8.0.21"
+  storageType: "Durable"
+  storage:
+    storageClassName: "freenas-nfs-csi"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  monitor:
+    agent: prometheus.io/operator
+    prometheus:
+      serviceMonitor:
+        labels:
+          app.kubernetes.io/name: mysql-guacamole
+        interval: 10s
+  podTemplate:
+    metadata:
+      annotations:
+        app.kubernetes.io/name: mysql-guacamole
+    controller:
+      annotations:
+        app.kubernetes.io/name: mysql-guacamole
+    spec:
+      env:
+      - name: MYSQL_USER
+        valueFrom:
+          secretKeyRef:
+            name: mysql-config
+            key: MYSQL_USER
+      - name: MYSQL_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: mysql-config
+            key: MYSQL_PASSWORD
+      - name: MYSQL_DATABASE
+        valueFrom:
+          secretKeyRef:
+            name: mysql-config
+            key: MYSQL_DATABASE
+  terminationPolicy: Halt

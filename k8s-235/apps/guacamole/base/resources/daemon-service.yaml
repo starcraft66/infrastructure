@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: guacamole-daemon
+  namespace: guacamole
+  labels:
+    app.kubernetes.io/name: guacamole-guacd
+spec:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+  - IPv4
+  - IPv6
+  ports:
+    - name: guacamole-daemon
+      port: 4822
+      targetPort: 4822
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: guacamole-guacd
