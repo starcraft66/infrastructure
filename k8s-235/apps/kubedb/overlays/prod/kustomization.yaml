@@ -1,6 +1,7 @@
 resources:
 - ../../base
 
+# Need to figure out service account stuff
 namespace: kubedb
 
 generators:
