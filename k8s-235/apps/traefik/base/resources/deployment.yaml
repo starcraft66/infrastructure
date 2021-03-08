@@ -77,7 +77,8 @@ spec:
           - "--entryPoints.traefik.address=:9000/tcp"
           - "--entryPoints.web.address=:8000/tcp"
 # https://github.com/traefik/traefik-helm-chart/blob/a4dbf1a5833f03e675e1550f32d047cdbf07900c/traefik/templates/_podtemplate.tpl#L127
-          - "--entrypoints.web.http.redirections.entryPoint.to=:8443"
+          # This port is technically 8443 but it is accessed from the outside via 443
+          - "--entrypoints.web.http.redirections.entryPoint.to=:443"
           - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
           - "--entryPoints.websecure.address=:8443/tcp"
           - "--api.dashboard=true"
