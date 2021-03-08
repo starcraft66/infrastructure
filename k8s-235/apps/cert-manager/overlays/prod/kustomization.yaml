@@ -12,20 +12,4 @@ patchesStrategicMerge:
 - ./patches/certmanager_namespace.yaml
 - ./patches/cainjector_namespace.yaml
 
-images:
-- name: quay.io/jetstack/cert-manager-cainjector
-  newTag: v1.1.1
-- name: quay.io/jetstack/cert-manager-controller
-  newTag: v1.1.1
-- name: quay.io/jetstack/cert-manager-webhook
-  newTag: v1.1.1
-
-# patchesJson6902:
-# - path: ./patches/webhook_dynamic_serving_dns_names.yaml
-#   target:
-#       group: apps
-#       kind: Deployment
-#       name: cert-manager-webhook
-#       version: v1
-
 namespace: cert-manager
