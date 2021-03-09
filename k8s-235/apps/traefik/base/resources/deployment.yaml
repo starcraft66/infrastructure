@@ -85,6 +85,8 @@ spec:
           # To avoid using IngressRoute CRD.
           # The dashboard has Auth Middleware anyway.
           - "--api.insecure=true"
+          # For now... Unifi controller requires this
+          - "--serversTransport.insecureSkipVerify=true"
           - "--metrics.prometheus=true"
           - "--ping=true"
           - "--providers.kubernetescrd"
