@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: unifi-controller
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # Disabled for now. Needs a rule or middleware to allow APs to communicate freely
+    # traefik.ingress.kubernetes.io/router.middlewares: traefik-forward-auth@kubernetescrd
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - unifi.tdude.co
+    secretName: unifi-tdude-co-tls
+  rules:
+  - host: unifi.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: unifi-controller
+            port:
+              name: https

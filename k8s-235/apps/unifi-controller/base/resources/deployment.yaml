@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unifi-controller
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: unifi-controller
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: unifi-controller
+    spec:
+      containers:
+      - name: unifi-controller
+        image: linuxserver/unifi-controller:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: TZ
+          value: "America/Montreal"
+        ports:
+        - name: "l2-discoverable"
+          containerPort: 1900
+          protocol: UDP
+        - name: "stun"
+          containerPort: 3478
+          protocol: UDP
+        - name: "ap-discovery"
+          containerPort: 10001
+          protocol: UDP
+        - name: "speed-test"
+          containerPort: 6789
+        - name: "internal-comms"
+          containerPort: 8080
+        - name: "unknown-port"
+          containerPort: 8081
+        - name: "http-web"
+          containerPort: 8443
+        - name: "http-s-redirect"
+          containerPort: 8843
+        - name: "http-redirect"
+          containerPort: 8880
+        volumeMounts:
+        - name: config
+          mountPath: /config
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 20
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: "unifi-controller-config"

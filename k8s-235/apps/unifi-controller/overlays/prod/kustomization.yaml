@@ -1,0 +1,12 @@
+resources:
+- ../../base
+- ./resources/namespace.yaml
+- ./resources/monitoring-rbac.yaml
+- ./resources/ingress.yaml
+- ./resources/volume.yaml
+
+namespace: unifi
+
+images:
+- name: linuxserver/unifi-controller
+  newTag: latest
