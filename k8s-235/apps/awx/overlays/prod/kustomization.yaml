@@ -1,0 +1,12 @@
+resources:
+- ../../base
+- ./resources/awx.yaml
+- ./resources/database.yaml
+- ./resources/namespace.yaml
+- ./resources/monitoring-rbac.yaml
+- ./resources/ingress.yaml
+
+namespace: awx
+
+generators:
+- ./generators/secrets-generator.yaml

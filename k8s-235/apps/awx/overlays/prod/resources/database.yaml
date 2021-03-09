@@ -1,0 +1,35 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Postgres
+metadata:
+  name: postgres-awx
+spec:
+  version: "11.2-v1"
+  storageType: "Durable"
+  storage:
+    storageClassName: "freenas-nfs-csi"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+  monitor:
+    agent: prometheus.io/operator
+    prometheus:
+      serviceMonitor:
+        labels:
+          app.kubernetes.io/name: postgres-awx
+        interval: 10s
+  authSecret:
+    name: awx-postgres-credentials
+  podTemplate:
+    metadata:
+      annotations:
+        app.kubernetes.io/name: postgres-awx
+    controller:
+      annotations:
+        app.kubernetes.io/name: postgres-awx
+    spec:
+      env:
+      - name: POSTGRES_DB
+        value: awx
+  terminationPolicy: Halt

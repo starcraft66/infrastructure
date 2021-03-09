@@ -1,0 +1,9 @@
+---
+apiVersion: awx.ansible.com/v1beta1
+kind: AWX
+metadata:
+  name: awx
+spec:
+  tower_postgres_storage_class: freenas-nfs-csi
+  tower_ingress_type: none
+  tower_hostname: awx.tdude.co

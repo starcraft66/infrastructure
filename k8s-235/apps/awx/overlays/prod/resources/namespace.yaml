@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mediaserver
+  labels:
+    prometheus: k8s
