@@ -18,5 +18,9 @@ spec:
       port: 443
       targetPort: 8443
       protocol: TCP
+    - name: metrics
+      port: 9130
+      targetPort: 9130
+      protocol: TCP
   selector:
     app.kubernetes.io/name: unifi-controller

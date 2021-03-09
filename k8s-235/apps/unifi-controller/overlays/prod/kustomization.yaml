@@ -1,6 +1,7 @@
 resources:
 - ../../base
 - ./resources/namespace.yaml
+- ./resources/monitoring.yaml
 - ./resources/monitoring-rbac.yaml
 - ./resources/ingress.yaml
 - ./resources/volume.yaml
@@ -10,3 +11,13 @@ namespace: unifi
 images:
 - name: linuxserver/unifi-controller
   newTag: latest
+
+generators:
+- ./generators/secrets-generator.yaml
+
+configMapGenerator:
+- name: unifi-poller-config
+  literals:
+  - UP_UNIFI_DEFAULT_URL="https://unifi.tdude.co"
+  - UP_UNIFI_DEFAULT_USER="unifipoller"
+  - UP_PROMETHEUS_HTTP_LISTEN=:9130

@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: unifi-controller-metrics
+  labels:
+    app.kubernetes.io/name: unifi-controller
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: unifi-controller
+  endpoints:
+  - port: metrics

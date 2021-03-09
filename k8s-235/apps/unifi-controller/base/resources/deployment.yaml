@@ -54,6 +54,30 @@ spec:
             port: 8080
           initialDelaySeconds: 15
           periodSeconds: 20
+      - name: unifi-poller
+        image: golift/unifi-poller:latest
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: unifi-poller-config
+        - secretRef:
+            name: unifi-poller-secrets
+        readinessProbe:
+          httpGet:
+            path: /metrics
+            port: metrics
+          periodSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: metrics
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 5
+        ports:
+        - name: "metrics"
+          containerPort: 9130
       volumes:
       - name: config
         persistentVolumeClaim:
