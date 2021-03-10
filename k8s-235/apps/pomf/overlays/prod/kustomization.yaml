@@ -1,0 +1,16 @@
+resources:
+- ../../base
+- ./resources/ingress.yaml
+- ./resources/nfs-volume.yaml
+- ./resources/pvc.yaml
+
+namespace: pomf
+
+images:
+- name: nginx
+  newTag: alpine
+
+configMapGenerator:
+- name: pomf-nginx-config
+  files:
+  - default.conf=config/default.conf

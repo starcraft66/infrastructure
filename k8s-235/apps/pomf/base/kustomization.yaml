@@ -1,0 +1,7 @@
+resources:
+- ./resources/deployment.yaml
+- ./resources/service.yaml
+- ./resources/namespace.yaml
+
+commonLabels:
+  app.kubernetes.io/name: pomf
