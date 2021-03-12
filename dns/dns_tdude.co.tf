@@ -1029,3 +1029,21 @@ resource "cloudflare_record" "cloud_305-1700" {
   ttl     = 1
   proxied = false
 }
+
+resource "cloudflare_record" "portainer_305-1700" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "portainer.305-1700"
+  value   = "traefik.305-1700.tdude.co"
+  type    = "CNAME"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "ha_305-1700" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "ha.305-1700"
+  value   = "traefik.305-1700.tdude.co"
+  type    = "CNAME"
+  ttl     = 1
+  proxied = false
+}
