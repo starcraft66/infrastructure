@@ -1,0 +1,15 @@
+---
+- op: replace
+  path: /spec/template/spec/volumes
+  value:
+    - name: nextcloud-data
+      persistentVolumeClaim:
+        claimName: "nextcloud-data"
+    - name: nextcloud-data-extra
+      persistentVolumeClaim:
+        claimName: "nextcloud-data-extra"
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/3
+  value:
+    name: nextcloud-data-extra
+    mountPath: /var/www/html/data/tristan/files/extra

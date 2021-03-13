@@ -1,0 +1,46 @@
+namespace: nextcloud
+
+images:
+- name: nextcloud
+  newTag: "21.0-apache"
+
+resources:
+- ../../base
+- ./resources/namespace.yaml
+- ./resources/database.yaml
+- ./resources/ingress.yaml
+- ./resources/service.yaml
+- ./resources/nfs-volume.yaml
+- ./resources/volume.yaml
+
+generators:
+- ./generators/secrets-generator.yaml
+
+patchesStrategicMerge:
+- ./patches/probe-hostnames.yaml
+
+patchesJson6902:
+- path: ./patches/persistence.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: nextcloud
+    version: v1
+- path: ./patches/env-vars.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: nextcloud
+    version: v1
+
+configMapGenerator:
+- name: nextcloud-env-vars
+  literals:
+  - NEXTCLOUD_TRUSTED_DOMAINS=cloud.tdude.co
+  - NEXTCLOUD_DATA_DIR="/var/www/html/data"
+  - POSTGRES_HOST=postgres-nextcloud
+  - POSTGRES_DB=nextcloud
+  - POSTGRES_USER=nextcloud
+
+commonLabels:
+  app.kubernetes.io/name: nextcloud

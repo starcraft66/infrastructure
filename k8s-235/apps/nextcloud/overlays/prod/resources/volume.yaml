@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextcloud-data
+  labels:
+    app.kubernetes.io/name: nextcloud
+spec:
+  storageClassName: freenas-nfs-csi
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
