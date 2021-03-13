@@ -77,6 +77,7 @@ metadata:
   annotations:
   # Provisioned by cert-manager in the ingress above
     traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.middlewares: mediaserver-plex-cors@kubernetescrd
 spec:
   ingressClassName: traefik
   tls:

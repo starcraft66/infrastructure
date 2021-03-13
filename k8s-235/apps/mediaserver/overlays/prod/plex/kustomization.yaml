@@ -1,6 +1,7 @@
 resources:
 - ./resources/nfs-volume.yaml
 - ./resources/service.yaml
+- ./resources/cors-middleware.yaml
 
 commonLabels:
   app.kubernetes.io/name: kube-plex
