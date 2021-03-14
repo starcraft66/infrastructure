@@ -20,21 +20,8 @@ resources:
 generators:
 - ./generators/secrets-generator.yaml
 
-# transformers:
-# - transformers/prefix-suffix.yaml
-
 configMapGenerator:
 - name: traefik-forward-auth-config
   namespace: traefik
   files:
   - traefik-forward-auth.ini=configs/traefik-forward-auth.ini
-
-# - name: traefik
-#   namespace: traefik
-#   files:
-#   - traefik.toml=configs/traefik.toml
-
-# patchesJson6902:
-# - path: patches/remove-helm.yaml
-#   target:
-#     name: ".*"
