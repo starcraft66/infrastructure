@@ -6,9 +6,11 @@ images:
 - name: thomseddon/traefik-forward-auth
   newTag: "2"
 
+# nameSuffix: -prod
+
 resources:
 - ../../base
-- ./resources/autoscaler.yaml
+# - ./resources/autoscaler.yml
 - ./resources/ingress.yaml
 - ./resources/middleware.yaml
 - ./resources/loadbalancer.yaml
