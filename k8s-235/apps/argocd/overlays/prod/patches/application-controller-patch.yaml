@@ -1,0 +1,26 @@
+# Modifications related to performance added
+# to the application controller. 
+#
+# Reference: https://argo-cd.readthedocs.io/en/stable/operator-manual/high_availability/#argocd-application-controller
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: argocd-application-controller
+spec:
+  template:
+    spec:
+      containers:
+      - name: argocd-application-controller
+        command:
+        - argocd-application-controller
+        - --status-processors
+        - "20"
+        - --operation-processors
+        - "10"
+        - --app-resync
+        - "300" # 5 minutes between re-sync
+        - --kubectl-parallelism-limit
+        - "20"
+        - --redis
+        - argocd-redis-ha-haproxy:6379

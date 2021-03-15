@@ -1,0 +1,20 @@
+resources:
+- ../../base
+- ./resources/monitoring-rbac.yaml
+- ./resources/project.yaml
+- ./resources/applications.yaml
+- ./resources/ingress.yaml
+
+patchesStrategicMerge:
+- ./patches/argocd-cm-patch.yaml
+- ./patches/argocd-gpg-keys-cm-patch.yaml
+- ./patches/argocd-rbac-cm-patch.yaml
+- ./patches/argocd-server-patch.yaml
+- ./patches/application-controller-patch.yaml
+- ./patches/argo-cd-repo-server-ksops-patch.yaml
+- ./patches/argo-cd-import-pgp-key.yaml
+
+namespace: argocd
+
+generators:
+- ./generators/secrets-generator.yaml

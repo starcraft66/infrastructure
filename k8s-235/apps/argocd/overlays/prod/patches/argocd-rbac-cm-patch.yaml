@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  namespace: argocd
+data:
+  policy.default: role:readonly
+  policy.csv: |
+    # Everything unrelated to a specific project is listed here.
+    
+    # These permissions allow Operators from 
+    # the tdude group to:
+    
+    # - get clusters, certificates and repositories;
+    # - sync applications;
+    # - read, create, update and delete GPG keys.
+
+    p, role:org-operators, applications, sync, *, allow
+    p, role:org-operators, clusters, get, *, allow
+    p, role:org-operators, certificates, get, *, allow
+    p, role:org-operators, repositories, get, *, allow
+    p, role:org-operators, gpgkeys, get, *, allow
+    p, role:org-operators, gpgkeys, create, *, allow
+    p, role:org-operators, gpgkeys, delete, *, allow
+
+    g, tdude, role:org-operators

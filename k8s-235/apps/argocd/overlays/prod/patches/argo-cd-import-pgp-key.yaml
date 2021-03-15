@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-repo-server
+spec:
+  template:
+    spec:
+      volumes:
+        - name: gnupg-home
+          emptyDir: {}
+        - name: deploy-pgp-key
+          secret:
+            secretName: deploy-pgp-key
+      initContainers:
+        - name: import-gpg-key
+          image: argoproj/argocd:v1.8.5
+          command: ["gpg", "--import", "/deploy-pgp-key/deploy-key.asc"]
+          env:
+            - name: GNUPGHOME
+              value: /gnupg-home/.gnupg
+          volumeMounts:
+            - mountPath: /deploy-pgp-key
+              name: deploy-pgp-key
+              readOnly: true
+            - mountPath: /gnupg-home
+              name: gnupg-home
+      containers:
+        - name: argocd-repo-server
+          env:
+            - name: GNUPGHOME
+              value: /home/argocd/.gnupg
+          volumeMounts:
+            - mountPath: /home/argocd/.gnupg
+              name: gnupg-home
+              subPath: .gnupg
+              # Note: can't be readOnly as gpg wants to create agent socket

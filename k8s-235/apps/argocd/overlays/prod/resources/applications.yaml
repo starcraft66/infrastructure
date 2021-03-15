@@ -1,0 +1,251 @@
+# In this file, all applications running in
+# our production cluster are listed. Simply add
+# a new 'Application' resource to this list to
+# sync them with Git.
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/argocd/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/monitoring/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: cert-manager
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/cert-manager/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: traefik
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/traefik/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: democratic-csi
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: democratic-csi
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/democratic-csi/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: elk-nhackindustries
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: nhackindustries
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/elk-nhackindustries/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guacamole
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: guacamole
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/guacamole/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jenkins
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/jenkins
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubedb
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: kubedb
+    server: https://kubernetes.default.svc
+  source:
+    helm:
+      version: "3"
+      releaseName: kubedb-community
+      values: |
+        monitoring:
+          enabled: true
+          agent: "prometheus.io/operator"
+          serviceMonitor:
+            labels:
+              app.kubernetes.io/name: "kubedb"
+    repoURL: https://charts.appscode.com/stable/
+    chart: kubedb
+    targetRevision: "v0.16.2"
+    # repoURL: https://git.tdude.co/tristan/infrastructure.git
+    # targetRevision: master
+    # path: k8s-235/apps/kubedb/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: false
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mediaserver
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: mediaserver
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/mediaserver/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nextcloud
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: nextcloud
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/nextcloud/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pomf
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: pomf
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/pomf/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: unifi-controller
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: unifi
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/unifi-controller/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true

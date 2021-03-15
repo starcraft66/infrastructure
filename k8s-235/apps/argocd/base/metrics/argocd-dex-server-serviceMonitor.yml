@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: argocd-dex-server-metrics
+  labels:
+    app.kubernetes.io/name: argocd-dex-server
+    app.kubernetes.io/part-of: argocd
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-dex-server
+  endpoints:
+  - port: metrics

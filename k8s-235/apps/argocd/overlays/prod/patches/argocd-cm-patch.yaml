@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+data:
+  admin.enabled: 'false'
+  url: https://gitops.tdude.co
+  repositories: |
+    - url: https://git.tdude.co/tristan/infrastructure.git
+  repository.credentials: |
+    - url: https://git.tdude.co/tristan/infrastructure.git
+  dex.config: |
+    connectors:
+    - type: gitlab
+      id: gitlab
+      name: Gitlab
+      config:
+        baseURL: https://git.tdude.co
+        clientID: $dex.gitlab.clientId
+        clientSecret: $dex.gitlab.clientSecret
+        redirectURI: http://gitops.tdude.co/dex/callback
+  resource.customizations: |
+    extensions/Ingress:
+      health.lua: |
+        hs = {}
+        hs.status = "Healthy"
+        return hs
+    networking.k8s.io/Ingress:
+      health.lua: |
+        hs = {}
+        hs.status = "Healthy"
+        return hs
+  # For kustomize-sops
+  kustomize.buildOptions: "--enable_alpha_plugins"

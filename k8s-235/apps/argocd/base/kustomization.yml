@@ -1,0 +1,10 @@
+resources:
+- https://github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v1.8.5
+- ./metrics/argocd-serviceMonitor.yml
+- ./metrics/argocd-server-serviceMonitor.yml
+- ./metrics/argocd-dex-server-serviceMonitor.yml
+- ./metrics/argocd-repo-server-serviceMonitor.yml
+# - ./argocd-roles.yml
+- ./namespace.yml
+
+namespace: argocd
