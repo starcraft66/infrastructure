@@ -19,5 +19,3 @@ spec:
     - p, proj:production:read-only, applications, get, production/*, allow
     groups:
     - tdude
-  signatureKeys:
-  - keyID: 9D98CDACFF04FD78
