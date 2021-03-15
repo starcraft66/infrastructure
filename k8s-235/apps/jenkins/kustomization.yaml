@@ -1,0 +1,5 @@
+resources:
+- ./resources/ingress.yaml
+- ./resources/service.yaml
+
+namespace: default
