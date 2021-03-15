@@ -1,8 +1,8 @@
 - op: remove
-  path: /spec/template/spec/0/env
+  path: /spec/template/spec/containers/0/env
   value: {}
 - op: add
-  path: /spec/template/spec/0/envFrom
+  path: /spec/template/spec/containers/0/envFrom
   value:
   - configMapRef:
       name: nextcloud-env-vars
