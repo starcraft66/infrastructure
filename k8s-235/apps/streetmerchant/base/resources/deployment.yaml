@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streetmerchant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: streetmerchant
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: streetmerchant
+    spec:
+      containers:
+        - name: streetmerchant
+          image: ghcr.io/jef/streetmerchant:nightly
+          imagePullPolicy: IfNotPresent
+          resources: {}

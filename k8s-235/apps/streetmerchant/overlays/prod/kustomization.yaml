@@ -1,0 +1,29 @@
+resources:
+- ../../base
+
+namespace: streetmerchant
+
+images:
+- name: ghcr.io/jef/streetmerchant
+  newTag: nightly
+
+generators:
+- ./generators/secrets-generator.yaml
+
+configMapGenerator:
+- name: streetmerchant-config
+  literals:
+  - MAX_PRICE_SERIES_3080=1250
+  - SHOW_ONLY_SERIES=3080
+  - STORES=amazon-ca,bestbuy-ca,canadacomputers,vuugo,walmart-ca,newegg-ca,memoryexpress
+
+patchesJson6902:
+- path: ./patches/env-vars.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: streetmerchant
+    version: v1
+
+commonLabels:
+  app.kubernetes.io/name: streetmerchant
