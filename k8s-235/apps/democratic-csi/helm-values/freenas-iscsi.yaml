@@ -1,0 +1,96 @@
+csiDriver:
+  # should be globally unique for a given cluster
+  name: "org.democratic-csi.iscsi"
+
+# add note here about volume expansion requirements
+storageClasses:
+- name: freenas-iscsi-csi
+  defaultClass: false
+  reclaimPolicy: Retain
+  volumeBindingMode: Immediate
+  allowVolumeExpansion: true
+  parameters:
+    # for block-based storage can be ext3, ext4, xfs
+    fsType: xfs
+
+  mountOptions: []
+  secrets:
+    provisioner-secret:
+    controller-publish-secret:
+    node-stage-secret:
+    node-publish-secret:
+    controller-expand-secret:
+
+controller:
+  externalProvisioner:
+    extraArgs:
+    - --volume-name-uuid-length=16
+
+driver:
+  config:
+    driver: freenas-iscsi
+    httpConnection:
+      allowInsecure: true
+      apiKey: redacted
+      apiVersion: 2
+      host: spitfire.235.tdude.co
+      port: 443
+      protocol: https
+      username: root
+    instance_id: null
+    sshConnection:
+      host: spitfire.235.tdude.co
+      port: 22
+      privateKey: |
+        -----BEGIN OPENSSH PRIVATE KEY-----
+        ...
+        -----END OPENSSH PRIVATE KEY-----
+      username: root
+    zfs:
+      # the example below is useful for TrueNAS 12
+      cli:
+        paths:
+          zfs: /usr/local/sbin/zfs
+          zpool: /usr/local/sbin/zpool
+          sudo: /usr/local/bin/sudo
+          chroot: /usr/sbin/chroot
+      # total volume name (zvol/<datasetParentName>/<pvc name>) length cannot exceed 63 chars
+      # https://www.ixsystems.com/documentation/freenas/11.2-U5/storage.html#zfs-zvol-config-opts-tab
+      # standard volume naming overhead is 46 chars
+      # datasetParentName should therefore be 17 chars or less
+      datasetParentName: spitfire/k8s-235/volumes
+      detachedSnapshotsDatasetParentName: spitfire/k8s-235/snapshots
+      # "" (inherit), lz4, gzip-9, etc
+      zvolCompression: ""
+      # "" (inherit), on, off, verify
+      zvolDedup: ""
+      zvolEnableReservation: false
+      # 512, 1K, 2K, 4K, 8K, 16K, 64K, 128K default is 16K
+      zvolBlocksize: "16K"
+    iscsi:
+      targetPortal: "spitfire.storage.235.tdude.co:3260"
+      targetPortals: []
+      # leave empty to omit usage of -I with iscsiadm
+      interface:
+      namePrefix: csi-
+      nameSuffix: "-cluster"
+      # add as many as needed
+      targetGroups:
+        # get the correct ID from the "portal" section in the UI
+        - targetGroupPortalGroup: 1
+          # get the correct ID from the "initiators" section in the UI
+          targetGroupInitiatorGroup: 1
+          # None, CHAP, or CHAP Mutual
+          targetGroupAuthType: None
+          # get the correct ID from the "Authorized Access" section of the UI
+          # only required if using Chap
+          targetGroupAuthGroup:
+      extentInsecureTpc: true
+      extentXenCompat: false
+      extentDisablePhysicalBlocksize: true
+      # 512, 1024, 2048, or 4096,
+      extentBlocksize: 4096
+      # "" (let FreeNAS decide, currently defaults to SSD), Unknown, SSD, 5400, 7200, 10000, 15000
+      extentRpm: "7200"
+      # 0-100 (0 == ignore)
+      extentAvailThreshold: 0

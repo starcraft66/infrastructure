@@ -1,6 +1,7 @@
 resources:
 - ./namespace.yaml
-- ./democratic-csi.yaml
+- ./nfs.yaml
+- ./iscsi.yaml
 # Snapshot stuff
 - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/deploy/kubernetes/snapshot-controller/rbac-snapshot-controller.yaml
 - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/deploy/kubernetes/snapshot-controller/setup-snapshot-controller.yaml

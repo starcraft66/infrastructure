@@ -1,0 +1,68 @@
+csiDriver:
+  # should be globally unique for a given cluster
+  name: "org.democratic-csi.nfs"
+
+storageClasses:
+- name: freenas-nfs-csi
+  defaultClass: false
+  reclaimPolicy: Retain
+  volumeBindingMode: Immediate
+  allowVolumeExpansion: true
+  parameters:
+    fsType: nfs
+
+  mountOptions:
+  - noatime
+  - nfsvers=3
+  secrets:
+    provisioner-secret:
+    controller-publish-secret:
+    node-stage-secret:
+    node-publish-secret:
+    controller-expand-secret:
+
+driver:
+  config:
+    driver: freenas-nfs
+    httpConnection:
+      allowInsecure: true
+      apiKey: redacted
+      apiVersion: 2
+      host: spitfire.235.tdude.co
+      port: 443
+      protocol: https
+      username: root
+    instance_id: null
+    nfs:
+      shareAlldirs: false
+      shareAllowedHosts:
+      - 2607:fa48:6ed8:8a54:100::10
+      - 2607:fa48:6ed8:8a54:100::11
+      - 2607:fa48:6ed8:8a54:100::12
+      - 2607:fa48:6ed8:8a54:100::13
+      - 2607:fa48:6ed8:8a54:100::14
+      - 2607:fa48:6ed8:8a54:100::15
+      - 2607:fa48:6ed8:8a54:100::16
+      - 2607:fa48:6ed8:8a54:100::17
+      shareAllowedNetworks: []
+      shareHost: spitfire.storage.235.tdude.co
+      shareMapallGroup: ""
+      shareMapallUser: ""
+      shareMaprootGroup: wheel
+      shareMaprootUser: root
+    sshConnection:
+      host: spitfire.235.tdude.co
+      port: 22
+      privateKey: |
+        -----BEGIN OPENSSH PRIVATE KEY-----
+        ...
+        -----END OPENSSH PRIVATE KEY-----
+      username: root
+    zfs:
+      datasetEnableQuotas: true
+      datasetEnableReservation: false
+      datasetParentName: spitfire/k8s-235/volumes
+      datasetPermissionsGroup: wheel
+      datasetPermissionsMode: "0777"
+      datasetPermissionsUser: root
+      detachedSnapshotsDatasetParentName: spitfire/k8s-235/snapshots
