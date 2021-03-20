@@ -158,22 +158,9 @@ spec:
     namespace: kubedb
     server: https://kubernetes.default.svc
   source:
-    helm:
-      version: "3"
-      releaseName: kubedb-community
-      values: |
-        monitoring:
-          enabled: true
-          agent: "prometheus.io/operator"
-          serviceMonitor:
-            labels:
-              app.kubernetes.io/name: "kubedb"
-    repoURL: https://charts.appscode.com/stable/
-    chart: kubedb
-    targetRevision: "v0.16.2"
-    # repoURL: https://git.tdude.co/tristan/infrastructure.git
-    # targetRevision: master
-    # path: k8s-235/apps/kubedb/overlays/prod
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/kubedb/overlays/prod
   syncPolicy:
     automated:
       selfHeal: false
