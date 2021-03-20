@@ -1,0 +1,3 @@
+- op: add
+  path: /spec/template/spec/containers/0/args/7
+  value: --volume-name-uuid-length=16

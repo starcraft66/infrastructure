@@ -156,9 +156,6 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: default
   csi.storage.k8s.io/provisioner-secret-name: provisioner-secret-freenas-iscsi-csi-democratic-csi
   csi.storage.k8s.io/provisioner-secret-namespace: default
-mountOptions:
-- noatime
-- nfsvers=3
 
 
 # this loop is deeply connected to the loop for secret parameter settings above

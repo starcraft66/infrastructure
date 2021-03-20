@@ -1,5 +1,5 @@
 resources:
-  - ../../base
+- ../../base
 
 namespace: democratic-csi
 
@@ -26,11 +26,17 @@ commonLabels:
   app.kubernetes.io/name: democratic-csi
 
 patchesStrategicMerge:
-  - ./patches/set-secret-generation-namespace.yaml
-  - ./patches/set-reclaim-policy.yaml
+- ./patches/set-secret-generation-namespace.yaml
+- ./patches/set-reclaim-policy.yaml
 
 patchesJson6902:
 - path: ./patches/leader-election-namespace.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: democratic-csi-controller
+    version: v1
+- path: ./patches/set-pvc-uuid-length.yaml
   target:
     group: apps
     kind: Deployment
