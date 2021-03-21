@@ -24,10 +24,10 @@ spec:
         imagePullPolicy: Always
         resources:
           limits:
-            cpu: "3"
+            cpu: "2.5"
             memory: 8Gi
           requests:
-            cpu: "3"
+            cpu: "2.5"
             memory: 8Gi
         readinessProbe:
           tcpSocket:
