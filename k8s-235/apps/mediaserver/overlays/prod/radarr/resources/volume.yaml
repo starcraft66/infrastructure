@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: radarr
 spec:
-  storageClassName: freenas-nfs-csi
+  storageClassName: freenas-iscsi-csi
   accessModes:
   - ReadWriteOnce
   resources:

@@ -15,13 +15,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: kube-plex-config
-spec:
-  storageClassName: freenas-nfs-csi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
   name: kube-plex-transcode
 spec:
   storageClassName: freenas-nfs-csi

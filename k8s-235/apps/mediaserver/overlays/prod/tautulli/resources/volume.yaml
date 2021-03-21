@@ -5,9 +5,9 @@ metadata:
   labels:
     app.kubernetes.io/name: tautulli
 spec:
-  storageClassName: freenas-nfs-csi
+  storageClassName: freenas-iscsi-csi
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 10Gi

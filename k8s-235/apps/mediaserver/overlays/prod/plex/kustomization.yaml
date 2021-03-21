@@ -1,5 +1,6 @@
 resources:
 - ./resources/nfs-volume.yaml
+- ./resources/volume.yaml
 - ./resources/service.yaml
 - ./resources/cors-middleware.yaml
 
