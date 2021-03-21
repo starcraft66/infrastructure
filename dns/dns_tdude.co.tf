@@ -48,33 +48,6 @@ resource "cloudflare_record" "cadvisor_bedrock_tdude_co-db5de91b27b5078488d6d32f
   proxied = false
 }
 
-resource "cloudflare_record" "ci_tdude_co-cfa5653b0c15ee01ec19db0fec6edec9" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "ci"
-  value   = "158.69.211.121"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "deluge_bedrock_tdude_co-04b501ad44cbce861c65e5b49d740c83" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "deluge.bedrock"
-  value   = "traefik.bedrock.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "firefly_tdude_co-7d1db62ff46a9a3c00f2c9e11e8471e4" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "firefly"
-  value   = "24.225.136.165"
-  type    = "A"
-  ttl     = 120
-  proxied = false
-}
-
 resource "cloudflare_record" "fleetfoot-ilo_tdude_co-5e2bf28301bb27e8562684c4c89cd739" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "fleetfoot-ilo"
@@ -93,83 +66,11 @@ resource "cloudflare_record" "git_tdude_co-15e863f9cc46997d6dff0c6f6d9d6b8b" {
   proxied = false
 }
 
-resource "cloudflare_record" "registry_tdude_co-A" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "registry"
-  value   = "traefik.bedrock.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "grafana_tdude_co-d417ff1811833b234d8504ba4c97fb34" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "grafana"
-  value   = "24.225.136.165"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "jackett_bedrock_tdude_co-c6f82e3b3832feebe4e837e51242c9d0" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "jackett.bedrock"
-  value   = "traefik.bedrock.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "kibana_bedrock_tdude_co-da4c426ea1178df2b3c7e21851fe2f95" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "kibana.bedrock"
-  value   = "traefik.bedrock.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "lolisafe_tdude_co-9452bcc45958fa18bd91f1e3c4c5db6d" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "lolisafe"
   value   = "traefik.bedrock.tdude.co"
   type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "networkvm_tdude_co-f4a2896bc8f68bfd8898c28b93c1caba" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "networkvm"
-  value   = "192.168.112.148"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "oldintranet_tdude_co-2f4d564bdc7271e15cf2fa515993d825" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "oldintranet"
-  value   = "24.225.136.165"
-  type    = "A"
-  ttl     = 120
-  proxied = false
-}
-
-resource "cloudflare_record" "plex_bedrock_tdude_co-22776aada2f4b80110b76a14a879fc04" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "plex.bedrock"
-  value   = "traefik.bedrock.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "pomf-files_tdude_co-fb3af32c70d3bd5cde57cb9afa4f385b" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "pomf-files"
-  value   = "24.225.136.165"
-  type    = "A"
   ttl     = 1
   proxied = false
 }
@@ -300,37 +201,10 @@ resource "cloudflare_record" "auth_bedrock_tdude_co-e600072af53ca2808f9a70af1259
   proxied = false
 }
 
-resource "cloudflare_record" "ci_tdude_co-ca4679c66c673dfa1071f30263fa966c" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "ci"
-  value   = "2607:5300:201:3100::7e8c"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "docker_235_tdude_co-dd0c7342973683671b57e1a636fb9c9f" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "docker.235"
   value   = "2607:fa48:6ed8:8a51:20bb:57ff:fe41:3dd1"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "docker-at_235_tdude_co-ed861a7e0897f566ca77646e7f4cfe8d" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "docker-at.235"
-  value   = "2607:fa48:6ed8:8a51:ac66:5dff:fe8d:c2e6"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "firefly_tdude_co-feeb8b36a9941c156e27365251a2c830" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "firefly"
-  value   = "2607:fa48:6ed8:8a51:ca0a:a9ff:fe04:3b5e"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -363,46 +237,10 @@ resource "cloudflare_record" "grafana_bedrock_tdude_co-cff47ef8a89f14bf6dd3ff10b
   proxied = false
 }
 
-resource "cloudflare_record" "grafana_tdude_co-78501fdae4a693fa3dc129b06c9dd725" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "grafana"
-  value   = "2607:fa48:6ed8:8a51:ca0a:a9ff:fe04:3b5e"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "inspiron530_260_tdude_co-54898725081cdac5098dffb842814fed" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "inspiron530.260"
   value   = "2607:fa48:6eca:a751:ac0:5b71:3ca0:a163"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "k8s-node1_235_tdude_co-0deb1141f0c1a891bab69faf299bd30f" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "k8s-node1.235"
-  value   = "2607:fa48:6ed8:8a54::100:1"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "k8s-node2_235_tdude_co-21d2a88574d06dc5a62f7147e84267e7" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "k8s-node2.235"
-  value   = "2607:fa48:6ed8:8a54::100:2"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "k8s-node3_235_tdude_co-55c85b67756783584549335368e6c646" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "k8s-node3.235"
-  value   = "2607:fa48:6ed8:8a54::100:3"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -420,78 +258,6 @@ resource "cloudflare_record" "minecraft_235_tdude_co-ab96afc3a095ae6e1a78d14071f
 resource "cloudflare_record" "monitor_bedrock_tdude_co-85e00f4ca90f98269d7dd6ef30aaeaca" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "monitor.bedrock"
-  value   = "traefik.bedrock.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "networkvm_235_tdude_co-ef29aa214ac2068bba95c15259c03a3a" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "networkvm.235"
-  value   = "2607:fa48:6ed8:8a51:3071:29ff:fe2d:cfea"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "oldintranet_tdude_co-7d73081223ecdfcc503925a097b40a2f" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "oldintranet"
-  value   = "2607:fa48:6ed8:8a51:ca0a:a9ff:fe04:3b5e"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "tautulli_bedrock_tdude_co-AAAA" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "tautulli.bedrock"
-  value   = "traefik.bedrock.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "pomf-files_tdude_co-b45b58aad36c7c11b38bb58f121df274" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "pomf-files"
-  value   = "2607:fa48:6ed8:8a51:ca0a:a9ff:fe04:3b5e"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "prometheus_bedrock_tdude_co-a844e88f822d5a14109aa0b0ab4db9ee" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "prometheus.bedrock"
-  value   = "traefik.bedrock.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "radarr_bedrock_tdude_co-834ac9f4bd31ce39388a6d3be8e0b968" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "radarr.bedrock"
-  value   = "traefik.bedrock.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "sapling_tdude_co-d5e05c75c5dc40ed4ff6348af0f51d40" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "sapling"
-  value   = "2607:5300:60:873e::"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "sonarr_bedrock_tdude_co-fe38617f9a745a5b2c48bffc2c7b5746" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "sonarr.bedrock"
   value   = "traefik.bedrock.tdude.co"
   type    = "CNAME"
   ttl     = 1
@@ -843,23 +609,6 @@ resource "cloudflare_record" "_minecraft__tcp_revelation_tdude_co-fe2f6abd7ec4b6
   data    = {
     name      = "revelation"
     port      = 1882
-    priority  = 1
-    proto     = "_tcp"
-    service   = "_minecraft"
-    target    = "235.tdude.co"
-    weight    = 1
-  }
-  type    = "SRV"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "_minecraft__tcp_validation_mc_tdude_co-befcf5b827643943e79c995fe5b87603" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "_minecraft._tcp.cacaffichage"
-  data    = {
-    name      = "cacaffichage"
-    port      = 1885
     priority  = 1
     proto     = "_tcp"
     service   = "_minecraft"
