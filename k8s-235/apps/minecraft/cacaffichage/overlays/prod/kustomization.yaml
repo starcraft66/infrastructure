@@ -25,6 +25,12 @@ patchesJson6902:
     kind: Deployment
     name: minecraft
     version: v1
+- path: ./patches/server-port.yaml
+  target:
+    group: ""
+    kind: Service
+    name: minecraft-v6
+    version: v1
 
 configMapGenerator:
 - name: minecraft-env-vars
