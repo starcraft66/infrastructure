@@ -7,7 +7,7 @@ data "cloudflare_zones" "tdude_co" {
 resource "cloudflare_record" "traefik-v4" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "traefik.k8s.235"
-  value   = "10.224.0.3"
+  value   = "24.225.136.165"
   type    = "A"
   ttl     = 1
   proxied = false
