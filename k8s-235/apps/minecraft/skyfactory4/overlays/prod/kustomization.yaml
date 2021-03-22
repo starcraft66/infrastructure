@@ -1,0 +1,76 @@
+namespace: skyfactory4
+
+images:
+- name: itzg/minecraft-server
+  newTag: "java8-multiarch"
+
+resources:
+- ../../../base
+- ./resources/namespace.yaml
+- ./resources/volume.yaml
+
+generators:
+- ./generators/secrets-generator.yaml
+
+patchesJson6902:
+- path: ./patches/persistence.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: minecraft
+    version: v1
+- path: ./patches/env-vars.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: minecraft
+    version: v1
+- path: ./patches/liveness-probe-extended.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: minecraft
+    version: v1
+- path: ./patches/server-port.yaml
+  target:
+    group: ""
+    kind: Service
+    name: minecraft-v6
+    version: v1
+
+configMapGenerator:
+- name: minecraft-env-vars
+  literals:
+  - EULA=TRUE
+  - TYPE=CURSEFORGE
+  - CF_SERVER_MOD=SkyFactory-4_Server_4.2.2.zip
+  - DIFFICULTY=hard
+  - ICON=""
+  - MAX_PLAYERS=20
+  - MAX_WORLD_SIZE=""
+  - ALLOW_NETHER=true
+  - ANNOUNCE_PLAYER_ACHIEVEMENTS=true
+  - ENABLE_COMMAND_BLOCK=false
+  - FORCE_GAMEMODE=false
+  - GENERATE_STRUCTURES=true
+  - HARDCORE=false
+  - MAX_BUILD_HEIGHT=256
+  - MAX_TICK_TIME=60000
+  - SPAWN_MONSTERS=true
+  - SPAWN_NPCS=true
+  - VIEW_DISTANCE=10
+  - MODE=survival
+  - MOTD="Welcome to Minecraft on Kubernetes!"
+  - PVP=true
+  - LEVEL_TYPE=DEFAULT
+  - GENERATOR_SETTINGS=""
+  - LEVEL=world
+  - ONLINE_MODE=true
+  - MEMORY=8192M
+  - JVM_DD_OPTS=fml.queryResult:confirm
+  - JVM_XX_OPTS=""
+  - ENABLE_RCON=true
+  - SERVER_IP="::"
+
+commonLabels:
+  app.kubernetes.io/name: minecraft

@@ -1,0 +1,7 @@
+---
+- op: replace
+  path: /spec/template/spec/volumes
+  value:
+    - name: datadir
+      persistentVolumeClaim:
+        claimName: "minecraft-datadir"

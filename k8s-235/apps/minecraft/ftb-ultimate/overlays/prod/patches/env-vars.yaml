@@ -1,0 +1,10 @@
+- op: remove
+  path: /spec/template/spec/containers/0/env
+  value: {}
+- op: add
+  path: /spec/template/spec/containers/0/envFrom
+  value:
+  - configMapRef:
+      name: minecraft-env-vars
+  - secretRef:
+      name: minecraft-secrets
