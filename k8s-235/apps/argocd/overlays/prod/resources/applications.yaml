@@ -268,7 +268,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/minecraft/overlays/cacaffichage/prod
+    path: k8s-235/apps/minecraft/cacaffichage/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
