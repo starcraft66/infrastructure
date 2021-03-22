@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kube-plex-config
+  labels:
+    app.kubernetes.io/name: kube-plex
+spec:
+  accessModes:
+  - "ReadWriteOnce"
+  storageClassName: freenas-iscsi-csi
+  resources:
+    requests:
+      storage: "20Gi"
