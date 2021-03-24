@@ -11,6 +11,10 @@ spec:
   destinations:
   - namespace: '*'
     server: 'https://kubernetes.default.svc'
+  # Allow all resources in cluster for now
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
   roles:
   # A role which provides read-only access to all applications in the project
   - name: read-only
