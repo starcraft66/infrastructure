@@ -15,5 +15,5 @@ spec:
       containers:
         - name: streetmerchant
           image: ghcr.io/jef/streetmerchant:nightly
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           resources: {}
