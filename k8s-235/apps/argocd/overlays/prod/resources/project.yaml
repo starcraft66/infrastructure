@@ -6,8 +6,6 @@ metadata:
 spec:
   sourceRepos:
   - 'https://git.tdude.co/tristan/infrastructure.git'
-  # KubeDB repo
-  - 'https://charts.appscode.com/stable/'
   destinations:
   - namespace: '*'
     server: 'https://kubernetes.default.svc'
