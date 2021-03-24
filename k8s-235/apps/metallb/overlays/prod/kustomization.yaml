@@ -9,12 +9,6 @@ configMapGenerator:
 generators:
 - ./generators/secrets-generator.yaml
 
-images:
-- name: metallb/controller
-  newTag: v0.9.5
-- name: metallb/speaker
-  newTag: v0.9.5
-
 namespace: metallb-system
 
 patchesStrategicMerge:
