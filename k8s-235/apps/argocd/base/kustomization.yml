@@ -1,5 +1,5 @@
 resources:
-- https://github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v1.8.5
+- https://github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v1.8.7
 - ./metrics/argocd-serviceMonitor.yml
 - ./metrics/argocd-server-serviceMonitor.yml
 - ./metrics/argocd-dex-server-serviceMonitor.yml
