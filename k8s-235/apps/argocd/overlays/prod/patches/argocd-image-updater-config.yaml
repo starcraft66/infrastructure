@@ -5,4 +5,4 @@ metadata:
   namespace: argocd
 data:
   # log.level can be one of trace, debug, info, warn or error
-  log.level: warn
+  log.level: info

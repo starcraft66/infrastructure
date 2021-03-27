@@ -117,7 +117,7 @@ metadata:
   name: guacamole
   namespace: argocd
   annotations:
-    argocd-image-updater.argoproj.io/image-list: "guacamole=guacamole/guacamole,guacd=gguacamole/guacd"
+    argocd-image-updater.argoproj.io/image-list: "guacamole=guacamole/guacamole,guacd=guacamole/guacd"
     argocd-image-updater.argoproj.io/guacamole.update-strategy: name
     argocd-image-updater.argoproj.io/guacamole.allow-tags: "regexp:^latest$"
     argocd-image-updater.argoproj.io/guacd.update-strategy: name
@@ -188,8 +188,8 @@ metadata:
     argocd-image-updater.argoproj.io/radarr.allow-tags: "regexp:^latest$"
     argocd-image-updater.argoproj.io/sonarr.update-strategy: name
     argocd-image-updater.argoproj.io/sonarr.allow-tags: "regexp:^latest$"
-    # argocd-image-updater.argoproj.io/qbittorrent.update-strategy: name
-    # argocd-image-updater.argoproj.io/qbittorrent.allow-tags: "regexp:^latest$"
+    argocd-image-updater.argoproj.io/qbittorrent.update-strategy: name
+    argocd-image-updater.argoproj.io/qbittorrent.allow-tags: "regexp:^latest$"
     argocd-image-updater.argoproj.io/tautulli.update-strategy: name
     argocd-image-updater.argoproj.io/tautulli.allow-tags: "regexp:^latest$"
 spec:
