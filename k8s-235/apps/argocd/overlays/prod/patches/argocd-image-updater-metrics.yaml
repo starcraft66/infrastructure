@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-image-updater
+spec:
+  template:
+    spec:
+      containers:
+      - name: argocd-server
+        ports:
+        - name: metrics
+          port: 8082
+          containerPort: 8082
