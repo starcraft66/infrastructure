@@ -116,6 +116,10 @@ kind: Application
 metadata:
   name: guacamole
   namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: "guacamole=guacamole/guacamole:latest,guacd=gguacamole/guacd:latest"
+    argocd-image-updater.argoproj.io/guacamole.update-strategy: name
+    argocd-image-updater.argoproj.io/guacd.update-strategy: name
 spec:
   project: production
   destination:
