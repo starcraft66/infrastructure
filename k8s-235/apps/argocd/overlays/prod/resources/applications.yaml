@@ -170,6 +170,15 @@ kind: Application
 metadata:
   name: mediaserver
   namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: "kube-plex=quay.io/munnerz/kube-plex:latest,plex=plexinc/pms-docker:latest,jackett=linuxserver/jackett:latest,radarr=linuxserver/radarr:latest,sonarr=linuxserver/sonarr:latest,qbittorrent=linuxserver/qbittorrent:latest,tautulli=linuxserver/tautulli:latest"
+    argocd-image-updater.argoproj.io/kube-plex.update-strategy: name
+    argocd-image-updater.argoproj.io/plex.update-strategy: name
+    argocd-image-updater.argoproj.io/jackett.update-strategy: name
+    argocd-image-updater.argoproj.io/radarr.update-strategy: name
+    argocd-image-updater.argoproj.io/sonarr.update-strategy: name
+    argocd-image-updater.argoproj.io/qbittorrent.update-strategy: name
+    argocd-image-updater.argoproj.io/tautulli.update-strategy: name
 spec:
   project: production
   destination:
