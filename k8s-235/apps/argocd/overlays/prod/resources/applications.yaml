@@ -181,7 +181,7 @@ metadata:
     argocd-image-updater.argoproj.io/jackett.update-strategy: name
     argocd-image-updater.argoproj.io/radarr.update-strategy: name
     argocd-image-updater.argoproj.io/sonarr.update-strategy: name
-    argocd-image-updater.argoproj.io/qbittorrent.update-strategy: name
+    # argocd-image-updater.argoproj.io/qbittorrent.update-strategy: name
     argocd-image-updater.argoproj.io/tautulli.update-strategy: name
 spec:
   project: production
