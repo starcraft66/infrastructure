@@ -15,7 +15,7 @@ spec:
       containers:
       - name: unifi-controller
         image: linuxserver/unifi-controller:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: TZ
           value: "America/Montreal"
@@ -56,7 +56,7 @@ spec:
           periodSeconds: 20
       - name: unifi-poller
         image: golift/unifi-poller:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         envFrom:
         - configMapRef:
             name: unifi-poller-config

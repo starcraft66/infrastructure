@@ -16,7 +16,7 @@ spec:
       containers:
       - name: guacamole-app
         image: guacamole/guacamole
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         envFrom:
         - secretRef:
             name: mysql-config

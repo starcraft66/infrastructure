@@ -35,7 +35,7 @@ spec:
       containers:
       - name: plex
         image: "plexinc/pms-docker:latest"
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         # We replace the PMS binary with a postStart hook to save having to
         # modify the default image entrypoint.
         # lifecycle:

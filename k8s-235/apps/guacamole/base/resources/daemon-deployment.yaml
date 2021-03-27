@@ -16,6 +16,7 @@ spec:
       containers:
       - name: guacamole-daemon
         image:  guacamole/guacd
+        imagePullPolicy: Always
         ports:
         - containerPort: 4822
         readinessProbe:
