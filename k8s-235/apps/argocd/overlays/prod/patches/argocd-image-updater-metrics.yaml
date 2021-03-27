@@ -9,5 +9,4 @@ spec:
       - name: argocd-image-updater
         ports:
         - name: metrics
-          port: 8082
           containerPort: 8082
