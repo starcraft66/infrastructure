@@ -259,6 +259,9 @@ kind: Application
 metadata:
   name: streetmerchant
   namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: "streetmerchant=ghcr.io/jef/streetmerchant:nightly"
+    argocd-image-updater.argoproj.io/streetmerchant.update-strategy: name
 spec:
   project: production
   destination:
