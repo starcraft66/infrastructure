@@ -233,6 +233,10 @@ kind: Application
 metadata:
   name: unifi-controller
   namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: "unifi-controller=linuxserver/unifi-controller:latest,unifi-poller=golift/unifi-poller:latest"
+    argocd-image-updater.argoproj.io/unifi-controller.update-strategy: name
+    argocd-image-updater.argoproj.io/unifi-poller.update-strategy: name
 spec:
   project: production
   destination:
