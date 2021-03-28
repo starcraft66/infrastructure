@@ -13,4 +13,4 @@ generators:
 
 images:
 - name: kibana
-  newTag: "7.9.1"
+  newTag: "7.11.2"
