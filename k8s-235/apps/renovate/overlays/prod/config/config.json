@@ -1,0 +1,4 @@
+{
+    "repositories": ["tristan/infrastructure"],
+    "dryRun": false
+}

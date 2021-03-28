@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+
+namespace: renovate
+
+images:
+- name: renovate/renovate
+  newTag: "24.53.0"
+
+generators:
+- ./generators/secrets-generator.yaml
+
+configMapGenerator:
+- name: renovate-config
+  files:
+  - ./config/config.json
