@@ -14,6 +14,8 @@ resources:
 - ./resources/service.yaml
 - ./resources/nfs-volume.yaml
 - ./resources/volume.yaml
+- ./resources/cron-files-scan.yaml
+- ./resources/cron-generate-previews.yaml
 
 generators:
 - ./generators/secrets-generator.yaml
