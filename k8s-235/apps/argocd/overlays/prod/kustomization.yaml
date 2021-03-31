@@ -18,6 +18,10 @@ patchesStrategicMerge:
 - ./patches/argocd-image-updater-config.yaml
 - ./patches/argocd-image-updater-metrics.yaml
 
+images:
+- name: argoprojlabs/argocd-image-updater
+  newTag: latest
+
 namespace: argocd
 
 generators:

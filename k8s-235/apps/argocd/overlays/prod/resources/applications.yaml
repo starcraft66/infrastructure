@@ -117,11 +117,9 @@ metadata:
   name: guacamole
   namespace: argocd
   annotations:
-    argocd-image-updater.argoproj.io/image-list: "guacamole=guacamole/guacamole,guacd=guacamole/guacd"
-    argocd-image-updater.argoproj.io/guacamole.update-strategy: name
-    argocd-image-updater.argoproj.io/guacamole.allow-tags: "regexp:^latest$"
-    argocd-image-updater.argoproj.io/guacd.update-strategy: name
-    argocd-image-updater.argoproj.io/guacd.allow-tags: "regexp:^latest$"
+    argocd-image-updater.argoproj.io/image-list: "guacamole=guacamole/guacamole:latest,guacd=guacamole/guacd:latest"
+    argocd-image-updater.argoproj.io/guacamole.update-strategy: digest
+    argocd-image-updater.argoproj.io/guacd.update-strategy: digest
 spec:
   project: production
   destination:
@@ -177,21 +175,14 @@ metadata:
   name: mediaserver
   namespace: argocd
   annotations:
-    argocd-image-updater.argoproj.io/image-list: "kube-plex=quay.io/munnerz/kube-plex,plex=plexinc/pms-docker,jackett=linuxserver/jackett,radarr=linuxserver/radarr,sonarr=linuxserver/sonarr,qbittorrent=linuxserver/qbittorrent,tautulli=linuxserver/tautulli"
-    argocd-image-updater.argoproj.io/kube-plex.update-strategy: name
-    argocd-image-updater.argoproj.io/kube-plex.allow-tags: "regexp:^latest$"
-    argocd-image-updater.argoproj.io/plex.update-strategy: name
-    argocd-image-updater.argoproj.io/plex.allow-tags: "regexp:^latest$"
-    argocd-image-updater.argoproj.io/jackett.update-strategy: name
-    argocd-image-updater.argoproj.io/jackett.allow-tags: "regexp:^latest$"
-    argocd-image-updater.argoproj.io/radarr.update-strategy: name
-    argocd-image-updater.argoproj.io/radarr.allow-tags: "regexp:^latest$"
-    argocd-image-updater.argoproj.io/sonarr.update-strategy: name
-    argocd-image-updater.argoproj.io/sonarr.allow-tags: "regexp:^latest$"
-    argocd-image-updater.argoproj.io/qbittorrent.update-strategy: name
-    argocd-image-updater.argoproj.io/qbittorrent.allow-tags: "regexp:^latest$"
-    argocd-image-updater.argoproj.io/tautulli.update-strategy: name
-    argocd-image-updater.argoproj.io/tautulli.allow-tags: "regexp:^latest$"
+    argocd-image-updater.argoproj.io/image-list: "kube-plex=quay.io/munnerz/kube-plex:latest,plex=plexinc/pms-docker:latest,jackett=linuxserver/jackett:latest,radarr=linuxserver/radarr:latest,sonarr=linuxserver/sonarr:latest,qbittorrent=linuxserver/qbittorrent:latest,tautulli=linuxserver/tautulli:latest"
+    argocd-image-updater.argoproj.io/kube-plex.update-strategy: digest
+    argocd-image-updater.argoproj.io/plex.update-strategy: digest
+    argocd-image-updater.argoproj.io/jackett.update-strategy: digest
+    argocd-image-updater.argoproj.io/radarr.update-strategy: digest
+    argocd-image-updater.argoproj.io/sonarr.update-strategy: digest
+    argocd-image-updater.argoproj.io/qbittorrent.update-strategy: digest
+    argocd-image-updater.argoproj.io/tautulli.update-strategy: digest
 spec:
   project: production
   destination:
@@ -247,11 +238,9 @@ metadata:
   name: unifi-controller
   namespace: argocd
   annotations:
-    argocd-image-updater.argoproj.io/image-list: "unifi-controller=linuxserver/unifi-controller,unifi-poller=golift/unifi-poller"
-    argocd-image-updater.argoproj.io/unifi-controller.update-strategy: name
-    argocd-image-updater.argoproj.io/unifi-controller.allow-tags: "regexp:^latest$"
-    argocd-image-updater.argoproj.io/unifi-poller.update-strategy: name
-    argocd-image-updater.argoproj.io/unifi-poller.allow-tags: "regexp:^latest$"
+    argocd-image-updater.argoproj.io/image-list: "unifi-controller=linuxserver/unifi-controller:latest,unifi-poller=golift/unifi-poller:latest"
+    argocd-image-updater.argoproj.io/unifi-controller.update-strategy: digest
+    argocd-image-updater.argoproj.io/unifi-poller.update-strategy: digest
 spec:
   project: production
   destination:
@@ -271,9 +260,8 @@ metadata:
   name: streetmerchant
   namespace: argocd
   annotations:
-    argocd-image-updater.argoproj.io/image-list: "streetmerchant=ghcr.io/jef/streetmerchant"
-    argocd-image-updater.argoproj.io/streetmerchant.update-strategy: name
-    argocd-image-updater.argoproj.io/streetmerchant.allow-tags: "regexp:^nightly$"
+    argocd-image-updater.argoproj.io/image-list: "streetmerchant=ghcr.io/jef/streetmerchant:latest"
+    argocd-image-updater.argoproj.io/streetmerchant.update-strategy: digest
 spec:
   project: production
   destination:
