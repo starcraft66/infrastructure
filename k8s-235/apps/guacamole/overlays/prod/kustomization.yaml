@@ -13,6 +13,6 @@ generators:
 
 images:
 - name: guacamole/guacamole
-  newTag: latest
+  newTag: "1.3.0"
 - name: guacamole/guacd
-  newTag: latest
+  newTag: "1.3.0"
