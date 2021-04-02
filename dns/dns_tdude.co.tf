@@ -710,7 +710,7 @@ resource "cloudflare_record" "_201608__domainkey_tdude_co-e93f862066906dc624a653
 resource "cloudflare_record" "_dmarc_tdude_co-4de172137b73fb7c61bcfa72f2aad7db" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "_dmarc"
-  value   = "v=DMARC1; p=none; rua=mailto:tristan@tdude.co; ruf=mailto:tristan@tdude.co; fo=d; adkim=s; aspf=r"
+  value   = "v=DMARC1; p=none; fo=d; adkim=s; aspf=r"
   type    = "TXT"
   ttl     = 1
   proxied = false
