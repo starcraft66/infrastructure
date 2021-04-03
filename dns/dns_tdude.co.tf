@@ -499,9 +499,9 @@ resource "cloudflare_record" "smtp_tdude_co-8831319c8ac7c5fe14007b106ec64abf" {
 
 resource "cloudflare_record" "soarin_tdude_co-68d3dc90cd44a475929631c7a74f3e3f" {
   zone_id = cloudflare_zone.tdude_co.id
-  name    = "soarin"
-  value   = "235.tdude.co"
-  type    = "CNAME"
+  name    = "soarin.235"
+  value   = "2607:fa48:6ed8:8a51:29c:2ff:fe9b:abf0"
+  type    = "AAAA"
   ttl     = 1
   proxied = false
 }
