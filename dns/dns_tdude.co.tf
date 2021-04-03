@@ -678,3 +678,12 @@ resource "cloudflare_record" "ha_305-1700" {
   ttl     = 1
   proxied = false
 }
+
+resource "cloudflare_record" "soyberry" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "soyberry.305-1700"
+  value   = "2001:470:b08b:51:dea6:32ff:fe99:a276"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
