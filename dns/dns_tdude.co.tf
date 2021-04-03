@@ -111,24 +111,6 @@ resource "cloudflare_record" "tdude_co-1661589aaef2dd9259f07d22951c6f35" {
   proxied = false
 }
 
-resource "cloudflare_record" "trixie-int_tdude_co-9ffefcf0c68ca311bb94be154f2cf82f" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "trixie-int"
-  value   = "172.16.29.20"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "trixie_tdude_co-b1d7df06e4d1e568e2e7af44b6b981af" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "trixie"
-  value   = "24.225.136.165"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "www_tdude_co-87e4f41d905d3b6116f38c416dbbd036" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "www"
@@ -336,15 +318,6 @@ resource "cloudflare_record" "firestreak_storage_235_tdude_co-AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "trixie_tdude_co-ed6755c69142841c707ce4793f6a0a56" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "trixie"
-  value   = "2607:fa48:6ed8:8a51:ca0a:a9ff:fe04:3b5e"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "www_tdude_co-110da07cb7c67be474675d1b2b7a6af6" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "www"
@@ -528,15 +501,6 @@ resource "cloudflare_record" "staging_at-int_tdude_co-bc0fe6f01ff94c5a86e001bb82
   zone_id = cloudflare_zone.tdude_co.id
   name    = "staging.at-int"
   value   = "235.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "unms_tdude_co-6366e7b20544a759d83e9d30cb77e84d" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "unms"
-  value   = "trixie-int.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
