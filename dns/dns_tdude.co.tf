@@ -51,8 +51,8 @@ resource "cloudflare_record" "cadvisor_bedrock_tdude_co-db5de91b27b5078488d6d32f
 resource "cloudflare_record" "fleetfoot-ilo_tdude_co-5e2bf28301bb27e8562684c4c89cd739" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "fleetfoot-ilo"
-  value   = "172.16.24.21"
-  type    = "A"
+  value   = "2607:fa48:6ed8:8a52:29c:2ff:fea5:346c"
+  type    = "AAAA"
   ttl     = 1
   proxied = false
 }
@@ -78,8 +78,8 @@ resource "cloudflare_record" "lolisafe_tdude_co-9452bcc45958fa18bd91f1e3c4c5db6d
 resource "cloudflare_record" "soarin-ilo_tdude_co-5bcadae620bb380e30c88ce658fd8d53" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "soarin-ilo"
-  value   = "172.16.24.20"
-  type    = "A"
+  value   = "2607:fa48:6ed8:8a52:29c:2ff:fe9b:abf2"
+  type    = "AAAA"
   ttl     = 1
   proxied = false
 }
