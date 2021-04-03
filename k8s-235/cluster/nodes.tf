@@ -1,8 +1,8 @@
 resource "proxmox_vm_qemu" "k8s-node" {
   count       = var.node_count
-  name        = "k8s-node${count.index + 1}.235.tdude.co"
+  name        = "node${count.index + 1}.k8s.235.tdude.co"
   desc        = "Kubernetes Worker Node ${count.index + 1}"
-  target_node = "fleetfoot"
+  target_node = count.index % 2 == 0 ? "fleetfoot" : "soarin"
 
   # clone = "focal-server-cloudimg-amd64"
 
@@ -10,17 +10,17 @@ resource "proxmox_vm_qemu" "k8s-node" {
     format  = "qcow2"
     type    = "scsi"
     storage = "spitfire-proxmox-vm"
-    size    = "20684M"
+    size    = "51404M"
   }
 
   # The harddisk from the cloned vm
   bootdisk = "scsi0"
 
   agent   = 1
-  cores   = 4
+  cores   = 8
   sockets = 1
   vcpus   = 0
-  memory  = 16384
+  memory  = 29696
   scsihw  = "virtio-scsi-pci"
   network {
     model   = "virtio"
