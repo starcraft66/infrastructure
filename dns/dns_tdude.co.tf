@@ -120,15 +120,6 @@ resource "cloudflare_record" "www_tdude_co-87e4f41d905d3b6116f38c416dbbd036" {
   proxied = false
 }
 
-resource "cloudflare_record" "xoa_tdude_co-AAAA" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "xoa"
-  value   = "2607:fa48:6ed8:8a51:c39:6ff:fe57:f36d"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "zabbix_tdude_co-ced531cda883f1fa2e768ebc2882d228" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "zabbix"
