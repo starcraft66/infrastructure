@@ -434,33 +434,6 @@ resource "cloudflare_record" "localhost4_tdude_co-A" {
   proxied = false
 }
 
-resource "cloudflare_record" "mc_tdude_co-11d119e1e74e65280ab03cd99e5dbbbd" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "mc"
-  value   = "235.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "prod_at-int_tdude_co-813b71f154e4f52996fefb67243818eb" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "prod.at-int"
-  value   = "235.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "registry_at-int_tdude_co-3cb03bf67ce479a2a77e8c6843232a90" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "registry.at-int"
-  value   = "235.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "smtp_tdude_co-8831319c8ac7c5fe14007b106ec64abf" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "smtp"
@@ -475,33 +448,6 @@ resource "cloudflare_record" "soarin_tdude_co-68d3dc90cd44a475929631c7a74f3e3f" 
   name    = "soarin.235"
   value   = "2607:fa48:6ed8:8a51:29c:2ff:fe9b:abf0"
   type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "sso-auth_tdude_co-efd49832fde842524121fec53b373552" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "sso-auth"
-  value   = "235.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "STAR_sso_tdude_co-d7b0276630065711cdba7d0deb83856d" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "*.sso"
-  value   = "235.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "staging_at-int_tdude_co-bc0fe6f01ff94c5a86e001bb82abd3a0" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "staging.at-int"
-  value   = "235.tdude.co"
-  type    = "CNAME"
   ttl     = 1
   proxied = false
 }
