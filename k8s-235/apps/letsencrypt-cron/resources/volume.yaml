@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: letsencrypt-cron-lego-volume
+  labels:
+    app.kubernetes.io/name: letsencrypt-cron
+spec:
+  storageClassName: freenas-nfs-csi
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi

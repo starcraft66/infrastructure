@@ -1,0 +1,33 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ./resources/cronjob.yaml
+- ./resources/namespace.yaml
+- ./resources/volume.yaml
+
+generators:
+- ./generators/secrets-generator.yaml
+
+images:
+- name: starcraft66/hpilo-letsencrypt
+  newTag: latest
+
+configMapGenerator:
+- name: soarin-config
+  literals:
+  - ILO_USERNAME=Administrator
+  - ILO_DOMAIN=soarin-ilo.235.tdude.co
+- name: fleetfoot-config
+  literals:
+  - ILO_USERNAME=Administrator
+  - ILO_DOMAIN=fleetfoot-ilo.235.tdude.co
+- name: firestreak-config
+  literals:
+  - IPMI_USERNAME=ADMIN
+  - IPMI_DOMAIN=firestreak-bmc.235.tdude.co
+- name: spitfire-config
+  literals:
+  - IPMI_USERNAME=ADMIN
+  - IPMI_DOMAIN=spitfire-bmc.235.tdude.co
+
+namespace: letsencrypt-cron
