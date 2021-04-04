@@ -11,6 +11,8 @@ generators:
 images:
 - name: starcraft66/hpilo-letsencrypt
   newTag: latest
+- name: starcraft66/supermicro-letsencrypt
+  newTag: latest
 
 configMapGenerator:
 - name: soarin-config
