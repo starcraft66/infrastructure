@@ -319,7 +319,7 @@ resource "cloudflare_record" "fleetfoot_tdude_co-7f7bb593122417df90d1af665407b0c
 resource "cloudflare_record" "imap_tdude_co-4f31c8d9fb1291a080af75741456cae6" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "imap"
-  value   = "235.tdude.co"
+  value   = "tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
