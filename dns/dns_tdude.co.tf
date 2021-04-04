@@ -3,42 +3,6 @@ resource "cloudflare_zone" "tdude_co" {
   # id = "c802e5f57a27af705373d5d3570649f0"
 }
 
-resource "cloudflare_record" "_235-gw_235_tdude_co-fba035a4d6c709a48f4cc574a50a8917" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "235-gw.235"
-  value   = "24.225.136.165"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "_235_tdude_co-e8f98ca862faaf9db482c45216a1493b" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "235"
-  value   = "24.225.136.165"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "_305-1700-gw_305-1700_tdude_co-44620ea4a39eb01253f28d303a47290f" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "305-1700-gw.305-1700"
-  value   = "107.179.249.99"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "_305-1700_tdude_co-f9bbec63e0fc407399c793115267c239" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "305-1700"
-  value   = "107.179.249.99"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "cadvisor_bedrock_tdude_co-db5de91b27b5078488d6d32f51e08fdc" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "cadvisor.bedrock"
