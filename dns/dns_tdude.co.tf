@@ -583,3 +583,12 @@ resource "cloudflare_record" "soyberry" {
   ttl     = 1
   proxied = false
 }
+
+resource "cloudflare_record" "borgbackup_235" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "borgbackup.235"
+  value   = "2607:fa48:6ed8:8a51:25:90ff:fe69:277d"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
