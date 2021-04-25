@@ -13,6 +13,7 @@ mkShell rec {
     kustomize
     kubetail
     krew
+    yamllint
   ] ++ lib.optional isDev [
     kubectx                    # v0.9.0
     kind                       # v0.8.1
