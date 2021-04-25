@@ -53,7 +53,7 @@ spec:
           tcpSocket:
             port: 8080
           initialDelaySeconds: 15
-          periodSeconds: 20
+          periodSeconds: 45
       - name: unifi-poller
         image: golift/unifi-poller:latest
         imagePullPolicy: Always
