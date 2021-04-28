@@ -38,13 +38,13 @@ spec:
         envFrom:
         - configMapRef:
             name: mediaserver-permissions
-        # resources:
-        #   requests:
-        #     cpu: "100m"
-        #     memory: "250Mi"
-        #   limits:
-        #     cpu: "100m"
-        #     memory: "500Mi"
+        resources:
+          requests:
+            cpu: "0.5"
+            memory: "3Gi"
+          limits:
+            cpu: "1.0"
+            memory: "6Gi"
         readinessProbe:
           httpGet:
             path: /

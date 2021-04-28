@@ -26,13 +26,13 @@ spec:
         volumeMounts:
         - name: jackett-config
           mountPath: /config
-      # resources:
-      #   requests:
-      #     cpu: "100m"
-      #     memory: "250Mi"
-      #   limits:
-      #     cpu: "100m"
-      #     memory: "500Mi"
+        resources:
+          requests:
+            cpu: "0.25"
+            memory: "250Mi"
+          limits:
+            cpu: "0.5m"
+            memory: "500Mi"
         readinessProbe:
           httpGet:
               path: /UI/Login
