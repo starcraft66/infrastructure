@@ -6,9 +6,12 @@ metadata:
   labels:
     app.kubernetes.io/name: organizr
 spec:
-  ipFamilyPolicy: RequireDualStack
+  # No ipv6 in organizr because the nginx config only listens on ipv4
+  # https://github.com/Organizr/docker-organizr/pull/21 fixes
+  ipFamilyPolicy: SingleStack
+  # ipFamilyPolicy: RequireDualStack
   ipFamilies:
-  - IPv6
+  # - IPv6
   - IPv4
   ports:
   - name: http
