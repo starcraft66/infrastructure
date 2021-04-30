@@ -9,5 +9,6 @@ spec:
       - name: argocd-image-updater
         command:
         - argocd-image-updater
+        - run
         - --interval
         - 6h
