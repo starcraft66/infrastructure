@@ -14,6 +14,7 @@ spec:
     - plex.tdude.co
     - sonarr.tdude.co
     - radarr.tdude.co
+    - lidarr.tdude.co
     - jackett.tdude.co
     - qbittorrent.tdude.co
     - tautulli.tdude.co
@@ -37,6 +38,16 @@ spec:
         backend:
           service:
             name: radarr
+            port:
+              name: http
+  - host: lidarr.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: lidarr
             port:
               name: http
   - host: jackett.tdude.co

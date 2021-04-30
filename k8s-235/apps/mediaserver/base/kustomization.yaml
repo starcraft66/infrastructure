@@ -4,6 +4,7 @@ resources:
 - ./resources/kube-plex.yaml
 - ./resources/sonarr.yaml
 - ./resources/radarr.yaml
+- ./resources/lidarr.yaml
 - ./resources/jackett.yaml
 - ./resources/qbittorrent.yaml
 - ./resources/tautulli.yaml

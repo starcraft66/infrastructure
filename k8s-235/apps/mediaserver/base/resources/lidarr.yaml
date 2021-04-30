@@ -1,0 +1,60 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lidarr
+  labels:
+    app.kubernetes.io/name: lidarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: lidarr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: lidarr
+    spec:
+      containers:
+      - name: lidarr
+        image: linuxserver/lidarr:latest
+        imagePullPolicy: Always
+        ports:
+        - name: "http"
+          containerPort: 8989
+          protocol: TCP
+        volumeMounts:
+        - name: lidarr-config
+          mountPath: /config
+        - name: data
+          mountPath: /media
+        envFrom:
+        - configMapRef:
+            name: mediaserver-permissions
+        resources:
+          requests:
+            cpu: "0.25"
+            memory: "250Mi"
+          limits:
+            cpu: "0.5"
+            memory: "500Mi"
+        readinessProbe:
+          httpGet:
+              path: /
+              port: 8686
+          periodSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+              path: /
+              port: 8686
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          failureThreshold: 5
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: "kube-plex-data"
+      - name: lidarr-config
+        persistentVolumeClaim:
+          claimName: lidarr-config
