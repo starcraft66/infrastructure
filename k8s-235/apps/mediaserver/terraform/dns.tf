@@ -31,6 +31,15 @@ resource "cloudflare_record" "mediaserver-radarr" {
   proxied = false
 }
 
+resource "cloudflare_record" "mediaserver-lidarr" {
+  zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
+  name    = "lidarr"
+  value   = "traefik.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+  type    = "CNAME"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "mediaserver-jackett" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "jackett"
@@ -52,6 +61,15 @@ resource "cloudflare_record" "mediaserver-qbittorrent" {
 resource "cloudflare_record" "mediaserver-tautulli" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "tautulli"
+  value   = "traefik.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+  type    = "CNAME"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "mediaserver-organizr" {
+  zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
+  name    = "mediaserver"
   value   = "traefik.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
   type    = "CNAME"
   ttl     = 1
