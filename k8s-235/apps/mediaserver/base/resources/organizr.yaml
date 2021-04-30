@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: organizr
+  labels:
+    app.kubernetes.io/name: organizr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: organizr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: organizr
+    spec:
+      containers:
+      - name: organizr
+        image: organizr/organizr:latest
+        imagePullPolicy: Always
+        ports:
+        - name: "http"
+          containerPort: 80
+          protocol: TCP
+        volumeMounts:
+        - name: organizr-config
+          mountPath: /config
+        resources:
+          requests:
+            cpu: "0.25"
+            memory: "250Mi"
+          limits:
+            cpu: "0.5"
+            memory: "500Mi"
+        readinessProbe:
+          httpGet:
+              path: /
+              port: 80
+          periodSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+              path: /
+              port: 80
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          failureThreshold: 5
+      volumes:
+      - name: organizr-config
+        persistentVolumeClaim:
+          claimName: organizr-config

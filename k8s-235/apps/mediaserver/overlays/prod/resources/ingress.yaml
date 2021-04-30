@@ -18,6 +18,7 @@ spec:
     - jackett.tdude.co
     - qbittorrent.tdude.co
     - tautulli.tdude.co
+    - mediaserver.tdude.co
     secretName: mediaserver-k8s-235-tdude-co-tls
   rules:
   - host: sonarr.tdude.co
@@ -78,6 +79,16 @@ spec:
         backend:
           service:
             name: tautulli
+            port:
+              name: http
+  - host: mediaserver.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: organizr
             port:
               name: http
 ---
