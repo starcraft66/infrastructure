@@ -8,3 +8,11 @@ namespace: kubedb
 
 generators:
 - ./generators/secrets-generator.yaml
+
+patchesJson6902:
+- path: ./patches/add-license-mount.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: kubedb-kubedb-community
+    version: v1
