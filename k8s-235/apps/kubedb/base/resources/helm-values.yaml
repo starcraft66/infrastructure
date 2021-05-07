@@ -1,11 +1,10 @@
-monitoring:
-  enabled: true
-  agent: "prometheus.io/operator"
-  prometheus:
-    namespace: kubedb
-  serviceMonitor:
-    labels:
-      app.kubernetes.io/name: "kubedb-community"
-
 global:
   skipCleaner: true
+
+kubedb-community:
+  monitoring:
+    enabled: true
+    agent: "prometheus.io/operator"
+    serviceMonitor:
+      labels:
+        app.kubernetes.io/name: "kubedb-community"
