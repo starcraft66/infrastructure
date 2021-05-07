@@ -1,0 +1,10 @@
+apiVersion: builtin
+kind: HelmChartInflationGenerator
+metadata:
+  name: kubedb-community
+chartName: kubedb
+chartRepoUrl: https://charts.appscode.com/stable/
+chartVersion: v2021.04.16
+releaseName: kubedb
+releaseNamespace: appscode
+values: ./resources/helm-values.yaml

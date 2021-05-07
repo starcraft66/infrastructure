@@ -1,0 +1,10 @@
+monitoring:
+  enabled: true
+  agent: "prometheus.io/operator"
+  serviceMonitor:
+    labels:
+      app.kubernetes.io/name: "kubedb"
+
+global:
+  skipCleaner: true
+  license: ""
