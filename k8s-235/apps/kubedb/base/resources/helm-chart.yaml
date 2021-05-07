@@ -6,5 +6,5 @@ chartName: kubedb
 chartRepoUrl: https://charts.appscode.com/stable/
 chartVersion: v2021.04.16
 releaseName: kubedb
-releaseNamespace: appscode
+releaseNamespace: kubedb
 values: ./resources/helm-values.yaml
