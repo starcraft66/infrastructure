@@ -36,8 +36,8 @@ spec:
   ports:
   - name: bt
     protocol: TCP
-    targetPort: 6881
-    port: 6881
+    targetPort: 55324
+    port: 55324
   selector:
     app.kubernetes.io/name: qbittorrent
   type: LoadBalancer
@@ -59,8 +59,8 @@ spec:
   ports:
   - name: bt
     protocol: UDP
-    targetPort: 6881
-    port: 6881
+    targetPort: 55324
+    port: 55324
   selector:
     app.kubernetes.io/name: qbittorrent
   type: LoadBalancer
@@ -82,8 +82,8 @@ spec:
   ports:
   - name: bt
     protocol: TCP
-    targetPort: 6881
-    port: 6881
+    targetPort: 55324
+    port: 55324
   selector:
     app.kubernetes.io/name: qbittorrent
   type: LoadBalancer
@@ -105,8 +105,8 @@ spec:
   ports:
   - name: bt
     protocol: UDP
-    targetPort: 6881
-    port: 6881
+    targetPort: 55324
+    port: 55324
   selector:
     app.kubernetes.io/name: qbittorrent
   type: LoadBalancer

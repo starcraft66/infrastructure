@@ -24,10 +24,10 @@ spec:
           containerPort: 8080
           protocol: TCP
         - name: "bt-tcp"
-          containerPort: 6881
+          containerPort: 55324
           protocol: TCP
         - name: "bt-udp"
-          containerPort: 6881
+          containerPort: 55324
           protocol: UDP
         volumeMounts:
         - name: qbittorrent-config
