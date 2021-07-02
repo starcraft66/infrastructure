@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: qbittorrent
-        image: linuxserver/qbittorrent:latest
+        image: ghcr.io/linuxserver/qbittorrent:latest
         imagePullPolicy: Always
         ports:
         - name: "http"

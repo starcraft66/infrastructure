@@ -25,17 +25,17 @@ images:
   newTag: latest
 - name: plexinc/pms-docker
   newTag: latest
-- name: linuxserver/jackett
+- name: ghcr.io/linuxserver/jackett
   newTag: latest
-- name: linuxserver/radarr
+- name: ghcr.io/linuxserver/radarr
   newTag: latest
-- name: linuxserver/sonarr
+- name: ghcr.io/linuxserver/sonarr
   newTag: latest
-- name: linuxserver/lidarr
+- name: ghcr.io/linuxserver/lidarr
   newTag: latest
-- name: linuxserver/qbittorrent
+- name: ghcr.io/linuxserver/qbittorrent
   newTag: 14.3.3.99202103251603-7345-332b173e0ubuntu20.04.1-ls122
-- name: linuxserver/tautulli
+- name: ghcr.io/linuxserver/tautulli
   newTag: latest
 - name: organizr/organizr
   newTag: latest

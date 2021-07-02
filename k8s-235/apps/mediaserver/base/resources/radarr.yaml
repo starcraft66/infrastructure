@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: radarr
-        image: linuxserver/radarr:latest
+        image: ghcr.io/linuxserver/radarr:latest
         imagePullPolicy: Always
         ports:
         - name: "http"

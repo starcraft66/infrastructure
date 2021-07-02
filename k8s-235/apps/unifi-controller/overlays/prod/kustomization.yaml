@@ -11,7 +11,7 @@ resources:
 namespace: unifi
 
 images:
-- name: linuxserver/unifi-controller
+- name: ghcr.io/linuxserver/unifi-controller
   newTag: latest
 
 generators:

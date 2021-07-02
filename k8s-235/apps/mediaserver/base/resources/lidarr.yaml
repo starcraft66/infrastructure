@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: lidarr
-        image: linuxserver/lidarr:latest
+        image: ghcr.io/linuxserver/lidarr:latest
         imagePullPolicy: Always
         ports:
         - name: "http"

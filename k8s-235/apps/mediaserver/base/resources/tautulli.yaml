@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: tautulli
-        image: linuxserver/tautulli:latest
+        image: ghcr.io/linuxserver/tautulli:latest
         imagePullPolicy: Always
         ports:
         - name: "http"
