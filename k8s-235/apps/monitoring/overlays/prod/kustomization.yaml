@@ -2,38 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../base
-- ./ingress.yaml
-- ./grafana-pvc.yaml
-
-patchesJson6902:
-- path: patches/grafana-patches.yml
-  target:
-    group: apps
-    kind: Deployment
-    name: grafana
-    version: v1
-- path: patches/add-volumes-to-prometheus-patch.yaml
-  target:
-    group: monitoring.coreos.com
-    kind: Prometheus
-    name: k8s
-    version: v1
-- path: patches/add-monitoring-namespaces-to-prometheus-patch.yaml
-  target:
-    group: monitoring.coreos.com
-    kind: Prometheus
-    name: k8s
-    version: v1
-
-patchesStrategicMerge:
-- patches/set-permissions-grafana-patch.yaml
-- patches/monitoring-namespace-labels.yaml
 
 generators:
 - ./generators/secrets-generator.yaml
-
-configMapGenerator:
-- name: grafana-settings-config
-  namespace: monitoring
-  envs:
-  - env/grafana-settings
