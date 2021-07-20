@@ -40,7 +40,7 @@ patchesJson6902:
 configMapGenerator:
 - name: nextcloud-env-vars
   literals:
-  - NEXTCLOUD_TRUSTED_DOMAINS=cloud.tdude.co
+  - NEXTCLOUD_TRUSTED_DOMAINS="cloud.tdude.co cloud4.tdude.co"
   - NEXTCLOUD_DATA_DIR="/var/www/html/data"
   - POSTGRES_HOST=postgres-nextcloud
   - POSTGRES_DB=nextcloud
