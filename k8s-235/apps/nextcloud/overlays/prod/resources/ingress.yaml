@@ -11,8 +11,19 @@ spec:
   tls:
   - hosts:
     - cloud.tdude.co
+    - cloud4.tdude.co
     secretName: cloud-tdude-co-tls
   rules:
+  - host: cloud4.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nextcloud
+            port:
+              number: 80
   - host: cloud.tdude.co
     http:
       paths:
