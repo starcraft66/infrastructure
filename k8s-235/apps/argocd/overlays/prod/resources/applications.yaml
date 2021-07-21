@@ -171,7 +171,7 @@ metadata:
   name: mediaserver
   namespace: argocd
   annotations:
-    argocd-image-updater.argoproj.io/image-list: "kube-plex=quay.io/munnerz/kube-plex:latest,plex=plexinc/pms-docker:latest,jackett=ghcr.io/linuxserver/jackett:latest,radarr=ghcr.io/linuxserver/radarr:latest,lidarr=ghcr.io/linuxserver/lidarr:latest,sonarr=ghcr.io/linuxserver/sonarr:latest,qbittorrent=ghcr.io/linuxserver/qbittorrent:latest,tautulli=ghcr.io/linuxserver/tautulli:latest,organizr=organizr/organizr:latest"
+    argocd-image-updater.argoproj.io/image-list: "kube-plex=quay.io/munnerz/kube-plex:latest,plex=plexinc/pms-docker:latest,jackett=ghcr.io/linuxserver/jackett:latest,radarr=ghcr.io/linuxserver/radarr:latest,lidarr=ghcr.io/linuxserver/lidarr:latest,sonarr=ghcr.io/linuxserver/sonarr:latest,qbittorrent=ghcr.io/linuxserver/qbittorrent:latest,tautulli=ghcr.io/linuxserver/tautulli:latest,overseerr=ghcr.io/linuxserver/overseerr:latest"
     argocd-image-updater.argoproj.io/kube-plex.update-strategy: digest
     argocd-image-updater.argoproj.io/plex.update-strategy: digest
     argocd-image-updater.argoproj.io/jackett.update-strategy: digest
@@ -180,7 +180,7 @@ metadata:
     argocd-image-updater.argoproj.io/sonarr.update-strategy: digest
     argocd-image-updater.argoproj.io/qbittorrent.update-strategy: digest
     argocd-image-updater.argoproj.io/tautulli.update-strategy: digest
-    argocd-image-updater.argoproj.io/organizr.update-strategy: digest
+    argocd-image-updater.argoproj.io/overseerr.update-strategy: digest
 spec:
   project: production
   destination:
