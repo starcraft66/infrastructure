@@ -7,6 +7,6 @@ resources:
 # Snapshot stuff
 - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/deploy/kubernetes/snapshot-controller/rbac-snapshot-controller.yaml
 - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/deploy/kubernetes/snapshot-controller/setup-snapshot-controller.yaml
-- https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/53469c21962339229dd150cbba50c34359acec73/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
-- https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/53469c21962339229dd150cbba50c34359acec73/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
-- https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/53469c21962339229dd150cbba50c34359acec73/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
+- https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/e6e14c16019ece315f91e8389b08cfcbd07d2e49/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
+- https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/e6e14c16019ece315f91e8389b08cfcbd07d2e49/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
+- https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/e6e14c16019ece315f91e8389b08cfcbd07d2e49/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
