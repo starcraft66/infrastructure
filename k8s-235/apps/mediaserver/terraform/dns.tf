@@ -67,7 +67,7 @@ resource "cloudflare_record" "mediaserver-tautulli" {
   proxied = false
 }
 
-resource "cloudflare_record" "mediaserver-organizr" {
+resource "cloudflare_record" "mediaserver-overseerr" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "mediaserver"
   value   = "traefik.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
