@@ -294,6 +294,42 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  name: minecraft-ftb-ultimate
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: ftb-ultimate
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/minecraft/ftb-ultimate/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minecraft-skyfactory4
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: skyfactory4
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/minecraft/skyfactory4/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
   name: metallb
   namespace: argocd
 spec:
