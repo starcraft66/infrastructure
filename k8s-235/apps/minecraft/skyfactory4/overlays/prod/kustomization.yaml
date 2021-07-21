@@ -18,19 +18,19 @@ patchesJson6902:
 - path: ./patches/persistence.yaml
   target:
     group: apps
-    kind: Deployment
+    kind: StatefulSet
     name: minecraft
     version: v1
 - path: ./patches/env-vars.yaml
   target:
     group: apps
-    kind: Deployment
+    kind: StatefulSet
     name: minecraft
     version: v1
 - path: ./patches/liveness-probe-extended.yaml
   target:
     group: apps
-    kind: Deployment
+    kind: StatefulSet
     name: minecraft
     version: v1
 - path: ./patches/server-port.yaml
