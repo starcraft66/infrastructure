@@ -1,12 +1,11 @@
 ---
 # Source: minecraft/templates/deployment.yaml
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: minecraft
 spec:
-  strategy:
-    type: Recreate
+  serviceName: "minecraft"
   selector:
     matchLabels:
       app.kubernetes.io/name: minecraft
