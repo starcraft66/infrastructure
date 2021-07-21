@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: organizr-config
+  name: overseerr-config
   labels:
-    app.kubernetes.io/name: organizr
+    app.kubernetes.io/name: overseerr
 spec:
   storageClassName: freenas-iscsi-csi
   accessModes:

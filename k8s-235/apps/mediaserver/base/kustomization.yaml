@@ -8,7 +8,7 @@ resources:
 - ./resources/jackett.yaml
 - ./resources/qbittorrent.yaml
 - ./resources/tautulli.yaml
-- ./resources/organizr.yaml
+- ./resources/overseerr.yaml
 - ./resources/pvc.yaml
 - ./resources/rbac.yaml
 - ./resources/namespace.yaml

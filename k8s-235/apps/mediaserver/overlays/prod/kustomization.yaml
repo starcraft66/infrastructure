@@ -10,7 +10,7 @@ resources:
 - ./jackett
 - ./qbittorrent
 - ./tautulli
-- ./organizr
+- ./overseerr
 
 namespace: mediaserver
 
@@ -37,7 +37,7 @@ images:
   newTag: 14.3.3.99202103251603-7345-332b173e0ubuntu20.04.1-ls122
 - name: ghcr.io/linuxserver/tautulli
   newTag: latest
-- name: organizr/organizr
+- name: ghcr.io/linuxserver/overseerr
   newTag: latest
 
 configMapGenerator:

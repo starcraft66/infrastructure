@@ -2,30 +2,33 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: organizr
+  name: overseerr
   labels:
-    app.kubernetes.io/name: organizr
+    app.kubernetes.io/name: overseerr
 spec:
-  serviceName: "organizr"
+  serviceName: "overseerr"
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: organizr
+      app.kubernetes.io/name: overseerr
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: organizr
+        app.kubernetes.io/name: overseerr
     spec:
       containers:
-      - name: organizr
-        image: organizr/organizr:latest
+      - name: overseerr
+        image: ghcr.io/linuxserver/overseerr:latest
         imagePullPolicy: Always
+        # env:
+        # - name: "HOST"
+        #   value: "::"
         ports:
         - name: "http"
-          containerPort: 80
+          containerPort: 5055
           protocol: TCP
         volumeMounts:
-        - name: organizr-config
+        - name: overseerr-config
           mountPath: /config
         resources:
           requests:
@@ -37,17 +40,17 @@ spec:
         readinessProbe:
           httpGet:
               path: /
-              port: 80
+              port: 5055
           periodSeconds: 10
           failureThreshold: 3
         livenessProbe:
           httpGet:
               path: /
-              port: 80
+              port: 5055
           initialDelaySeconds: 60
           periodSeconds: 10
           failureThreshold: 5
       volumes:
-      - name: organizr-config
+      - name: overseerr-config
         persistentVolumeClaim:
-          claimName: organizr-config
+          claimName: overseerr-config
