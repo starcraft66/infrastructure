@@ -1,11 +1,12 @@
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: radarr
   labels:
     app.kubernetes.io/name: radarr
 spec:
+  serviceName: "radarr"
   replicas: 1
   selector:
     matchLabels:

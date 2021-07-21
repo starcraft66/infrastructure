@@ -1,11 +1,12 @@
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: organizr
   labels:
     app.kubernetes.io/name: organizr
 spec:
+  serviceName: "organizr"
   replicas: 1
   selector:
     matchLabels:

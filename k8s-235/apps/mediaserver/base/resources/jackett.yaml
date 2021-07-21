@@ -1,11 +1,12 @@
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: jackett
   labels:
     app.kubernetes.io/name: jackett
 spec:
+  serviceName: "jackett"
   replicas: 1
   selector:
     matchLabels:

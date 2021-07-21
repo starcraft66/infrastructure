@@ -1,16 +1,15 @@
 ---
 # Source: kube-plex/templates/deployment.yaml
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: kube-plex
   labels:
     app.kubernetes.io/name: kube-plex
 spec:
+  serviceName: "plex"
   replicas: 1
   revisionHistoryLimit: 3
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: kube-plex

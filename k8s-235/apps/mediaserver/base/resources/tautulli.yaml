@@ -1,11 +1,12 @@
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: tautulli
   labels:
     app.kubernetes.io/name: tautulli
 spec:
+  serviceName: "tautulli"
   replicas: 1
   selector:
     matchLabels:

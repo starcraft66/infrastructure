@@ -1,11 +1,12 @@
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: qbittorrent
   labels:
     app.kubernetes.io/name: qbittorrent
 spec:
+  serviceName: "qbittorrent"
   replicas: 1
   selector:
     matchLabels:
