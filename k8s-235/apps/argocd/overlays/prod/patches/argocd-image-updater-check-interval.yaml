@@ -11,4 +11,4 @@ spec:
         - argocd-image-updater
         - run
         - --interval
-        - 6h
+        - 24h
