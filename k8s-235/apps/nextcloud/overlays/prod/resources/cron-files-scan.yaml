@@ -24,7 +24,7 @@ spec:
               runAsUser: 33
             envFrom:
             - configMapRef:
-                name: nextcloud-env-vars-mcb6mt9tc9
+                name: nextcloud-env-vars
             - secretRef:
                 name: nextcloud-secrets
             resources:
