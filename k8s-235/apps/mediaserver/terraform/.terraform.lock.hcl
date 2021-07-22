@@ -5,6 +5,7 @@ provider "registry.terraform.io/cloudflare/cloudflare" {
   version = "2.18.0"
   hashes = [
     "h1:DcHmM5XmjwrCCPqIdBRvYDrth5hjk6ldjsS94szjjJc=",
+    "h1:eh776Jlk6M4CIH5Z9bA+knSN3iAhim1NtPXzSdbjdKo=",
     "zh:4121da1ad26081552e3a648e94c89df96e246d50c6e307fe5eba586664691de0",
     "zh:4212865eeb42f491d3409f1b9edbb508dbc781a12144c4cb157a8057965144fb",
     "zh:4965fad90d5caf7917e0f7617d76a5d3419ca3f003e408f6e58af5e53f20b1ba",
