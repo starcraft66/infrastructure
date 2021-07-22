@@ -10,14 +10,14 @@ resources:
 - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/e6e14c16019ece315f91e8389b08cfcbd07d2e49/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
 helmCharts:
 - name: democratic-csi
-  includeCRDs: true
+  # includeCRDs: true
   releaseName: zfs-nfs
   version: 0.8.3
   repo: https://democratic-csi.github.io/charts/
   namespace: democratic-csi
   valuesFile: ./resources/values-nfs.yaml
 - name: democratic-csi
-  includeCRDs: true
+  # includeCRDs: true
   releaseName: zfs-iscsi
   version: 0.8.3
   repo: https://democratic-csi.github.io/charts/

@@ -5,7 +5,7 @@ resources:
 
 helmCharts:
 - name: kubedb
-  includeCRDs: true
+  # includeCRDs: true
   releaseName: kubedb
   version: v2021.04.16
   repo: https://charts.appscode.com/stable/
