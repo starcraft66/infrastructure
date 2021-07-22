@@ -3,3 +3,4 @@
 .env
 terraform.tfstate
 terraform.tfstate.*
+charts
