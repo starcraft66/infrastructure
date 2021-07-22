@@ -8,15 +8,15 @@ metadata:
     app.kubernetes.io/name: traefik
   annotations:
 spec:
-  replicas: 1
+  replicas: 8
   selector:
     matchLabels:
       app.kubernetes.io/name: traefik
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
+      maxSurge: 50%
+      maxUnavailable: 50%
   template: 
     metadata:
       annotations:
