@@ -2,5 +2,21 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ./resources/namespace.yaml
-generators:
-- ./resources/helm-chart.yaml
+
+helmCharts:
+- name: kubedb
+  includeCRDs: true
+  releaseName: kubedb
+  version: v2021.04.16
+  repo: https://charts.appscode.com/stable/
+  namespace: kubedb
+  valuesInline:
+    global:
+      skipCleaner: true
+    kubedb-community:
+      monitoring:
+        enabled: true
+        agent: "prometheus.io/operator"
+        serviceMonitor:
+          labels:
+            app.kubernetes.io/name: "kubedb-community"
