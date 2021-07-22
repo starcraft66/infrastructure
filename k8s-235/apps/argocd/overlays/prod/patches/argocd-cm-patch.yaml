@@ -32,4 +32,4 @@ data:
         hs.status = "Healthy"
         return hs
   # For kustomize-sops
-  kustomize.buildOptions: "--enable_alpha_plugins"
+  kustomize.buildOptions: "--enable-alpha-plugins"
