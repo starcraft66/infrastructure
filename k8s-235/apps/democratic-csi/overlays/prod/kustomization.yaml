@@ -19,8 +19,6 @@ images:
   newTag: latest
 - name: k8s.gcr.io/sig-storage/csi-node-driver-registrar
   newTag: v2.2.0
-- name: docker.io/busybox
-  newTag: "1.32.0"
 - name: democraticcsi/democratic-csi
   newTag: latest
 

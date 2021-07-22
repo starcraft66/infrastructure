@@ -10,7 +10,3 @@ namespace: nhackindustries
 
 generators:
 - ./generators/secrets-generator.yaml
-
-images:
-- name: kibana
-  newTag: "7.9.1"
