@@ -81,16 +81,6 @@ spec:
             name: tautulli
             port:
               name: http
-  - host: mediaserver.tdude.co
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: overseerr
-            port:
-              name: http
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -105,6 +95,16 @@ spec:
   tls:
   - secretName: mediaserver-k8s-235-tdude-co-tls
   rules:
+  - host: mediaserver.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: overseerr
+            port:
+              name: http
   - host: plex.tdude.co
     http:
       paths:
