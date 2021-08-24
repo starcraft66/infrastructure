@@ -1,0 +1,45 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: traefik
+
+images:
+- name: traefik
+  newTag: "v2.4.11"
+- name: thomseddon/traefik-forward-auth
+  newTag: "2"
+
+# nameSuffix: -prod
+
+patchesJson6902:
+- target:
+    version: v1
+    kind: Deployment
+    name: pomerium-authenticate
+  path: ./patches/set-replica-count.yaml
+- target:
+    version: v1
+    kind: Deployment
+    name: pomerium-authorize
+  path: ./patches/set-replica-count.yaml
+- target:
+    version: v1
+    kind: Deployment
+    name: pomerium-databroker
+  path: ./patches/set-replica-count.yaml
+- target:
+    version: v1
+    kind: Deployment
+    name: pomerium-proxy
+  path: ./patches/set-replica-count.yaml
+
+resources:
+- ../../base
+# - ./resources/autoscaler.yml
+- ./resources/ingress.yaml
+- ./resources/middleware.yaml
+- ./resources/loadbalancer.yaml
+- ./resources/monitoring.yaml
+- ./resources/monitoring-rbac.yaml
+
+generators:
+- ./generators/secrets-generator.yaml

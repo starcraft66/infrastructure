@@ -1,0 +1,133 @@
+---
+# Source: pomerium/templates/authenticate-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pomerium-authenticate
+  labels:
+    app.kubernetes.io/name: pomerium-authenticate
+    app.kubernetes.io/component: authenticate
+spec:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+    - IPv6
+    - IPv4
+  type: ClusterIP
+  ports:
+    - port: 443
+      targetPort: https
+      protocol: TCP
+      name: https
+    - name: metrics
+      port: 9090
+      protocol: TCP
+      targetPort: metrics
+  selector:
+    app.kubernetes.io/name: pomerium-authenticate
+---
+# Source: pomerium/templates/authorize-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pomerium-authorize
+  labels:
+    app.kubernetes.io/name: pomerium-authorize
+    app.kubernetes.io/component: authorize
+spec:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+    - IPv6
+    - IPv4
+  clusterIP: None
+  type: ClusterIP
+  ports:
+    - port: 443
+      targetPort: https
+      protocol: TCP
+      name: https
+    - name: metrics
+      port: 9090
+      protocol: TCP
+      targetPort: metrics
+  selector:
+    app.kubernetes.io/name: pomerium-authorize
+---
+# Source: pomerium/templates/cache-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pomerium-cache
+  labels:
+    app.kubernetes.io/name: pomerium-cache
+    app.kubernetes.io/component: cache
+spec:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+    - IPv6
+    - IPv4
+  clusterIP: None
+  type: ClusterIP
+  ports:
+    - port: 443
+      targetPort: https
+      protocol: TCP
+      name: https
+    - name: metrics
+      port: 9090
+      protocol: TCP
+      targetPort: metrics
+  selector:
+    app.kubernetes.io/name: pomerium-databroker
+---
+# Source: pomerium/templates/databroker-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pomerium-databroker
+  labels:
+    app.kubernetes.io/name: pomerium-databroker
+    app.kubernetes.io/component: databroker
+spec:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+    - IPv6
+    - IPv4
+  clusterIP: None
+  type: ClusterIP
+  ports:
+    - port: 443
+      targetPort: https
+      protocol: TCP
+      name: https
+    - name: metrics
+      port: 9090
+      protocol: TCP
+      targetPort: metrics
+  selector:
+    app.kubernetes.io/name: pomerium-databroker
+---
+# Source: pomerium/templates/proxy-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pomerium-proxy
+  labels:
+    app.kubernetes.io/name: pomerium-proxy
+    app.kubernetes.io/component: proxy
+spec:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+    - IPv6
+    - IPv4
+  type: ClusterIP
+  ports:
+    - port: 443
+      targetPort: https
+      protocol: TCP
+      name: https
+    - name: metrics
+      port: 9090
+      protocol: TCP
+      targetPort: metrics
+  selector:
+    app.kubernetes.io/name: pomerium-proxy

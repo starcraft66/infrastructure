@@ -1,0 +1,51 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: pomerium-authenticate-metrics
+  labels:
+    app.kubernetes.io/name: pomerium-authenticate
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pomerium-authenticate
+  endpoints:
+  - port: metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: pomerium-authorize-metrics
+  labels:
+    app.kubernetes.io/name: pomerium-authorize
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pomerium-authorize
+  endpoints:
+  - port: metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: pomerium-databroker-metrics
+  labels:
+    app.kubernetes.io/name: pomerium-databroker
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pomerium-databroker
+  endpoints:
+  - port: metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: pomerium-proxy-metrics
+  labels:
+    app.kubernetes.io/name: pomerium-proxy
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pomerium-proxy
+  endpoints:
+  - port: metrics

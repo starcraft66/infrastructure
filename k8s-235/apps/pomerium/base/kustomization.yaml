@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ./resources/deployment.yaml
+- ./resources/service.yaml
+- ./resources/service-account.yaml
+- ./resources/rbac.yaml
+- ./resources/namespace.yaml

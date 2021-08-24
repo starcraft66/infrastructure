@@ -1,0 +1,226 @@
+---
+# Source: pomerium/templates/authenticate-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: pomerium-authenticate
+    app.kubernetes.io/component: authenticate
+  name: pomerium-authenticate
+  annotations:
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pomerium-authenticate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pomerium-authenticate
+    spec:
+      containers:
+      - name: pomerium
+        image: pomerium/pomerium:v0.14.4
+        imagePullPolicy: IfNotPresent
+        args:
+          - --config=/etc/pomerium/config.yaml
+        env:
+        - name: SERVICES
+          value: authenticate
+        - name: SIGNING_KEY
+          valueFrom:
+            secretKeyRef:
+              name: pomerium-signing-key
+              key: signing-key
+        ports:
+          - containerPort: 443
+            name: https
+            protocol: TCP
+          - containerPort: 9090
+            name: metrics
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: https
+            scheme: HTTPS
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: https
+            scheme: HTTPS
+        resources:
+          {}
+        volumeMounts:
+          - mountPath: /etc/pomerium/
+            name: config
+      serviceAccountName: pomerium-authenticate
+      volumes:
+        - name: config
+          secret:
+            secretName: pomerium
+---
+# Source: pomerium/templates/authorize-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: pomerium-authorize
+    app.kubernetes.io/component: authorize
+  name: pomerium-authorize
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pomerium-authorize
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pomerium-authorize
+    spec:
+      containers:
+      - name: pomerium
+        image: pomerium/pomerium:v0.14.4
+        imagePullPolicy: IfNotPresent
+        args:
+          - --config=/etc/pomerium/config.yaml
+        env:
+        - name: SERVICES
+          value: authorize
+        - name: SIGNING_KEY
+          valueFrom:
+            secretKeyRef:
+              name: pomerium-signing-key
+              key: signing-key
+        ports:
+          - containerPort: 443
+            name: https
+            protocol: TCP
+          - containerPort: 9090
+            name: metrics
+            protocol: TCP
+        livenessProbe:
+          tcpSocket:
+            port: https
+          initialDelaySeconds: 15
+        readinessProbe:
+          tcpSocket:
+            port: https
+        resources:
+          {}
+        volumeMounts:
+          - mountPath: /etc/pomerium/
+            name: config
+      serviceAccountName: pomerium-authorize
+      volumes:
+        - name: config
+          secret:
+            secretName: pomerium
+---
+# Source: pomerium/templates/databroker-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: pomerium-databroker
+    app.kubernetes.io/component: databroker
+  name: pomerium-databroker
+  annotations:
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pomerium-databroker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pomerium-databroker
+    spec:
+      containers:
+      - name: pomerium
+        image: pomerium/pomerium:v0.14.4
+        imagePullPolicy: IfNotPresent
+        args:
+          - --config=/etc/pomerium/config.yaml
+        env:
+        - name: SERVICES
+          value: databroker
+        ports:
+          - containerPort: 443
+            name: https
+            protocol: TCP
+          - containerPort: 9090
+            name: metrics
+            protocol: TCP
+        livenessProbe:
+          tcpSocket:
+            port: https
+          initialDelaySeconds: 15
+        readinessProbe:
+          tcpSocket:
+            port: https
+        resources:
+          {}
+        volumeMounts:
+          - mountPath: /etc/pomerium/
+            name: config
+      serviceAccountName: pomerium-databroker
+      volumes:
+        - name: config
+          secret:
+            secretName: pomerium
+---
+# Source: pomerium/templates/proxy-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: pomerium-proxy
+    app.kubernetes.io/component: proxy
+  name: pomerium-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pomerium-proxy
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pomerium-proxy
+    spec:
+      containers:
+      - name: pomerium
+        image: pomerium/pomerium:v0.14.4
+        imagePullPolicy: IfNotPresent
+        args:
+          - --config=/etc/pomerium/config.yaml
+        env:
+        - name: SERVICES
+          value: proxy
+        ports:
+          - containerPort: 443
+            name: https
+            protocol: TCP
+          - containerPort: 9090
+            name: metrics
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: https
+            scheme: HTTPS
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: https
+            scheme: HTTPS
+        resources:
+          {}
+        volumeMounts:
+          - mountPath: /etc/pomerium/
+            name: config
+      serviceAccountName: pomerium-proxy
+      volumes:
+        - name: config
+          secret:
+            secretName: pomerium
