@@ -1,6 +1,7 @@
 *.retry
 .terraform
 .env
+.direnv
 terraform.tfstate
 terraform.tfstate.*
 charts
