@@ -59,6 +59,9 @@ spec:
         - name: "websecure"
           containerPort: 8443
           protocol: "TCP"
+        - name: "websecureudp"
+          containerPort: 8443
+          protocol: "UDP"
         securityContext:
           capabilities:
             drop:
@@ -87,6 +90,9 @@ spec:
           - "--api.insecure=true"
           # For now... Unifi controller requires this
           - "--serversTransport.insecureSkipVerify=true"
+          # HTTP/3 Experimental support
+          - "--experimental.http3=true"
+          - "--entrypoints.websecure.enablehttp3=true"
           - "--metrics.prometheus=true"
           - "--ping=true"
           - "--providers.kubernetescrd"
