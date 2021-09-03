@@ -8,6 +8,7 @@ spec:
   ipFamilyPolicy: SingleStack
   ipFamilies:
     - IPv4
+  loadBalancerIP: "10.224.0.3"
   type: LoadBalancer
   externalTrafficPolicy: Local
   ports:
@@ -28,6 +29,7 @@ spec:
   ipFamilyPolicy: SingleStack
   ipFamilies:
     - IPv6
+  loadBalancerIP: "2607:fa48:6ed8:8a54:3::1"
   type: LoadBalancer
   externalTrafficPolicy: Local
   ports:
@@ -48,6 +50,7 @@ spec:
   ipFamilyPolicy: SingleStack
   ipFamilies:
     - IPv4
+  loadBalancerIP: "10.224.0.3"
   type: LoadBalancer
   externalTrafficPolicy: Local
   ports:
@@ -72,6 +75,7 @@ spec:
   ipFamilyPolicy: SingleStack
   ipFamilies:
     - IPv6
+  loadBalancerIP: "2607:fa48:6ed8:8a54:3::1"
   type: LoadBalancer
   externalTrafficPolicy: Local
   ports:
