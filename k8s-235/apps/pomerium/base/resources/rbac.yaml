@@ -1,67 +1,149 @@
 ---
-# Source: traefik/templates/rbac/clusterrole.yaml
-kind: ClusterRole
+# Source: pomerium/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
 metadata:
-  name: traefik
+  name: pomerium
   labels:
-    app.kubernetes.io/name: traefik
+    app.kubernetes.io/name: pomerium-operator
+    app.kubernetes.io/component: operator
+  annotations:
 rules:
+  - apiGroups:
+      - extensions
+      - "networking.k8s.io" # k8s 1.14+
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
   - apiGroups:
       - ""
     resources:
       - services
-      - endpoints
-      - secrets
-    verbs:
-      - get
-      - list
-      - watch
-  - apiGroups:
-      - extensions
-      - networking.k8s.io
-    resources:
-      - ingresses
-      - ingressclasses
-    verbs:
-      - get
-      - list
-      - watch
-  - apiGroups:
-      - extensions
-      - networking.k8s.io
-    resources:
-      - ingresses/status
-    verbs:
-      - update
-  - apiGroups:
-      - traefik.containo.us
-    resources:
-      - ingressroutes
-      - ingressroutetcps
-      - ingressrouteudps
-      - middlewares
-      - tlsoptions
-      - tlsstores
-      - traefikservices
-      - serverstransports
     verbs:
       - get
       - list
       - watch
 ---
-# Source: traefik/templates/rbac/clusterrolebinding.yaml
-kind: ClusterRoleBinding
+# Source: pomerium/templates/clusterrolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
 metadata:
-  name: traefik
   labels:
-    app.kubernetes.io/name: traefik
+    app.kubernetes.io/name: pomerium-operator
+    app.kubernetes.io/component: operator
+  name: pomerium
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: traefik
+  name: pomerium
 subjects:
   - kind: ServiceAccount
-    name: traefik
+    name: pomerium-operator
+    namespace: kube-system
+---
+# Source: pomerium/templates/role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pomerium
+  labels:
+    app.kubernetes.io/name: pomerium-operator
+    app.kubernetes.io/component: operator
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+  - apiGroups:
+      - ""
+      - "apps"
+    resources:
+      - configmaps
+      - deployments
+      - secrets
+    resourceNames:
+      - "pomerium"
+      - pomerium-authenticate
+      - pomerium-authorize
+      - pomerium-proxy
+      - pomerium-operator-election
+      - pomerium-databroker
+    verbs:
+      - get
+      - list
+      - watch
+      - update
+      - create
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    resourceNames:
+      - "pomerium-base"
+    verbs:
+      - get
+      - list
+      - watch
+---
+# Source: pomerium/templates/rolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/name: pomerium-operator
+    app.kubernetes.io/component: operator
+  name: pomerium
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: pomerium
+subjects:
+  - kind: ServiceAccount
+    name: pomerium-operator
+    namespace: kube-system
+# pomerium-k8s.yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: default
+  name: pomerium
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pomerium-impersonation
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - users
+      - groups
+      - serviceaccounts
+    verbs:
+      - impersonate
+  - apiGroups:
+      - "authorization.k8s.io"
+    resources:
+      - selfsubjectaccessreviews
+    verbs:
+      - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: pomerium-impersonation
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: pomerium-impersonation
+subjects:
+  - kind: ServiceAccount
+    name: pomerium
     namespace: default

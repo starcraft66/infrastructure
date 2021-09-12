@@ -1,14 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: traefik
+namespace: pomerium
 
 images:
-- name: traefik
-  newTag: "v2.4.11"
-- name: thomseddon/traefik-forward-auth
-  newTag: "2"
-
-# nameSuffix: -prod
+- name: pomerium/pomerium
+  newTag: "v0.14.4"
 
 patchesJson6902:
 - target:
@@ -34,12 +30,26 @@ patchesJson6902:
 
 resources:
 - ../../base
-# - ./resources/autoscaler.yml
 - ./resources/ingress.yaml
 - ./resources/middleware.yaml
-- ./resources/loadbalancer.yaml
 - ./resources/monitoring.yaml
-- ./resources/monitoring-rbac.yaml
 
 generators:
 - ./generators/secrets-generator.yaml
+
+configMapGenerator:
+- name: pomerium-config
+  namespace: pomerium
+  literals:
+  - "ADDRESS=:443"
+  - "GRPC_ADDRESS=:443"
+  - "METRICS_ADDRESS=:9090"
+  - "CERTIFICATE_FILE=/pomerium/tls/tls.crt"
+  - "CERTIFICATE_KEY_FILE=/pomerium/tls/tls.key"
+  - "CERTIFICATE_AUTHORITY_FILE=/pomerium/tls/ca.crt"
+  - "AUTHENTICATE_SERVICE_URL=https://sso.k8s.235.tdude.co"
+  - "AUTHORIZE_SERVICE_URL=https://pomerium-authorize.pomerium.svc.cluster.local"
+  - "DATABROKER_SERVICE_URL=https://pomerium-databroker.pomerium.svc.cluster.local"
+  - "IDP_PROVIDER=google"
+  - "IDP_PROVIDER_URL=https://accounts.google.com"
+  - "DATABROKER_STORAGE_TYPE=memory"

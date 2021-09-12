@@ -1,0 +1,8 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: pomerium-issuer
+  namespace: pomerium
+spec:
+  ca:
+    secretName: pomerium-tls-ca

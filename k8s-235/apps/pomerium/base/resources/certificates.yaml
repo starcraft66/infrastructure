@@ -1,0 +1,64 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: pomerium-proxy-cert
+  namespace: pomerium
+spec:
+  secretName: pomerium-proxy-tls
+  issuerRef:
+    name: pomerium-issuer
+    kind: Issuer
+  usages:
+    - server auth
+    - client auth
+  dnsNames:
+    - pomerium-proxy.pomerium.svc.cluster.local
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: pomerium-authorize-cert
+  namespace: pomerium
+spec:
+  secretName: pomerium-authorize-tls
+  issuerRef:
+    name: pomerium-issuer
+    kind: Issuer
+  usages:
+    - server auth
+    - client auth
+  dnsNames:
+    - pomerium-authorize.pomerium.svc.cluster.local
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: pomerium-databroker-cert
+  namespace: pomerium
+spec:
+  secretName: pomerium-databroker-tls
+  issuerRef:
+    name: pomerium-issuer
+    kind: Issuer
+  usages:
+    - server auth
+    - client auth
+  dnsNames:
+    - pomerium-databroker.pomerium.svc.cluster.local
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: pomerium-authenticate-cert
+  namespace: pomerium
+spec:
+  secretName: pomerium-authenticate-tls
+  issuerRef:
+    name: pomerium-issuer
+    kind: Issuer
+  usages:
+    - server auth
+    - client auth
+  dnsNames:
+    - pomerium-authenticate.pomerium.svc.cluster.local

@@ -22,8 +22,11 @@ spec:
       - name: pomerium
         image: pomerium/pomerium:v0.14.4
         imagePullPolicy: IfNotPresent
-        args:
-          - --config=/etc/pomerium/config.yaml
+        envFrom:
+        - configMapRef:
+            name: pomerium-config
+        - secretRef:
+            name: pomerium-secrets
         env:
         - name: SERVICES
           value: authenticate
@@ -52,13 +55,20 @@ spec:
         resources:
           {}
         volumeMounts:
-          - mountPath: /etc/pomerium/
-            name: config
+          - mountPath: /pomerium/tls
+            name: service-tls
+          - mountPath: /pomerium/ca
+            name: ca-tls
       serviceAccountName: pomerium-authenticate
       volumes:
-        - name: config
+        - name: ca-tls
           secret:
-            secretName: pomerium
+            secretName: pomerium-ca-tls
+            optional: true
+        - name: service-tls
+          secret:
+            secretName: pomerium-authenticate-tls
+            optional: true
 ---
 # Source: pomerium/templates/authorize-deployment.yaml
 apiVersion: apps/v1
@@ -82,8 +92,11 @@ spec:
       - name: pomerium
         image: pomerium/pomerium:v0.14.4
         imagePullPolicy: IfNotPresent
-        args:
-          - --config=/etc/pomerium/config.yaml
+        envFrom:
+        - configMapRef:
+            name: pomerium-config
+        - secretRef:
+            name: pomerium-secrets
         env:
         - name: SERVICES
           value: authorize
@@ -109,13 +122,20 @@ spec:
         resources:
           {}
         volumeMounts:
-          - mountPath: /etc/pomerium/
-            name: config
+          - mountPath: /pomerium/tls
+            name: service-tls
+          - mountPath: /pomerium/ca
+            name: ca-tls
       serviceAccountName: pomerium-authorize
       volumes:
-        - name: config
+        - name: ca-tls
           secret:
-            secretName: pomerium
+            secretName: pomerium-ca-tls
+            optional: true
+        - name: service-tls
+          secret:
+            secretName: pomerium-authorize-tls
+            optional: true
 ---
 # Source: pomerium/templates/databroker-deployment.yaml
 apiVersion: apps/v1
@@ -140,8 +160,11 @@ spec:
       - name: pomerium
         image: pomerium/pomerium:v0.14.4
         imagePullPolicy: IfNotPresent
-        args:
-          - --config=/etc/pomerium/config.yaml
+        envFrom:
+        - configMapRef:
+            name: pomerium-config
+        - secretRef:
+            name: pomerium-secrets
         env:
         - name: SERVICES
           value: databroker
@@ -162,13 +185,25 @@ spec:
         resources:
           {}
         volumeMounts:
-          - mountPath: /etc/pomerium/
-            name: config
+          - mountPath: /pomerium/databroker-tls
+            name: databroker-tls
+          - mountPath: /pomerium/tls
+            name: service-tls
+          - mountPath: /pomerium/ca
+            name: ca-tls
       serviceAccountName: pomerium-databroker
       volumes:
-        - name: config
+        - name: databroker-tls
           secret:
-            secretName: pomerium
+            secretName: pomerium-databroker-tls
+        - name: ca-tls
+          secret:
+            secretName: pomerium-ca-tls
+            optional: true
+        - name: service-tls
+          secret:
+            secretName: pomerium-databroker-tls
+            optional: true
 ---
 # Source: pomerium/templates/proxy-deployment.yaml
 apiVersion: apps/v1
@@ -192,8 +227,11 @@ spec:
       - name: pomerium
         image: pomerium/pomerium:v0.14.4
         imagePullPolicy: IfNotPresent
-        args:
-          - --config=/etc/pomerium/config.yaml
+        envFrom:
+        - configMapRef:
+            name: pomerium-config
+        - secretRef:
+            name: pomerium-secrets
         env:
         - name: SERVICES
           value: proxy
@@ -217,10 +255,82 @@ spec:
         resources:
           {}
         volumeMounts:
-          - mountPath: /etc/pomerium/
-            name: config
+          - mountPath: /pomerium/tls
+            name: service-tls
+          - mountPath: /pomerium/ca
+            name: ca-tls
       serviceAccountName: pomerium-proxy
       volumes:
-        - name: config
+        - name: ca-tls
           secret:
-            secretName: pomerium
+            secretName: pomerium-ca-tls
+            optional: true
+        - name: service-tls
+          secret:
+            secretName: pomerium-proxy-tls
+            optional: true
+---
+# Source: pomerium/templates/operator-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: pomerium-operator
+    app.kubernetes.io/component: operator
+  name: pomerium-operator
+  annotations:
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pomerium-operator
+      app.kubernetes.io/instance: pomerium
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pomerium-operator
+        app.kubernetes.io/instance: pomerium
+    spec:
+      containers:
+      - name: pomerium
+        image: pomerium/pomerium-operator:v0.0.5
+        envFrom:
+        - configMapRef:
+            name: pomerium-config
+        - secretRef:
+            name: pomerium-secrets
+        imagePullPolicy:
+        args:
+          - --ingress-class=pomerium
+          - --service-class=pomerium
+          - --metrics-address=:9090
+          - --health-address=:8081
+          - --pomerium-namespace=kube-system
+          - --pomerium-deployments=pomerium-authenticate
+          - --pomerium-deployments=pomerium-authorize
+          - --pomerium-deployments=pomerium-proxy
+          - --pomerium-deployments=pomerium-databroker
+          - --debug=false
+          - --election-configmap=pomerium-operator-election
+          - --election-namespace=pomerium
+          - --election=true
+        ports:
+          - containerPort: 9090
+            name: metrics
+            protocol: TCP
+          - containerPort: 8081
+            name: health
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: health
+            scheme: HTTP
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: health
+            scheme: HTTP
+        resources:
+          {}
+      serviceAccountName: pomerium-operator
