@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hedgedoc
+  labels:
+    app.kubernetes.io/name: hedgedoc
+  annotations:
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: hedgedoc
+  ports:
+  - port: 3000
+    name: web
+    targetPort: "web"
+    protocol: "TCP"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  labels:
+    app.kubernetes.io/name: ctfnote
+  annotations:
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: ctfnote
+  ports:
+  - port: 3000
+    name: web
+    targetPort: "api"
+    protocol: "TCP"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ctfnote
+  labels:
+    app.kubernetes.io/name: ctfnote-frontend
+  annotations:
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: ctfnote-frontend
+  ports:
+  - port: 80
+    name: web
+    targetPort: "web"
+    protocol: "TCP"

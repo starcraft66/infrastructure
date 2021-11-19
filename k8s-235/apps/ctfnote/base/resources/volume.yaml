@@ -1,0 +1,27 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: hedgedoc-uploads
+  labels:
+    app.kubernetes.io/name: hedgedoc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: "10Gi"
+  storageClassName: "freenas-nfs-csi"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: ctfnote-uploads
+  labels:
+    app.kubernetes.io/name: ctfnote
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: "10Gi"
+  storageClassName: "freenas-nfs-csi"

@@ -1,0 +1,39 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Postgres
+metadata:
+  name: postgres-ctfnote
+spec:
+  version: "13.2"
+  storageType: "Durable"
+  storage:
+    storageClassName: "freenas-nfs-csi"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+  init:
+    script:
+      configMap:
+        name: pg-init-script
+  monitor:
+    agent: prometheus.io/operator
+    prometheus:
+      serviceMonitor:
+        labels:
+          app.kubernetes.io/name: postgres-ctfnote
+        interval: 10s
+  authSecret:
+    name: ctfnote-postgres-credentials
+  podTemplate:
+    metadata:
+      annotations:
+        app.kubernetes.io/name: postgres-ctfnote
+    controller:
+      annotations:
+        app.kubernetes.io/name: postgres-ctfnote
+    spec:
+      env:
+      - name: POSTGRES_DB
+        value: ctfnote
+  terminationPolicy: Halt
