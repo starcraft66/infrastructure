@@ -1,0 +1,116 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ctfnote-frontend
+  labels:
+    app.kubernetes.io/name: ctfnote-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ctfnote-frontend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ctfnote-frontend
+    spec:
+      containers:
+      - name: ctfnote-frontend
+        image: ghcr.io/starcraft66/ctfnote-frontend:latest
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 80
+          name: web
+          protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ctfnote
+  labels:
+    app.kubernetes.io/name: ctfnote
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ctfnote
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ctfnote
+    spec:
+      containers:
+      - name: ctfnote
+        command:
+        - "./start.sh"
+        - "postgres-ctfnote"
+        - "5432"
+        - "yarn"
+        - "start"
+        image: starcraft66/ctfnote:latest
+        envFrom:
+        - configMapRef:
+            name: ctfnote-api-config
+        - secretRef:
+            name: ctfnote-secrets
+        - secretRef:
+            name: ctfnote-postgres-credentials
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 3000
+          name: api
+          protocol: TCP
+        volumeMounts:
+        - mountPath: "/app/uploads"
+          name: uploads
+      volumes:
+      - name: uploads
+        persistentVolumeClaim:
+          claimName: ctfnote-uploads
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hedgedoc
+  labels:
+    app.kubernetes.io/name: hedgedoc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: hedgedoc
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: hedgedoc
+    spec:
+      containers:
+      - name: hedgedoc
+        image: quay.io/hedgedoc/hedgedoc:1.9.0-alpine
+        envFrom:
+        - configMapRef:
+            name: hedgedoc-config
+        - secretRef:
+            name: ctfnote-postgres-credentials
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 3000
+          name: web
+          protocol: TCP
+        volumeMounts:
+        - mountPath: "/hedgedoc/public/uploads"
+          name: uploads
+      volumes:
+      - name: uploads
+        persistentVolumeClaim:
+          claimName: hedgedoc-uploads

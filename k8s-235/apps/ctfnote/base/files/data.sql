@@ -1,0 +1,3 @@
+CREATE USER hedgedoc;
+CREATE DATABASE hedgedoc;
+GRANT ALL PRIVILEGES ON DATABASE hedgedoc TO hedgedoc;
