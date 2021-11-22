@@ -2,20 +2,22 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/cloudflare/cloudflare" {
-  version = "2.18.0"
+  version     = "2.26.1"
+  constraints = "2.26.1"
   hashes = [
-    "h1:DcHmM5XmjwrCCPqIdBRvYDrth5hjk6ldjsS94szjjJc=",
-    "h1:eh776Jlk6M4CIH5Z9bA+knSN3iAhim1NtPXzSdbjdKo=",
-    "zh:4121da1ad26081552e3a648e94c89df96e246d50c6e307fe5eba586664691de0",
-    "zh:4212865eeb42f491d3409f1b9edbb508dbc781a12144c4cb157a8057965144fb",
-    "zh:4965fad90d5caf7917e0f7617d76a5d3419ca3f003e408f6e58af5e53f20b1ba",
-    "zh:59d5dedb2b9c9b0a3fc5ad07fce4b1aefeaef5229dbe510e7f0f9f99bbb448aa",
-    "zh:6746bfa2cfe6005b64286ccf9fcc5b25d1dc29d1448fe9b4f9acf7d3f7f05f79",
-    "zh:78dd4811b35ea04f0ab11a0c7c600e8fe7f30e7645d8fc60d1d02272fa85568b",
-    "zh:c7a7adf710bbf686d879825428f9ba92ec35fcb44742ffac5ea9b9538c43a19a",
-    "zh:cd8827681b957a9a28cb8139414fd8430f228ff736be251c32ae26d8b146bfad",
-    "zh:cf398859858618b5569b2ad3e84ee5550836b70083b1e7bcf3ba8398ff06e247",
-    "zh:eb11da2096aea02c792dfe1a5e3605e711102401d03a722b8ae16223245e7f70",
-    "zh:fc8d289e98dfa3e846b2c737cfdd821a6e1836a062e5453265d1dbb1e35433f1",
+    "h1:P1ktP+9KnBoqJUnoGbGzOVRbMef1jXL282sJIJ5KlS4=",
+    "zh:0fc9e723b7f012870b32f82c094794b5c5debde00d5dc48dbd25beb8e8117171",
+    "zh:19a1eb85da263488f766cd2b0e30a4cebb8416c8f928fcb89df3dd12bf6dabef",
+    "zh:1fc097f4d471c553e2effc547d0af07d8d1cfb8cf70b0a1e9c7b87db28d823bc",
+    "zh:6a33b565397501a6c21095cf773418311a1c192aa8fc1389d258583417b8da8a",
+    "zh:6f0b9f88c150d01d30a8c3aa5fe77183a4e43ff344e4b5efec2f12a422222e72",
+    "zh:8bf32bbcd88f9078c2b06d5d260cba69da641f2df359ab2e6bd953c6de01610f",
+    "zh:91f82ad1e3a880399d1e866200304d259fd599f02c086ddb62402b5501f1ec73",
+    "zh:aa0d76d7a3d541452228a40b36947c94cf3481411e80327d70b7a3b4f62eb097",
+    "zh:acc4703c44122228c1dd8cda1b6b051d53d6433c708c1bf7f9c27faa6371f8df",
+    "zh:d05eb3a268cdb656def53db47fd4e623b060944aa4865a3f2bbf645fdbe7d102",
+    "zh:f6032d4a3ef0fe6c034c59d0c75134bc738c5a6f9e16cc9fac9649633b94f674",
+    "zh:fa626e82dbee19f997a4e5d1d6b3ddf27c91fee54b219f50ec91fea9a15c7508",
+    "zh:fbf97c0025baa0fb7937ccc0782158c8531b9c965b32a4bc8930418e5520c6a8",
   ]
 }
