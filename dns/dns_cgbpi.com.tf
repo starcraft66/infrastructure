@@ -3,6 +3,10 @@ resource "cloudflare_zone" "cgbpi_com" {
   # id = "6322bae6b62fcf2868a77cc564c6d045"
 }
 
+resource "cloudflare_zone_dnssec" "cgbpi_com" {
+  zone_id = cloudflare_zone.cgbpi_com.id
+}
+
 resource "cloudflare_record" "cgbpi_com-eb568133c231b70e6464374bb646acd9" {
   zone_id = cloudflare_zone.cgbpi_com.id
   name    = "cgbpi.com"
