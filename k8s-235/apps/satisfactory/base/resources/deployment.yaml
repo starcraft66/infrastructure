@@ -1,0 +1,75 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: satisfactory
+spec:
+  serviceName: "satisfactory"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: satisfactory
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: satisfactory
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+      - name: satisfactory
+        image: "ghcr.io/wolveix/satisfactory-server/satisfactory-server:dev"
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: "6"
+            memory: 8Gi
+          requests:
+            cpu: "4"
+            memory: 8Gi
+        # No readiness probe on udp rn
+        # readinessProbe:
+        #   tcpSocket:
+        #     port: 15777
+        #   initialDelaySeconds: 15
+        #   periodSeconds: 5
+        #   failureThreshold: 10
+        #   successThreshold: 1
+        #   timeoutSeconds: 1
+        # livenessProbe:
+        #   tcpSocket:
+        #     port: 15777
+        #   initialDelaySeconds: 15
+        #   periodSeconds: 5
+        #   failureThreshold: 10
+        #   successThreshold: 1
+        #   timeoutSeconds: 1
+        envFrom:
+        - configMapRef:
+            name: satisfactory-vars
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        ports:
+        - name: query
+          containerPort: 15777
+          protocol: UDP
+        - name: beacon
+          containerPort: 15000
+          protocol: UDP
+        - name: game
+          containerPort: 7777
+          protocol: UDP
+        volumeMounts:
+        - name: savedata
+          mountPath: /config
+        - name: gamefiles
+          mountPath: /config/gamefiles
+      volumes:
+      - name: savedata
+        persistentVolumeClaim:
+          claimName: satisfactory-savedata
+      - name: gamefiles
+        persistentVolumeClaim:
+          claimName: satisfactory-gamefiles

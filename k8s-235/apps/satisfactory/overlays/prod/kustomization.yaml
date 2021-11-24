@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: satisfactory
+
+images:
+- name: "ghcr.io/wolveix/satisfactory-server/satisfactory-server"
+  newTag: "v1"
+
+resources:
+- ../../base
+- ./resources/namespace.yaml
+- ./resources/volume.yaml
+
+configMapGenerator:
+- name: satisfactory-vars
+  literals:
+  - DEBUG=false
+  - STEAMBETA=false
+  - MAXPLAYERS=4
+  - SERVERQUERYPORT=15777
+  - SERVERBEACONPORT=15000
+  - SERVERGAMEPORT=7777
+  - SERVERIP="::"
+
+commonLabels:
+  app.kubernetes.io/name: satisfactory

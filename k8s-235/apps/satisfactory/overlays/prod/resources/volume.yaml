@@ -1,0 +1,27 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: satisfactory-savedata
+  labels:
+    app.kubernetes.io/name: satisfactory
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "10Gi"
+  storageClassName: "truenas-nfs-spitfire-fast"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: satisfactory-gamefiles
+  labels:
+    app.kubernetes.io/name: satisfactory
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "30Gi"
+  storageClassName: "truenas-nfs-spitfire-fast"
