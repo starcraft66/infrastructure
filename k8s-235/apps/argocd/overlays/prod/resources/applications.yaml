@@ -255,27 +255,6 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: streetmerchant
-  namespace: argocd
-  annotations:
-    argocd-image-updater.argoproj.io/image-list: "streetmerchant=ghcr.io/jef/streetmerchant:latest"
-    argocd-image-updater.argoproj.io/streetmerchant.update-strategy: digest
-spec:
-  project: production
-  destination:
-    namespace: streetmerchant
-    server: https://kubernetes.default.svc
-  source:
-    repoURL: https://git.tdude.co/tristan/infrastructure.git
-    targetRevision: master
-    path: k8s-235/apps/streetmerchant/overlays/prod
-  syncPolicy:
-    automated:
-      selfHeal: true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
   name: minecraft-cacaffichage
   namespace: argocd
 spec:
