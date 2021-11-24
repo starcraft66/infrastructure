@@ -36,5 +36,11 @@ patchesJson6902:
   target:
     group: apps
     kind: Deployment
+    name: zfs-nfs-spitfire-fast-democratic-csi-controller
+    version: v1
+- path: ./patches/leader-election-namespace.yaml
+  target:
+    group: apps
+    kind: Deployment
     name: zfs-iscsi-democratic-csi-controller
     version: v1

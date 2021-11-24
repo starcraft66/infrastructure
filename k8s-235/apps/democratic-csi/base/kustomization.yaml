@@ -18,6 +18,13 @@ helmCharts:
   valuesFile: ./resources/values-nfs.yaml
 - name: democratic-csi
   # includeCRDs: true
+  releaseName: zfs-nfs-spitfire-fast
+  version: 0.8.3
+  repo: https://democratic-csi.github.io/charts/
+  namespace: democratic-csi
+  valuesFile: ./resources/values-nfs-spitfire-fast.yaml
+- name: democratic-csi
+  # includeCRDs: true
   releaseName: zfs-iscsi
   version: 0.8.3
   repo: https://democratic-csi.github.io/charts/
