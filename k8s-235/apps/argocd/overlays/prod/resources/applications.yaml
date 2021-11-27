@@ -132,24 +132,6 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: jenkins
-  namespace: argocd
-spec:
-  project: production
-  destination:
-    namespace: default
-    server: https://kubernetes.default.svc
-  source:
-    repoURL: https://git.tdude.co/tristan/infrastructure.git
-    targetRevision: master
-    path: k8s-235/apps/jenkins
-  syncPolicy:
-    automated:
-      selfHeal: true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
   name: kubedb
   namespace: argocd
 spec:
