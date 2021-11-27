@@ -4,7 +4,7 @@ namespace: satisfactory
 
 images:
 - name: "ghcr.io/wolveix/satisfactory-server/satisfactory-server"
-  newTag: "v1"
+  newTag: "v4"
 
 resources:
 - ../../base
