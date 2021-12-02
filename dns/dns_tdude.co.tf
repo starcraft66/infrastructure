@@ -128,15 +128,6 @@ resource "cloudflare_record" "auth_bedrock_tdude_co-e600072af53ca2808f9a70af1259
   proxied = false
 }
 
-resource "cloudflare_record" "docker_235_tdude_co-dd0c7342973683671b57e1a636fb9c9f" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "docker.235"
-  value   = "2607:fa48:6ed8:8a51:20bb:57ff:fe41:3dd1"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "fleetfoot_235_tdude_co-0682464601437aabb4960f25ecb9b1b4" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "fleetfoot.235"
@@ -168,15 +159,6 @@ resource "cloudflare_record" "inspiron530_260_tdude_co-54898725081cdac5098dffb84
   zone_id = cloudflare_zone.tdude_co.id
   name    = "inspiron530.260"
   value   = "2607:fa48:6eca:a751:ac0:5b71:3ca0:a163"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "minecraft_235_tdude_co-ab96afc3a095ae6e1a78d14071fff425" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "minecraft.235"
-  value   = "2607:fa48:6ed8:8a51:8c8f:e7ff:fe25:271a"
   type    = "AAAA"
   ttl     = 1
   proxied = false
