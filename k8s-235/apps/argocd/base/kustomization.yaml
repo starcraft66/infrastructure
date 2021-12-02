@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - https://github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v2.1.7
-- https://github.com/argoproj-labs/argocd-image-updater/manifests/base?ref=v0.9.5
+# - https://github.com/argoproj-labs/argocd-image-updater/manifests/base?ref=v0.11.0
 - ./metrics/argocd-serviceMonitor.yaml
 - ./metrics/argocd-server-serviceMonitor.yaml
 - ./metrics/argocd-dex-server-serviceMonitor.yaml
