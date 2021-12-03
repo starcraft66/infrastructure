@@ -11,7 +11,7 @@ images:
 - name: ghcr.io/starcraft66/ctfnote-frontend
   newTag: "big-uploads"
 - name: quay.io/hedgedoc/hedgedoc:1.9.0-alpine
-  newTag: "1.9.0-alpine"
+  newTag: "1.9.2-alpine"
 
 generators:
 - ./generators/secrets-generator.yaml
