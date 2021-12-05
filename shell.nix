@@ -5,7 +5,7 @@
 with pkgs;
 mkShell rec {
   buildInputs = [
-    ansible
+    ansible_2_9
     kubectl
     kubernetes-helm
     terraform_1_0
