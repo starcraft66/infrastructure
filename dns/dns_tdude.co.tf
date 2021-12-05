@@ -21,11 +21,20 @@ resource "cloudflare_record" "fleetfoot-ilo_tdude_co" {
   proxied = false
 }
 
+resource "cloudflare_record" "registry_tdude_co-CNAME" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "registry"
+  value   = "traefik.bedrock.tdude.co"
+  type    = "CNAME"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "git_tdude_co-15e863f9cc46997d6dff0c6f6d9d6b8b" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "git"
-  value   = "135.181.141.143"
-  type    = "A"
+  value   = "traefik.bedrock.tdude.co"
+  type    = "CNAME"
   ttl     = 1
   proxied = false
 }
@@ -132,15 +141,6 @@ resource "cloudflare_record" "fleetfoot_235_tdude_co-0682464601437aabb4960f25ecb
   zone_id = cloudflare_zone.tdude_co.id
   name    = "fleetfoot.235"
   value   = "2607:fa48:6ed8:8a51:29c:2ff:fea5:346a"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "git_tdude_co-9cf4851ffe020afbb5e820e79902c356" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "git"
-  value   = "2a01:4f9:3a:15b0::3"
   type    = "AAAA"
   ttl     = 1
   proxied = false
