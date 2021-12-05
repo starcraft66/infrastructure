@@ -40,6 +40,15 @@ resource "cloudflare_record" "mediaserver-lidarr" {
   proxied = false
 }
 
+resource "cloudflare_record" "mediaserver-prowlarr" {
+  zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
+  name    = "prowlarr"
+  value   = "traefik.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+  type    = "CNAME"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "mediaserver-jackett" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "jackett"
