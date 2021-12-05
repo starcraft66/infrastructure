@@ -51,6 +51,16 @@ spec:
             name: lidarr
             port:
               name: http
+  - host: prowlarr.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: prowlarr
+            port:
+              name: http
   - host: jackett.tdude.co
     http:
       paths:

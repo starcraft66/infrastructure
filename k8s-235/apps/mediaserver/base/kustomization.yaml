@@ -6,6 +6,7 @@ resources:
 - ./resources/radarr.yaml
 - ./resources/lidarr.yaml
 - ./resources/jackett.yaml
+- ./resources/prowlarr.yaml
 - ./resources/qbittorrent.yaml
 - ./resources/tautulli.yaml
 - ./resources/overseerr.yaml

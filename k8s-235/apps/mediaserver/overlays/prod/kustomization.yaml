@@ -8,6 +8,7 @@ resources:
 - ./radarr
 - ./lidarr
 - ./jackett
+- ./prowlarr
 - ./qbittorrent
 - ./tautulli
 - ./overseerr
@@ -32,6 +33,8 @@ images:
 - name: ghcr.io/linuxserver/sonarr
   newTag: latest
 - name: ghcr.io/linuxserver/lidarr
+  newTag: latest
+- name: ghcr.io/linuxserver/prowlarr
   newTag: latest
 - name: ghcr.io/linuxserver/qbittorrent
   newTag: 14.3.3.99202103251603-7345-332b173e0ubuntu20.04.1-ls122
