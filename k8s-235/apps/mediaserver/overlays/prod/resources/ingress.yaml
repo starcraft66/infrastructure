@@ -16,6 +16,7 @@ spec:
     - radarr.tdude.co
     - lidarr.tdude.co
     - jackett.tdude.co
+    - prowlarr.tdude.co
     - qbittorrent.tdude.co
     - tautulli.tdude.co
     - mediaserver.tdude.co
