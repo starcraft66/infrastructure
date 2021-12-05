@@ -8,6 +8,8 @@ kube_config_dir: /etc/kubernetes
 kube_script_dir: "{{ bin_dir }}/kubernetes-scripts"
 kube_manifest_dir: "{{ kube_config_dir }}/manifests"
 
+download_run_once: false
+
 # This is where all the cert scripts and certs will be located
 kube_cert_dir: "{{ kube_config_dir }}/ssl"
 
@@ -17,7 +19,7 @@ kube_token_dir: "{{ kube_config_dir }}/tokens"
 kube_api_anonymous_auth: true
 
 ## Change this to use another Kubernetes version, e.g. a current beta release
-kube_version: v1.20.2
+kube_version: v1.21.6
 
 # Where the binaries will be downloaded.
 # Note: ensure that you've enough disk space (about 1G)
@@ -193,6 +195,7 @@ dns_domain: "{{ cluster_name }}"
 ## Container runtime
 ## docker for docker, crio for cri-o and containerd for containerd.
 container_manager: containerd
+# containerd_snapshotter: native
 
 # Additional container runtimes
 kata_containers_enabled: false
@@ -200,10 +203,10 @@ kata_containers_enabled: false
 ## Settings for containerd runtimes (only used when container_manager is set to containerd)
 #
 # Settings for default containerd runtime
-containerd_default_runtime:
-  type: io.containerd.runtime.v1.linux
-  engine: ''
-  root: ''
+# containerd_default_runtime:
+#   type: io.containerd.runtime.v1.linux
+#   engine: ''
+#   root: ''
 #
 # Settings for additional runtimes for containerd configuration
 # containerd_runtimes:
