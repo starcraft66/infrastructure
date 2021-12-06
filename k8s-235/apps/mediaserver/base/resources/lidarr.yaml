@@ -29,9 +29,6 @@ spec:
           mountPath: /config
         - name: data
           mountPath: /media
-        env:
-        - name: DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER
-          value: "0"
         envFrom:
         - configMapRef:
             name: mediaserver-permissions

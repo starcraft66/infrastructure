@@ -20,9 +20,6 @@ spec:
       - name: prowlarr
         image: ghcr.io/linuxserver/prowlarr:latest
         imagePullPolicy: Always
-        env:
-        - name: DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER
-          value: "0"
         ports:
         - name: "http"
           containerPort: 9117
