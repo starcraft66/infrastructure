@@ -7,7 +7,7 @@ data "cloudflare_zones" "tdude_co" {
 resource "cloudflare_record" "skyfactory4-srv" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "_minecraft._tcp.skyfactory4"
-  data    = {
+  data {
     name      = "skyfactory4"
     port      = 12347
     priority  = 1

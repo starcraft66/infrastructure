@@ -42,7 +42,7 @@ resource "cloudflare_record" "www_shitsta_in-c1590f325d584763e05763b0d356ea80" {
 resource "cloudflare_record" "shitsta_in-32cf1e78d6ddd4f54f0929ede371c292" {
   zone_id = cloudflare_zone.shitsta_in.id
   name    = "shitsta.in"
-  data    = {
+  data {
     flags = 0
     tag   = "iodef"
     value = "mailto:tristan@tdude.co"
@@ -55,7 +55,7 @@ resource "cloudflare_record" "shitsta_in-32cf1e78d6ddd4f54f0929ede371c292" {
 resource "cloudflare_record" "shitsta_in-878cb5e726ea223548d09f36d9e5cfbd" {
   zone_id = cloudflare_zone.shitsta_in.id
   name    = "shitsta.in"
-  data    = {
+  data {
     flags = 0
     tag   = "issue"
     value = "letsencrypt.org"

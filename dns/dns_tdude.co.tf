@@ -257,7 +257,7 @@ resource "cloudflare_record" "www_tdude_co-110da07cb7c67be474675d1b2b7a6af6" {
 resource "cloudflare_record" "tdude_co-7dec68f62be8c7fd1afc990a62611dfd" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "tdude.co"
-  data    = {
+  data {
     flags = 0
     tag   = "iodef"
     value = "mailto:tristan@tdude.co"
@@ -270,7 +270,7 @@ resource "cloudflare_record" "tdude_co-7dec68f62be8c7fd1afc990a62611dfd" {
 resource "cloudflare_record" "tdude_co-62ff3f5817cd2f7a41790bb0ad4d24c1" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "tdude.co"
-  data    = {
+  data {
     flags = 0
     tag   = "issue"
     value = "letsencrypt.org"
@@ -383,10 +383,10 @@ resource "cloudflare_record" "tdude_co-7a0081a70287ca28d715fca5b75d14b8" {
 resource "cloudflare_record" "stone_tdude_co-2179ebef8a058bba0e28d359c8bea8ed" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
-  data    = {
-    algorithm = 1
+  data {
+    algorithm   = 1
     fingerprint = "EE92EB97F26A9CE1B9C4452F429708B5BEFB1EC3"
-    type = 1
+    type        = 1
   }
   type    = "SSHFP"
   ttl     = 1
@@ -396,10 +396,10 @@ resource "cloudflare_record" "stone_tdude_co-2179ebef8a058bba0e28d359c8bea8ed" {
 resource "cloudflare_record" "stone_tdude_co-f7eab1022b4fa2ea46c02d454ec60fd9" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
-  data    = {
-    algorithm = 1
+  data {
+    algorithm   = 1
     fingerprint = "5A905B9C8F5E8A9FB8B03B50CC33480A5FE3BB4865E5D7A724F9FCE7BFD2F7F3"
-    type = 2
+    type        = 2
   }
   type    = "SSHFP"
   ttl     = 1
@@ -409,10 +409,10 @@ resource "cloudflare_record" "stone_tdude_co-f7eab1022b4fa2ea46c02d454ec60fd9" {
 resource "cloudflare_record" "stone_tdude_co-d8d0c4a3f9343987ed015d04c9fde84c" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
-  data    = {
-    algorithm = 3
+  data {
+    algorithm   = 3
     fingerprint = "78AEFE1AA58613C12494D80A0C11E216CF685F0B"
-    type = 1
+    type        = 1
   }
   type    = "SSHFP"
   ttl     = 1
@@ -422,10 +422,10 @@ resource "cloudflare_record" "stone_tdude_co-d8d0c4a3f9343987ed015d04c9fde84c" {
 resource "cloudflare_record" "stone_tdude_co-26756bbbe9a8d030ff95e98b8a094c54" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
-  data    = {
-    algorithm = 3
+  data {
+    algorithm   = 3
     fingerprint = "7ECB56E084127FDDCA1C7907FF5F6F2060540A5012B35D745FE5DDA96D494773"
-    type = 2
+    type        = 2
   }
   type    = "SSHFP"
   ttl     = 1
@@ -435,10 +435,10 @@ resource "cloudflare_record" "stone_tdude_co-26756bbbe9a8d030ff95e98b8a094c54" {
 resource "cloudflare_record" "stone_tdude_co-54891e7099e62a0309807495d5c2b331" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
-  data    = {
-    algorithm = 4
+  data {
+    algorithm   = 4
     fingerprint = "9F8843F8F6525551397ED50C114F6E55964CA466"
-    type = 1
+    type        = 1
   }
   type    = "SSHFP"
   ttl     = 1
@@ -448,10 +448,10 @@ resource "cloudflare_record" "stone_tdude_co-54891e7099e62a0309807495d5c2b331" {
 resource "cloudflare_record" "stone_tdude_co-7355b626ba8aa8028c6871fa64f5dae9" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
-  data    = {
-    algorithm = 4
+  data {
+    algorithm   = 4
     fingerprint = "C2EBF70430B5CAB202C80D390A80C2A53859898055D81094B7ED3E386884926B"
-    type = 2
+    type        = 2
   }
   type    = "SSHFP"
   ttl     = 1

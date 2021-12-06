@@ -7,7 +7,7 @@ data "cloudflare_zones" "tdude_co" {
 resource "cloudflare_record" "ftb-ultimate-srv" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "_minecraft._tcp.ftb-ultimate"
-  data    = {
+  data {
     name      = "ftb-ultimate"
     port      = 12346
     priority  = 1

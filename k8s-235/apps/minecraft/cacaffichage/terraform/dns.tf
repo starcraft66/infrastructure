@@ -7,7 +7,7 @@ data "cloudflare_zones" "tdude_co" {
 resource "cloudflare_record" "cacaffichage-srv" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "_minecraft._tcp.cacaffichage"
-  data    = {
+  data {
     name      = "cacaffichage"
     port      = 12345
     priority  = 1

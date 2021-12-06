@@ -52,7 +52,7 @@ resource "cloudflare_record" "_github-challenge-nerdsinspace_nerdsin_space_TXT" 
 resource "cloudflare_record" "_matrix__tcp_nerdsin_space-aa2b554a2832c865d14945123b62160a" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "_matrix._tcp"
-  data    = {
+  data {
     name     = "nerdsin.space"
     port     = 443
     priority = 10
@@ -69,7 +69,7 @@ resource "cloudflare_record" "_matrix__tcp_nerdsin_space-aa2b554a2832c865d149451
 resource "cloudflare_record" "_matrix__tcp_staging_nerdsin_space-6f7da27c1882659176af5273753c823d" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "_matrix._tcp.staging"
-  data    = {
+  data {
     name     = "staging"
     port     = 443
     priority = 1
@@ -86,7 +86,7 @@ resource "cloudflare_record" "_matrix__tcp_staging_nerdsin_space-6f7da27c1882659
 resource "cloudflare_record" "_minecraft__tcp_nerdsin_space-d8276c70aea17f359f136bc7dffd000c" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "_minecraft._tcp"
-  data    = {
+  data {
     name      = "nerdsin.space"
     port      = 25565
     priority  = 10

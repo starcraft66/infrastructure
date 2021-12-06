@@ -69,7 +69,7 @@ resource "cloudflare_record" "www_trs_tn-0cd9059f357d8f5bb18ad80a394f8943" {
 resource "cloudflare_record" "trs_tn-0983f01d1ae34286622cd0090b66658b" {
   zone_id = cloudflare_zone.trs_tn.id
   name    = "trs.tn"
-  data    = {
+  data {
     flags = 0
     tag   = "iodef"
     value = "mailto:tristan@tdude.co"
@@ -82,7 +82,7 @@ resource "cloudflare_record" "trs_tn-0983f01d1ae34286622cd0090b66658b" {
 resource "cloudflare_record" "trs_tn-87597a3b0dcc0efc6ba5385ab496bb0d" {
   zone_id = cloudflare_zone.trs_tn.id
   name    = "trs.tn"
-  data    = {
+  data {
     flags = 0
     tag   = "issue"
     value = "letsencrypt.org"
