@@ -8,13 +8,13 @@ resource "cloudflare_record" "skyfactory4-srv" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "_minecraft._tcp.skyfactory4"
   data {
-    name      = "skyfactory4"
-    port      = 12347
-    priority  = 1
-    proto     = "_tcp"
-    service   = "_minecraft"
-    target    = "skyfactory4.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
-    weight    = 1
+    name     = "skyfactory4"
+    port     = 12347
+    priority = 1
+    proto    = "_tcp"
+    service  = "_minecraft"
+    target   = "skyfactory4.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+    weight   = 1
   }
   type    = "SRV"
   ttl     = 1

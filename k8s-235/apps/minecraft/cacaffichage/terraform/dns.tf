@@ -8,13 +8,13 @@ resource "cloudflare_record" "cacaffichage-srv" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "_minecraft._tcp.cacaffichage"
   data {
-    name      = "cacaffichage"
-    port      = 12345
-    priority  = 1
-    proto     = "_tcp"
-    service   = "_minecraft"
-    target    = "cacaffichage.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
-    weight    = 1
+    name     = "cacaffichage"
+    port     = 12345
+    priority = 1
+    proto    = "_tcp"
+    service  = "_minecraft"
+    target   = "cacaffichage.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+    weight   = 1
   }
   type    = "SRV"
   ttl     = 1

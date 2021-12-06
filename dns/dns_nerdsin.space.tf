@@ -87,13 +87,13 @@ resource "cloudflare_record" "_minecraft__tcp_nerdsin_space-d8276c70aea17f359f13
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "_minecraft._tcp"
   data {
-    name      = "nerdsin.space"
-    port      = 25565
-    priority  = 10
-    proto     = "_tcp"
-    service   = "_minecraft"
-    target    = "mc.fiki.dev"
-    weight    = 10
+    name     = "nerdsin.space"
+    port     = 25565
+    priority = 10
+    proto    = "_tcp"
+    service  = "_minecraft"
+    target   = "mc.fiki.dev"
+    weight   = 10
   }
   type    = "SRV"
   ttl     = 1

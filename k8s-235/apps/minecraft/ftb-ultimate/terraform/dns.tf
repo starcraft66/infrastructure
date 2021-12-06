@@ -8,13 +8,13 @@ resource "cloudflare_record" "ftb-ultimate-srv" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "_minecraft._tcp.ftb-ultimate"
   data {
-    name      = "ftb-ultimate"
-    port      = 12346
-    priority  = 1
-    proto     = "_tcp"
-    service   = "_minecraft"
-    target    = "ftb-ultimate.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
-    weight    = 1
+    name     = "ftb-ultimate"
+    port     = 12346
+    priority = 1
+    proto    = "_tcp"
+    service  = "_minecraft"
+    target   = "ftb-ultimate.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+    weight   = 1
   }
   type    = "SRV"
   ttl     = 1
