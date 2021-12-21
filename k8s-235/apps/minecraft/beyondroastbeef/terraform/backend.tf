@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     endpoint = "https://spitfire.235.tdude.co:9000/"
-    bucket   = "k8s-235-minecraft-cacaffichage"
+    bucket   = "k8s-235-minecraft-beyondroastbeef"
     key      = "terraform.tfstate"
     region   = "main"
     # We are using minio
