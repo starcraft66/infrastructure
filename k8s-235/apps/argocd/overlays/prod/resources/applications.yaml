@@ -382,3 +382,21 @@ spec:
   syncPolicy:
     automated:
       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minecraft-beyondroastbeef
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: beyondroastbeef
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/minecraft/beyondroastbeef/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
