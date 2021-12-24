@@ -10,7 +10,7 @@ generators:
 
 images:
 - name: starcraft66/hpilo-letsencrypt
-  newTag: sha256:2168025a84af02b5bfcbda7fa46fee69973921b04144789c95820f761eade57a
+  digest: sha256:2168025a84af02b5bfcbda7fa46fee69973921b04144789c95820f761eade57a
 - name: starcraft66/supermicro-letsencrypt
   newTag: latest
 
