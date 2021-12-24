@@ -10,19 +10,17 @@ generators:
 
 images:
 - name: starcraft66/hpilo-letsencrypt
-  digest: sha256:2168025a84af02b5bfcbda7fa46fee69973921b04144789c95820f761eade57a
+  digest: latest
 - name: starcraft66/supermicro-letsencrypt
   newTag: latest
 
 configMapGenerator:
 - name: soarin-config
   literals:
-  - DEBUG=1
   - ILO_USERNAME=Administrator
   - ILO_DOMAIN=soarin-ilo.235.tdude.co
 - name: fleetfoot-config
   literals:
-  - DEBUG=1
   - ILO_USERNAME=Administrator
   - ILO_DOMAIN=fleetfoot-ilo.235.tdude.co
 - name: firestreak-config
