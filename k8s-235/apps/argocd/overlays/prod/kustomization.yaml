@@ -15,9 +15,9 @@ patchesStrategicMerge:
 - ./patches/application-controller-patch.yaml
 - ./patches/argo-cd-repo-server-ksops-patch.yaml
 - ./patches/argo-cd-import-pgp-key.yaml
-- ./patches/argocd-image-updater-config.yaml
-- ./patches/argocd-image-updater-metrics.yaml
-- ./patches/argocd-image-updater-check-interval.yaml
+# - ./patches/argocd-image-updater-config.yaml
+# - ./patches/argocd-image-updater-metrics.yaml
+# - ./patches/argocd-image-updater-check-interval.yaml
 
 images:
 - name: argoprojlabs/argocd-image-updater
