@@ -330,10 +330,10 @@ kind: Application
 metadata:
   name: letsencrypt-cron
   namespace: argocd
-  # annotations:
-  #   argocd-image-updater.argoproj.io/image-list: "supermicro-letsencrypt=starcraft66/supermicro-letsencrypt:latest,hpilo-letsencrypt=starcraft66/hpilo-letsencrypt:latest"
-  #   argocd-image-updater.argoproj.io/supermicro-letsencrypt.update-strategy: digest
-  #   argocd-image-updater.argoproj.io/hpilo-letsencrypt.update-strategy: digest
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: "supermicro-letsencrypt=starcraft66/supermicro-letsencrypt:latest,hpilo-letsencrypt=starcraft66/hpilo-letsencrypt:latest"
+    argocd-image-updater.argoproj.io/supermicro-letsencrypt.update-strategy: digest
+    argocd-image-updater.argoproj.io/hpilo-letsencrypt.update-strategy: digest
 spec:
   project: production
   destination:
