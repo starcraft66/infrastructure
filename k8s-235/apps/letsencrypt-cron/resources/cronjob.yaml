@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: letsencrypt-renewal
+  name: letsencrypt-renewal-soarin
   labels:
     app.kubernetes.io/name: letsencrypt-cron
 spec:
@@ -25,6 +25,26 @@ spec:
             volumeMounts:
             - name: lego-volume
               mountPath: /.lego
+          restartPolicy: Never
+          volumes:
+          - name: lego-volume
+            persistentVolumeClaim:
+              claimName: letsencrypt-cron-lego-volume
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: letsencrypt-renewal-fleetfoot
+  labels:
+    app.kubernetes.io/name: letsencrypt-cron
+spec:
+  schedule: '@daily'
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
           - name: hpilo-letsencrypt-fleetfoot
             image: starcraft66/hpilo-letsencrypt:latest
             # Environment Variables
@@ -38,6 +58,26 @@ spec:
             volumeMounts:
             - name: lego-volume
               mountPath: /.lego
+          restartPolicy: Never
+          volumes:
+          - name: lego-volume
+            persistentVolumeClaim:
+              claimName: letsencrypt-cron-lego-volume
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: letsencrypt-renewal-firestreak
+  labels:
+    app.kubernetes.io/name: letsencrypt-cron
+spec:
+  schedule: '@daily'
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
           - name: supermicro-letsencrypt-firestreak
             image: starcraft66/supermicro-letsencrypt:latest
             # Environment Variables
@@ -51,6 +91,26 @@ spec:
             volumeMounts:
             - name: lego-volume
               mountPath: /.lego
+          restartPolicy: Never
+          volumes:
+          - name: lego-volume
+            persistentVolumeClaim:
+              claimName: letsencrypt-cron-lego-volume
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: letsencrypt-renewal-spitfire
+  labels:
+    app.kubernetes.io/name: letsencrypt-cron
+spec:
+  schedule: '@daily'
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
           - name: supermicro-letsencrypt-spitfire
             image: starcraft66/supermicro-letsencrypt:latest
             # Environment Variables
