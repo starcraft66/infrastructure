@@ -10,7 +10,7 @@ generators:
 
 images:
 - name: starcraft66/hpilo-letsencrypt
-  digest: latest
+  newTag: latest
 - name: starcraft66/supermicro-letsencrypt
   newTag: latest
 
