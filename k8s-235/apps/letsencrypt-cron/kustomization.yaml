@@ -17,10 +17,12 @@ images:
 configMapGenerator:
 - name: soarin-config
   literals:
+  - DEBUG=1
   - ILO_USERNAME=Administrator
   - ILO_DOMAIN=soarin-ilo.235.tdude.co
 - name: fleetfoot-config
   literals:
+  - DEBUG=1
   - ILO_USERNAME=Administrator
   - ILO_DOMAIN=fleetfoot-ilo.235.tdude.co
 - name: firestreak-config
