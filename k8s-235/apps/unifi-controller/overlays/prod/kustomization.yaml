@@ -10,10 +10,6 @@ resources:
 
 namespace: unifi
 
-images:
-- name: ghcr.io/linuxserver/unifi-controller
-  newTag: latest
-
 generators:
 - ./generators/secrets-generator.yaml
 

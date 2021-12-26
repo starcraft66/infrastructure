@@ -1,3 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 resources:
 - ./resources/deployment.yaml
 - ./resources/service.yaml
+
+images:
+- name: ghcr.io/linuxserver/unifi-controller
+  newTag: latest
+- name: golift/unifi-poller
+  digest: sha256:8cd99d3eaeee316cbd9bb50c29a55b042fe1c7844f8e44ed19b7eaa6071e8df7

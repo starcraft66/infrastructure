@@ -13,3 +13,25 @@ resources:
 - ./resources/pvc.yaml
 - ./resources/rbac.yaml
 - ./resources/namespace.yaml
+
+images:
+- name: quay.io/munnerz/kube-plex
+  digest: sha256:13fffb730e53e451a6be2c649c4da3dfb252bb411802ce87f9f704d602d3a195
+- name: plexinc/pms-docker
+  digest: sha256:8b4b232806f28d2dc87103c09ff84b500f83ded2d2b49eca0f2987d08e6ab048
+- name: ghcr.io/linuxserver/jackett
+  digest: sha256:2c9ef06f3335762cfebad2826f9042dcef32a33b6aac47b3f5ef1946cbcf671a
+- name: ghcr.io/linuxserver/radarr
+  digest: sha256:3201663b04c408ee6305fbcef0792e207e8f64cb2b41396d85c2a469feafc6fd
+- name: ghcr.io/linuxserver/sonarr
+  digest: sha256:ee215be8bf3deb6a22c7e25f6a7fb68905799a8222b78eae8f2cbb3246cf6d4e
+- name: ghcr.io/linuxserver/lidarr
+  digest: sha256:b4572b2eae49ca0884d4e1f828aa85918d4f3182df18dcfb068ce8febf09319a
+- name: ghcr.io/linuxserver/prowlarr
+  newTag: develop@sha256:0c90bd2d4ff94d072d2a9303841c8c31e381732ec5c3b18ea5a95076a7afc7b5
+- name: ghcr.io/linuxserver/qbittorrent
+  digest: 14.3.3.99202103251603-7345-332b173e0ubuntu20.04.1-ls122
+- name: ghcr.io/linuxserver/tautulli
+  digest: sha256:b7a6a12ebdc4067d878a976a62b28f4cbca2b63acf2c77edd048b370a194ce62
+- name: ghcr.io/linuxserver/overseerr
+  digest: sha256:4319ea9e3a189a39f093b112ce4a194f01f8d719db153460939b063c5d69d849
