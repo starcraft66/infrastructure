@@ -8,4 +8,4 @@ images:
 - name: ghcr.io/linuxserver/unifi-controller
   newTag: latest
 - name: golift/unifi-poller
-  digest: sha256:8cd99d3eaeee316cbd9bb50c29a55b042fe1c7844f8e44ed19b7eaa6071e8df7
+  digest: sha256:7c4789178dc38a7f243df746e45e5bd19279ea8a1a392ecbab28a6361cc06c80
