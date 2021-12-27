@@ -1,5 +1,5 @@
 { isDev ? true
-, pkgs ? import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/503209808cd613daed238e21e7a18ffcbeacebe3.tar.gz") { }
+, pkgs ? import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/5c37ad87222cfc1ec36d6cd1364514a9efc2f7f2.tar.gz") { }
 }:
 
 with pkgs;
@@ -8,7 +8,7 @@ mkShell rec {
     ansible_2_9
     kubectl
     kubernetes-helm
-    terraform_1_0
+    terraform_1
     sops
     kustomize
     kubetail
