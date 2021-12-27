@@ -1,0 +1,28 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- https://github.com/zalando/postgres-operator/manifests?ref=v1.7.1
+- https://github.com/zalando/postgres-operator/ui/manifests?ref=v1.7.1
+- https://raw.githubusercontent.com/zalando/postgres-operator/v1.7.1/manifests/operatorconfiguration.crd.yaml
+- https://raw.githubusercontent.com/zalando/postgres-operator/v1.7.1/manifests/postgresql.crd.yaml
+- https://raw.githubusercontent.com/zalando/postgres-operator/v1.7.1/manifests/postgresteam.crd.yaml
+- ./resources/namespace.yaml
+
+patchesJson6902:
+- target:
+    version: v1
+    kind: Service
+    name: postgres-operator-ui
+  path: ./patches/dual-stack-services.yaml
+- target:
+    version: v1
+    kind: Service
+    name: postgres-operator
+  path: ./patches/dual-stack-services.yaml
+- target:
+    version: v1
+    kind: apps
+    name: postgres-operator-ui
+  path: ./patches/ui-configmap-env.yaml
+
+namespace: postgres-operator

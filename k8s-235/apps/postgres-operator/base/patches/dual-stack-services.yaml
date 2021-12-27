@@ -1,0 +1,8 @@
+- op: add
+  path: /spec/ipFamilyPolicy
+  value: RequireDualStack
+- op: add
+  path: /spec/ipFamilies
+  value:
+  - IPv6
+  - IPv4
