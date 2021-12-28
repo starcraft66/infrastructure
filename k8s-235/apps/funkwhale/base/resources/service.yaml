@@ -18,6 +18,7 @@ spec:
       name: http
   selector:
     app.kubernetes.io/name: funkwhale
+    app.kubernetes.io/component: frontend
 ---
 # Stupid hack because funkwhale hardcodes the db url to "postgres"
 # And I can't call a cluster just "postgres" using the operator

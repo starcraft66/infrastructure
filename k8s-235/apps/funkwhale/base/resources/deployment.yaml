@@ -111,15 +111,18 @@ metadata:
   name: funkwhale
   labels:
     app.kubernetes.io/name: funkwhale
+    app.kubernetes.io/component: frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: funkwhale
+      app.kubernetes.io/component: frontend
   template:
     metadata:
       labels:
         app.kubernetes.io/name: funkwhale
+        app.kubernetes.io/component: frontend
     spec:
       containers:
         - name: funkwhale
