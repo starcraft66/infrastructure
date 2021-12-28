@@ -9,6 +9,10 @@ resources:
 
 namespace: redis-operator
 
+images:
+- name: funkwhale/funkwhale
+  newTag: 1.2.0-rc2
+
 configMapGenerator:
 - name: funkwhale
   literals:
