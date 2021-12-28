@@ -176,11 +176,13 @@ spec:
           - secretRef:
               name: funkwhale
           volumeMounts:
+            - mountPath: /srv/funkwhale/data/
+              name: data
             - mountPath: /srv/funkwhale/data/static/
               name: static
             - mountPath: /srv/funkwhale/frontend
               name: frontend
-            - name: data
+            - name: music
               mountPath: /srv/funkwhale/data/music/
               subPath: Music
           ports:
@@ -228,9 +230,14 @@ spec:
             tcpSocket:
               port: http
           volumeMounts:
-            - mountPath: /srv/funkwhale/data/music
+            - mountPath: /srv/funkwhale/data/
               name: data
+            - mountPath: /srv/funkwhale/data/music/
+              name: music
               subPath: Music
+            - mountPath: /srv/funkwhale/data/static/
+              name: static
+              readOnly: true
             - mountPath: /frontend
               name: frontend
               readOnly: true
@@ -251,5 +258,8 @@ spec:
           configMap:
             name: funkwhale-front
         - name: data
+          persistentVolumeClaim:
+            claimName: funkwhale-data
+        - name: music
           persistentVolumeClaim:
             claimName: funkwhale-media
