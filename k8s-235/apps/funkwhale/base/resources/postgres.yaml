@@ -17,7 +17,7 @@ spec:
     funkwhale:
       defaultUsers: true
       extensions:
-        unaccent: public
-        citext: public
+        unaccent: data
+        citext: data
   postgresql:
     version: "14"
