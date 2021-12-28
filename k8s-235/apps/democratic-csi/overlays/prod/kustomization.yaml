@@ -10,7 +10,7 @@ generators:
 
 images:
 - name: k8s.gcr.io/sig-storage/csi-provisioner
-  newTag: v2.2.2
+  newTag: v3.0.0
 - name: k8s.gcr.io/sig-storage/csi-resizer
   newTag: v1.3.0
 - name: k8s.gcr.io/sig-storage/csi-snapshotter
