@@ -1,0 +1,41 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ./resources/namespace.yaml
+- ./resources/deployment.yaml
+- ./resources/service.yaml
+- ./resources/postgres.yaml
+- ./resources/volume.yaml
+
+namespace: redis-operator
+
+configMapGenerator:
+- name: funkwhale
+  literals:
+  - FUNKWHALE_HOSTNAME=music.tdude.co
+  - FUNKWHALE_PROTOCOL=https
+  - REVERSE_PROXY_TYPE=nginx
+  - MEDIA_ROOT=/srv/funkwhale/data/media
+  - STATIC_ROOT=/srv/funkwhale/data/static
+  - MUSIC_DIRECTORY_PATH=/srv/funkwhale/data/music
+  - MUSIC_DIRECTORY_SERVE_PATH=/srv/funkwhale/data/music
+  - DJANGO_SETTINGS_MODULE=config.settings.production
+  - FUNKWHALE_FRONTEND_PATH=/srv/funkwhale/front/dist
+  - NGINX_MAX_BODY_SIZE=500M
+  - DJANGO_ALLOWED_HOSTS='*'
+- name: funkwhale-front
+  files:
+  - ./config/nginx.conf
+  - ./config/proxy.conf
+
+helmCharts:
+- name: redis
+  releaseName: funkwhale-redis
+  version: 15.x.x
+  repo: https://charts.bitnami.com/bitnami
+  namespace: funkwhale
+  valuesInline:
+    auth:
+      existingSecret: "funkwhale"
+    global:
+      storageClass: "freenas-nfs-csi"

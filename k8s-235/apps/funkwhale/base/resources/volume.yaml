@@ -1,0 +1,14 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: funkwhale-data
+  labels:
+    app.kubernetes.io/name: funkwhale
+spec:
+  accessModes:
+  - "ReadWriteOnce"
+  storageClassName: "freenas-nfs-csi"
+  resources:
+    requests:
+      storage: "10Gi"

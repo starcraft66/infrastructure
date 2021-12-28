@@ -1,0 +1,1033 @@
+---
+# Source: funkwhale/charts/postgresql/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: funkwhale-postgresql
+  labels:
+    app.kubernetes.io/name: postgresql
+    helm.sh/chart: postgresql-10.9.6
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+  namespace: kube-system
+type: Opaque
+data:
+  postgresql-postgres-password: "b0hQT1NhM3RFaA=="
+  postgresql-password: "ZnVua3doYWxl"
+---
+# Source: funkwhale/charts/redis/templates/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: funkwhale-redis
+  namespace: kube-system
+  labels:
+    app: redis
+    chart: redis-10.6.19
+    release: "funkwhale"
+    heritage: "Helm"
+type: Opaque
+data:
+  redis-password: "ZnVua3doYWxl"
+---
+# Source: funkwhale/templates/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: funkwhale
+  labels:
+    app.kubernetes.io/name: funkwhale
+    helm.sh/chart: funkwhale-0.4.2
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+data:
+  CACHE_URL: cmVkaXM6Ly86ZnVua3doYWxlQGZ1bmt3aGFsZS1yZWRpcy1tYXN0ZXI6NjM3OS8w
+  DATABASE_URL: cG9zdGdyZXM6Ly9mdW5rd2hhbGU6ZnVua3doYWxlQGZ1bmt3aGFsZS1wb3N0Z3Jlc3FsOjU0MzIvZnVua3doYWxl
+  DJANGO_SECRET_KEY: ODY1NTRjMmQtNmU4Mi00NzEwLWEzNDYtOWY2M2Q1NzA2YWU5
+---
+# Source: funkwhale/charts/postgresql/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: funkwhale-postgresql-configuration
+  labels:
+    app.kubernetes.io/name: postgresql
+    helm.sh/chart: postgresql-10.9.6
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+  namespace: kube-system
+data:
+  pg_hba.conf: |
+    local all all trust
+    host all all localhost trust
+    host all all 0.0.0.0/0 md5
+    host all all ::/0 md5
+---
+# Source: funkwhale/charts/postgresql/templates/initialization-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: funkwhale-postgresql-init-scripts
+  labels:
+    app.kubernetes.io/name: postgresql
+    helm.sh/chart: postgresql-10.9.6
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+  namespace: kube-system
+data:
+  enable_extensions.sh: |
+    #!/bin/sh
+  
+    echo 'create extension unaccent;' | psql -U postgres $POSTGRESQL_DATABASE
+    echo 'create extension citext;' | psql -U postgres $POSTGRESQL_DATABASE
+---
+# Source: funkwhale/charts/redis/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: funkwhale-redis
+  namespace: kube-system
+  labels:
+    app: redis
+    chart: redis-10.6.19
+    heritage: Helm
+    release: funkwhale
+data:
+  redis.conf: |-
+    # User-supplied configuration:
+    # Enable AOF https://redis.io/topics/persistence#append-only-file
+    appendonly yes
+    # Disable RDB persistence, AOF persistence already enabled.
+    save ""
+  master.conf: |-
+    dir /data
+    rename-command FLUSHDB ""
+    rename-command FLUSHALL ""
+  replica.conf: |-
+    dir /data
+    slave-read-only yes
+    rename-command FLUSHDB ""
+    rename-command FLUSHALL ""
+---
+# Source: funkwhale/charts/redis/templates/health-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: funkwhale-redis-health
+  namespace: kube-system
+  labels:
+    app: redis
+    chart: redis-10.6.19
+    heritage: Helm
+    release: funkwhale
+data:
+  ping_readiness_local.sh: |-
+    #!/bin/bash
+    no_auth_warning=$([[ "$(redis-cli --version)" =~ (redis-cli 5.*) ]] && echo --no-auth-warning)
+    response=$(
+      timeout -s 3 $1 \
+      redis-cli \
+        -a $REDIS_PASSWORD $no_auth_warning \
+        -h localhost \
+        -p $REDIS_PORT \
+        ping
+    )
+    if [ "$response" != "PONG" ]; then
+      echo "$response"
+      exit 1
+    fi
+  ping_liveness_local.sh: |-
+    #!/bin/bash
+    no_auth_warning=$([[ "$(redis-cli --version)" =~ (redis-cli 5.*) ]] && echo --no-auth-warning)
+    response=$(
+      timeout -s 3 $1 \
+      redis-cli \
+        -a $REDIS_PASSWORD $no_auth_warning \
+        -h localhost \
+        -p $REDIS_PORT \
+        ping
+    )
+    if [ "$response" != "PONG" ] && [ "$response" != "LOADING Redis is loading the dataset in memory" ]; then
+      echo "$response"
+      exit 1
+    fi
+  ping_readiness_master.sh: |-
+    #!/bin/bash
+    no_auth_warning=$([[ "$(redis-cli --version)" =~ (redis-cli 5.*) ]] && echo --no-auth-warning)
+     response=$(
+      timeout -s 3 $1 \
+      redis-cli \
+        -a $REDIS_MASTER_PASSWORD $no_auth_warning \
+        -h $REDIS_MASTER_HOST \
+        -p $REDIS_MASTER_PORT_NUMBER \
+        ping
+    )
+    if [ "$response" != "PONG" ]; then
+      echo "$response"
+      exit 1
+    fi
+  ping_liveness_master.sh: |-
+    #!/bin/bash
+    no_auth_warning=$([[ "$(redis-cli --version)" =~ (redis-cli 5.*) ]] && echo --no-auth-warning)
+    response=$(
+      timeout -s 3 $1 \
+      redis-cli \
+        -a $REDIS_MASTER_PASSWORD $no_auth_warning \
+        -h $REDIS_MASTER_HOST \
+        -p $REDIS_MASTER_PORT_NUMBER \
+        ping
+    )
+    if [ "$response" != "PONG" ] && [ "$response" != "LOADING Redis is loading the dataset in memory" ]; then
+      echo "$response"
+      exit 1
+    fi
+  ping_readiness_local_and_master.sh: |-
+    script_dir="$(dirname "$0")"
+    exit_status=0
+    "$script_dir/ping_readiness_local.sh" $1 || exit_status=$?
+    "$script_dir/ping_readiness_master.sh" $1 || exit_status=$?
+    exit $exit_status
+  ping_liveness_local_and_master.sh: |-
+    script_dir="$(dirname "$0")"
+    exit_status=0
+    "$script_dir/ping_liveness_local.sh" $1 || exit_status=$?
+    "$script_dir/ping_liveness_master.sh" $1 || exit_status=$?
+    exit $exit_status
+---
+# Source: funkwhale/templates/configmap-front.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: funkwhale-front
+  labels:
+    app.kubernetes.io/name: funkwhale
+    helm.sh/chart: funkwhale-0.4.2
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+    audio.funkwhale/component: front
+data:
+  nginx.conf: |
+    upstream funkwhale-api {
+      server localhost:5000;
+    }
+
+    map $http_upgrade $connection_upgrade {
+      default upgrade;
+      ''      close;
+    }
+
+    server {
+      listen 80;
+      listen [::]:80;
+
+      server_name ${FUNKWHALE_HOSTNAME};
+
+      root /frontend;
+
+      add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; object-src 'none'; media-src 'self' data:";
+      add_header Referrer-Policy "strict-origin-when-cross-origin";
+
+
+      location / {
+          include /etc/nginx/funkwhale_proxy.conf;
+          # this is needed if you have file import via upload enabled
+          client_max_body_size ${NGINX_MAX_BODY_SIZE};
+          proxy_pass   http://funkwhale-api/;
+      }
+
+      location /front/ {
+          add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; object-src 'none'; media-src 'self' data:";
+          add_header Referrer-Policy "strict-origin-when-cross-origin";
+          add_header Service-Worker-Allowed "/";
+          add_header X-Frame-Options "ALLOW";
+          alias /frontend/;
+          expires 30d;
+          add_header Pragma public;
+          add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+      }
+
+      location /front/embed.html {
+          add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; object-src 'none'; media-src 'self' data:";
+          add_header Referrer-Policy "strict-origin-when-cross-origin";
+
+          add_header X-Frame-Options "ALLOW";
+          alias /frontend/embed.html;
+          expires 30d;
+          add_header Pragma public;
+          add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+      }
+
+      location /federation/ {
+          include /etc/nginx/funkwhale_proxy.conf;
+          proxy_pass   http://funkwhale-api/federation/;
+      }
+
+      # You can comment this if you do not plan to use the Subsonic API
+      location /rest/ {
+          include /etc/nginx/funkwhale_proxy.conf;
+          proxy_pass   http://funkwhale-api/api/subsonic/rest/;
+      }
+
+      location /.well-known/ {
+          include /etc/nginx/funkwhale_proxy.conf;
+          proxy_pass   http://funkwhale-api/.well-known/;
+      }
+
+      location /media/ {
+          alias ${MEDIA_ROOT}/;
+      }
+      # this is an internal location that is used to serve
+      # audio files once correct permission / authentication
+      # has been checked on API side
+      location /_protected/media {
+          internal;
+          alias   ${MEDIA_ROOT};
+      }
+
+      location /_protected/music {
+          # this is an internal location that is used to serve
+          # audio files once correct permission / authentication
+          # has been checked on API side
+          # Set this to the same value as your MUSIC_DIRECTORY_PATH setting
+          internal;
+          alias   ${MUSIC_DIRECTORY_PATH};
+      }
+
+      location /staticfiles/ {
+          # django static files
+          alias ${STATIC_ROOT}/;
+      }
+    }
+  proxy.conf: |
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+    proxy_set_header X-Forwarded-Host $http_x_forwarded_host;
+    proxy_set_header X-Forwarded-Port $http_x_forwarded_port;
+    proxy_redirect off;
+
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+---
+# Source: funkwhale/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: funkwhale
+  labels:
+    app.kubernetes.io/name: funkwhale
+    helm.sh/chart: funkwhale-0.4.2
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+data:
+  FUNKWHALE_HOSTNAME: chart-example.local
+  FUNKWHALE_PROTOCOL: http
+  REVERSE_PROXY_TYPE: nginx
+  MEDIA_ROOT: /srv/funkwhale/data/media
+  STATIC_ROOT: /srv/funkwhale/data/static
+  MUSIC_DIRECTORY_PATH: /srv/funkwhale/data/music
+  MUSIC_DIRECTORY_SERVE_PATH: /srv/funkwhale/data/music
+  DJANGO_SETTINGS_MODULE: config.settings.production
+  FUNKWHALE_FRONTEND_PATH: /srv/funkwhale/front/dist
+  NGINX_MAX_BODY_SIZE: 500M
+
+  DJANGO_ALLOWED_HOSTS: '*'
+---
+# Source: funkwhale/charts/postgresql/templates/svc-headless.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: funkwhale-postgresql-headless
+  labels:
+    app.kubernetes.io/name: postgresql
+    helm.sh/chart: postgresql-10.9.6
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+    # Use this annotation in addition to the actual publishNotReadyAddresses
+    # field below because the annotation will stop being respected soon but the
+    # field is broken in some versions of Kubernetes:
+    # https://github.com/kubernetes/kubernetes/issues/58662
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+  namespace: kube-system
+spec:
+  type: ClusterIP
+  clusterIP: None
+  # We want all pods in the StatefulSet to have their addresses published for
+  # the sake of the other Postgresql pods even before they're ready, since they
+  # have to be able to talk to each other in order to become ready.
+  publishNotReadyAddresses: true
+  ports:
+    - name: tcp-postgresql
+      port: 5432
+      targetPort: tcp-postgresql
+  selector:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/instance: funkwhale
+---
+# Source: funkwhale/charts/postgresql/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: funkwhale-postgresql
+  labels:
+    app.kubernetes.io/name: postgresql
+    helm.sh/chart: postgresql-10.9.6
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+  namespace: kube-system
+spec:
+  type: ClusterIP
+  ports:
+    - name: tcp-postgresql
+      port: 5432
+      targetPort: tcp-postgresql
+  selector:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/instance: funkwhale
+    role: primary
+---
+# Source: funkwhale/charts/redis/templates/headless-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: funkwhale-redis-headless
+  namespace: kube-system
+  labels:
+    app: redis
+    chart: redis-10.6.19
+    release: funkwhale
+    heritage: Helm
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: redis
+      port: 6379
+      targetPort: redis
+  selector:
+    app: redis
+    release: funkwhale
+---
+# Source: funkwhale/charts/redis/templates/redis-master-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: funkwhale-redis-master
+  namespace: kube-system
+  labels:
+    app: redis
+    chart: redis-10.6.19
+    release: funkwhale
+    heritage: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - name: redis
+      port: 6379
+      targetPort: redis
+  selector:
+    app: redis
+    release: funkwhale
+    role: master
+---
+# Source: funkwhale/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: funkwhale
+  labels:
+    app.kubernetes.io/name: funkwhale
+    helm.sh/chart: funkwhale-0.4.2
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: funkwhale
+    app.kubernetes.io/instance: funkwhale
+    audio.funkwhale/component: app
+---
+# Source: funkwhale/templates/deployment-celerybeat.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: funkwhale-beat
+  labels:
+    app.kubernetes.io/name: funkwhale
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+    audio.funkwhale/component: celery-beat
+    helm.sh/chart: funkwhale-0.4.2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: funkwhale
+      app.kubernetes.io/instance: funkwhale
+      audio.funkwhale/component: celery-beat
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: a20388fdb12b23694bcfc274c0bf00857c51188336c204fa2c66da1bbf16dacb
+        checksum/secret: 921faf13a3114436489a44d0d3c2b3fa84c06694874c95f628bf166459a29c7c
+      labels:
+        app.kubernetes.io/name: funkwhale
+        app.kubernetes.io/instance: funkwhale
+        audio.funkwhale/component: celery-beat
+    spec:
+      containers:
+        - name: celery-beat
+          image: "funkwhale/funkwhale:1.1.2"
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -c
+            - |
+              celery -A funkwhale_api.taskapp beat -l INFO
+          envFrom:
+          - configMapRef:
+              name: funkwhale
+          - secretRef:
+              name: funkwhale
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 10m
+              memory: 75Mi
+---
+# Source: funkwhale/templates/deployment-celeryworker.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: funkwhale-worker
+  labels:
+    app.kubernetes.io/name: funkwhale
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+    audio.funkwhale/component: celery-worker
+    helm.sh/chart: funkwhale-0.4.2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: funkwhale
+      app.kubernetes.io/instance: funkwhale
+      audio.funkwhale/component: celery-worker
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: a20388fdb12b23694bcfc274c0bf00857c51188336c204fa2c66da1bbf16dacb
+        checksum/secret: e6aaa40e00ca5174e0eab5e48025664f0e1f9e6b2ae931bf4dd63256d282ae0b
+      labels:
+        app.kubernetes.io/name: funkwhale
+        app.kubernetes.io/instance: funkwhale
+        audio.funkwhale/component: celery-worker
+    spec:
+      containers:
+        - name: worker
+          image: "funkwhale/funkwhale:1.1.2"
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -c
+            - |
+              celery -A funkwhale_api.taskapp worker -l INFO
+          env:
+            - name: C_FORCE_ROOT
+              value: "true"
+          envFrom:
+          - configMapRef:
+              name: funkwhale
+          - secretRef:
+              name: funkwhale
+          volumeMounts:
+            - mountPath: /srv/funkwhale/data
+              name: data
+          resources:
+            {}
+      volumes:
+        - name: config
+          configMap:
+            name: funkwhale-front
+        - name: data
+          emptyDir: {}
+---
+# Source: funkwhale/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: funkwhale
+  labels:
+    app.kubernetes.io/name: funkwhale
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+    audio.funkwhale/component: app
+    helm.sh/chart: funkwhale-0.4.2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: funkwhale
+      app.kubernetes.io/instance: funkwhale
+      audio.funkwhale/component: app
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: a20388fdb12b23694bcfc274c0bf00857c51188336c204fa2c66da1bbf16dacb
+        checksum/secret: af18aaa30bbe49fd57a3059ed1cae432a4e30bcfa340cc46ab2e36226de23a8d
+      labels:
+        app.kubernetes.io/name: funkwhale
+        app.kubernetes.io/instance: funkwhale
+        audio.funkwhale/component: app
+    spec:
+      containers:
+        - name: funkwhale
+          image: "funkwhale/funkwhale:1.1.2"
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -c
+            - |-
+              # Copy frontend files for the front pod
+              cp -r frontend/* /srv/funkwhale/frontend/
+
+              # Apply any waiting migrations
+              /app/manage.py migrate
+
+              if [ -e compose/django/daphne.sh ]; then
+                compose/django/entrypoint.sh compose/django/daphne.sh
+              else
+                compose/django/entrypoint.sh compose/django/server.sh
+              fi
+          readinessProbe:
+            
+            httpGet:
+              path: /
+              port: api
+              scheme: HTTP
+          livenessProbe:
+            
+            httpGet:
+              path: /
+              port: api
+              scheme: HTTP
+          startupProbe:
+            
+            tcpSocket:
+              port: api
+          envFrom:
+          - configMapRef:
+              name: funkwhale
+          - secretRef:
+              name: funkwhale
+          volumeMounts:
+            - mountPath: /srv/funkwhale/data/static/
+              name: static
+            - mountPath: /srv/funkwhale/frontend
+              name: frontend
+            - name: data
+              mountPath: /srv/funkwhale/data
+          ports:
+            - name: api
+              containerPort: 5000
+              protocol: TCP
+          resources:
+            {}
+        - name: nginx
+          image: "nginx:stable"
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -c
+            - |-
+              # Instantiate the nginx template
+              envsubst "`env | awk -F = '{printf \" $%s\", $1}'`" < /etc/nginx/funkwhale.template > /etc/nginx/conf.d/default.conf
+
+              # Add a hardcoded resolver configuration to ease S3 usage
+              echo "resolver $(grep nameserver /etc/resolv.conf | head -n1 | awk '{print $2}');" > /etc/nginx/conf.d/resolver.conf
+
+              # Launch nginx
+              nginx -g 'daemon off;'
+          envFrom:
+          - configMapRef:
+              name: funkwhale
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            
+            httpGet:
+              path: /
+              port: http
+              scheme: HTTP
+          readinessProbe:
+            
+            httpGet:
+              path: /
+              port: http
+              scheme: HTTP
+          startupProbe:
+            
+            tcpSocket:
+              port: http
+          volumeMounts:
+            - mountPath: /srv/funkwhale/data
+              name: data
+            - mountPath: /frontend
+              name: frontend
+              readOnly: true
+            - mountPath: /etc/nginx/funkwhale_proxy.conf
+              name: config
+              subPath: proxy.conf
+              readOnly: true
+            - mountPath: /etc/nginx/funkwhale.template
+              name: config
+              subPath: nginx.conf
+              readOnly: true
+      volumes:
+        - name: frontend
+          emptyDir: {}
+        - name: static
+          emptyDir: {}
+        - name: config
+          configMap:
+            name: funkwhale-front
+        - name: data
+          emptyDir: {}
+---
+# Source: funkwhale/charts/postgresql/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: funkwhale-postgresql
+  labels:
+    app.kubernetes.io/name: postgresql
+    helm.sh/chart: postgresql-10.9.6
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: primary
+  annotations:
+  namespace: kube-system
+spec:
+  serviceName: funkwhale-postgresql-headless
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: postgresql
+      app.kubernetes.io/instance: funkwhale
+      role: primary
+  template:
+    metadata:
+      name: funkwhale-postgresql
+      labels:
+        app.kubernetes.io/name: postgresql
+        helm.sh/chart: postgresql-10.9.6
+        app.kubernetes.io/instance: funkwhale
+        app.kubernetes.io/managed-by: Helm
+        role: primary
+        app.kubernetes.io/component: primary
+    spec:      
+      affinity:
+        podAffinity:
+          
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: postgresql
+                    app.kubernetes.io/instance: funkwhale
+                    app.kubernetes.io/component: primary
+                namespaces:
+                  - "kube-system"
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        nodeAffinity:
+          
+      securityContext:
+        fsGroup: 1001
+      automountServiceAccountToken: false
+      containers:
+        - name: funkwhale-postgresql
+          image: docker.io/bitnami/postgresql:11.13.0-debian-10-r33
+          imagePullPolicy: "IfNotPresent"
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          securityContext:
+            runAsUser: 1001
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: POSTGRESQL_PORT_NUMBER
+              value: "5432"
+            - name: POSTGRESQL_VOLUME_DIR
+              value: "/bitnami/postgresql"
+            - name: PGDATA
+              value: "/bitnami/postgresql/data"
+            - name: POSTGRES_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: funkwhale-postgresql
+                  key: postgresql-postgres-password
+            - name: POSTGRES_USER
+              value: "funkwhale"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: funkwhale-postgresql
+                  key: postgresql-password
+            - name: POSTGRES_DB
+              value: "funkwhale"
+            - name: POSTGRESQL_ENABLE_LDAP
+              value: "no"
+            - name: POSTGRESQL_ENABLE_TLS
+              value: "no"
+            - name: POSTGRESQL_LOG_HOSTNAME
+              value: "false"
+            - name: POSTGRESQL_LOG_CONNECTIONS
+              value: "false"
+            - name: POSTGRESQL_LOG_DISCONNECTIONS
+              value: "false"
+            - name: POSTGRESQL_PGAUDIT_LOG_CATALOG
+              value: "off"
+            - name: POSTGRESQL_CLIENT_MIN_MESSAGES
+              value: "error"
+            - name: POSTGRESQL_SHARED_PRELOAD_LIBRARIES
+              value: "pgaudit"
+          ports:
+            - name: tcp-postgresql
+              containerPort: 5432
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U "funkwhale" -d "dbname=funkwhale" -h 127.0.0.1 -p 5432
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - -e
+                - |
+                  exec pg_isready -U "funkwhale" -d "dbname=funkwhale" -h 127.0.0.1 -p 5432
+                  [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          volumeMounts:
+            - name: custom-init-scripts
+              mountPath: /docker-entrypoint-initdb.d/
+            - name: dshm
+              mountPath: /dev/shm
+            - name: data
+              mountPath: /bitnami/postgresql
+              subPath: 
+            - name: postgresql-config
+              mountPath: /bitnami/postgresql/conf
+      volumes:
+        - name: postgresql-config
+          configMap:
+            name: funkwhale-postgresql-configuration
+        - name: custom-init-scripts
+          configMap:
+            name: funkwhale-postgresql-init-scripts
+        - name: dshm
+          emptyDir:
+            medium: Memory
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "8Gi"
+---
+# Source: funkwhale/charts/redis/templates/redis-master-statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: funkwhale-redis-master
+  namespace: kube-system
+  labels:
+    app: redis
+    chart: redis-10.6.19
+    release: funkwhale
+    heritage: Helm
+spec:
+  selector:
+    matchLabels:
+      app: redis
+      release: funkwhale
+      role: master
+  serviceName: funkwhale-redis-headless
+  template:
+    metadata:
+      labels:
+        app: redis
+        chart: redis-10.6.19
+        release: funkwhale
+        role: master
+      annotations:
+        checksum/health: dfeb19c21fb1d1236d11db0d53c2c4b160725b9b537e56ce0ddb688175b25324
+        checksum/configmap: 6aa8678ab650c1b58bee7254dd798726aabd6791ebc4627f14199b1133e7296c
+        checksum/secret: 6b89397029c865e00cf776c7482a404385b4fe6c22de560b78f434a305272c4b
+    spec:
+      
+      securityContext:
+        fsGroup: 1001
+      serviceAccountName: default
+      containers:
+        - name: redis
+          image: docker.io/bitnami/redis:6.0.5-debian-10-r0
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            runAsUser: 1001
+          command:
+            - /bin/bash
+            - -c
+            - |
+              if [[ -n $REDIS_PASSWORD_FILE ]]; then
+                password_aux=`cat ${REDIS_PASSWORD_FILE}`
+                export REDIS_PASSWORD=$password_aux
+              fi
+              if [[ ! -f /opt/bitnami/redis/etc/master.conf ]];then
+                cp /opt/bitnami/redis/mounted-etc/master.conf /opt/bitnami/redis/etc/master.conf
+              fi
+              if [[ ! -f /opt/bitnami/redis/etc/redis.conf ]];then
+                cp /opt/bitnami/redis/mounted-etc/redis.conf /opt/bitnami/redis/etc/redis.conf
+              fi
+              ARGS=("--port" "${REDIS_PORT}")
+              ARGS+=("--requirepass" "${REDIS_PASSWORD}")
+              ARGS+=("--masterauth" "${REDIS_PASSWORD}")
+              ARGS+=("--include" "/opt/bitnami/redis/etc/redis.conf")
+              ARGS+=("--include" "/opt/bitnami/redis/etc/master.conf")
+              /run.sh ${ARGS[@]}
+          env:
+            - name: REDIS_REPLICATION_MODE
+              value: master
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: funkwhale-redis
+                  key: redis-password
+            - name: REDIS_PORT
+              value: "6379"
+          ports:
+            - name: redis
+              containerPort: 6379
+          livenessProbe:
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+            exec:
+              command:
+                - sh
+                - -c
+                - /health/ping_liveness_local.sh 5
+          readinessProbe:
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 5
+            exec:
+              command:
+                - sh
+                - -c
+                - /health/ping_readiness_local.sh 5
+          resources:
+            null
+          volumeMounts:
+            - name: health
+              mountPath: /health
+            - name: redis-data
+              mountPath: /data
+              subPath: 
+            - name: config
+              mountPath: /opt/bitnami/redis/mounted-etc
+            - name: redis-tmp-conf
+              mountPath: /opt/bitnami/redis/etc/
+      volumes:
+        - name: health
+          configMap:
+            name: funkwhale-redis-health
+            defaultMode: 0755
+        - name: config
+          configMap:
+            name: funkwhale-redis
+        - name: "redis-data"
+          emptyDir: {}
+        - name: redis-tmp-conf
+          emptyDir: {}
+  updateStrategy:
+    type: RollingUpdate
+---
+# Source: funkwhale/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: funkwhale
+  labels:
+    app.kubernetes.io/name: funkwhale
+    helm.sh/chart: funkwhale-0.4.2
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 500m
+spec:
+  rules:
+    - host: "chart-example.local"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: funkwhale
+              servicePort: http
+---
+# Source: funkwhale/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "funkwhale-test-connection"
+  labels:
+    app.kubernetes.io/name: funkwhale
+    helm.sh/chart: funkwhale-0.4.2
+    app.kubernetes.io/instance: funkwhale
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['funkwhale:80']
+  restartPolicy: Never
