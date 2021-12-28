@@ -1,0 +1,227 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: netbox-worker
+  labels:
+    app.kubernetes.io/name: netbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: netbox
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: netbox
+    spec:
+      serviceAccountName: netbox
+      securityContext:
+        fsGroup: 1000
+        runAsNonRoot: true
+      containers:
+        - name: netbox-worker
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: "netboxcommunity/netbox:v3.0.11"
+          command:
+            - /opt/netbox/venv/bin/python
+            - /opt/netbox/netbox/manage.py
+            - rqworker
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: config
+              mountPath: /etc/netbox/config/configuration.py
+              subPath: configuration.py
+              readOnly: true
+            - name: config
+              mountPath: /run/config/netbox
+              readOnly: true
+            - name: secrets
+              mountPath: /run/secrets/netbox
+              readOnly: true
+            - name: netbox-tmp
+              mountPath: /tmp
+            - name: media
+              mountPath: /opt/netbox/netbox/media
+              subPath: ""
+      volumes:
+        - name: config
+          configMap:
+            name: netbox
+        - name: secrets
+          projected:
+            sources:
+              - secret:
+                  name: "netbox"
+                  items:
+                    # Used by our configuration
+                    - key: email_password
+                      path: email_password
+                    - key: napalm_password
+                      path: napalm_password
+                    - key: secret_key
+                      path: secret_key
+              - secret:
+                  name: "netbox-owner-user.netbox-postgres.credentials.postgresql.acid.zalan.do"
+                  items:
+                    - key: "password"
+                      path: db_password
+              - secret:
+                  name: "netbox"
+                  items:
+                    - key: "redis-password"
+                      path: redis_tasks_password
+              - secret:
+                  name: "netbox"
+                  items:
+                    - key: "redis-password"
+                      path: redis_cache_password
+        - name: netbox-tmp
+          emptyDir:
+            medium: Memory
+        - name: media
+          persistentVolumeClaim:
+            claimName: netbox-media
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: netbox
+  labels:
+    app.kubernetes.io/name: netbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: netbox
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: netbox
+    spec:
+      serviceAccountName: netbox
+      securityContext:
+        fsGroup: 1000
+        runAsNonRoot: true
+      initContainers:
+        - name: init-dirs
+          image: "busybox:1.32.1"
+          imagePullPolicy: IfNotPresent
+          command: [/bin/sh, -c, mkdir -p /opt/unit/state /opt/unit/tmp]
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+          volumeMounts:
+            - name: optunit
+              mountPath: /opt/unit
+      containers:
+        - name: netbox
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: "netboxcommunity/netbox:v3.0.11"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: SUPERUSER_NAME
+              value: "admin"
+            - name: SUPERUSER_EMAIL
+              value: "admin@example.com"
+            - name: SKIP_STARTUP_SCRIPTS
+              value: "true"
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /login/
+              port: http
+          volumeMounts:
+            - name: config
+              mountPath: /etc/netbox/config/configuration.py
+              subPath: configuration.py
+              readOnly: true
+            - name: config
+              mountPath: /run/config/netbox
+              readOnly: true
+            - name: secrets
+              mountPath: /run/secrets/netbox
+              readOnly: true
+            - name: netbox-tmp
+              mountPath: /tmp
+            - name: media
+              mountPath: /opt/netbox/netbox/media
+              subPath: ""
+            - name: optunit
+              mountPath: /opt/unit
+            - name: secrets
+              mountPath: /run/secrets/superuser_password
+              subPath: superuser_password
+              readOnly: true
+            - name: secrets
+              mountPath: /run/secrets/superuser_api_token
+              subPath: superuser_api_token
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: netbox
+        - name: secrets
+          projected:
+            sources:
+              - secret:
+                  name: "netbox"
+                  items:
+                    # Used by netbox-docker entry scripts
+                    - key: superuser_password
+                      path: superuser_password
+                    - key: superuser_api_token
+                      path: superuser_api_token
+                    # Used by our configuration
+                    - key: email_password
+                      path: email_password
+                    - key: napalm_password
+                      path: napalm_password
+                    - key: secret_key
+                      path: secret_key
+              - secret:
+                  name: "netbox-owner-user.netbox-postgres.credentials.postgresql.acid.zalan.do"
+                  items:
+                    - key: "password"
+                      path: db_password
+              - secret:
+                  name: "netbox"
+                  items:
+                    - key: "redis-password"
+                      path: redis_tasks_password
+              - secret:
+                  name: "netbox"
+                  items:
+                    - key: "redis-password"
+                      path: redis_cache_password
+        - name: netbox-tmp
+          emptyDir:
+            medium: Memory
+        - name: optunit
+          emptyDir:
+            medium: Memory
+        - name: media
+          persistentVolumeClaim:
+            claimName: netbox-media

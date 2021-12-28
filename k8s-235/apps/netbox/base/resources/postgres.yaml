@@ -1,0 +1,20 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: netbox-postgres
+  namespace: postgres-operator
+spec:
+  teamId: "netbox"
+  volume:
+    size: 10Gi
+    storageClass: "freenas-nfs-csi"
+  numberOfInstances: 2
+  users:
+    root:  # database owner
+    - superuser
+    - createdb
+  preparedDatabases:
+    netbox:
+      defaultUsers: true
+  postgresql:
+    version: "14"

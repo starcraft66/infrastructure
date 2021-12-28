@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: netbox
+  labels:
+    app.kubernetes.io/name: netbox
+spec:
+  type: ClusterIP
+  # Doesn't work on ipv6 for some reason
+  # and the netbox docker image is so convoluted
+  # that I can't be assed to track down the issue
+  # ipFamilyPolicy: RequireDualStack
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+  # - IPv6
+  - IPv4
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app.kubernetes.io/name: netbox

@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: netbox-metrics
+  labels:
+    app.kubernetes.io/name: netbox
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: netbox
+  endpoints:
+  - port: http

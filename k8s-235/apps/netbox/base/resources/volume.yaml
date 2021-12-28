@@ -1,0 +1,14 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: netbox-media
+  labels:
+    app.kubernetes.io/name: netbox
+spec:
+  accessModes:
+  - "ReadWriteOnce"
+  storageClassName: "freenas-nfs-csi"
+  resources:
+    requests:
+      storage: "1Gi"
