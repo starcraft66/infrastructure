@@ -8,19 +8,20 @@ namespace: democratic-csi
 generators:
 - ./generators/secrets-generator.yaml
 
-images:
-- name: k8s.gcr.io/sig-storage/csi-provisioner
-  newTag: v3.0.0
-- name: k8s.gcr.io/sig-storage/csi-resizer
-  newTag: v1.3.0
-- name: k8s.gcr.io/sig-storage/csi-snapshotter
-  newTag: v4.2.1
-- name: democraticcsi/democratic-csi
-  newTag: latest
-- name: k8s.gcr.io/sig-storage/csi-node-driver-registrar
-  newTag: v2.4.0
-- name: democraticcsi/democratic-csi
-  newTag: latest
+# Let the Helm chart pin image versions
+# images:
+# - name: k8s.gcr.io/sig-storage/csi-provisioner
+#   newTag: v3.0.0
+# - name: k8s.gcr.io/sig-storage/csi-resizer
+#   newTag: v1.3.0
+# - name: k8s.gcr.io/sig-storage/csi-snapshotter
+#   newTag: v4.2.1
+# - name: democraticcsi/democratic-csi
+#   newTag: latest
+# - name: k8s.gcr.io/sig-storage/csi-node-driver-registrar
+#   newTag: v2.4.0
+# - name: democraticcsi/democratic-csi
+#   newTag: latest
 
 commonLabels:
   app.kubernetes.io/name: democratic-csi
