@@ -1,0 +1,17 @@
+---
+apiVersion: mysql.oracle.com/v2alpha1
+kind: InnoDBCluster
+metadata:
+  name: mysql-photoprism
+spec:
+  secretName: mysql-secrets
+  datadirVolumeClaimTemplate:
+    accessModes:
+    - ReadWriteOnce
+    storageClassName: truenas-nfs-spitfire-fast
+    resources:
+      requests:
+        storage: 20Gi
+  instances: 1
+  router:
+    instances: 1

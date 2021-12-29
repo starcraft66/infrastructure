@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: datadir-mysql-photoprism-0
+  namespace: photoprism
+  labels:
+    app.kubernetes.io/component: database
+    app.kubernetes.io/created-by: mysql-operator
+    app.kubernetes.io/instance: mysql-innodbcluster-mysql-photoprism-mysql-server
+    app.kubernetes.io/managed-by: mysql-operator
+    app.kubernetes.io/name: mysql
+    innodbcluster-mysql-server.component: mysqld
+    mysql.oracle.com/cluster: mysql-photoprism
+spec:
+  storageClassName: "truenas-nfs-spitfire-fast"
+  accessModes:
+  - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "20Gi"
