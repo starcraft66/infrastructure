@@ -80,7 +80,7 @@ spec:
                         - key: "password"
                           path: db_password
                   - secret:
-                      name: "netboxr"
+                      name: "netbox"
                       items:
                         - key: "redis-password"
                           path: redis_tasks_password
