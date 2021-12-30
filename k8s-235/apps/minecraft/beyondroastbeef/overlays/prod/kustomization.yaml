@@ -53,6 +53,7 @@ configMapGenerator:
   - MAX_TICK_TIME=60000
   - SPAWN_MONSTERS=true
   - SPAWN_NPCS=true
+  - SPAWN_PROTECTION=0
   - VIEW_DISTANCE=10
   - MODE=survival
   - MOTD="Beyond Roast Beef"
