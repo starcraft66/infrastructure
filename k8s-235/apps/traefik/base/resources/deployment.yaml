@@ -72,7 +72,7 @@ spec:
           runAsUser: 65532
         volumeMounts:
         - name: traefik-config
-          mountPath: /etc/traefik
+          mountPath: /etc/traefik/traefik.toml
           subPath: traefik.toml
         - name: traefik-data
           mountPath: /data
