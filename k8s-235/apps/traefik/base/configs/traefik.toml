@@ -56,12 +56,11 @@
 [metrics]
   [metrics.prometheus]
 
-[providers]
-  [providers.kubernetescrd]
-  [providers.kubernetesingress]
+[providers.kubernetescrd]
+[providers.kubernetesingress]
 
 # HTTP/3 Experimental support
 [experimental]
-  [experimental.http3]
+  http3 = true
 
 # No TLS configuration because we are using cert-manager for TLS
