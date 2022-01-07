@@ -1,0 +1,67 @@
+[entryPoints]
+  [entryPoints.web]
+    # Running as unprivileged user
+    address = ":8000"
+    [entryPoints.web.http]
+      [entryPoints.web.http.redirections]
+        [entryPoints.web.http.redirections.entryPoint]
+          # https://github.com/traefik/traefik-helm-chart/blob/a4dbf1a5833f03e675e1550f32d047cdbf07900c/traefik/templates/_podtemplate.tpl#L127
+          # This port is technically 8443 but it is accessed from the outside via 443
+          to = ":443"
+          scheme = "https"
+
+  [entryPoints.websecure]
+    # Running as unprivileged user
+    address = ":8443"
+    enablehttp3 = true
+
+  [entryPoints.traefik]
+    address = ":9000"
+
+[tls.options]
+  [tls.options.default]
+    minVersion = "VersionTLS12"
+    sniStrict = true
+# Cipher suites using RSA keys are disabled because we are
+# only using ECDSA certificates since traefik does not (yet?)
+# support using a combination of RSA and ECDSA certificates
+# like nginx does.
+    cipherSuites = [
+        "TLS_AES_256_GCM_SHA384",
+        "TLS_CHACHA20_POLY1305_SHA256",
+        "TLS_AES_128_GCM_SHA256",
+#        "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+        "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+#       "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305",
+        "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305",
+#        "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+        "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+      ]
+
+[log]
+  level = "INFO"
+
+[api]
+  dashboard = true
+  # To avoid using IngressRoute CRD.
+  # The dashboard has Auth Middleware anyway.
+  insecure = true
+
+[ping]
+
+# Needed for Unifi Controller and maybe ArgoCD
+[serversTransport]
+  insecureSkipVerify = true
+
+[metrics]
+  [metrics.prometheus]
+
+[providers]
+  [providers.kubernetescrd]
+  [providers.kubernetesingress]
+
+# HTTP/3 Experimental support
+[experimental]
+  [experimental.http3]
+
+# No TLS configuration because we are using cert-manager for TLS
