@@ -71,32 +71,13 @@ spec:
           runAsNonRoot: true
           runAsUser: 65532
         volumeMounts:
-          - name: traefik-data
-            mountPath: /data
-          - name: tmp
-            mountPath: /tmp
-        args:
-          - "--global.checknewversion"
-          - "--entryPoints.traefik.address=:9000/tcp"
-          - "--entryPoints.web.address=:8000/tcp"
-# https://github.com/traefik/traefik-helm-chart/blob/a4dbf1a5833f03e675e1550f32d047cdbf07900c/traefik/templates/_podtemplate.tpl#L127
-          # This port is technically 8443 but it is accessed from the outside via 443
-          - "--entrypoints.web.http.redirections.entryPoint.to=:443"
-          - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
-          - "--entryPoints.websecure.address=:8443/tcp"
-          - "--api.dashboard=true"
-          # To avoid using IngressRoute CRD.
-          # The dashboard has Auth Middleware anyway.
-          - "--api.insecure=true"
-          # For now... Unifi controller requires this
-          - "--serversTransport.insecureSkipVerify=true"
-          # HTTP/3 Experimental support
-          - "--experimental.http3=true"
-          - "--entrypoints.websecure.enablehttp3=true"
-          - "--metrics.prometheus=true"
-          - "--ping=true"
-          - "--providers.kubernetescrd"
-          - "--providers.kubernetesingress"
+        - name: traefik-config
+          mountPath: /etc/traefik
+          subPath: traefik.toml
+        - name: traefik-data
+          mountPath: /data
+        - name: tmp
+          mountPath: /tmp
       - image: thomseddon/traefik-forward-auth:2
         name: traefik-forward-auth
         ports:
@@ -125,6 +106,9 @@ spec:
           mountPath: /config
           subPath: traefik-forward-auth.ini
       volumes:
+        - name: traefik-config
+          configMap:
+            name: traefik-config
         - name: traefik-forward-auth-config
           configMap:
             name: traefik-forward-auth-config

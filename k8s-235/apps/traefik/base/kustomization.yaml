@@ -7,3 +7,9 @@ resources:
 - ./resources/service-account.yaml
 - ./resources/rbac.yaml
 - ./resources/namespace.yaml
+
+configMapGenerator:
+- name: traefik-config
+  namespace: traefik
+  files:
+  - traefik.toml=configs/traefik.toml
