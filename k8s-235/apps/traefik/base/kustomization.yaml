@@ -1,12 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+- ./resources/namespace.yaml
 - ./resources/crds.yaml
 - ./resources/deployment.yaml
 - ./resources/service.yaml
 - ./resources/service-account.yaml
 - ./resources/rbac.yaml
-- ./resources/namespace.yaml
+- ./resources/tlsoptions.yaml
 
 configMapGenerator:
 - name: traefik-config
