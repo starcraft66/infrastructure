@@ -1,4 +1,7 @@
 {
-    "repositories": ["tristan/infrastructure"],
+    "repositories": [
+        "tristan/infrastructure",
+        "tristan/kube-prometheus-k8s-235"
+    ],
     "dryRun": false
 }
