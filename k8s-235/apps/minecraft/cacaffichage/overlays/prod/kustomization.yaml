@@ -38,7 +38,7 @@ configMapGenerator:
 - name: minecraft-env-vars
   literals:
   - EULA=TRUE
-  - TYPE=VANILLA
+  - TYPE=PAPER
   - DIFFICULTY=hard
   - ICON=""
   - MAX_PLAYERS=20
