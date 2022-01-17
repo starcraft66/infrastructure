@@ -1,0 +1,4 @@
+- op: add
+  path: "/metadata/annotations"
+  value:
+    argocd.argoproj.io/sync-options: "Replace=true"
