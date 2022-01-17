@@ -1,4 +1,4 @@
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
@@ -21,7 +21,7 @@ spec:
             name: cloudflare-api-token-secret
             key: api-token
 ---
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-staging
@@ -44,7 +44,7 @@ spec:
             name: cloudflare-api-token-secret
             key: api-token
 ---
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-http01-prod
@@ -68,7 +68,7 @@ spec:
               annotations:
                 traefik.ingress.kubernetes.io/router.tls: "true"
 ---
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-http01-staging
