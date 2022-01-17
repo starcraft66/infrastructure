@@ -9,7 +9,7 @@ peer_with_router: true
 peers:
   - name: "brocade-v6"
     scope: "global"
-    router_id: "2607:fa49:3c45:2530:100::ffff"
+    router_id: "2607:fa48:6ed8:8a54:100::ffff"
     as: "64512"
   - name: "brocade-v4"
     scope: "global"
@@ -70,7 +70,7 @@ calico_advertise_cluster_ips: true
 
 calico_advertise_service_loadbalancer_ips:
   - "10.224.0.0/16"
-  - "2607:fa49:3c45:2530:3::/80"
+  - "2607:fa48:6ed8:8a54:3::/80"
 
 # Choose data store type for calico: "etcd" or "kdd" (kubernetes datastore)
 # calico_datastore: "etcd"
