@@ -140,7 +140,7 @@ resource "cloudflare_record" "auth_bedrock_tdude_co-e600072af53ca2808f9a70af1259
 resource "cloudflare_record" "fleetfoot_235_tdude_co-0682464601437aabb4960f25ecb9b1b4" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "fleetfoot.235"
-  value   = "2607:fa48:6ed8:8a51:29c:2ff:fea5:346a"
+  value   = "2607:fa48:6ed8:8a51:7c53:9eff:fe70:7df3"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -517,6 +517,26 @@ resource "cloudflare_record" "traefik_bedrock_tdude_co-AAAA" {
   name    = "traefik.bedrock.tdude.co"
   value   = "2a01:4f9:3a:15b0:8::2"
   type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "photofinish_305-1700" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "photofinish.305-1700.tdude.co"
+#  value   = "2001:470:b08b:51::a"
+  value   = "172.17.51.16"
+  type    = "A"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "ovirt_305-1700" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "ovirt.305-1700.tdude.co"
+#  value   = "2001:470:b08b:51::b"
+  value   = "172.17.51.17"
+  type    = "A"
   ttl     = 1
   proxied = false
 }
