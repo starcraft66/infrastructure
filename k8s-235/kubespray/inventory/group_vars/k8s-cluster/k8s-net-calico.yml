@@ -1,5 +1,5 @@
 # see roles/network_plugin/calico/defaults/main.yml
-calico_version: "v3.20.0"
+calico_version: "v3.20.3"
 
 ## With calico it is possible to distributed routes with border routers of the datacenter.
 ## Warning : enabling router peering will disable calico's default behavior ('node mesh').
