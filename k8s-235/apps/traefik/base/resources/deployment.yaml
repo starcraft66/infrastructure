@@ -113,6 +113,7 @@ spec:
         # https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/overview#forwardauth-with-static-upstreams-configuration
         - --upstream=static://202
         - --reverse-proxy=true
+        - --skip-provider-button
         envFrom:
         - secretRef:
             name: oauth2-proxy-secrets
