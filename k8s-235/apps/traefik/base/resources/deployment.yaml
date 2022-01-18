@@ -114,6 +114,7 @@ spec:
         - --upstream=static://202
         - --reverse-proxy=true
         - --skip-provider-button
+        - --cookie-secure=true
         envFrom:
         - secretRef:
             name: oauth2-proxy-secrets
