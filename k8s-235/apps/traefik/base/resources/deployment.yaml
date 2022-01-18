@@ -115,6 +115,8 @@ spec:
         - --reverse-proxy=true
         - --skip-provider-button
         - --cookie-secure=true
+        - --cookie-refresh=1h
+        - --cookie-expire=168h
         envFrom:
         - secretRef:
             name: oauth2-proxy-secrets
