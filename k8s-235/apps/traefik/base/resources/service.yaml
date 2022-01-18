@@ -28,18 +28,18 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app.kubernetes.io/name: oauth2-proxy
+    app.kubernetes.io/name: traefik
   name: oauth2-proxy
 spec:
   type: ClusterIP
   ports:
   - port: 80
-    targetPort: http
+    targetPort: oauth2-proxy
     protocol: TCP
-    name: http
+    name: oauth2-proxy
   - port: 44180
     protocol: TCP
-    targetPort: metrics
-    name: metrics
+    targetPort: oauth2-proxy-metrics
+    name: oauth2-proxy-metrics
   selector:
-    app.kubernetes.io/name: oauth2-proxy
+    app.kubernetes.io/name: traefik

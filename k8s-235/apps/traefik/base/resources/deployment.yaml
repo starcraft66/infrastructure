@@ -83,22 +83,22 @@ spec:
         name: oauth2-proxy
         ports:
         - containerPort: 4180
-          name: http
+          name: oauth2-proxy
           protocol: TCP
         - containerPort: 44180
-          name: metrics
+          name: oauth2-proxy-metrics
           protocol: TCP
         livenessProbe:
           httpGet:
             path: /ping
-            port: http
+            port: oauth2-proxy
             scheme: HTTP
           initialDelaySeconds: 0
           timeoutSeconds: 1
         readinessProbe:
           httpGet:
             path: /ping
-            port: http
+            port: oauth2-proxy
             scheme: HTTP
           initialDelaySeconds: 0
           timeoutSeconds: 1
