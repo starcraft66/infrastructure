@@ -39,7 +39,7 @@ spec:
     name: oauth2-proxy
   - port: 44180
     protocol: TCP
-    targetPort: oauth2-proxy-metrics
-    name: oauth2-proxy-metrics
+    targetPort: oauth2-metrics
+    name: oauth2-metrics
   selector:
     app.kubernetes.io/name: traefik

@@ -17,14 +17,14 @@ kind: ServiceMonitor
 metadata:
   name: oauth2-proxy
   labels:
-    app.kubernetes.io/name: oauth2-proxy
+    app.kubernetes.io/name: traefik
 spec:
   jobLabel: oauth2-proxy
   selector:
     matchLabels:
-      app.kubernetes.io/name: oauth2-proxy
+      app.kubernetes.io/name: traefik
   endpoints:
-  - port: metrics
+  - port: oauth2-metrics
     path: "/metrics"
     interval: 60s
     scrapeTimeout: 30s

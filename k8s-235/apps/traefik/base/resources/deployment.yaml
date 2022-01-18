@@ -86,7 +86,7 @@ spec:
           name: oauth2-proxy
           protocol: TCP
         - containerPort: 44180
-          name: oauth2-proxy-metrics
+          name: oauth2-metrics
           protocol: TCP
         livenessProbe:
           httpGet:
