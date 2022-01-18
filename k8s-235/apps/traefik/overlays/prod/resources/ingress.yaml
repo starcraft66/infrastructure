@@ -49,6 +49,7 @@ spec:
     - auth.k8s.235.tdude.co
     - dashboard.traefik.k8s.235.tdude.co
     secretName: dashboard-traefik-k8s-235-tdude-co-tls
+  rules:
   - host: auth.k8s.235.tdude.co
     http:
       paths:
