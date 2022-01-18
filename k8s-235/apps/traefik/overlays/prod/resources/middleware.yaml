@@ -5,7 +5,7 @@ metadata:
   name: forward-auth
 spec:
   forwardAuth:
-    address: http://oauth2-proxy.traefik.svc.cluster.local/
+    address: http://oauth2-proxy.traefik.svc.cluster.local/oauth2/auth_or_start
     trustForwardHeader: true
     authResponseHeaders:
     - X-Auth-Request-Access-Token
