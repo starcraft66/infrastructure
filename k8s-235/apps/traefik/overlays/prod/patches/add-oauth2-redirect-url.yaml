@@ -6,3 +6,7 @@
   op: add
   value:
     --cookie-domain=tdude.co
+- path: /spec/template/spec/containers/1/args/0
+  op: add
+  value:
+    --whitelist-domain=tdude.co
