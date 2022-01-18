@@ -50,25 +50,6 @@ kind: Service
 metadata:
   labels:
     app.kubernetes.io/name: traefik
-  name: traefik-forward-auth
-spec:
-  ipFamilyPolicy: RequireDualStack
-  ipFamilies:
-  - IPv6
-  - IPv4
-  ports:
-  - name: traefik-forward-auth
-    port: 80
-    targetPort: 4181
-  selector:
-    app.kubernetes.io/name: traefik
-  type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app.kubernetes.io/name: traefik
   name: traefik-dashboard
 spec:
   ipFamilyPolicy: RequireDualStack

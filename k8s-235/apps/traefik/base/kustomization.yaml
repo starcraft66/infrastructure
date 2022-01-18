@@ -14,3 +14,7 @@ configMapGenerator:
   namespace: traefik
   files:
   - traefik.toml=configs/traefik.toml
+
+images:
+- name: quay.io/oauth2-proxy/oauth2-proxy
+  newTag: v7.2.0

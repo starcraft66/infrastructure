@@ -23,3 +23,23 @@ items:
         name: websecure
         targetPort: "websecure"
         protocol: "TCP"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: oauth2-proxy
+  name: oauth2-proxy
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+  - port: 44180
+    protocol: TCP
+    targetPort: metrics
+    name: metrics
+  selector:
+    app.kubernetes.io/name: oauth2-proxy

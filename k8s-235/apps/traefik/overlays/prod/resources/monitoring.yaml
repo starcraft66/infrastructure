@@ -1,3 +1,4 @@
+---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -10,3 +11,20 @@ spec:
       app.kubernetes.io/name: traefik
   endpoints:
   - port: metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: oauth2-proxy
+  labels:
+    app.kubernetes.io/name: oauth2-proxy
+spec:
+  jobLabel: oauth2-proxy
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: oauth2-proxy
+  endpoints:
+  - port: metrics
+    path: "/metrics"
+    interval: 60s
+    scrapeTimeout: 30s
