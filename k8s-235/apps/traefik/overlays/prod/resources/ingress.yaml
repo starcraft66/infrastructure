@@ -41,7 +41,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: traefik-forward-auth
+            name: oauth2-proxy
             port:
               number: 80
 ---
