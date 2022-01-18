@@ -34,6 +34,21 @@ spec:
             name: traefik-dashboard
             port:
               number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oauth2-proxy
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - auth.k8s.235.tdude.co
+    - dashboard.traefik.k8s.235.tdude.co
+    secretName: dashboard-traefik-k8s-235-tdude-co-tls
   - host: auth.k8s.235.tdude.co
     http:
       paths:
