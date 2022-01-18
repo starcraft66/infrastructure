@@ -116,6 +116,7 @@ spec:
         envFrom:
         - secretRef:
             name: oauth2-proxy-secrets
+        volumeMounts:
         - mountPath: /etc/oauth2-proxy
           name: configaccesslist
           readOnly: true
