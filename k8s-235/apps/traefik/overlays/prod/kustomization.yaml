@@ -22,8 +22,10 @@ resources:
 generators:
 - ./generators/secrets-generator.yaml
 
-configMapGenerator:
-- name: traefik-forward-auth-config
-  namespace: traefik
-  files:
-  - traefik-forward-auth.ini=configs/traefik-forward-auth.ini
+patchesJson6902:
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: traefik
+  path: ./patches/add-oauth2-redirect-url.yaml
