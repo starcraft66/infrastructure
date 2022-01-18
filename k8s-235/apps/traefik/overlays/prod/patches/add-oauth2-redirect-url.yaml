@@ -2,3 +2,7 @@
   op: add
   value:
     --redirect-url=https://auth.k8s.235.tdude.co/oauth2/callback
+- path: /spec/template/spec/containers/1/args/0
+  op: add
+  value:
+    --cookie-domain=tdude.co
