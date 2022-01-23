@@ -21,7 +21,7 @@ resource "cloudflare_record" "cacaffichage-srv" {
   proxied = false
 }
 
-resource "cloudflare_record" "cacaffichage-v4" {
+resource "cloudflare_record" "cacaffichage-ingress-v4" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "cacaffichage"
   value   = "24.225.136.165"
@@ -30,7 +30,7 @@ resource "cloudflare_record" "cacaffichage-v4" {
   proxied = false
 }
 
-resource "cloudflare_record" "cacaffichage-v6" {
+resource "cloudflare_record" "cacaffichage-ingress-v6" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "cacaffichage"
   value   = "2607:fa48:6ed8:8a54:3::1"
