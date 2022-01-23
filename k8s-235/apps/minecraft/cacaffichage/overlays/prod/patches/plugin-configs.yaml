@@ -1,3 +1,4 @@
+# DiscordSRV
 - op: add
   path: /spec/template/spec/containers/0/volumeMounts/0
   value:
@@ -52,3 +53,17 @@
     name: discordsrv-config
     configMap:
       name: discordsrv-config
+# Dynmap
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/0
+  value:
+    mountPath: /data/plugins/dynmap/configuration.txt
+    subPath: configuration.txt
+    name: dynmap-config
+    readOnly: true
+- op: add
+  path: /spec/template/spec/volumes/0
+  value:
+    name: dynmap-config
+    configMap:
+      name: dynmap-config

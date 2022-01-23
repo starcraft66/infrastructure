@@ -87,6 +87,9 @@ configMapGenerator:
   - messages.yml=files/DiscordSRV/messages.yml
   - synchronization.yml=files/DiscordSRV/synchronization.yml
   - voice.yml=files/DiscordSRV/voice.yml
+- name: dynmap-config
+  files:
+  - configuration.txt=files/dynmap/configuration.txt
 
 commonLabels:
   app.kubernetes.io/name: minecraft
