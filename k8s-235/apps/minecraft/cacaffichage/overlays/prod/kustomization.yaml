@@ -28,6 +28,12 @@ patchesJson6902:
     kind: StatefulSet
     name: minecraft
     version: v1
+- path: ./patches/plugin-configs.yaml
+  target:
+    group: apps
+    kind: StatefulSet
+    name: minecraft
+    version: v1
 - path: ./patches/dynmap-port.yaml
   target:
     group: apps
@@ -74,6 +80,13 @@ configMapGenerator:
   - ENABLE_RCON=true
   - SERVER_IP="::"
   - SPIGET_RESOURCES="274,18494"
+- name: discordsrv-config
+  files:
+  - alerts.yml=files/DiscordSRV/alerts.yml
+  - linking.yml=files/DiscordSRV/linking.yml
+  - messages.yml=files/DiscordSRV/messages.yml
+  - synchronization.yml=files/DiscordSRV/synchronization.yml
+  - voice.yml=files/DiscordSRV/voice.yml
 
 commonLabels:
   app.kubernetes.io/name: minecraft
