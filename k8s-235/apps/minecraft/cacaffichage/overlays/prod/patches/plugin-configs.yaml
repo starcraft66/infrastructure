@@ -4,7 +4,7 @@
   value:
     mountPath: /data/plugins/DiscordSRV/config.yml
     subPath: config.yml
-    name: discordsrv-secret-config
+    name: discordsrv-config
     readOnly: true
 - op: add
   path: /spec/template/spec/containers/0/volumeMounts/0
@@ -44,15 +44,14 @@
 - op: add
   path: /spec/template/spec/volumes/0
   value:
-    name: discordsrv-secret-config
-    secret:
-      secretName: discordsrv-secrets
-- op: add
-  path: /spec/template/spec/volumes/0
-  value:
     name: discordsrv-config
     configMap:
       name: discordsrv-config
+- op: add
+  path: /spec/template/spec/containers/0/envFrom/0
+  value:
+    secretRef:
+      name: discordsrv-secrets
 # Dynmap
 - op: add
   path: /spec/template/spec/containers/0/volumeMounts/0
