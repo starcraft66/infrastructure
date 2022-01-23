@@ -66,6 +66,7 @@ configMapGenerator:
   - JVM_XX_OPTS=""
   - ENABLE_RCON=true
   - SERVER_IP="::"
+  - SPIGET_RESOURCES="274,18494"
 
 commonLabels:
   app.kubernetes.io/name: minecraft
