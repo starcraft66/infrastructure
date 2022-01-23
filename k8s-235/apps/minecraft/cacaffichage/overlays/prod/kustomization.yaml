@@ -90,6 +90,9 @@ configMapGenerator:
 - name: dynmap-config
   files:
   - configuration.txt=files/dynmap/configuration.txt
+- name: bstats-config
+  files:
+  - config.yml=files/bStats/config.yml
 
 commonLabels:
   app.kubernetes.io/name: minecraft
