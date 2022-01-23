@@ -5,3 +5,10 @@
     port: 12345
     targetPort: minecraft
     protocol: TCP
+- op: add
+  path: /spec/ports/3
+  value:
+    name: dynmap
+    port: 8123
+    targetPort: dynmap
+    protocol: TCP

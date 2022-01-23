@@ -10,6 +10,7 @@ resources:
 - ../../../base
 - ./resources/namespace.yaml
 - ./resources/volume.yaml
+- ./resources/ingress.yaml
 
 generators:
 - ./generators/secrets-generator.yaml
@@ -22,6 +23,12 @@ patchesJson6902:
     name: minecraft
     version: v1
 - path: ./patches/env-vars.yaml
+  target:
+    group: apps
+    kind: StatefulSet
+    name: minecraft
+    version: v1
+- path: ./patches/dynmap-port.yaml
   target:
     group: apps
     kind: StatefulSet
