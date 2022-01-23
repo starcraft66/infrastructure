@@ -73,11 +73,11 @@
   value:
     mountPath: /data/plugins/bStats/config.yml
     subPath: config.yml
-    name: bStats-config
+    name: bstats-config
     readOnly: true
 - op: add
   path: /spec/template/spec/volumes/0
   value:
-    name: bStats-config
+    name: bstats-config
     configMap:
-      name: bStats-config
+      name: bstats-config
