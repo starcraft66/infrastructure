@@ -1,13 +1,43 @@
 - op: add
   path: /spec/template/spec/containers/0/volumeMounts/0
   value:
-    mountPath: /data/plugins/DiscordSRV
+    mountPath: /data/plugins/DiscordSRV/config.yml
+    subPath: config.yml
     name: discordsrv-secret-config
     readOnly: true
 - op: add
   path: /spec/template/spec/containers/0/volumeMounts/0
   value:
-    mountPath: /data/plugins/DiscordSRV
+    mountPath: /data/plugins/DiscordSRV/alerts.yml
+    subPath: alerts.yml
+    name: discordsrv-config
+    readOnly: true
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/0
+  value:
+    mountPath: /data/plugins/DiscordSRV/messages.yml
+    subPath: messages.yml
+    name: discordsrv-config
+    readOnly: true
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/0
+  value:
+    mountPath: /data/plugins/DiscordSRV/synchronization.yml
+    subPath: synchronization.yml
+    name: discordsrv-config
+    readOnly: true
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/0
+  value:
+    mountPath: /data/plugins/DiscordSRV/voice.yml
+    subPath: voice.yml
+    name: discordsrv-config
+    readOnly: true
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/0
+  value:
+    mountPath: /data/plugins/DiscordSRV/linking.yml
+    subPath: linking.yml
     name: discordsrv-config
     readOnly: true
 - op: add
