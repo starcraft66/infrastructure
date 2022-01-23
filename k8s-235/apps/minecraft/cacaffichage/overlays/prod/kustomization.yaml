@@ -83,6 +83,7 @@ configMapGenerator:
 - name: discordsrv-config
   files:
   - alerts.yml=files/DiscordSRV/alerts.yml
+  - config.yml=files/DiscordSRV/config.yml
   - linking.yml=files/DiscordSRV/linking.yml
   - messages.yml=files/DiscordSRV/messages.yml
   - synchronization.yml=files/DiscordSRV/synchronization.yml
