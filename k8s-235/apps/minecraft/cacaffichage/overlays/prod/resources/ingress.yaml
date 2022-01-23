@@ -20,6 +20,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: dynmap
+            name: minecraft-v6
             port:
-              number: 8123
+              name: dynmap
