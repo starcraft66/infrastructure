@@ -67,3 +67,17 @@
     name: dynmap-config
     configMap:
       name: dynmap-config
+# bStats
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/0
+  value:
+    mountPath: /data/plugins/bStats/config.yml
+    subPath: config.yml
+    name: bStats-config
+    readOnly: true
+- op: add
+  path: /spec/template/spec/volumes/0
+  value:
+    name: bStats-config
+    configMap:
+      name: bStats-config
