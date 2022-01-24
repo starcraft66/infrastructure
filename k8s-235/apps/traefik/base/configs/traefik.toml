@@ -13,7 +13,8 @@
   [entryPoints.websecure]
     # Running as unprivileged user
     address = ":8443"
-    enablehttp3 = true
+    [entryPoints.name.http3]
+      advertisedPort = 443
 
   [entryPoints.traefik]
     address = ":9000"
