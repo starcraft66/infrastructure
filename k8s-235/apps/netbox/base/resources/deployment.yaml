@@ -18,6 +18,7 @@ spec:
       serviceAccountName: netbox
       securityContext:
         fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
         runAsNonRoot: true
       containers:
         - name: netbox-worker
@@ -109,6 +110,7 @@ spec:
       serviceAccountName: netbox
       securityContext:
         fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
         runAsNonRoot: true
       initContainers:
         - name: init-dirs

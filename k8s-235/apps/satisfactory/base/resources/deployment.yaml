@@ -15,6 +15,7 @@ spec:
     spec:
       securityContext:
         fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
       containers:
       - name: satisfactory
         image: "ghcr.io/wolveix/satisfactory-server/satisfactory-server:dev"

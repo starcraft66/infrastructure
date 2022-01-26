@@ -140,3 +140,4 @@ spec:
           emptyDir: {}
       securityContext:
         fsGroup: 65532
+        fsGroupChangePolicy: "OnRootMismatch"

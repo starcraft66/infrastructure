@@ -62,3 +62,4 @@ spec:
           # Will mount configuration files as www-data (id: 33) for nextcloud
           securityContext:
             fsGroup: 33
+            fsGroupChangePolicy: "OnRootMismatch"
