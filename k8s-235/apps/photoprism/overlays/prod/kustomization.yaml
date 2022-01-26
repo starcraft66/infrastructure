@@ -59,6 +59,6 @@ patchesJson6902:
 - path: ./patches/persistence.yaml
   target:
     group: apps
-    kind: Deployment
+    kind: StatefulSet
     name: photoprism
     version: v1
