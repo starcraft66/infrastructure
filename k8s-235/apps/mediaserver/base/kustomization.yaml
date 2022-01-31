@@ -18,7 +18,7 @@ images:
 - name: quay.io/munnerz/kube-plex
   digest: sha256:13fffb730e53e451a6be2c649c4da3dfb252bb411802ce87f9f704d602d3a195
 - name: plexinc/pms-docker
-  digest: sha256:480f8b27b4af59b8f635e6a60d6d2519984b63a63a5b2883a33701e08054b0a8
+  digest: sha256:919d7b7a54e782040def71915747a5991549598074e02ef414646b335f453041
 - name: ghcr.io/linuxserver/jackett
   digest: sha256:cba2f428feb67f93921fba4beea38c1350d332b7cc4dcf6da8ad2b6c3b9b335c
 - name: ghcr.io/linuxserver/radarr
