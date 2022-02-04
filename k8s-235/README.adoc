@@ -18,9 +18,9 @@ blablabla calico CNI BGP peering
 === 🐙 ArgoCD
 
 [.text-justify]
-blablabla calico CNI BGP peering
+blablabla ArgoCD GitOps
 
 === 🔥 Prometheus
 
 [.text-justify]
-blablabla ArgoCD GitOps
+blablabla Prometheus monitoring
