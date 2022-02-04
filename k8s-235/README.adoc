@@ -1,0 +1,21 @@
+= 235 Kubernetes cluster
+
+== Overview
+
+[.text-justify]
+The 235 kubernetes cluster (referred to as `k8s-235`) is my only personal kubernetes cluster at the moment. It consists of 2 master nodes and 6 worker nodes. One of the workers and both masters run a 3-node etcd cluster, the backing data store for kubernetes. The cluster is deployed on 8 virtual machines running Ubuntu 20.04 LTS, these VMs run on my two physical proxmox hypervisors and are provisioned with Terraform. The cluster is then deployed on the aforementioned VMs with Ansible using the Kubespray playbook.
+
+== Components
+
+[.text-justify]
+The core components of the kubernetes cluster include the control-plane itself, etcd, the Calico CNI networking plugin and the democratic-csi CSI storage plugin. Calico is installed at cluster provisioning time by kubespray and democratic-csi is later installed by ArgoCD.
+
+=== 😸 Calico
+
+[.text-justify]
+blablabla calico CNI BGP peering
+
+=== 🐙 ArgoCD
+
+[.text-justify]
+blablabla calico CNI BGP peering

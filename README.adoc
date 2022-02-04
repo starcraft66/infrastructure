@@ -1,0 +1,116 @@
+= Infrastructure
+Tristan Gosselin-Hane <starcraft66@gmail.com>
+:description: The document's description. 
+:url-repo: https://git.tdude.co/tristan/infrastructure
+:toc:
+:toclevels: 3
+
+ifdef::env-github[]
+WARNING: It appears that you are reading this document on GitHub. I urge you to https://git.tdude.co/tristan/asfdasdf[click on this link] to read the same document on GitLab which has far superior README formatting and rendering capabilities.
+endif::[]
+
+== Introduction
+
+[.text-justify]
+Welcome to my infrastructure repository. The goal of this repo is to document and make freely available the configuration and deployment tooling used to support most of my personal computer infrastructure, from networking to servers and applications.
+
+[.text-justify]
+This is my journey of constant experimentation in learning new tools and technologies to manage the lifecycle of infrastructure and applications in a way that burdens as little as possible while letting me iterate quickly and safely. The landscape is constantly evolving and I try to stay up to date with best practices as I see fit.
+
+== The Landscape
+
+I use a few different tools and methodologies to achieve my goals outlined above, here are some important ones.
+
+=== 🔧 Tools
+
+[cols="20h,~"]
+|===
+| Tool | Description
+
+| https://nixos.org/[Nix] | Declarative package manager providing a development environment for this repo.
+| https://vyos.io/[VyOS] | Declaratively-configured network OS for all of my routing/firewalling needs.
+| https://www.truenas.com/[TrueNAS Core] | Rock solid storage operating system for my NASes powered by OpenZFS.
+| https://www.proxmox.com/[Proxmox VE] | Hypervisor providing virtual machines for my infrastructure.
+| https://www.terraform.io/[Terraform] | Infrastructure as code tool I use to manage all of my cloud resources.
+| https://min.io/[MinIO] | S3-compatible object storage running on TrueNAS I use to store my Terraform state files.
+| https://www.ansible.com/[Ansible] | Simple SSH-based linux provisioning tool I use to provision my kubernetes cluster.
+| https://kubernetes.io/[Kubernetes] | Production-grade container orchestrator I use to run most of my services.
+| https://kubespray.io/[Kubespray] | Ansible playbook I use to deploy and manager the lifecycle of my personal kubernetes cluster.
+| https://argoproj.github.io/[Argo Project] | Open source tools for Kubernetes I use to run workflows, manage my cluster, and do GitOps right.
+| https://gitlab.com/[GitLab] | My self-hosted Git collaboration software of choice, deployed by and hosting this repository.
+| https://github.com/mozilla/sops[SOPS] | SOPS allows me to encrypt sensitive information in this repository at rest and decrypt it at runtime.
+|=== 
+
+=== 🧠 Methodologies
+
+[cols="15h,~"]
+|===
+|Methodology|Description
+
+| https://opengitops.dev/[GitOps] | Versioned, Immutable, Declarative configuration being automatically applied and continuously reconciled.
+|===
+
+=== 🖥️ Inventory
+
+Listing of relevant hardware configuration in this repository is applied to.
+
+[cols="~,~,~,~"]
+|===
+| Hardware | Hostname | Purpose | Specifications
+
+| HP T730 | 235-gw | Internet Gateway | 8GB RAM, 2x Ge
+| HP T620 | 260-gw | Internet Gateway | 4GB RAM, 4x Ge
+| HP T730 | 305-1700-gw | Internet Gateway | 8GB RAM, 2x Ge
+| HPE SL250S G8 | soarin | Hypervisor #1 | 2x E5-2670, 128 GB RAM
+| HPE SL250S G8 | fleetfoot | Hypervisor #2 | 2x E5-2670, 128 GB RAM
+| Supermicro X9 | spitfire | NAS #1 | 2x E5-2620, 128 GB RAM, 132 TB ZFS
+| Supermicro X9 | firestreak | NAS #2 | 2x E5-2620, 64 GB RAM, 24 TB ZFS
+| Brocade ICX-6610 | Router | Switch/Router | 2x 40Ge, 16x 10Ge, 48x 1Ge
+| Hetzner EX-52 | bedrock | Cloud Dedicated Server | i7 8700, 128 GB RAM
+| OVH VPS | stone | Cloud VPS | 1 vCore , 2 GB RAM
+|===
+
+=== 🌐 Network Topology
+
+[.text-justify]
+My network is quite vast and spans many physical sites. The network diagram below will give you a good visual feel for it. All of my internet gateways are re-purposed thin clients running the purpose-built VyOS Linux distribution. My entire network is dual-stacked running native IPv4 and native IPv6 where possible with fallback to tunnel brokers. I interconnect my physical sites using WireGuard tunnels and run OSPFv2/3 over those tunnels to propagate routing tables. My core Brocade switch connects my kubernetes cluster to the internet via BGP using the Calico CNI on the kubernetes side to advertise all of the relevant subnets living in the cluster. Everything on the kubernetes side is pure layer-3 networking, there are no overlays or tunnels between nodes. Finally, my network is divided into several VLANs to isolate different types of traffic, such as home traffic, lab traffic, storage traffic, kubernetes traffic and OOB management traffic.
+
+[.text-justify]
+I am currently in the process of obtaining a personal ASN as well as my own PA and possibly PI IPv6 address space as part of a project to learn more about BGP and more importantly to avoid relying on unstable residential ISP-supplied PA prefixes. This will probably involve running BGP sessions on a VPS from a cloud provider that allows BGP peering and tunnelling that home. Unless I can convince my residential ISPs to let me establish a BGP session with them but that it more likely to be a pipe dream.
+
+=== 🗺️ Diagrams
+.Click to expand
+[%collapsible]
+====
+image::.gitlab/diagram.png[]
+====
+
+=== ❄️ Nix
+
+[.text-justify]
+To be complete, this repo needs to be as self-contained as possible. What I mean by this is that to manipulate or apply any kind of configuration in this repo, you shouldn't need anything on your system other than `git` to clone it and the Nix package manager. The repo contains a https://www.tweag.io/blog/2020-05-25-flakes/[flake] at the root, `flake.nix` which defines apps and development shells that are immediately accessible via Nix and don't perform or require any alteration to the state of the system the repo is cloned onto. The development shell makes available to the user all of the CLI tools required to interact with the repository. It also decrypts and makes available in the environment all of the relevant secrets required to authenticate with the infrastructure, given that the user can provide private key material to decrypt them.
+
+[.text-justify]
+To enter the development shell, either have https://direnv.net/[`direnv`] configured for your shell and run `direnv allow` in the root of the project or else run `nix develop`. You may need to enter your PIN and touch your Yubikey to decrypt secrets during the shell hook execution.
+
+== The Repository itself
+
+=== 📂 Repository structure
+
+This listing intentionally doesn't cover the entire structure of the repo, it is meant to be a high-level overview of where various components are located.
+
+[source,console]
+----
+./
+├── ansible/        # Ansible roles and playbooks for certain hosts
+├── dns/            # Terraform files for misc. dns zones and records
+├── k8s-235/        # All files related to my kubernetes cluster
+│  ├── apps/        # Applications deployed on k8s using ArgoCD and Kustomize
+│  ├── cluster/     # Terraform deployment for my k8s VMs on Proxmox
+│  └── kubespray/   # Ansible inventory for deploying my k8s cluster with kubespray
+├── secrets/        # Secrets encrypted with SOPS
+└── flake.nix       # The Nix flake containing all tools and development shells to work with the contents of this repo
+----
+
+// Kubernetes chapter
+include::k8s-235/README.adoc[leveloffset=+1]
