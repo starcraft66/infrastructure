@@ -1,5 +1,5 @@
 { isDev ? true
-, pkgs ? import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/5c37ad87222cfc1ec36d6cd1364514a9efc2f7f2.tar.gz") { }
+, pkgs ? import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/81f05d871faf75d1456df6adec1d2118d787f65c.tar.gz") { }
 }:
 
 with pkgs;

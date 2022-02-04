@@ -1,6 +1,0 @@
----
-- hosts: 235-gw
-  become: True
-
-  roles:
-    - { role: tdude.wireguard }
