@@ -1,0 +1,7 @@
+{
+    "cSpell.enabled": true,
+    "cSpell.enableFiletypes": [
+        "asciidoc",
+        "yaml"
+    ],
+}
