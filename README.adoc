@@ -4,6 +4,8 @@ Tristan Gosselin-Hane <starcraft66@gmail.com>
 :url-repo: https://git.tdude.co/tristan/infrastructure
 :toc:
 :toclevels: 3
+:imagesdir: .gitlab/images
+:source-highlighter: rouge
 
 ifdef::env-github[]
 WARNING: It appears that you are reading this document on GitHub. I urge you to https://git.tdude.co/tristan/infrastructure/-/tree/docs[click on this link] to read the same document on GitLab which has far superior README formatting and rendering capabilities.
@@ -82,7 +84,7 @@ I am currently in the process of obtaining a personal ASN as well as my own PA a
 .Click to expand
 [%collapsible]
 ====
-image::.gitlab/diagram.png[]
+image::diagram.png[]
 ====
 
 === ❄️ Nix
@@ -97,6 +99,7 @@ To enter the development shell, either have https://direnv.net/[`direnv`] config
 
 === 📂 Repository structure
 
+[.text-justify]
 This listing intentionally doesn't cover the entire structure of the repo, it is meant to be a high-level overview of where various components are located.
 
 [source,console]
@@ -111,6 +114,44 @@ This listing intentionally doesn't cover the entire structure of the repo, it is
 ├── secrets/        # Secrets encrypted with SOPS
 └── flake.nix       # The Nix flake containing all tools and development shells to work with the contents of this repo
 ----
+
+=== 🔐 SOPS
+
+[.text-justify]
+You might notice at a glance that it appears that this repository is full of secret things like API keys and stuff that shouldn't be publicly available. That is partially correct. This repository contains a variety of sensitive values but none of them are committed in plain text. Instead, they are encrypted with https://github.com/mozilla/sops[SOPS], which protects them from prying eyes at rest. However, with the right decryption keys, these secrets can be decrypted at runtime. Activating this project's nix shell using `nix develop` or via `direnv` will automatically decrypt the secrets and place them in the appropriate environment variable to be used by tools and config in the repo.
+
+[.text-justify]
+The `.sops.yaml` file at the root of the repo defines creation rules for secrets to be encrypted with sops. Any files matching the defined creation rule paths will be encrypted with the PGP fingerprints specified. The user encrypting new files mut have all of the PGP public keys included in their keyring in order to encrypt the secret.
+
+// workaround for top level document not having +1 depth, we don't want this in the toc
+[discrete]
+==== Encrypting with SOPS
+
+[.text-justify]
+To encrypt a new file or edit an existing one in `$EDITOR`, run `sops <filename>`. To encrypt a file in place, run `sops -i -e <filename>`.
+
+NOTE: New files must match the creation rules in `.sops.yaml` or they will fail to create.
+
+// workaround for top level document not having +1 depth, we don't want this in the toc
+[discrete]
+==== Re-keying with SOPS
+
+[.text-justify]
+Occasionally, we might want to add a collaborator to the project, or a new tool that needs to be able to decrypt secrets. In that case, it will be necessary to re-key all existing files to encrypt them with the new public key after adding it to `.sops.yaml`. The following snippet can be used for this purpose.
+
+.Re-key snippet
+[%collapsible]
+====
+[source,bash]
+----
+#!/usr/bin/env bash
+find **/secrets/*.yaml -name '*.yaml' | xargs -i sops updatekeys -y {}
+find k8s/**/secrets/*.yaml -name '*.yaml' | xargs -i sops updatekeys -y {}
+----
+====
+
+// DNS chapter
+include::dns/README.adoc[leveloffset=+1]
 
 // Kubernetes chapter
 include::k8s-235/README.adoc[leveloffset=+1]
