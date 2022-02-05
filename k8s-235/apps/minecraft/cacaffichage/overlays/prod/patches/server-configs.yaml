@@ -1,0 +1,14 @@
+# paper
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/0
+  value:
+    mountPath: /data/paper.yml
+    subPath: paper.yml
+    name: server-config
+    readOnly: true
+- op: add
+  path: /spec/template/spec/volumes/0
+  value:
+    name: server-config
+    configMap:
+      name: server-config

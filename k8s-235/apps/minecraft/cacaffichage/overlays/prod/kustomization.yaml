@@ -28,6 +28,12 @@ patchesJson6902:
     kind: StatefulSet
     name: minecraft
     version: v1
+- path: ./patches/server-configs.yaml
+  target:
+    group: apps
+    kind: StatefulSet
+    name: minecraft
+    version: v1
 - path: ./patches/plugin-configs.yaml
   target:
     group: apps
@@ -94,6 +100,9 @@ configMapGenerator:
 - name: bstats-config
   files:
   - config.yml=files/bStats/config.yml
+- name: server-config
+  files:
+  - paper.yml=files/paper/paper.yml
 
 commonLabels:
   app.kubernetes.io/name: minecraft
