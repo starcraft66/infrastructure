@@ -8,7 +8,7 @@ Tristan Gosselin-Hane <starcraft66@gmail.com>
 :source-highlighter: rouge
 
 ifdef::env-github[]
-WARNING: It appears that you are reading this document on GitHub. I urge you to https://git.tdude.co/tristan/infrastructure/-/tree/docs[click on this link] to read the same document on GitLab which has far superior README formatting and rendering capabilities.
+WARNING: It appears that you are reading this document on GitHub. I urge you to https://git.tdude.co/tristan/infrastructure/[click on this link] to read the same document on GitLab which has far superior README formatting and rendering capabilities.
 endif::[]
 
 == Introduction
