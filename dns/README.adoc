@@ -1,0 +1,34 @@
+= DNS
+// Only set imagesdir if the file hasn't been included by one with a different imagesdir
+ifndef::imagesdir[:imagesdir: ../.gitlab/images]
+
+== Overview
+
+[.text-justify]
+I try to keep all configuration related the to deployment of a particular "application" or "unit" together. This is why, for example, many deployments in the `k8s-235/apps` folder have their own terraform folders for DNS and other cloud configuration. For underlying infrastructure, this is less obvious so the `dns` folder is a collection of DNS zones and records that don't exactly fit with a particular project and are all applied in one collection of terraform.
+
+== Zones
+
+[.text-justify]
+The following zones, including their DNSSEC configuration are managed by this collection:
+
+- cgbpi.com
+- nerdsin.space
+- shitsta.in
+- tdude.co
+- trs.tn
+
+=== ☁️ Making changes
+
+These DNS zones are managed by cloudflare and changes are performed with terraform using the official cloudflare provider.
+
+.Procedure to apply DNS changes
+[%collapsible]
+====
+TODO: document
+
+create bucket in minio
+init terraform
+plan terraform
+apply terraform
+====
