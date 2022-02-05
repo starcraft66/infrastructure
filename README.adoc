@@ -84,6 +84,7 @@ I am currently in the process of obtaining a personal ASN as well as my own PA a
 .Click to expand
 [%collapsible]
 ====
+Example diagram; will change
 image::diagram.png[]
 ====
 
