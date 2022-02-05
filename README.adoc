@@ -47,7 +47,7 @@ I use a few different tools and methodologies to achieve my goals outlined above
 
 [cols="15h,~"]
 |===
-|Methodology|Description
+| Methodology | Description
 
 | https://opengitops.dev/[GitOps] | Versioned, Immutable, Declarative configuration being automatically applied and continuously reconciled.
 |===
