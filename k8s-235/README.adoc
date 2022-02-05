@@ -1,9 +1,33 @@
 = 235 Kubernetes cluster
+// Only set imagesdir if the file hasn't been included by one with a different imagesdir
+ifndef::imagesdir[:imagesdir: ../.gitlab/images]
 
 == Overview
 
 [.text-justify]
 The 235 kubernetes cluster (referred to as `k8s-235`) is my only personal kubernetes cluster at the moment. It consists of 2 master nodes and 6 worker nodes. One of the workers and both masters run a 3-node etcd cluster, the backing data store for kubernetes. The cluster is deployed on 8 virtual machines running Ubuntu 20.04 LTS, these VMs run on my two physical proxmox hypervisors and are provisioned with Terraform. The cluster is then deployed on the aforementioned VMs with Ansible using the Kubespray playbook.
+
+== Provisioning
+
+[.text-justify]
+The virtual machines providing compute for the kubernetes worker and master nodes are provisioned on my two proxmox hypervisors `soarin` and `fleetfoot`. The API keys to connect to the proxmox api and terraform storage backend are automatically added to the environment upon entering the nix shell. The terraform files in the `k8s-235/cluster` folder create 8 identical proxmox VMs with 8 vCPU and 30 GiB of ram each, along with DNS records to connect to each VM. The VMs are cloned from an ubuntu 20.04 cloud image that must initially be loaded into a proxmox storage container prior to applying the terraform plan. The terraform definition also adds SSH keys to the VMs via cloud-init so that they can immediately be taken over by ansible once up and running.
+
+.Procedure to install the ubuntu cloud image template on Proxmox
+[%collapsible]
+====
+TODO: Paraphrase https://pve.proxmox.com/wiki/Cloud-Init_Support#_preparing_cloud_init_templates
+====
+
+.Procedure to deploy the kubernetes VMs with Terraform
+[%collapsible]
+====
+TODO: document
+
+create bucket in minio
+init terraform
+plan terraform
+apply terraform
+====
 
 == Components
 
@@ -13,14 +37,109 @@ The core components of the kubernetes cluster include the control-plane itself, 
 === 😸 Calico
 
 [.text-justify]
-blablabla calico CNI BGP peering
+I use the Calico CNI plugin to provide my cluster with networking. Unlike most other CNI plugins that rely heavily on overlay networks and encapsulation, calico can function with pure layer 3 underlay networks using normal routing via BGP.
+
+[.text-justify]
+In kubernetes there are two main CIDR blocks that are important to know about when creating a cluster. The first one is the Pod cidr, every Pod created will be allocated an address inside this subnet. The second one is the Service subnet, all service VIPs created in the cluster will be allocated an address inside this subnet.
+
+[.text-justify]
+By default with calico, the pod cidr is further divided and every node in the cluster is allocated a portion of this subnet. Every node the cluster forms a BGP mesh that that makes all nodes aware of each others' pod CIDRs so that all nodes can reach each other. Calico can also optionally peer with a router and announce its subnets to it over BGP to allow communication from the exterior into the internal cluster network, something that isn't typically possible with overlay networks.
+
+[.text-justify]
+In my cluster, I have disabled the mesh due to a long-standing bug in calico that made it impossible for me to a https://github.com/projectcalico/calico/issues/3810/[long-standing issue in calico] that could not be worked around at the time my cluster was created. Communication between nodes still works fine, it just incurs an additional layer 3 hop through my router which isn't a big deal. I also advertise the service CIDR, as well as an optional LoadBalancer CIDR. In short, every network specific to my kubernetes cluster can be reached from elsewhere in my network.
+
+[.text-justify]
+The ansible variable files `k8s-235/kubespray/inventory/group_vars/k8s-cluster/k8s-cluster.yml`, `k8s-235/kubespray/inventory/group_vars/k8s-cluster/k8s-net-calico.yml` and `k8s-235/kubespray/inventory/group_vars/k8s-cluster/peers.yml` contain all of configuration values relating to the Calico BGP configuration such as CIDRs, peering configuration and AS numbers.
+
+[.text-justify]
+In the future, I plan to re-enable the node-to-node mesh in calico and setting `spec.keepOriginalNextHop: true` in all of my ``BGPPeer``s to prevent every node from announcing every node CIDR at once and causing general chaos. When that is complete, my calico network topology will look something like this:
+
+.Calico network diagram
+[%collapsible]
+====
+image::calico-bgp.png[]
+====
+
+==== MetalLB "integration"
+
+[.text-justify]
+I also run MetalLB in my cluster which is a "Bare-Metal" replacement for kubernetes' `LoadBalancer` concept aimed at hooking up cloud load balancers to kubernetes services. Since we already run a load-balancer inside the cluster and aren't running in a cloud that would provide us with one, this concept doesn't exactly make sense. Most people use MetalLB in layer-2 mode so that pods can behave like typical VMs on a network and acquire IP addresses via a mechanism reminiscent of DHCP. MetalLB also has a BGP mode but I consider it useless when I already run calico in the cluster. For this reason, I have completely disabled the MetalLB speaker which is the integral part of the software. I only use it as a mechanism to automatically assign addresses out of an address pool to LoadBalancer services. These ip addresses will be reachable without the speaker because Calico already advertises these addresses to my upstream router as soon as they are assigned.
+
+[.text-justify]
+In the future, I plan to remove MetalLB entirely and simply assign and advertise ``ExternalIP``s to services that I've currently assigned ``LoadBalancer``s to. This will actually make the whole ordeal more ergonomic for me because I will be able to specify the IP address in advance to coordinate with firewall rules instead of waiting for an IP address to be allocated and then creating a firewall rule.
 
 === 🐙 ArgoCD
 
 [.text-justify]
-blablabla ArgoCD GitOps
+ArgoCD is an central part of my cluster. Once the initial control-plane for the cluster is deployed by ansible, the only application that must be installed manually into the cluster is ArgoCD. Once installed, it will take over the lifecycle of all of the applications in this repository to be deployed into the cluster.
+ArgoCD deploys everything in the `k8s-235/apps` folder including itself. A commit webhook in GitLab will cause ArgoCD to sync the repository on every commit. Authentication to ArgoCD is done through GitLab's SSO.
+
+[.text-justify]
+To deploy ArgoCD, go into the `k8s-235/apps/argocd` and run `kustomize build --enable-alpha-plugins overlays/prod | kubectl apply -f -`. ArgoCD will become available at https://gitops.tdude.co.
+
+==== Kustomize
+
+[.text-justify]
+Kustomize touts itself to be a template-free solution to manage application deployments on kubernetes in stark contrast to the popular Helm package manager. All of the manifests in `k8s-235/apps` are assembled with kustomize before being applied. ArgoCD runs kustomize which builds the manifests and applies them to the cluster.
+
+==== SOPS
+
+ArgoCD is capable of decrypting secrets in this repo through the https://github.com/viaduct-ai/kustomize-sops[kustomize-sops] plugin for kustomize. To do this, an `initContainer` installs the plugin into ArgoCD's Pod and also imports a GPG private key ArgoCD uses to decrypt secrets. All sops-encrypted secrets you expect ArgoCD to be able to decrypt must be encrypted with ArgoCD's public key.
+
+.Procedure to generate a GPG key for use with ArgoCD
+[%collapsible]
+====
+Procedure goes here...
+====
 
 === 🔥 Prometheus
 
 [.text-justify]
-blablabla Prometheus monitoring
+Cluster-wide metrics monitoring in my cluster is performed by prometheus. More specifically, I use ArgoCD to deploy https://git.tdude.co/tristan/kube-prometheus-k8s-235/-/tree/master/[my personal configuration] of the https://github.com/prometheus-operator/kube-prometheus/[kube-prometheus] project. Like everything else, it is deployed by ArgoCD and configured to scrape ``ServiceMonitor``s and ``PodMonitor``s in all namespaces, along with cluster-wide internal metrics. The web interface for prometheus is reachable at https://prometheus.monitoring.tdude.co and the one for Grafana at https://monitoring.tdude.co. Grafana is configured for SSO authentication with GitLab.
+
+[.text-justify]
+Additionally, `kube-prometheus` also deploys alertmanager and a handful of useful alerting rules. I have configured it to notify me on Discord and on Matrix when alerts are firing using https://github.com/benjojo/alertmanager-discord/[alert-manager-discord] and https://github.com/jaywink/matrix-alertmanager/[matrix-alertmanager]. The web interface for alertmanager is available at https://alertmanager.tdude.co.
+
+=== 🛩️ Traefik
+
+[.text-justify]
+The idiomatic way to expose http services in kubernetes is via an ingress controller, a fancy word for a reverse proxy that does some service discovery. For this task, I use https://traefik.io/traefik/[Traefik] for no particular reason other than having used it in the past and having liked it.
+
+==== Single Sign-On
+
+[.text-justify]
+Traefik supports a host of interesting features like its extensive middleware system. I make extensive use of the "Forward Auth" middleware to protect services I don't want exposed to the public behind an OpenID Connect SSO login via https://github.com/oauth2-proxy/oauth2-proxy/[oauth2-proxy]. SSO protection can be added to any ingress by setting the `traefik.ingress.kubernetes.io/router.middlewares` label on it to `traefik-forward-auth@kubernetescrd`.
+
+==== TLS
+
+[.text-justify]
+Traefik is configured to accept TLS 1.2 and 1.3 connections only and sets strict-transport security headers unconditionally. While it is capable of obtaining TLS certificates on its own via ACME, I choose to disable that functionality and provision TLS certificates with https://cert-manager.io/[cert-manager] instead because it is much more flexible. Setting the `cert-manager.io/cluster-issuer` label to `"letsencrypt-prod"` on any ingress will cause cert-manager to provision a certificate matching the domains on that ingress. Cert-manager is configured to obtain certificate from the Let's Encrypt staging and production environments via the DNS-01 challenge using Cloudflare's API.
+
+=== 💾 Democratic-csi
+
+[.text-justify]
+No kubernetes cluster is complete without persistent storage for stateful applications. My hypervisors aren't particularly interesting in terms of storage, but I do have a NAS with plenty of storage so let's use that! I use the https://github.com/democratic-csi/democratic-csi/[democratic-csi] CSI storage driver in my cluster to provide network programmatic access to network storage on my NAS to my kubernetes nodes. This works by making calls to the TrueNAS http api to provision new ZFS datasets or ZVOLs and exporting it over NFS or iSCSI depending on the type of share. The configuration in `k8s-235/apps/democratic-csi` defines 3 distinct ``StorageClass``es for different purposes:
+
+- `freenas-nfs-csi`
+- `freenas-iscsi-csi`
+- `truenas-nfs-spitfire-fast`
+
+[.text-justify]
+`freenas-nfs-csi` provisions HDD-backed ZFS datasets to be shared over NFS. `freenas-iscsi-csi` provisions HDD-backed ZFS datasets to be shared over iSCSI, this is usually required for anything that uses an SQLite database with the WAL enabled since locking does not work over NFS. `truenas-nfs-spitfire-fast` provisions an NVMe SSD-backed ZFS dataset to be shared over NFS.
+
+==== Configuration
+
+[.text-justify]
+To in order for democratic-csi to do its work, we need to supply it with a TrueNAS API key and an SSH private key to log into TrueNAS as root to run some ZFS commands (this might not be required in the future).
+
+.Procedure to add an SSH key to TrueNAS root
+[%collapsible]
+====
+Procedure goes here...
+====
+
+.Procedure to generate and retrieve a TrueNAS API key
+[%collapsible]
+====
+Procedure goes here...
+====
