@@ -131,7 +131,7 @@ The `.sops.yaml` file at the root of the repo defines creation rules for secrets
 [.text-justify]
 To encrypt a new file or edit an existing one in `$EDITOR`, run `sops <filename>`. To encrypt a file in place, run `sops -i -e <filename>`.
 
-NOTE: New files must match the creation rules in `.sops.yaml` or they will fail to create.
+WARNING: New files must match the creation rules in `.sops.yaml` or they will fail to create.
 
 // workaround for top level document not having +1 depth, we don't want this in the toc
 [discrete]
