@@ -85,7 +85,10 @@ configMapGenerator:
   - JVM_XX_OPTS=""
   - ENABLE_RCON=true
   - SERVER_IP="::"
-  - SPIGET_RESOURCES="274,18494"
+  - SPIGET_RESOURCES="18494"
+  # Disable programmatically pulling dynmap until solution to
+  # https://github.com/itzg/docker-minecraft-server/issues/1307 is found
+  # - SPIGET_RESOURCES="274,18494"
 - name: discordsrv-config
   files:
   - alerts.yml=files/DiscordSRV/alerts.yml
