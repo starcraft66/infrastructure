@@ -17,6 +17,7 @@ The following zones, including their DNSSEC configuration are managed by this co
 - shitsta.in
 - tdude.co
 - trs.tn
+- as208914.net
 
 === ☁️ Making changes
 
