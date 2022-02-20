@@ -8,7 +8,9 @@ namespace: crossplane
 
 helmCharts:
 - name: crossplane
-  includeCRDs: true
+  # Causes error in ArgoCD for some reason
+  # not needed anyway
+  # includeCRDs: true
   releaseName: crossplane
   version: 1.6.3
   repo: https://charts.crossplane.io/stable
