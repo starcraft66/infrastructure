@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: traefik-v4
+  name: traefik-v4-tcp
   annotations:
     metallb.universe.tf/allow-shared-ip: "traefik-v4"
 spec:
@@ -19,6 +19,22 @@ spec:
     port: 443
     targetPort: websecure
     protocol: TCP
+  selector:
+    app.kubernetes.io/name: traefik
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-v4-udp
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "traefik-v4"
+spec:
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+    - IPv4
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  ports:
   - name: http3
     port: 443
     targetPort: websecureudp
@@ -29,7 +45,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: traefik-v6
+  name: traefik-v6-tcp
   annotations:
     metallb.universe.tf/allow-shared-ip: "traefik-v6"
 spec:
@@ -47,6 +63,22 @@ spec:
     port: 443
     targetPort: websecure
     protocol: TCP
+  selector:
+    app.kubernetes.io/name: traefik
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-v6-udp
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "traefik-v6"
+spec:
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+    - IPv6
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  ports:
   - name: http3
     port: 443
     targetPort: websecureudp
