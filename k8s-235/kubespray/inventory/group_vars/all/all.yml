@@ -5,6 +5,13 @@ etcd_data_dir: /var/lib/etcd
 ## Experimental kubeadm etcd deployment mode. Available only for new deployment
 etcd_kubeadm_enabled: false
 
+# Allow k8s to scrape host etcd metrics
+etcd_metrics_port: 2381
+etcd_metrics_service_labels:
+  app.kubernetes.io/managed-by: Kubespray
+  app.kubernetes.io/name: etcd
+  app.kubernetes.io/instance: monitoring
+
 ## Directory where the binaries will be installed
 bin_dir: /usr/local/bin
 
