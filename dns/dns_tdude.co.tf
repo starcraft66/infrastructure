@@ -51,7 +51,7 @@ resource "cloudflare_record" "lolisafe_tdude_co-9452bcc45958fa18bd91f1e3c4c5db6d
 resource "cloudflare_record" "soarin-ilo_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "soarin-ilo.235"
-  value   = "2607:fa48:6ed8:8a52:29c:2ff:fe9b:abf2"
+  value   = "2607:fa48:6ed8:8a51:32:a8ff:feb1:c696"
   type    = "AAAA"
   ttl     = 1
   proxied = false
