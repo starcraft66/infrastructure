@@ -29,6 +29,18 @@
           sops-nix.sops-import-keys-hook
         ];
 
+        KUSTOMIZE_PLUGIN_HOME = pkgs.buildEnv {
+          name = "kustomize-plugins";
+          paths = with pkgs; [
+            kustomize-sops
+          ];
+          postBuild = ''
+            mv $out/lib/* $out
+            rm -r $out/lib
+          '';
+          pathsToLink = [ "/lib" ];
+        };
+
         # For future usage
         # sopsPGPKeyDirs = [
         #   "./secrets/keys/hosts"
