@@ -16,6 +16,12 @@ generators:
 - ./generators/secrets-generator.yaml
 
 patchesJson6902:
+- path: ./patches/resources.yaml
+  target:
+    group: apps
+    kind: StatefulSet
+    name: minecraft
+    version: v1
 - path: ./patches/persistence.yaml
   target:
     group: apps
