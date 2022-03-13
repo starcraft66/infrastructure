@@ -22,6 +22,14 @@
       # Use inputs to avoid infinite recursion
       sops-nix = inputs.sops-nix.packages.${system};
     in {
+      # nix run .#minecraft-console -- namespace
+      apps = {
+        minecraft-console = {
+          type = "app";
+          program = toString (import ./scripts/minecraft-console.nix { inherit pkgs; }).minecraft-console + "/bin/minecraft-console";
+        };
+      };
+
       devShell = pkgs.mkShell {
         name = "infrastructure";
 
@@ -48,6 +56,7 @@
         # ];
 
         buildInputs = with pkgs; [
+          jq
           git
           nixFlakes
           nixfmt
