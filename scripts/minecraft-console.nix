@@ -40,7 +40,7 @@ in {
     NAMESPACE="$1"
     echo "Connecting to Minecraft console in namespace: $NAMESPACE..."
     # Use pod instead of sts since name is reliable and we get the IP
-    POD=$(${kubectl}/bin/kubectl get pod -n cacaffichage minecraft-0 -o json)
+    POD=$(${kubectl}/bin/kubectl get pod -n $NAMESPACE minecraft-0 -o json)
     SECRET=$(echo $POD | ${jq}/bin/jq -r '.spec.containers[0].envFrom[].secretRef.name' | grep minecraft-secrets)
     RCON_IP=$(echo $POD | ${jq}/bin/jq -r '.status.podIP')
     RCON_PASSWORD=$(${kubectl}/bin/kubectl get secret $SECRET -n $NAMESPACE -o "jsonpath={.data.RCON_PASSWORD}" | ${pkgs.coreutils}/bin/base64 -d)
