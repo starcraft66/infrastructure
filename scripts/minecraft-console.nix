@@ -43,7 +43,7 @@ in {
     POD=$(${kubectl}/bin/kubectl get pod -n cacaffichage minecraft-0 -o json)
     SECRET=$(echo $POD | ${jq}/bin/jq -r '.spec.containers[0].envFrom[].secretRef.name' | grep minecraft-secrets)
     RCON_IP=$(echo $POD | ${jq}/bin/jq -r '.status.podIP')
-    RCON_PASSWORD=$(${kubectl}/bin/kubectl get secret $SECRET -n $NAMESPACE -o "jsonpath={.data.RCON_PASSWORD}" | base64 -d)
+    RCON_PASSWORD=$(${kubectl}/bin/kubectl get secret $SECRET -n $NAMESPACE -o "jsonpath={.data.RCON_PASSWORD}" | ${pkgs.coreutils}/bin/base64 -d)
     ${pkgs.mcrcon}/bin/mcrcon -H $RCON_IP -p $RCON_PASSWORD
   '';
 }
