@@ -44,8 +44,8 @@ spec:
             cpu: "0.5"
             memory: "3Gi"
           limits:
-            cpu: "1.0"
-            memory: "6Gi"
+            cpu: "4.0"
+            memory: "8Gi"
 #        readinessProbe:
 #          httpGet:
 #            path: /
