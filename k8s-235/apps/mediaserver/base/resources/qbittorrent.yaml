@@ -46,19 +46,19 @@ spec:
           limits:
             cpu: "1.0"
             memory: "6Gi"
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          periodSeconds: 30
-          failureThreshold: 3
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 120
-          periodSeconds: 30
-          failureThreshold: 5
+#        readinessProbe:
+#          httpGet:
+#            path: /
+#            port: 8080
+#          periodSeconds: 30
+#          failureThreshold: 3
+#        livenessProbe:
+#          httpGet:
+#            path: /
+#            port: 8080
+#          initialDelaySeconds: 120
+#          periodSeconds: 30
+#          failureThreshold: 5
       volumes:
       - name: data
         persistentVolumeClaim:
