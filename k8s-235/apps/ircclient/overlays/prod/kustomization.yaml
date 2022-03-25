@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base
+- ./resources/volume.yaml
+- ./resources/ingress.yaml
+
+namespace: ircclient
+
+configMapGenerator:
+- name: thelounge-permissions
+  literals: &perms
+  - "PUID=1000"
+  - "PGID=1000"
+  - "TZ=America/Toronto"
+- name: znc-permissions
+  literals: *perms
+- name: thelounge-config
+  files:
+  - "config.js=./config/thelounge.js"
+
+images:
+- name: lscr.io/linuxserver/thelounge
+  digest: sha256:e5e28d74f55a4b37ac3d1c1b3c72f6ec491d85b4406d390e6563220d87f79a73
+- name: lscr.io/linuxserver/znc
+  digest: sha256:ced6a88aecdd27c05f0e15d6ff58ff8b3e2bdb5235bb17c552f635fd8644787c

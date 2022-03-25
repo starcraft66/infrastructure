@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: thelounge
+  labels:
+    prometheus: k8s

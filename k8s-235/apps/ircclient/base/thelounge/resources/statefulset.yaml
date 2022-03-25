@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: thelounge
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: thelounge
+  serviceName: "thelounge"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: thelounge
+    spec:
+      containers:
+      - name: thelounge
+        image: lscr.io/linuxserver/thelounge:latest
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: thelounge-permissions
+        resources:
+          requests:
+            cpu: "0.25"
+            memory: "250Mi"
+          limits:
+            cpu: "0.5"
+            memory: "500Mi"
+        ports:
+        - name: http
+          containerPort: 9000
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          periodSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 5
+        volumeMounts:
+        - name: data
+          mountPath: /config
+        - name: thelounge-config
+          mountPath: /config/config.js
+          subPath: config.js
+          readOnly: true
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: "thelounge-data"
+      - name: thelounge-config
+        configMap:
+          name: thelounge-config
+          items:
+          - key: config.js
+            path: config.js

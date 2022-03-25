@@ -558,3 +558,21 @@ spec:
   syncPolicy:
     automated:
       selfHeal: false
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ircclient
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: ircclient
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/ircclient/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
