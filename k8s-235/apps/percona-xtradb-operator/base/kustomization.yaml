@@ -12,14 +12,3 @@ helmCharts:
   version: 1.10.0
   repo: https://percona.github.io/percona-helm-charts/
   namespace: xtradb-operator
-  valuesInline:
-    watchAllNamespaces: true
-    createCRD: true
-    pmm:
-      enabled: true
-    pxc:
-      volumeSpec:
-        persistentVolumeClaim:
-          storageClassName: "truenas-spitfire-fast-nfs-csi"
-          accessModes: [ "ReadWriteOnce" ]
-
