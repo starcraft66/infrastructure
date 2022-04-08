@@ -74,6 +74,7 @@
           yamllint
           gnupg
           sops-nix.ssh-to-pgp
+          asciidoctor
         ];
 
         shellHook = ''
