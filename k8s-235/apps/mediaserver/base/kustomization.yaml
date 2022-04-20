@@ -32,6 +32,6 @@ images:
 - name: ghcr.io/linuxserver/qbittorrent
   newTag: 4.4.2
 - name: ghcr.io/linuxserver/tautulli
-  digest: sha256:08778002f5392e0f6175232d10c7a71a720388b1943d39a561d311c019aec009
+  digest: sha256:a20ff9fcc7414c985f0085e0f30a3e423a9587643152043842742d2c38b6d70a
 - name: ghcr.io/linuxserver/overseerr
   digest: sha256:cc9cccb9b6df70a26ce6f6b5792f0093e464cf250b3e9f143c973038ff0fd17c
