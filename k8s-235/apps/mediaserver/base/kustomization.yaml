@@ -24,7 +24,7 @@ images:
 - name: ghcr.io/linuxserver/radarr
   digest: sha256:606546d01349a851d2ba9f05047d03dad888551ad67dca1e3ed1177c81d8405e
 - name: ghcr.io/linuxserver/sonarr
-  digest: sha256:49052e1ac8266cd421d5e86b2be5bed7571b41e7ff6864149011d9259421427f
+  digest: sha256:0b5ae82899ae81b60728d0ef903d41ea52e28cba3e5c68dfa03023e98b2e8cf5
 - name: ghcr.io/linuxserver/lidarr
   digest: sha256:37c42081a572c68e1263c32823d68763854c34c871bff5339e47ca1502c0caf7
 - name: ghcr.io/linuxserver/prowlarr
