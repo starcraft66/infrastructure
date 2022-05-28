@@ -2,8 +2,8 @@
   path: /spec/template/spec/containers/0/resources
   value:
     requests:
-      cpu: 6000m
+      cpu: 4000m
       memory: 8Gi
     limits:
-      cpu: 6000m
+      cpu: 8000m
       memory: 8Gi
