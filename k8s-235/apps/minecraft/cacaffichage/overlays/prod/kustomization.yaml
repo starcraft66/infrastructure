@@ -86,7 +86,8 @@ configMapGenerator:
   - GENERATOR_SETTINGS=""
   - LEVEL=world
   - ONLINE_MODE=true
-  - JVM_XX_OPTS="-XX:MaxRAMPercentage=75"
+  - MEMORY=""
+  - JVM_XX_OPTS="-XX:MaxRAMPercentage=85"
   - JVM_OPTS=""
   - ENABLE_RCON=true
   - SERVER_IP="::"
