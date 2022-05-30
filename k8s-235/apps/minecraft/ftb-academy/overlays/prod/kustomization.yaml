@@ -1,0 +1,79 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: ftb-academy
+
+images:
+- name: itzg/minecraft-server
+  newTag: "java8-multiarch"
+
+resources:
+- ../../../base
+- ./resources/namespace.yaml
+- ./resources/volume.yaml
+
+generators:
+- ./generators/secrets-generator.yaml
+
+patchesJson6902:
+- path: ./patches/persistence.yaml
+  target:
+    group: apps
+    kind: StatefulSet
+    name: minecraft
+    version: v1
+- path: ./patches/env-vars.yaml
+  target:
+    group: apps
+    kind: StatefulSet
+    name: minecraft
+    version: v1
+- path: ./patches/liveness-probe-extended.yaml
+  target:
+    group: apps
+    kind: StatefulSet
+    name: minecraft
+    version: v1
+- path: ./patches/server-port.yaml
+  target:
+    group: ""
+    kind: Service
+    name: minecraft-v6
+    version: v1
+
+configMapGenerator:
+- name: minecraft-env-vars
+  literals:
+  - EULA=TRUE
+  - TYPE=FTBA
+  - FTB_MODPACK_ID=88
+  - FTB_MODPACK_VERSION_ID=2110
+  - DIFFICULTY=hard
+  - ICON=""
+  - MAX_PLAYERS=20
+  - MAX_WORLD_SIZE=""
+  - ALLOW_NETHER=true
+  - ANNOUNCE_PLAYER_ACHIEVEMENTS=true
+  - ENABLE_COMMAND_BLOCK=false
+  - FORCE_GAMEMODE=false
+  - GENERATE_STRUCTURES=true
+  - HARDCORE=false
+  - MAX_BUILD_HEIGHT=256
+  - MAX_TICK_TIME=60000
+  - SPAWN_MONSTERS=true
+  - SPAWN_NPCS=true
+  - VIEW_DISTANCE=10
+  - MODE=survival
+  - MOTD="Welcome to Minecraft on Kubernetes!"
+  - PVP=true
+  - LEVEL_TYPE=DEFAULT
+  - GENERATOR_SETTINGS=""
+  - LEVEL=world
+  - ONLINE_MODE=true
+  - MEMORY=""
+  - JVM_XX_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=85.0"
+  - JVM_DD_OPTS=fml.queryResult:confirm
+  - ENABLE_RCON=true
+  - SERVER_IP="::"
+
+commonLabels:
+  app.kubernetes.io/name: minecraft

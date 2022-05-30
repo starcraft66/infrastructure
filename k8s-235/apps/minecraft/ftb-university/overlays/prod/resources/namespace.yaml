@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ftb-ultimate
+  labels:
+    prometheus: k8s

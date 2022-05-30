@@ -1,0 +1,7 @@
+- op: add
+  path: /spec/ports/2
+  value:
+    name: minecraft-alt
+    port: 12351
+    targetPort: minecraft
+    protocol: TCP

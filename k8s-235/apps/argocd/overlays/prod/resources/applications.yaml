@@ -576,3 +576,39 @@ spec:
   syncPolicy:
     automated:
       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minecraft-ftb-academy
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: ftb-academy
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/minecraft/ftb-academy/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minecraft-ftb-university
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: ftb-university
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/minecraft/ftb-university/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
