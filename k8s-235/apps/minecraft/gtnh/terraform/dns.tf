@@ -4,16 +4,16 @@ data "cloudflare_zones" "tdude_co" {
   }
 }
 
-resource "cloudflare_record" "ftb-university-srv" {
+resource "cloudflare_record" "gtnh-srv" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
-  name    = "_minecraft._tcp.ftb-university"
+  name    = "_minecraft._tcp.gtnh"
   data {
-    name     = "ftb-university"
+    name     = "gtnh"
     port     = 12350
     priority = 1
     proto    = "_tcp"
     service  = "_minecraft"
-    target   = "ftb-university.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+    target   = "gtnh.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
     weight   = 1
   }
   type    = "SRV"
@@ -21,18 +21,18 @@ resource "cloudflare_record" "ftb-university-srv" {
   proxied = false
 }
 
-resource "cloudflare_record" "ftb-university-v4" {
+resource "cloudflare_record" "gtnh-v4" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
-  name    = "ftb-university.k8s.235"
+  name    = "gtnh.k8s.235"
   value   = "24.225.136.165"
   type    = "A"
   ttl     = 1
   proxied = false
 }
 
-resource "cloudflare_record" "ftb-university-v6" {
+resource "cloudflare_record" "gtnh-v6" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
-  name    = "ftb-university.k8s.235"
+  name    = "gtnh.k8s.235"
   value   = "2607:fa48:6ed8:8a54:3::7"
   type    = "AAAA"
   ttl     = 1
