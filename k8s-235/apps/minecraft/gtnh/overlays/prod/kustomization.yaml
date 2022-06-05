@@ -45,7 +45,7 @@ configMapGenerator:
   literals:
   - EULA=TRUE
   - TYPE=CURSEFORGE
-  - CF_SERVER_MOD=GT+New+Horizons-2.1.2.3-1.7.10.zip
+  - CF_SERVER_MOD=GTNewHorizonsServer-1.7.10-2.1.2.3.zip
   - DIFFICULTY=hard
   - ICON=""
   - MAX_PLAYERS=20
