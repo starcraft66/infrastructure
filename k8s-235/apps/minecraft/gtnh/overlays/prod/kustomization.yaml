@@ -65,7 +65,7 @@ configMapGenerator:
   - MODE=survival
   - MOTD="Welcome to Minecraft on Kubernetes!"
   - PVP=true
-  - LEVEL_TYPE=DEFAULT
+  - LEVEL_TYPE=rwg
   - GENERATOR_SETTINGS=""
   - LEVEL=world
   - ONLINE_MODE=true
