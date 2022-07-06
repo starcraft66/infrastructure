@@ -544,7 +544,7 @@ resource "cloudflare_record" "ovirt_305-1700" {
 resource "cloudflare_record" "traefik_305-1700" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "traefik.305-1700.tdude.co"
-  value   = "2001:470:b08b:d::4"
+  value   = "2001:470:b08b:d::5"
   type    = "AAAA"
   ttl     = 1
   proxied = false
