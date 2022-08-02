@@ -1,5 +1,6 @@
 resource "cloudflare_zone" "as208914_net" {
-  zone = "as208914.net"
+  zone       = "as208914.net"
+  account_id = "2b4b7b075ea5f723e423aaee08c09e4d"
 }
 
 resource "cloudflare_zone_dnssec" "as208914_net_dnssec" {

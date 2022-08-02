@@ -1,6 +1,6 @@
 resource "cloudflare_zone" "cgbpi_com" {
-  zone = "cgbpi.com"
-  # id = "6322bae6b62fcf2868a77cc564c6d045"
+  zone       = "cgbpi.com"
+  account_id = "2b4b7b075ea5f723e423aaee08c09e4d"
 }
 
 resource "cloudflare_zone_dnssec" "cgbpi_com" {

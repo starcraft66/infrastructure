@@ -1,6 +1,6 @@
 resource "cloudflare_zone" "nerdsin_space" {
-  zone = "nerdsin.space"
-  # id = "f51e4e810b96efbadb972187038375d5"
+  zone       = "nerdsin.space"
+  account_id = "2b4b7b075ea5f723e423aaee08c09e4d"
 }
 
 resource "cloudflare_record" "turn_nerdsin_space-772814e8fbfef2c39c8977e269d3b3aa" {

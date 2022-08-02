@@ -1,5 +1,6 @@
 resource "cloudflare_zone" "trs_tn" {
-  zone = "trs.tn"
+  zone       = "trs.tn"
+  account_id = "2b4b7b075ea5f723e423aaee08c09e4d"
   # id = "b7c58ff85f09ba3a7aeaa231c216dd84"
 }
 

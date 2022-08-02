@@ -1,5 +1,6 @@
 resource "cloudflare_zone" "tdude_co" {
-  zone = "tdude.co"
+  zone       = "tdude.co"
+  account_id = "2b4b7b075ea5f723e423aaee08c09e4d"
   # id = "c802e5f57a27af705373d5d3570649f0"
 }
 

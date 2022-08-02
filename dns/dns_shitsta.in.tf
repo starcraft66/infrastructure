@@ -1,6 +1,6 @@
 resource "cloudflare_zone" "shitsta_in" {
-  zone = "shitsta.in"
-  # id = "303edd17e33dd7a114cf004107ef7cff"
+  zone       = "shitsta.in"
+  account_id = "2b4b7b075ea5f723e423aaee08c09e4d"
 }
 
 resource "cloudflare_record" "shitsta_in-4f4799fae5fde1ad79648fc0d33c7df2" {
