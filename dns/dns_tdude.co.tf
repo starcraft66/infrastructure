@@ -604,3 +604,12 @@ resource "cloudflare_record" "borgbackup_235" {
   ttl     = 1
   proxied = false
 }
+
+resource "cloudflare_record" "fogserver_305-1700_AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "fogserver.305-1700.tdude.co"
+  value   = "172.16.2.4"
+  type    = "A"
+  ttl     = 1
+  proxied = false
+}
