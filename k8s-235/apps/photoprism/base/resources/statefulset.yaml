@@ -35,7 +35,7 @@ spec:
             httpHeaders:
             - name: Host
               value: "photos.tdude.co"
-          initialDelaySeconds: 10
+          initialDelaySeconds: 3600
           periodSeconds: 10
           timeoutSeconds: 5
           successThreshold: 1
@@ -47,7 +47,7 @@ spec:
             httpHeaders:
             - name: Host
               value: "photos.tdude.co"
-          initialDelaySeconds: 10
+          initialDelaySeconds: 3600
           periodSeconds: 10
           timeoutSeconds: 5
           successThreshold: 1
