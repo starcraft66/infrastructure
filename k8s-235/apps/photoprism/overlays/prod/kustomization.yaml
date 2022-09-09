@@ -35,7 +35,7 @@ configMapGenerator:
   - PHOTOPRISM_UPLOAD_NSFW="true"                 # Allow uploads that MAY be offensive
   # PHOTOPRISM_DATABASE_DRIVER="sqlite"         # SQLite is an embedded database that doesn't require a server
   - PHOTOPRISM_DATABASE_DRIVER="mysql"            # Use MariaDB 10.5+ or MySQL 8+ instead of SQLite for improved performance
-  - PHOTOPRISM_DATABASE_SERVER="mysql-photoprism:6446"     # MariaDB or MySQL database server (hostname:port)
+  - PHOTOPRISM_DATABASE_SERVER="photoprism-mariadb:3306"     # MariaDB or MySQL database server (hostname:port)
   - PHOTOPRISM_DATABASE_PASSWORD="insecure"       # MariaDB or MySQL database user password
   - PHOTOPRISM_SITE_TITLE="PhotoPrism"
   - PHOTOPRISM_SITE_CAPTION="Browse Your Life"

@@ -4,7 +4,22 @@ resources:
 - ./resources/namespace.yaml
 - ./resources/statefulset.yaml
 - ./resources/service.yaml
-- ./resources/mysql.yaml
 - ./resources/volume.yaml
 
 namespace: photoprism
+
+# Photoprism only supports MariaDB and there's no good Operator for it
+helmCharts:
+- name: mariadb
+  includeCRDs: true
+  releaseName: photoprism
+  version: 11.3.0
+  repo: https://charts.bitnami.com/bitnami
+  namespace: photoprism
+  valuesInline:
+    auth:
+      existingSecret: mariadb-secrets
+    metrics:
+      enabled: true
+    global:
+      storageClass: truenas-nfs-spitfire-fast
