@@ -20,26 +20,3 @@ spec:
   selector:
     app.kubernetes.io/name: funkwhale
     app.kubernetes.io/component: frontend
----
-# Stupid hack because funkwhale hardcodes the db url to "postgres"
-# And I can't call a cluster just "postgres" using the operator
-apiVersion: v1
-kind: Service
-metadata:
-  name: postgres
-  labels:
-    app.kubernetes.io/name: funkwhale
-spec:
-  type: ClusterIP
-  ipFamilyPolicy: SingleStack
-  ipFamilies:
-  - IPv4
-  ports:
-    - name: postgresql
-      port: 5432
-      protocol: TCP
-      targetPort: 5432
-  selector:
-    application: spilo
-    cluster-name: funkwhale-postgres
-    spilo-role: replica
