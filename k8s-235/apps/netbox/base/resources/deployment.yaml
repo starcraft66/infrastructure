@@ -70,7 +70,7 @@ spec:
                     - key: secret_key
                       path: secret_key
               - secret:
-                  name: "netbox-owner-user.netbox-postgres.credentials.postgresql.acid.zalan.do"
+                  name: postgres
                   items:
                     - key: "password"
                       path: db_password
@@ -204,7 +204,7 @@ spec:
                     - key: secret_key
                       path: secret_key
               - secret:
-                  name: "netbox-owner-user.netbox-postgres.credentials.postgresql.acid.zalan.do"
+                  name: postgres
                   items:
                     - key: "password"
                       path: db_password
