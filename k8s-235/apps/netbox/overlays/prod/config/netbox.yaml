@@ -1,11 +1,11 @@
 ALLOWED_HOSTS: ["*"]
 DATABASE:
-  HOST: "netbox-postgres"
-  USER: "netbox_owner_user"
+  HOST: "netbox-postgres-rw"
+  USER: "netbox"
   NAME: "netbox"
   PORT: 5432
   OPTIONS:
-    sslmode: "require"
+    sslmode: "prefer"
   CONN_MAX_AGE: 300
 ADMINS: []
 ALLOWED_URL_SCHEMES: ["file","ftp","ftps","http","https","irc","mailto","sftp","ssh","tel","telnet","tftp","vnc","xmpp"]
