@@ -18,6 +18,7 @@ configMapGenerator:
   literals:
   - FUNKWHALE_HOSTNAME=music.tdude.co
   - FUNKWHALE_PROTOCOL=https
+  - FUNKWHALE_SPA_HTML_ROOT=http://localhost/front
   - REVERSE_PROXY_TYPE=nginx
   - MEDIA_ROOT=/srv/funkwhale/data/media
   - STATIC_ROOT=/srv/funkwhale/data/static
