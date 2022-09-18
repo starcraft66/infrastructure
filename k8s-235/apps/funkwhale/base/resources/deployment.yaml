@@ -28,12 +28,12 @@ spec:
             - name: POSTGRES_ENV_POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: "funkwhale-owner-user.funkwhale-postgres.credentials.postgresql.acid.zalan.do"
+                  name: postgres
                   key: password
             - name: POSTGRES_ENV_POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: "funkwhale-owner-user.funkwhale-postgres.credentials.postgresql.acid.zalan.do"
+                  name: postgres
                   key: username
           envFrom:
           - configMapRef:
@@ -79,12 +79,12 @@ spec:
             - name: POSTGRES_ENV_POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: "funkwhale-owner-user.funkwhale-postgres.credentials.postgresql.acid.zalan.do"
+                  name: postgres
                   key: password
             - name: POSTGRES_ENV_POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: "funkwhale-owner-user.funkwhale-postgres.credentials.postgresql.acid.zalan.do"
+                  name: postgres
                   key: username
           envFrom:
           - configMapRef:
@@ -163,12 +163,12 @@ spec:
             - name: POSTGRES_ENV_POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: "funkwhale-owner-user.funkwhale-postgres.credentials.postgresql.acid.zalan.do"
+                  name: postgres
                   key: password
             - name: POSTGRES_ENV_POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: "funkwhale-owner-user.funkwhale-postgres.credentials.postgresql.acid.zalan.do"
+                  name: postgres
                   key: username
           envFrom:
           - configMapRef:

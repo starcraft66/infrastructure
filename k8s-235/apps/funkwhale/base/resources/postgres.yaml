@@ -1,27 +1,3 @@
-apiVersion: "acid.zalan.do/v1"
-kind: postgresql
-metadata:
-  name: funkwhale-postgres
-  namespace: postgres-operator
-spec:
-  teamId: "funkwhale"
-  volume:
-    size: 10Gi
-    storageClass: "freenas-nfs-csi"
-  numberOfInstances: 2
-  users:
-    root:  # database owner
-    - superuser
-    - createdb
-  preparedDatabases:
-    funkwhale:
-      defaultUsers: true
-      extensions:
-        unaccent: data
-        citext: data
-  postgresql:
-    version: "14"
----
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
