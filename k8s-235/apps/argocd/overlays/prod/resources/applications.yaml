@@ -603,7 +603,7 @@ metadata:
 spec:
   project: production
   destination:
-    namespace: cloudnative-pg
+    namespace: cnpg
     server: https://kubernetes.default.svc
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
