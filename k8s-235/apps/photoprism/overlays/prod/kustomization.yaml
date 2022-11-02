@@ -7,7 +7,7 @@ resources:
 
 images:
 - name: photoprism/photoprism
-  newTag: "220901-bullseye"
+  newTag: "221102-bullseye"
 
 generators:
 - ./generators/secrets-generator.yaml
