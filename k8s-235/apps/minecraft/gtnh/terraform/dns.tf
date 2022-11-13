@@ -9,11 +9,12 @@ resource "cloudflare_record" "gtnh-srv" {
   name    = "_minecraft._tcp.gtnh"
   data {
     name     = "gtnh"
-    port     = 12350
+    port     = 3423
     priority = 1
     proto    = "_tcp"
     service  = "_minecraft"
-    target   = "gtnh.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+    # target   = "gtnh.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+    target   = "fiki.dev"
     weight   = 1
   }
   type    = "SRV"
