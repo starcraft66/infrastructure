@@ -1,6 +1,6 @@
 - op: replace
   path: /spec/template/spec/containers/0/readinessProbe/initialDelaySeconds
-  value: 400
+  value: 500
 - op: replace
   path: /spec/template/spec/containers/0/livenessProbe/initialDelaySeconds
-  value: 400
+  value: 500
