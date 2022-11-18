@@ -70,7 +70,7 @@ resource "cloudflare_record" "_matrix__tcp_staging_nerdsin_space-6f7da27c1882659
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "_matrix._tcp.staging"
   data {
-    name     = "staging"
+    name     = "staging.nerdsin.space"
     port     = 443
     priority = 1
     proto    = "_tcp"
