@@ -9,6 +9,6 @@ helmCharts:
 - name: pxc-operator
   includeCRDs: true
   releaseName: xtradb-operator
-  version: 1.11.2
+  version: 1.12.0
   repo: https://percona.github.io/percona-helm-charts/
   namespace: xtradb-operator
