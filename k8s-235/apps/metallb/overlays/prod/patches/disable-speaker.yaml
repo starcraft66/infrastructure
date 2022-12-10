@@ -4,3 +4,45 @@ metadata:
   name: speaker
   namespace: metallb-system
 $patch: delete
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: speaker-monitor-service
+  namespace: metallb-system
+$patch: delete
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: speaker
+  namespace: metallb-system
+$patch: delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-lister
+  namespace: metallb-system
+$patch: delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: metallb-system:speaker
+  namespace: metallb-system
+$patch: delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: metallb-system:speaker
+  namespace: metallb-system
+$patch: delete
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: speaker-monitor
+  namespace: metallb-system
+$patch: delete

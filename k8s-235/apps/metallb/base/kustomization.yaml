@@ -1,5 +1,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - github.com/metallb/metallb//manifests?ref=v0.11.0
-  - https://raw.githubusercontent.com/metallb/metallb/280d4dce683c800bf991b8988e37b94e28fb4c3b/manifests/prometheus-operator.yaml
+  - github.com/metallb/metallb/config/prometheus-native?ref=v0.13.7
