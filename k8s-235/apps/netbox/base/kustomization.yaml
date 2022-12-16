@@ -21,7 +21,7 @@ namespace: netbox
 helmCharts:
 - name: redis
   releaseName: netbox-redis
-  version: 15.x.x
+  version: 17.x
   repo: https://charts.bitnami.com/bitnami
   namespace: netbox
   valuesInline:
