@@ -258,7 +258,7 @@ gitlab_registry_storage_redirect_disable: "true"
 
 traefik_installation_folder: "/opt/traefik"
 traefik_data_folder: "/opt/traefik/data"
-traefik_docker_version: "2.2"
+traefik_docker_version: "2.9.6"
 
 monitoring_installation_folder: "/opt/monitoring"
 prometheus_installation_folder: "{{ monitoring_installation_folder }}/prometheus"
