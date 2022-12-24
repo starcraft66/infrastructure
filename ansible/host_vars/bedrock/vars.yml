@@ -315,7 +315,7 @@ matrix_element_default_theme: dark
 
 matrix_appservice_webhooks_version: latest
 
-matrix_postgres_version: 10
+matrix_postgres_version: 15
 
 matrix_installation_folder: "/opt/matrix"
 matrix_appservice_webhooks_data_folder: "{{ matrix_installation_folder }}/matrix-appservice-webhooks"
