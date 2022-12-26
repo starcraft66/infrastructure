@@ -14,6 +14,7 @@ data:
     # - get clusters, certificates and repositories;
     # - sync applications;
     # - read, create, update and delete GPG keys.
+    # - restart deployments and statefulsets
 
     p, role:org-operators, applications, sync, *, allow
     p, role:org-operators, clusters, get, *, allow
@@ -22,5 +23,7 @@ data:
     p, role:org-operators, gpgkeys, get, *, allow
     p, role:org-operators, gpgkeys, create, *, allow
     p, role:org-operators, gpgkeys, delete, *, allow
+    p, role:org-operators, applications, action/apps/Deployment/restart, *, allow
+    p, role:org-operators, applications, action/apps/StatefulSet/restart, *, allow
 
     g, tdude, role:org-operators
