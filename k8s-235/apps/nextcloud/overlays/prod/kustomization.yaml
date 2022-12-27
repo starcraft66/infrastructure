@@ -45,6 +45,11 @@ configMapGenerator:
   - POSTGRES_HOST=postgres-nextcloud
   - POSTGRES_DB=nextcloud
   - POSTGRES_USER=nextcloud
+  # This stuff is probably required because the nextcloud image
+  # only listens to X-Forwarded-For stuff if it comes from an
+  # RFC1918 IPv4 address.
+  # Forum posts say I need this to fix sign-in via iOS app.
+  - OVERWRITEPROTOCOL=https
 
 commonLabels:
   app.kubernetes.io/name: nextcloud
