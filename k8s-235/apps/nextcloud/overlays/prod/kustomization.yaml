@@ -42,7 +42,7 @@ configMapGenerator:
   literals:
   - NEXTCLOUD_TRUSTED_DOMAINS="cloud.tdude.co cloud4.tdude.co"
   - NEXTCLOUD_DATA_DIR="/var/www/html/data"
-  - POSTGRES_HOST=postgres-nextcloud-rw
+  - POSTGRES_HOST=nextcloud-postgres-rw
   - POSTGRES_DB=nextcloud
   - POSTGRES_USER=nextcloud
   # This stuff is probably required because the nextcloud image
