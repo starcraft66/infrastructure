@@ -109,7 +109,7 @@ spec:
     path: k8s-235/apps/awx/overlays/prod
   syncPolicy:
     automated:
-      selfHeal: false
+      selfHeal: true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
