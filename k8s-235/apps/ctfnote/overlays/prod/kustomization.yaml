@@ -22,12 +22,12 @@ configMapGenerator:
   - PAD_CREATE_URL=http://hedgedoc:3000/new
   - PAD_SHOW_URL=/
   - DB_DATABASE=ctfnote
-  - DB_HOST=postgres-ctfnote
+  - DB_HOST=-rw
   - DB_PORT=5432
   - WEB_PORT=3000
 - name: hedgedoc-config
   literals:
-  - CMD_DB_URL=postgres://ctfnote:ctfnote@postgres-ctfnote:5432/hedgedoc
+  - CMD_DB_URL=postgres://ctfnote:ctfnote@postgres-ctfnote-rw:5432/hedgedoc
   - CMD_URL_PATH=pad
   - CMD_DOMAIN=ctfnote.tdude.co
   - CMD_PROTOCOL_USESSL=true
