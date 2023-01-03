@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/part-of: kube-prometheus
     app.kubernetes.io/version: 2.25.0
   name: prometheus-k8s
-  namespace: kubedb
+  namespace: awx
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -27,7 +27,7 @@ metadata:
     app.kubernetes.io/part-of: kube-prometheus
     app.kubernetes.io/version: 2.25.0
   name: prometheus-k8s
-  namespace: kubedb
+  namespace: awx
 rules:
 - apiGroups:
   - ""
