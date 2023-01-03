@@ -47,7 +47,7 @@ spec:
       - name: ctfnote
         command:
         - "./start.sh"
-        - "postgres-ctfnote"
+        - "postgres-ctfnote-rw"
         - "5432"
         - "yarn"
         - "start"
