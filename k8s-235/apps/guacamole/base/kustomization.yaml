@@ -6,3 +6,10 @@ resources:
 - ./resources/app-service.yaml
 - ./resources/daemon-service.yaml
 - ./resources/namespace.yaml
+
+configMapGenerator:
+- name: pg-init-script
+  files:
+  - schema.sql=files/postgres-schema.sql
+  options:
+      disableNameSuffixHash: true

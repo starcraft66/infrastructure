@@ -19,7 +19,7 @@ spec:
         imagePullPolicy: Always
         envFrom:
         - secretRef:
-            name: mysql-config
+            name: postgres-config
         env:
         - name: GUACD_HOSTNAME
           value: "guacamole-daemon"
