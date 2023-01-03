@@ -1,7 +1,0 @@
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: kubedb
-  labels:
-    prometheus: k8s
