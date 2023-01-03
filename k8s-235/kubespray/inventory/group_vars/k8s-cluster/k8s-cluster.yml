@@ -197,6 +197,8 @@ dns_domain: "{{ cluster_name }}"
 container_manager: containerd
 # containerd_snapshotter: native
 
+containerd_base_runtime_spec_rlimit_nofile: 131070
+
 # Additional container runtimes
 kata_containers_enabled: false
 
