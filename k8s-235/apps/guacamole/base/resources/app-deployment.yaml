@@ -102,6 +102,11 @@ spec:
             port: 8080
           initialDelaySeconds: 15
           periodSeconds: 20
+        volumeMounts:
+        - name: temphack
+          mountPath: "/opt/guacamole/postgresql-hack"
+        - name: temphackalso
+          mountPath: "/opt/guacamole/postgresql"
       volumes:
       - name: temphack 
         emptyDir: {}
