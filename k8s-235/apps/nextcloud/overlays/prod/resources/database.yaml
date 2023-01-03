@@ -33,3 +33,19 @@ spec:
       - name: POSTGRES_DB
         value: nextcloud
   terminationPolicy: Halt
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: nextcloud-postgres
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      database: nextcloud
+      owner: nextcloud
+      secret:
+        name: postgres-credentials
+  storage:
+    storageClass: truenas-nfs-spitfire-fast
+    size: 10Gi
