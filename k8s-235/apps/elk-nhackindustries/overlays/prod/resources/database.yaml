@@ -1,30 +1,70 @@
-apiVersion: kubedb.com/v1alpha2
+# apiVersion: kubedb.com/v1alpha2
+# kind: Elasticsearch
+# metadata:
+#   name: es-nhackindustries
+#   namespace: nhackindustries
+# spec:
+#   version: "7.9.1-xpack"
+#   storageType: "Durable"
+#   storage:
+#     storageClassName: "freenas-nfs-csi"
+#     accessModes:
+#     - ReadWriteOnce
+#     resources:
+#       requests:
+#         storage: 10Gi
+#   monitor:
+#     agent: prometheus.io/operator
+#     prometheus:
+#       serviceMonitor:
+#         labels:
+#           app.kubernetes.io/name: elk-nhackindustries
+#         interval: 10s
+#   podTemplate:
+#     metadata:
+#       annotations:
+#         app.kubernetes.io/name: elk-nhackindustries
+#     controller:
+#       annotations:
+#         app.kubernetes.io/name: elk-nhackindustries
+#   terminationPolicy: Halt
+# ---
+apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
-  name: es-nhackindustries
+  name: elasticsearch
   namespace: nhackindustries
 spec:
-  version: "7.9.1-xpack"
-  storageType: "Durable"
-  storage:
-    storageClassName: "freenas-nfs-csi"
-    accessModes:
-    - ReadWriteOnce
-    resources:
-      requests:
-        storage: 10Gi
-  monitor:
-    agent: prometheus.io/operator
-    prometheus:
-      serviceMonitor:
-        labels:
-          app.kubernetes.io/name: elk-nhackindustries
-        interval: 10s
-  podTemplate:
-    metadata:
-      annotations:
-        app.kubernetes.io/name: elk-nhackindustries
-    controller:
-      annotations:
-        app.kubernetes.io/name: elk-nhackindustries
-  terminationPolicy: Halt
+  version: "7.17.0"
+  # DeleteOnScaledownOnly keeps the PersistentVolumeClaims when deleting the Elasticsearch cluster.
+  # If you recreate a deleted cluster with the same name and node sets as before, the existing
+  # PersistentVolumeClaims will be adopted by the new cluster.
+  volumeClaimDeletePolicy: DeleteOnScaledownOnly
+  nodeSets:
+  - name: default
+    count: 1
+    config:
+      # xpack.security.enabled: true
+      # xpack.security.autoconfiguration.enabled: true
+      node.store.allow_mmap: false
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data # Do not change this name unless you set up a volume mount for the data path.
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: "freenas-nfs-csi"
+---
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: kibana
+  namespace: nhackindustries
+spec:
+  version: "7.17.0"
+  count: 1
+  elasticsearchRef:
+    name: elasticsearch
