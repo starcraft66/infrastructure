@@ -4,6 +4,11 @@ kind: AWX
 metadata:
   name: awx
 spec:
-  tower_postgres_storage_class: freenas-nfs-csi
-  tower_ingress_type: none
-  tower_hostname: awx.tdude.co
+  hostname: awx.tdude.co
+  postgres_configuration_secret: awx-postgres-configuration
+  ingress_type: ingress
+  ingress_annotations: |
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-forward-auth@kubernetescrd
+    traefik.ingress.kubernetes.io/router.tls: "true"
+  ingress_tls_secret: awx-tdude-co-tls

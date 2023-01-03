@@ -33,3 +33,19 @@ spec:
       - name: POSTGRES_DB
         value: awx
   terminationPolicy: Halt
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: awx-postgres
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      database: awx
+      owner: awx
+      secret:
+        name: postgres-credentials
+  storage:
+    storageClass: truenas-nfs-spitfire-fast
+    size: 10Gi
