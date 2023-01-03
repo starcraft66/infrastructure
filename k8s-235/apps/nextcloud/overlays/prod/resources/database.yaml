@@ -1,39 +1,3 @@
-apiVersion: kubedb.com/v1alpha2
-kind: Postgres
-metadata:
-  name: postgres-nextcloud
-spec:
-  version: "11.11"
-  storageType: "Durable"
-  storage:
-    storageClassName: "freenas-nfs-csi"
-    accessModes:
-    - ReadWriteOnce
-    resources:
-      requests:
-        storage: 10Gi
-  monitor:
-    agent: prometheus.io/operator
-    prometheus:
-      serviceMonitor:
-        labels:
-          app.kubernetes.io/name: postgres-nextcloud
-        interval: 10s
-  authSecret:
-    name: nextcloud-postgres-credentials
-  podTemplate:
-    metadata:
-      annotations:
-        app.kubernetes.io/name: postgres-nextcloud
-    controller:
-      annotations:
-        app.kubernetes.io/name: postgres-nextcloud
-    spec:
-      env:
-      - name: POSTGRES_DB
-        value: nextcloud
-  terminationPolicy: Halt
----
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
