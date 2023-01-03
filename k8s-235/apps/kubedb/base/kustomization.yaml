@@ -3,20 +3,20 @@ kind: Kustomization
 resources:
 - ./resources/namespace.yaml
 
-helmCharts:
-- name: kubedb
-  # includeCRDs: true
-  releaseName: kubedb
-  version: v2021.06.23
-  repo: https://charts.appscode.com/stable/
-  namespace: kubedb
-  valuesInline:
-    global:
-      skipCleaner: true
-    kubedb-community:
-      monitoring:
-        enabled: true
-        agent: "prometheus.io/operator"
-        serviceMonitor:
-          labels:
-            app.kubernetes.io/name: "kubedb-community"
+# helmCharts:
+# - name: kubedb
+#   # includeCRDs: true
+#   releaseName: kubedb
+#   version: v2021.06.23
+#   repo: https://charts.appscode.com/stable/
+#   namespace: kubedb
+#   valuesInline:
+#     global:
+#       skipCleaner: true
+#     kubedb-community:
+#       monitoring:
+#         enabled: true
+#         agent: "prometheus.io/operator"
+#         serviceMonitor:
+#           labels:
+#             app.kubernetes.io/name: "kubedb-community"
