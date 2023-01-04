@@ -34,7 +34,7 @@ data:
         return hs
   # For kustomize-sops
   kustomize.buildOptions: "--enable-alpha-plugins"
-  # Ignore differences in ValidatingWebhookConfiguration caBundle
+  # Ignore differences in CustomResourceDefinition conversion webhook caBundle
   resource.customizations.ignoreDifferences.apiextensions.k8s.io_CustomResourceDefinition: |
     jqPathExpressions:
     - '.spec.conversion.webhook.clientConfig.caBundle'
