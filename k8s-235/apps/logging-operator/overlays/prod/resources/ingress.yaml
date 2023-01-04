@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: elk-nhackindustries
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-http01-prod"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   ingressClassName: traefik
