@@ -7,8 +7,4 @@ resources:
 - ../../base
 - ./resources/cluster-issuer.yaml
 
-patchesStrategicMerge:
-- ./patches/certmanager_namespace.yaml
-- ./patches/cainjector_namespace.yaml
-
 namespace: cert-manager
