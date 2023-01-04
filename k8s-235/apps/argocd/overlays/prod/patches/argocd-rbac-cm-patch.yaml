@@ -25,5 +25,7 @@ data:
     p, role:org-operators, gpgkeys, delete, *, allow
     p, role:org-operators, applications, action/apps/Deployment/restart, *, allow
     p, role:org-operators, applications, action/apps/StatefulSet/restart, *, allow
+    p, role:org-operators, applications, action/batch/Job/delete, *, allow
+    p, role:org-operators, applications, action/Pod/delete, *, allow
 
     g, tdude, role:org-operators
