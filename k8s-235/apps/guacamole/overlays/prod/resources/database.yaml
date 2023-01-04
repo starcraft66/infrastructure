@@ -17,3 +17,5 @@ spec:
   storage:
     storageClass: truenas-nfs-spitfire-fast
     size: 1Gi
+  monitoring:
+    enablePodMonitor: true
