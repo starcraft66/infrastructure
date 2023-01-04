@@ -4,6 +4,7 @@ metadata:
   name: argocd-cm
   namespace: argocd
 data:
+  application.resourceTrackingMethod: annotation
   admin.enabled: 'false'
   url: https://gitops.tdude.co
   repositories: |
