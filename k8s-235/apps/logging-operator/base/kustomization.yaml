@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ./resources/namespace.yaml
+
+namespace: logging
+
+helmCharts:
+- name: logging-operator
+  includeCRDs: true
+  releaseName: logging
+  version: 3.17.10
+  repo: https://kubernetes-charts.banzaicloud.com
+  namespace: logging
+  valuesInline:
+    createCustomResource: false
+    monitoring:
+      serviceMonitor:
+        enabled: true

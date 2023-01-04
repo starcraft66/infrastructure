@@ -1,0 +1,14 @@
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: ClusterFlow
+metadata:
+  name: cliuter-flow
+spec:
+  filters:
+    # - parser:
+    #     remove_key_name_field: true
+    #     parse:
+    #       type: nginx
+    - tag_normaliser:
+        format: ${namespace_name}.${pod_name}.${container_name}
+  globalOutputRefs:
+  - es-cluster-output

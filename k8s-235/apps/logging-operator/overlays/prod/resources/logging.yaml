@@ -1,0 +1,18 @@
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: Logging
+metadata:
+  name: logging
+spec:
+  fluentd:
+    bufferStorageVolume:
+      pvc:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 10Gi
+          storageClassName: truenas-nfs-spitfire-fast
+          volumeMode: Filesystem
+  fluentbit: {}
+  controlNamespace: logging

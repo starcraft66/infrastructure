@@ -1,0 +1,37 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+spec:
+  version: "8.5.3"
+  # DeleteOnScaledownOnly keeps the PersistentVolumeClaims when deleting the Elasticsearch cluster.
+  # If you recreate a deleted cluster with the same name and node sets as before, the existing
+  # PersistentVolumeClaims will be adopted by the new cluster.
+  volumeClaimDeletePolicy: DeleteOnScaledownOnly
+  nodeSets:
+  - name: default
+    count: 3
+    config:
+      # xpack.security.enabled: true
+      # xpack.security.autoconfiguration.enabled: true
+      node.store.allow_mmap: false
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data # Do not change this name unless you set up a volume mount for the data path.
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+        storageClassName: "truenas-nfs-spitfire-fast"
+---
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: kibana
+spec:
+  version: "8.5.3"
+  count: 1
+  elasticsearchRef:
+    name: elasticsearch
