@@ -2,8 +2,8 @@
 - op: add
   path: /spec/template/spec/containers/0/volumeMounts/0
   value:
-    mountPath: /data/paper.yml
-    subPath: paper.yml
+    mountPath: /data/config/paper-global.yml
+    subPath: paper-global.yml
     name: server-config
     readOnly: true
 - op: add
