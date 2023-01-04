@@ -112,7 +112,7 @@ configMapGenerator:
   - config.yml=files/bStats/config.yml
 - name: server-config
   files:
-  - paper.yml=files/paper/paper-global.yml
+  - paper-global.yml=files/paper/paper-global.yml
 
 commonLabels:
   app.kubernetes.io/name: minecraft
