@@ -34,6 +34,10 @@ data:
         return hs
   # For kustomize-sops
   kustomize.buildOptions: "--enable-alpha-plugins"
+  # Ignore differences in ValidatingWebhookConfiguration caBundle
+  resource.customizations.ignoreDifferences.admissionregistration.k8s.io_ValidatingWebhookConfiguration: |
+    jqPathExpressions:
+    - '.webhooks[]?.clientConfig.caBundle'
   # Ignore differences in MutatingWebhookConfiguration caBundle
   resource.customizations.ignoreDifferences.admissionregistration.k8s.io_MutatingWebhookConfiguration: |
     jqPathExpressions:
