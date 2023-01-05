@@ -29,8 +29,8 @@ spec:
             # Disabled for now due to the plugin installation at runtime
             readOnlyRootFilesystem: false
             runAsGroup: 1000
-            runAsNonRoot: true
-            runAsUser: 1000
+            # runAsNonRoot: true
+            # runAsUser: 1000
           image: "netboxcommunity/netbox:v3.0.11"
           command:
             - /opt/netbox/venv/bin/python
@@ -150,8 +150,8 @@ spec:
             # Disabled for now due to the plugin installation at runtime
             readOnlyRootFilesystem: false
             runAsGroup: 1000
-            runAsNonRoot: true
-            runAsUser: 1000
+            # runAsNonRoot: true
+            # runAsUser: 1000
           image: "netboxcommunity/netbox:v3.0.11"
           imagePullPolicy: IfNotPresent
           lifecycle: # Install plugins
