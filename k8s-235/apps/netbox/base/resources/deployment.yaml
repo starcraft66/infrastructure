@@ -36,6 +36,18 @@ spec:
             - /opt/netbox/netbox/manage.py
             - rqworker
           imagePullPolicy: IfNotPresent
+          lifecycle: # Install plugins
+            postStart:
+              exec:
+                command:
+                  - /bin/bash
+                  - -c
+                  - >
+                    source /opt/netbox/venv/bin/activate &&
+                    cd /opt/netbox/netbox &&
+                    pip3 install netbox-topology-views &&
+                    python3 manage.py migrate netbox_topology_views &&
+                    python3 manage.py collectstatic --no-input
           volumeMounts:
             - name: config
               mountPath: /etc/netbox/config/configuration.py
@@ -144,7 +156,7 @@ spec:
             postStart:
               exec:
                 command:
-                  - /bin/sh
+                  - /bin/bash
                   - -c
                   - >
                     source /opt/netbox/venv/bin/activate &&
