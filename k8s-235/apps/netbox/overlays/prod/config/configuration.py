@@ -23,4 +23,3 @@ SECRET_KEY = _load_secret('netbox', 'secret_key')
 # Post-process certain values
 CORS_ORIGIN_REGEX_WHITELIST = [re.compile(r) for r
                                 in CORS_ORIGIN_REGEX_WHITELIST]
-PLUGINS = ["netbox_topology_views"]
