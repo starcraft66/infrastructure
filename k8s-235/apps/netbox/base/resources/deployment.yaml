@@ -26,7 +26,8 @@ spec:
             capabilities:
               drop:
               - ALL
-            readOnlyRootFilesystem: true
+            # Disabled for now due to the plugin installation at runtime
+            readOnlyRootFilesystem: false
             runAsGroup: 1000
             runAsNonRoot: true
             runAsUser: 1000
@@ -146,7 +147,8 @@ spec:
             capabilities:
               drop:
               - ALL
-            readOnlyRootFilesystem: true
+            # Disabled for now due to the plugin installation at runtime
+            readOnlyRootFilesystem: false
             runAsGroup: 1000
             runAsNonRoot: true
             runAsUser: 1000
