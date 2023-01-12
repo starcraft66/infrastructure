@@ -23,6 +23,10 @@ configMapGenerator:
   literals:
   - ILO_USERNAME=Administrator
   - ILO_DOMAIN=fleetfoot-ilo.235.tdude.co
+- name: stormfeather-config
+  literals:
+  - ILO_USERNAME=Administrator
+  - ILO_DOMAIN=stormfeather-ilo.235.tdude.co
 - name: firestreak-config
   literals:
   - IPMI_USERNAME=ADMIN
