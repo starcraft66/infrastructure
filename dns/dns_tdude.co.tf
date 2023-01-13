@@ -147,6 +147,15 @@ resource "cloudflare_record" "auth_bedrock_tdude_co-e600072af53ca2808f9a70af1259
   proxied = false
 }
 
+resource "cloudflare_record" "stormfeather_235_tdude_co_AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "stormfeather.235"
+  value   = "2607:fa48:6ed8:8a51:da9d:67ff:fe16:77a3"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "fleetfoot_235_tdude_co-0682464601437aabb4960f25ecb9b1b4" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "fleetfoot.235"
