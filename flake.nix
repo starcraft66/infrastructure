@@ -4,11 +4,12 @@
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
     flake-utils.url = "github:numtide/flake-utils";
-    flake-utils.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-generators.url = "github:nix-community/nixos-generators";
+    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = inputs@{ self, nixpkgs, flake-utils, sops-nix, deploy-rs, ... }: let
     platforms = [ "x86_64-linux" "x86_64-darwin" "aarch64-darwin" ];
@@ -23,6 +24,7 @@
       inherit (nixpkgs) lib;
       # Use inputs to avoid infinite recursion
       sops-nix = inputs.sops-nix.packages.${system};
+      deploy-rs = inputs.deploy-rs.defaultPackage.${system};
     in {
       # nix run .#minecraft-console -- namespace
       apps = {
@@ -32,7 +34,7 @@
         };
       };
 
-      devShell = pkgs.mkShell {
+      devShells.default = pkgs.mkShell {
         name = "infrastructure";
 
         nativeBuildInputs = [
@@ -75,6 +77,7 @@
           gnupg
           sops-nix.ssh-to-pgp
           asciidoctor
+          deploy-rs
         ];
 
         shellHook = ''
@@ -91,5 +94,9 @@
           set +a
         '';
       };
+  }) // (let
+      nixosHosts = import ./nixos/hosts { inherit inputs; };
+  in {
+    inherit (nixosHosts) nixosConfigurations deploy packages;
   });
 }
