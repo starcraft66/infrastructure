@@ -52,3 +52,12 @@ resource "cloudflare_record" "mail" {
   ttl      = 1
   proxied  = false
 }
+
+resource "cloudflare_record" "geo_as208914_net-CNAME" {
+  zone_id = cloudflare_zone.as208914_net.id
+  name    = "geo"
+  value   = "starcraft66.github.io"
+  type    = "CNAME"
+  ttl     = 1
+  proxied = false
+}
