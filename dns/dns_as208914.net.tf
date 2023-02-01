@@ -28,7 +28,7 @@ resource "cloudflare_record" "yyz-r1_as208914_net-AAAA" {
 resource "cloudflare_record" "yyz-r1_backdoor_as208914_net-AAAA" {
   zone_id = cloudflare_zone.as208914_net.id
   name    = "yyz-r1.backdoor"
-  value   = "2001:19f0:b001:390:5400:3ff:fed8:2ff7"
+  value   = "2001:19f0:b002:896:5400:4ff:fe4a:7da9"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -37,7 +37,7 @@ resource "cloudflare_record" "yyz-r1_backdoor_as208914_net-AAAA" {
 resource "cloudflare_record" "yyz-r1_backdoor_as208914_net-A" {
   zone_id = cloudflare_zone.as208914_net.id
   name    = "yyz-r1.backdoor"
-  value   = "155.138.154.43"
+  value   = "149.248.50.237"
   type    = "A"
   ttl     = 1
   proxied = false
