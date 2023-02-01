@@ -33,6 +33,7 @@ resource "cloudflare_record" "yyz-r1_backdoor_as208914_net-AAAA" {
   ttl     = 1
   proxied = false
 }
+
 resource "cloudflare_record" "yyz-r1_backdoor_as208914_net-A" {
   zone_id = cloudflare_zone.as208914_net.id
   name    = "yyz-r1.backdoor"
@@ -40,4 +41,14 @@ resource "cloudflare_record" "yyz-r1_backdoor_as208914_net-A" {
   type    = "A"
   ttl     = 1
   proxied = false
+}
+
+resource "cloudflare_record" "mail" {
+  zone_id  = cloudflare_zone.as208914_net.id
+  name     = "as208914.net"
+  value    = "stone.tdude.co"
+  type     = "MX"
+  priority = "10"
+  ttl      = 1
+  proxied  = false
 }
