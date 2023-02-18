@@ -100,6 +100,39 @@ spec:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
+  name: letsencrypt-renewal-sassaflash
+  labels:
+    app.kubernetes.io/name: letsencrypt-cron
+spec:
+  schedule: '@daily'
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hpilo-letsencrypt-sassaflash
+            image: starcraft66/hpilo-letsencrypt:latest
+            # Environment Variables
+            envFrom:
+            - secretRef:
+                name: sassaflash-secrets
+            - configMapRef:
+                name: sassaflash-config
+            - secretRef:
+                name: cloudflare-token
+            volumeMounts:
+            - name: lego-volume
+              mountPath: /.lego
+          restartPolicy: Never
+          volumes:
+          - name: lego-volume
+            persistentVolumeClaim:
+              claimName: letsencrypt-cron-lego-volume
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
   name: letsencrypt-renewal-firestreak
   labels:
     app.kubernetes.io/name: letsencrypt-cron

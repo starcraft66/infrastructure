@@ -27,6 +27,10 @@ configMapGenerator:
   literals:
   - ILO_USERNAME=Administrator
   - ILO_DOMAIN=stormfeather-ilo.235.tdude.co
+- name: sassaflash-config
+  literals:
+  - ILO_USERNAME=Administrator
+  - ILO_DOMAIN=sassaflash-ilo.235.tdude.co
 - name: firestreak-config
   literals:
   - IPMI_USERNAME=ADMIN

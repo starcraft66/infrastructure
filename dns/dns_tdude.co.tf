@@ -31,6 +31,15 @@ resource "cloudflare_record" "stormfeather-ilo_tdude_co" {
   proxied = false
 }
 
+resource "cloudflare_record" "sassaflash-ilo_tdude_co" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "sassaflash-ilo.235"
+  value   = "2607:fa48:6ed8:8a52:b6b5:2fff:fee9:cd36"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "registry_tdude_co-CNAME" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "registry"
