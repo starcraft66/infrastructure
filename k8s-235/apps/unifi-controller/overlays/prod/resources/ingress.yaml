@@ -6,6 +6,7 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     # Disabled for now. Needs a rule or middleware to allow APs to communicate freely
     # traefik.ingress.kubernetes.io/router.middlewares: traefik-forward-auth@kubernetescrd
+    traefik.ingress.kubernetes.io/router.tls.options: unifi-unifi@kubernetescrd
     traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   ingressClassName: traefik

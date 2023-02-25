@@ -6,6 +6,7 @@ resources:
 - ./resources/monitoring.yaml
 - ./resources/monitoring-rbac.yaml
 - ./resources/ingress.yaml
+- ./resources/tlsoptions.yaml
 - ./resources/volume.yaml
 
 namespace: unifi
