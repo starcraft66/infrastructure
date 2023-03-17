@@ -11,7 +11,7 @@ namespace: redis-operator
 
 images:
 - name: funkwhale/funkwhale
-  newTag: 1.2.9
+  newTag: 1.2.10
 
 configMapGenerator:
 - name: funkwhale
