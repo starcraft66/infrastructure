@@ -36,7 +36,7 @@ configMapGenerator:
 helmCharts:
 - name: redis
   releaseName: funkwhale-redis
-  version: 17.8.5
+  version: 17.9.4
   repo: https://charts.bitnami.com/bitnami
   namespace: funkwhale
   valuesInline:
