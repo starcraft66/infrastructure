@@ -6,6 +6,6 @@ resources:
 
 images:
 - name: ghcr.io/linuxserver/unifi-controller
-  digest: sha256:c0666eb5aaf4d5741a3dfc7a45910684a55a62736561b19c544e2277d5d11343
+  digest: sha256:f1b38054e02e70e9078f51470b3f8ea70b951c88210b0ef811a9954200e301fa
 - name: golift/unifi-poller
   digest: sha256:7c4789178dc38a7f243df746e45e5bd19279ea8a1a392ecbab28a6361cc06c80
