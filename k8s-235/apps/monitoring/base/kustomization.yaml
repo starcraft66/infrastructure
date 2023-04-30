@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- https://git.tdude.co/tristan/kube-prometheus-k8s-235.git?ref=v0.1.23
+- https://git.tdude.co/tristan/kube-prometheus-k8s-235.git?ref=v0.1.25
 
 patchesJson6902:
   # https://github.com/prometheus-community/helm-charts/issues/1500 workaround
