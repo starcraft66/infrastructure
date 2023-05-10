@@ -4,7 +4,7 @@ namespace: nextcloud
 
 images:
 - name: nextcloud
-  newTag: "25.0-apache"
+  newTag: "26.0-apache"
 
 resources:
 - ../../base
