@@ -20,6 +20,10 @@ spec:
       - name: jackett
         image: ghcr.io/linuxserver/jackett:latest
         imagePullPolicy: Always
+        dnsConfig:
+          options:
+          - name: ndots
+            value: "1"
         ports:
         - name: "http"
           containerPort: 9117

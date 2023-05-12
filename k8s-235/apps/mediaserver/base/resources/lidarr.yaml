@@ -20,6 +20,10 @@ spec:
       - name: lidarr
         image: ghcr.io/linuxserver/lidarr:latest
         imagePullPolicy: Always
+        dnsConfig:
+          options:
+          - name: ndots
+            value: "1"
         ports:
         - name: "http"
           containerPort: 8989
