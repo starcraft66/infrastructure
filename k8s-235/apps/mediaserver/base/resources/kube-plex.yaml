@@ -75,7 +75,7 @@ spec:
         env:
         # kube-plex env vars
         - name: PMS_INTERNAL_ADDRESS
-          value: http://kube-plex:32400
+          value: http://kube-plex.mediaserver.svc.cluster.local:32400
         - name: PMS_IMAGE
           value: "plexinc/pms-docker:latest"
         - name: KUBE_NAMESPACE
@@ -101,6 +101,10 @@ spec:
         #   mountPath: /tmp
         resources:
           {}
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
       nodeSelector:
         beta.kubernetes.io/arch: amd64
       volumes:
