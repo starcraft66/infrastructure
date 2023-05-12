@@ -5,5 +5,4 @@
       cpu: 4000m
       memory: 8Gi
     limits:
-      cpu: 8000m
       memory: 8Gi

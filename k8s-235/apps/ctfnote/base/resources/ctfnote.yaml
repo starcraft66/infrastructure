@@ -21,7 +21,6 @@ spec:
         resources:
           limits:
             memory: "512Mi"
-            cpu: "1000m"
         ports:
         - containerPort: 80
           name: web
@@ -62,7 +61,6 @@ spec:
         resources:
           limits:
             memory: "512Mi"
-            cpu: "1000m"
         ports:
         - containerPort: 3000
           name: api
@@ -102,7 +100,6 @@ spec:
         resources:
           limits:
             memory: "512Mi"
-            cpu: "1000m"
         ports:
         - containerPort: 3000
           name: web
