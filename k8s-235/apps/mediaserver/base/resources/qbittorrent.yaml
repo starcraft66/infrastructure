@@ -20,10 +20,6 @@ spec:
       - name: qbittorrent
         image: ghcr.io/linuxserver/qbittorrent:latest
         imagePullPolicy: Always
-        dnsConfig:
-          options:
-          - name: ndots
-            value: "1"
         ports:
         - name: "http"
           containerPort: 8080
@@ -62,6 +58,10 @@ spec:
 #          initialDelaySeconds: 120
 #          periodSeconds: 30
 #          failureThreshold: 5
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
       volumes:
       - name: data
         persistentVolumeClaim:
