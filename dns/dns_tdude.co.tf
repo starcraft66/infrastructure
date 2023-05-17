@@ -132,7 +132,7 @@ resource "cloudflare_record" "_235_tdude_co-b73dce106a455e5ba493ea51f4ac61b6" {
 resource "cloudflare_record" "_305-1700-gw_305-1700_tdude_co-55c277d95f2b6c7d6d077a3732742e5e" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "305-1700-gw.305-1700"
-  value   = "2001:470:1c:274::2"
+  value   = "2a10:4741:33:2::2"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -141,7 +141,7 @@ resource "cloudflare_record" "_305-1700-gw_305-1700_tdude_co-55c277d95f2b6c7d6d0
 resource "cloudflare_record" "_305-1700_tdude_co-1bdb980fa9e481c74caf8dd3d3030848" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "305-1700"
-  value   = "2001:470:1c:274::2"
+  value   = "2a10:4741:33:2::2"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -572,7 +572,7 @@ resource "cloudflare_record" "ovirt_305-1700" {
 resource "cloudflare_record" "traefik_305-1700" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "traefik.305-1700.tdude.co"
-  value   = "2001:470:b08b:d::5"
+  value   = "2a10:4741:37:d::2"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -617,7 +617,7 @@ resource "cloudflare_record" "zwavejs_305-1700" {
 resource "cloudflare_record" "soyberry" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "soyberry.305-1700"
-  value   = "2001:470:b08b:51:dea6:32ff:fe99:a276"
+  value   = "2a10:4741:37:51:dea6:32ff:fe99:a276"
   type    = "AAAA"
   ttl     = 1
   proxied = false
