@@ -33,7 +33,7 @@ resource "cloudflare_record" "ftb-academy-v4" {
 resource "cloudflare_record" "ftb-academy-v6" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "ftb-academy.k8s.235"
-  value   = "2607:fa48:6ed8:8a54:3::6"
+  value   = "2a10:4741:36:8a54:3::6"
   type    = "AAAA"
   ttl     = 1
   proxied = false
