@@ -14,7 +14,7 @@ images:
 - name: netboxcommunity/netbox
   newTag: v3.5.1
 - name: busybox
-  newTag: 1.36.0
+  newTag: 1.36.1
 
 namespace: netbox
 
