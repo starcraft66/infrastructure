@@ -48,6 +48,10 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /config
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
       volumes:
       - name: data
         persistentVolumeClaim:

@@ -50,6 +50,10 @@ spec:
           mountPath: /config/config.js
           subPath: config.js
           readOnly: true
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
       volumes:
       - name: data
         persistentVolumeClaim:
