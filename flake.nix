@@ -64,7 +64,7 @@
           git
           nixFlakes
           nixfmt
-          ansible_2_12
+          ansible
           kubectl
           kubectx
           kubernetes-helm
