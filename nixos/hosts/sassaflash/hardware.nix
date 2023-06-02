@@ -6,9 +6,9 @@
     ];
 
   # hpsa is important to see the P420i's logical volume
-  # tg3 and mlx4_core are used for initrd networking
-  boot.initrd.availableKernelModules = [ "tg3" "mlx4_core" "hpsa" "ehci_pci" "ahci" "uhci_hcd" "hpsa" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
-  boot.initrd.kernelModules = [ ];
+  # tg3, mlx4_en and mlx4_core are used for initrd networking
+  boot.initrd.availableKernelModules = [ "tg3" "mlx4_core" "mlx4_en" "hpsa" "ehci_pci" "ahci" "uhci_hcd" "hpsa" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
+  boot.initrd.kernelModules = [ "mlx4_core" "mlx4_en" "tg3" "8021q" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
@@ -41,7 +41,28 @@
   networking.useDHCP = lib.mkDefault false;
   networking.useNetworkd = lib.mkDefault true;
 
-  networking.interfaces.eno4 = let 
+  # Disable SLAAC on the native vlan
+  # The switch port has its native vlan set to 29
+  # So that initrd networking which doesn't support
+  # vlan configuration afaik can work.
+  # boot.kernel.sysctl = {
+  #   "net.ipv6.conf.eno1.autoconf" = 0;
+  #   "net.ipv6.conf.eno1.accept_ra" = 0; 
+  # };
+
+  # Temporary hack to make VLANs create during stage 1
+  # initrd networking
+  # TODO: upstream the fix
+  boot.initrd.systemd.network.networks."40-eno1".vlan = config.systemd.network.networks."40-eno1".vlan;
+  # Same deal here
+  boot.initrd.systemd.network.netdevs = config.systemd.network.netdevs;
+
+  networking.vlans = { 
+    "eno1.28" = { id = 28; interface = "eno1"; };
+    "eno1.29" = { id = 29; interface = "eno1"; };
+  };
+
+  networking.interfaces."eno1.29" = let 
     ip = "172.16.29.20";
     gateway = "172.16.29.1";
   in {
@@ -60,9 +81,14 @@
     # v6 assigned via slaac
   };
 
+  networking.interfaces."eno1.28" = {
+    tempAddress = "disabled";
+    # v6 assigned via slaac
+  };
+
   # further configuration of networking.interfaces.enp10s0 will be needed  
 
-  networking.nameservers = [ "2607:fa48:6ed8:8a5d::1" "172.32.25.1" ];
+  networking.nameservers = [ "2a10:4741:36:25::1" "172.32.25.1" ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

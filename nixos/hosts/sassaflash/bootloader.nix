@@ -1,11 +1,10 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   boot.loader.grub.enable = lib.mkDefault true;
-  boot.loader.grub.version = 2;
+  boot.initrd.systemd.enable = true;
   boot.initrd.network = {
     enable = true;
-    flushBeforeStage2 = true;
     ssh = {
       enable = true;
       port = 2222;
