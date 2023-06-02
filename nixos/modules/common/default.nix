@@ -19,7 +19,7 @@ in {
     };
   };
   config = {
-    boot.cleanTmpDir = true;
+    boot.tmp.cleanOnBoot = true;
     networking.firewall.allowPing = true;
     networking.firewall.logRefusedConnections = false;
     services.openssh.enable = true;
