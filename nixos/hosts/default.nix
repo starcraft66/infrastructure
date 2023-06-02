@@ -18,7 +18,7 @@ let
   generateNixosSystems = builtins.mapAttrs (name: system:
     lib.nixosSystem {
       inherit (system) system pkgs;
-      modules = system.modules ++ (import ../modules);
+      modules = system.modules ++ [ ./${name}/bootloader.nix ] ++ (import ../modules);
       specialArgs = { inherit inputs; };
     });
 
