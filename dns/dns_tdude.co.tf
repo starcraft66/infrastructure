@@ -165,6 +165,15 @@ resource "cloudflare_record" "stormfeather_235_tdude_co_AAAA" {
   proxied = false
 }
 
+resource "cloudflare_record" "sassaflash_235_tdude_co_AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "sassaflash.235"
+  value   = "2a10:4741:36:29:26be:5ff:fe84:d8b0"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "fleetfoot_235_tdude_co-0682464601437aabb4960f25ecb9b1b4" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "fleetfoot.235"
