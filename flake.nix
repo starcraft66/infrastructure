@@ -69,8 +69,7 @@
         buildInputs = with pkgs; [
           jq
           git
-          nixFlakes
-          nixfmt
+          nixpkgs-fmt
           ansible
           kubectl
           kubectx
