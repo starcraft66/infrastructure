@@ -8,13 +8,23 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+    colmena.url = "github:zhaofengli/colmena";
+    colmena.inputs.nixpkgs.follows = "nixpkgs";
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = inputs@{ self, nixpkgs, flake-utils, sops-nix, deploy-rs, ... }: let
+  outputs = inputs@{ self, nixpkgs, flake-utils, sops-nix, deploy-rs, colmena, ... }: let
     platforms = [ "x86_64-linux" "x86_64-darwin" "aarch64-darwin" ];
   in {
-    overlays.inputs = final: prev: { inherit inputs; };
+    overlays = {
+      inputs = final: prev: { inherit inputs; };
+      colmena = colmena.overlays.default;
+      deploy-rs = deploy-rs.overlay;
+      spos-nix = sops-nix.overlays.default;
+      local-packages = self: super: {
+        cni-plugin-cilium = super.callPackage ./nixos/pkgs/cni-plugin-cilium.nix {};
+      };
+    };
   } // inputs.flake-utils.lib.eachSystem platforms (system:
     let
       pkgs = import nixpkgs {
@@ -22,9 +32,6 @@
         overlays = builtins.attrValues self.overlays;
       };
       inherit (nixpkgs) lib;
-      # Use inputs to avoid infinite recursion
-      sops-nix = inputs.sops-nix.packages.${system};
-      deploy-rs = inputs.deploy-rs.defaultPackage.${system};
     in {
       # nix run .#minecraft-console -- namespace
       apps = {
@@ -37,8 +44,8 @@
       devShells.default = pkgs.mkShell {
         name = "infrastructure";
 
-        nativeBuildInputs = [
-          sops-nix.sops-import-keys-hook
+        nativeBuildInputs = with pkgs; [
+          sops-import-keys-hook
         ];
 
         KUSTOMIZE_PLUGIN_HOME = pkgs.buildEnv {
@@ -75,9 +82,12 @@
           krew
           yamllint
           gnupg
-          sops-nix.ssh-to-pgp
+          ssh-to-pgp
           asciidoctor
-          deploy-rs
+          vault
+        ] ++ [
+          pkgs.colmena
+          pkgs.deploy-rs.deploy-rs
         ];
 
         shellHook = ''
@@ -97,6 +107,6 @@
   }) // (let
       nixosHosts = import ./nixos/hosts { inherit inputs; };
   in {
-    inherit (nixosHosts) nixosConfigurations deploy packages;
+    inherit (nixosHosts) nixosConfigurations deploy packages colmena;
   });
 }

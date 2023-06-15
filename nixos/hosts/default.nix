@@ -45,6 +45,23 @@ let
       };
     }) systems;
 
+  generateColmenaNodes = systems:
+    lib.mapAttrs
+      (name: system: { name, nodes, ... }:
+        {
+          imports = system.modules ++ (import ../modules);
+          deployment = {
+            targetUser = "root";
+            targetHost = system.hostname;
+            targetPort = 22;
+            replaceUnknownProfiles = true;
+          };
+        })
+      systems;
+
+  generateColmenaNixpkgs = systems:
+    lib.mapAttrs (name: system: system.pkgs) systems;
+
   mergeVmImages = systems: merge (generateVmImages systems);
 
   mergeDeployRsProfiles = systems: merge (generateDeployRsProfiles systems);
@@ -52,6 +69,16 @@ in {
   nixosConfigurations = generateNixosSystems systems;
   packages = mergeVmImages systems;
   deploy = mergeDeployRsProfiles systems;
+  colmena = (generateColmenaNodes systems) // {
+    meta = {
+      # dummy nixpkgs that won't be used
+      nixpkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+      specialArgs = {
+        inherit inputs;
+      };
+      nodeNixpkgs = generateColmenaNixpkgs systems;
+    };
+  };
   checks =
     builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy)
     inputs.deploy-rs.lib;
