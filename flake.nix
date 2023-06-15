@@ -99,9 +99,8 @@
             ssh-to-pgp
             asciidoctor
             vault
-          ] ++ [
-            pkgs.colmena
-            pkgs.deploy-rs.deploy-rs
+            colmena
+            deploy-rs.deploy-rs
           ];
 
           shellHook = ''
