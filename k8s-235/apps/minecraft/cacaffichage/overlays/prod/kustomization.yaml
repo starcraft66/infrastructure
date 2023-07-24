@@ -65,7 +65,7 @@ configMapGenerator:
   literals:
   - EULA=TRUE
   - TYPE=PAPER
-  - VERSION=1.19.3
+  - VERSION=1.20.1
   - DIFFICULTY=hard
   - ICON=""
   - MAX_PLAYERS=20
