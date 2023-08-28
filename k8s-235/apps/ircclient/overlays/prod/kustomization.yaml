@@ -22,6 +22,6 @@ configMapGenerator:
 
 images:
 - name: lscr.io/linuxserver/thelounge
-  digest: sha256:98acf3d4c804358cf8d586012e85ecadb5c8759b06f0801147d07755346d79e3
+  digest: sha256:c576b2da043a48a67ff3b8ab5fb76c0649b819c6d8cd22cd31f2c5db69144b5e
 - name: lscr.io/linuxserver/znc
   digest: sha256:3418f3392c9a3589bf983f919a0c41895cb9b6f1f65efb9881219fc39ec9ef6f
