@@ -159,7 +159,7 @@ resource "cloudflare_record" "auth_bedrock_tdude_co-e600072af53ca2808f9a70af1259
 resource "cloudflare_record" "stormfeather_235_tdude_co_AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stormfeather.235"
-  value   = "2a10:4741:36:29:da9d:67ff:fe16:77a3"
+  value   = "2a10:4741:36:29:6b:60ff:fe2a:7156"
   type    = "AAAA"
   ttl     = 1
   proxied = false
