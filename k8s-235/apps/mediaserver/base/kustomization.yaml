@@ -30,7 +30,7 @@ images:
 - name: ghcr.io/linuxserver/prowlarr
   newTag: develop@sha256:ddf617037221a8dfa14e108d152e36f93cad4f55607aff9117df902bd888c5df
 - name: ghcr.io/linuxserver/qbittorrent
-  newTag: 4.5.4
+  newTag: 4.5.5
 - name: ghcr.io/linuxserver/tautulli
   digest: sha256:78ef0d6abf48b24a732624f6711117b6cbff7ddc022812c450f212c4e0bb67e8
 - name: ghcr.io/linuxserver/overseerr
