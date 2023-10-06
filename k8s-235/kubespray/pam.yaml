@@ -1,0 +1,11 @@
+---
+- hosts: k8s-cluster
+  connection: ssh
+  become: True
+  pre_tasks:
+  - name: Raise open file descriptor limit
+    pam_limits:
+      domain: '*'
+      limit_type: soft
+      limit_item: nofile
+      value: 200000
