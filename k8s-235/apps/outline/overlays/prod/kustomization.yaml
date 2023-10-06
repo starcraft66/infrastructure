@@ -1,0 +1,44 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+- resources/ingress.yaml
+- resources/nfs-volume.yaml
+
+images:
+- name: photoprism/photoprism
+  newTag: "221118-jammy"
+
+generators:
+- ./generators/secrets-generator.yaml
+
+namespace: photoprism
+
+configMapGenerator:
+- name: photoprism-config
+  literals:
+  - NODE_ENV=production
+  - DATABASE_URL=postgres://user:pass@localhost:5432/outline
+  - DATABASE_URL_TEST=postgres://user:pass@localhost:5432/outline-test
+  - DATABASE_CONNECTION_POOL_MIN=
+  - DATABASE_CONNECTION_POOL_MAX=
+  - REDIS_URL=redis://redis:6379
+  - URL=http://outline.tdude.co
+  - PORT=3000
+  - ENABLE_UPDATES=false
+  - LOG_LEVEL=info
+  - AWS_REGION=us-east-2
+  - AWS_S3_FORCE_PATH_STYLE=false
+  - AWS_S3_UPLOAD_BUCKET_NAME=my-bucket-name
+  - AWS_S3_UPLOAD_BUCKET_URL=http://minio
+  - AWS_S3_UPLOAD_MAX_SIZE=26214400
+  - AWS_ACCESS_KEY_ID=AK66L9HZpTtfrpFFgtVxcxOUTn
+  - AWS_SECRET_ACCESS_KEY=97L9HfssZpTtfrxOUTVxcnpgtSa
+
+patchesJson6902:
+- path: ./patches/persistence.yaml
+  target:
+    group: apps
+    kind: StatefulSet
+    name: photoprism
+    version: v1

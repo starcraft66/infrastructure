@@ -1,0 +1,12 @@
+---
+- op: add
+  path: /spec/template/spec/volumes/1
+  value:
+    name: extra
+    persistentVolumeClaim:
+      claimName: "photoprism-data-extra"
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/2
+  value:
+    name: extra
+    mountPath: /photoprism/originals/extra
