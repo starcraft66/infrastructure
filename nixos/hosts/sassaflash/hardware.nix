@@ -34,9 +34,10 @@
       fsType = "ext4";
     };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/dce4f7f9-036f-4075-8884-aa0b3c8dd22b"; }
-    ];
+  # No swap on kubernetes
+  swapDevices = [];
+    # [ { device = "/dev/disk/by-uuid/dce4f7f9-036f-4075-8884-aa0b3c8dd22b"; }
+    # ];
 
   networking.useDHCP = lib.mkDefault false;
   networking.useNetworkd = lib.mkDefault true;
@@ -78,11 +79,14 @@
         options.onlink = "";
       }
     ];
+    ipv6.addresses = [ { address = "2a10:4741:36:29::5"; prefixLength = 64; } ];
     # v6 assigned via slaac
   };
 
   networking.interfaces."eno1.28" = {
     tempAddress = "disabled";
+    ipv6.addresses = [ { address = "2a10:4741:36:28::5"; prefixLength = 64; } ];
+    # we only care about the implicit /64 for the storage vlan, no default route
     # v6 assigned via slaac
   };
 

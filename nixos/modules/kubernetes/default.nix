@@ -1,0 +1,8 @@
+{...}:
+{
+  imports = [
+    ./controlplane
+    ./etcd
+    ./worker
+  ];
+}

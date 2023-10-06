@@ -4,6 +4,9 @@ creation_rules:
     pgp: >-
       85974506EC695392044308059D98CDACFF04FD78,
       2DADB88EC6EA687971F53F10E9936473C592AEDF
+  - path_regex: vault/pki/.*\.yaml$
+    pgp: >-
+      85974506EC695392044308059D98CDACFF04FD78
   - path_regex: secrets/.*\.yaml$
     pgp: >-
       85974506EC695392044308059D98CDACFF04FD78,

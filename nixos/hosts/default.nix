@@ -3,6 +3,7 @@
 let
   systems = {
     sassaflash = import ./sassaflash { inherit inputs; };
+    stormfeather = import ./stormfeather { inherit inputs; };
   };
 
   inherit (inputs.nixpkgs) lib;
@@ -49,7 +50,7 @@ let
     lib.mapAttrs
       (name: system: { name, nodes, ... }:
         {
-          imports = system.modules ++ (import ../modules);
+          imports = system.modules ++ [ ./${name}/bootloader.nix ./${name}/keys.nix ] ++ (import ../modules);
           deployment = {
             targetUser = "root";
             targetHost = system.hostname;

@@ -1,0 +1,25 @@
+== The Repository itself
+
+* sdf
+
+
+=== 📂 Repository structure
+
+[.text-justify]
+This listing intentionally doesn't cover the entire structure of the repo, it is meant to be a high-level overview of where various components are located.
+
+[source,console]
+----
+kubernetes_id=$(vault read --field=role_id auth/approle/role/k8s-235-1-node-kubernetes/role-id)
+kubernetes_secret=$(vault write --field=secret_id -f auth/approle/role/k8s-235-1-node-kubernetes/secret-id)
+etcd_id=$(vault read --field=role_id auth/approle/role/k8s-235-1-node-etcd/role-id)
+etcd_secret=$(vault write --field=secret_id -f auth/approle/role/k8s-235-1-node-etcd/secret-id)
+mkdir -p  /var/lib/secrets/{kubernetes,etcd,coredns}
+echo $kubernetes_id > /var/lib/secrets/kubernetes/vault_agent_role_id
+echo $kubernetes_secret > /var/lib/secrets/kubernetes/vault_agent_secret_id
+echo $kubernetes_id > /var/lib/secrets/coredns/vault_agent_role_id
+echo $kubernetes_secret > /var/lib/secrets/coredns/vault_agent_secret_id
+echo $etcd_id > /var/lib/secrets/etcd/vault_agent_role_id
+echo $etcd_secret > /var/lib/secrets/etcd/vault_agent_secret_id
+systemctl restart vault-agent-{coredns,etcd,kubernetes-worker,kubernetes-control-plane}
+----

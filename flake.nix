@@ -28,6 +28,9 @@
           colmena = inputs.colmena.overlays.default;
           deploy-rs = inputs.deploy-rs.overlay;
           spos-nix = inputs.sops-nix.overlays.default;
+          lib = final: prev: {
+            lib = prev.lib.extend (libfinal: libprev: import ./nixos/lib { inherit final prev libfinal libprev; });
+          };
           local-packages = self: super: {
             cni-plugin-cilium = super.callPackage ./nixos/pkgs/cni-plugin-cilium.nix { };
           };
@@ -63,6 +66,8 @@
             sops-import-keys-hook
           ];
 
+          VAULT_ADDR = "http://[2a10:4741:36:29:26be:5ff:fe84:d8b0]:8200";
+
           KUSTOMIZE_PLUGIN_HOME = pkgs.buildEnv {
             name = "kustomize-plugins";
             paths = with pkgs; [
@@ -83,6 +88,7 @@
 
           buildInputs = with pkgs; [
             jq
+            openssl
             git
             nixpkgs-fmt
             ansible
@@ -101,6 +107,9 @@
             vault
             colmena
             deploy-rs.deploy-rs
+            cilium-cli
+            hubble
+            cfssl
           ];
 
           shellHook = ''
