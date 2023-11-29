@@ -51,6 +51,8 @@
           overlays = builtins.attrValues (toplevel.config.flake.overlays or [ ]);
         };
 
+        packages = (import ./nixos/pkgs/kubernetes/default.nix {inherit pkgs;}).mkKubernetesPackages;
+
         # nix run .#minecraft-console -- namespace
         apps = {
           minecraft-console = {
