@@ -79,7 +79,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: qbittorrent
+            name: qbittorrent-ui
             port:
               name: http
   - host: tautulli.tdude.co
