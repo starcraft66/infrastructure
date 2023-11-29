@@ -3,7 +3,8 @@
 let
   systems = {
     sassaflash = import ./sassaflash { inherit inputs; };
-    stormfeather = import ./stormfeather { inherit inputs; };
+    # stormfeather = import ./stormfeather { inherit inputs; };
+    soarin = import ./soarin { inherit inputs; };
   };
 
   inherit (inputs.nixpkgs) lib;

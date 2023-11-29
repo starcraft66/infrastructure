@@ -13,6 +13,7 @@ in {
     initialCluster = [
       "sassaflash=https://sassaflash.235.tdude.co:2380"
       "stormfeather=https://stormfeather.235.tdude.co:2380"
+      "soarin=https://soarin.235.tdude.co:2380"
     ];
     # This needs to either be new on the first node, or the first node has to already have a data directory
     initialClusterState = "existing";

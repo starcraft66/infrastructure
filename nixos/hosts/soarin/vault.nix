@@ -23,8 +23,8 @@
         leader_client_key_file = "/var/lib/vault/vault-key.pem"
       }
       retry_join {
-        leader_tls_servername = "soarin.235.tdude.co"
-        leader_api_addr = "https://soarin.235.tdude.co:8200"
+        leader_tls_servername = "stormfeather.235.tdude.co"
+        leader_api_addr = "https://stormfeather.235.tdude.co:8200"
         leader_ca_cert_file = "/etc/ssl/certs/vault-ca.pem"
         leader_client_cert_file = "/var/lib/vault/vault-cert.pem"
         leader_client_key_file = "/var/lib/vault/vault-key.pem"
