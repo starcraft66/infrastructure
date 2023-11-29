@@ -1,42 +1,17 @@
 ---
-# Source: minecraft/templates/minecraft-svc.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: minecraft-v4
+  name: minecraft
   labels:
     app.kubernetes.io/name: minecraft
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
-  ipFamilyPolicy: SingleStack
+  ipFamilyPolicy: RequireDualStack
   ipFamilies:
-    - IPv4
-  ports:
-  - name: minecraft
-    port: 25565
-    targetPort: minecraft
-    protocol: TCP
-  - name: rcon
-    port: 25575
-    targetPort: rcon
-    protocol: TCP
-  selector:
-    app.kubernetes.io/name: minecraft
----
-# Source: minecraft/templates/minecraft-svc.yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: minecraft-v6
-  labels:
-    app.kubernetes.io/name: minecraft
-spec:
-  type: LoadBalancer
-  externalTrafficPolicy: Local
-  ipFamilyPolicy: SingleStack
-  ipFamilies:
-    - IPv6
+  - IPv4
+  - IPv6
   ports:
   - name: minecraft
     port: 25565
