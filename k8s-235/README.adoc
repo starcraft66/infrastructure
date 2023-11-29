@@ -5,68 +5,33 @@ ifndef::imagesdir[:imagesdir: ../.gitlab/images]
 == Overview
 
 [.text-justify]
-The 235 kubernetes cluster (referred to as `k8s-235`) is my only personal kubernetes cluster at the moment. It consists of 2 master nodes and 6 worker nodes. One of the workers and both masters run a 3-node etcd cluster, the backing data store for kubernetes. The cluster is deployed on 8 virtual machines running Ubuntu 20.04 LTS, these VMs run on my two physical proxmox hypervisors and are provisioned with Terraform. The cluster is then deployed on the aforementioned VMs with Ansible using the Kubespray playbook.
+The 235 kubernetes cluster (referred to as `k8s-235`) is my only personal kubernetes cluster at the moment. It consists of 3 consolidated master, worker and etcd nodes. Etcd is the backing data store for kubernetes. The cluster is deployed on 3 physical (bare metal) servers running NixOS, these hosts are provisioned by the Nix expressions and modules located in the `nixos` folder at the root of the repo. The kubernetes cluster deployed using a combination of the kubernetes module included in upstream nixpkgs and a custom module that I wrote specific to my infrastructure. Most importantly, it handles end-to-end mutual TLS certification of all cluster components using Hashicorp Vault and vault-agent.
 
 == Provisioning
 
 [.text-justify]
-The virtual machines providing compute for the kubernetes worker and master nodes are provisioned on my two proxmox hypervisors `soarin` and `fleetfoot`. The API keys to connect to the proxmox api and terraform storage backend are automatically added to the environment upon entering the nix shell. The terraform files in the `k8s-235/cluster` folder create 8 identical proxmox VMs with 8 vCPU and 30 GiB of ram each, along with DNS records to connect to each VM. The VMs are cloned from an ubuntu 20.04 cloud image that must initially be loaded into a proxmox storage container prior to applying the terraform plan. The terraform definition also adds SSH keys to the VMs via cloud-init so that they can immediately be taken over by ansible once up and running.
+The physical servers providing compute for the kubernetes worker and master nodes are provisioned by Nix. The flake in this repo contains NixOS configurations for the pysical servers `soarin`, `sassaflash` and `stormfeather`.
 
-.Procedure to install the ubuntu cloud image template on Proxmox
-[%collapsible]
-====
-TODO: Paraphrase https://pve.proxmox.com/wiki/Cloud-Init_Support#_preparing_cloud_init_templates
-====
-
-.Procedure to deploy the kubernetes VMs with Terraform
+.Procedure to install a new physical NixOS server
 [%collapsible]
 ====
 TODO: document
+====
 
-create bucket in minio
-init terraform
-plan terraform
-apply terraform
+.Procedure to initialize, backup and restore the etcd database
+[%collapsible]
+====
+TODO: document
 ====
 
 == Components
 
 [.text-justify]
-The core components of the kubernetes cluster include the control-plane itself, etcd, the Calico CNI networking plugin and the democratic-csi CSI storage plugin. Calico is installed at cluster provisioning time by kubespray and democratic-csi is later installed by ArgoCD.
+The core components of the kubernetes cluster include the control-plane itself, etcd, the Cilium CNI networking plugin and the democratic-csi CSI storage plugin. Cilium is installed at cluster provisioning time using a manual invocation and democratic-csi is later installed by ArgoCD. Cilium can then be further upgraded by ArgoCD.
 
-=== 😸 Calico
+=== 🐝 Cilium
 
-[.text-justify]
-I use the Calico CNI plugin to provide my cluster with networking. Unlike most other CNI plugins that rely heavily on overlay networks and encapsulation, calico can function with pure layer 3 underlay networks using normal routing via BGP.
-
-[.text-justify]
-In kubernetes there are two main CIDR blocks that are important to know about when creating a cluster. The first one is the Pod cidr, every Pod created will be allocated an address inside this subnet. The second one is the Service subnet, all service VIPs created in the cluster will be allocated an address inside this subnet.
-
-[.text-justify]
-By default with calico, the pod cidr is further divided and every node in the cluster is allocated a portion of this subnet. Every node the cluster forms a BGP mesh that that makes all nodes aware of each others' pod CIDRs so that all nodes can reach each other. Calico can also optionally peer with a router and announce its subnets to it over BGP to allow communication from the exterior into the internal cluster network, something that isn't typically possible with overlay networks.
-
-[.text-justify]
-In my cluster, I have disabled the mesh due to a long-standing bug in calico that made it impossible for me to a https://github.com/projectcalico/calico/issues/3810/[long-standing issue in calico] that could not be worked around at the time my cluster was created. Communication between nodes still works fine, it just incurs an additional layer 3 hop through my router which isn't a big deal. I also advertise the service CIDR, as well as an optional LoadBalancer CIDR. In short, every network specific to my kubernetes cluster can be reached from elsewhere in my network.
-
-[.text-justify]
-The ansible variable files `k8s-235/kubespray/inventory/group_vars/k8s-cluster/k8s-cluster.yml`, `k8s-235/kubespray/inventory/group_vars/k8s-cluster/k8s-net-calico.yml` and `k8s-235/kubespray/inventory/group_vars/k8s-cluster/peers.yml` contain all of configuration values relating to the Calico BGP configuration such as CIDRs, peering configuration and AS numbers.
-
-[.text-justify]
-In the future, I plan to re-enable the node-to-node mesh in calico and setting `spec.keepOriginalNextHop: true` in all of my ``BGPPeer``s to prevent every node from announcing every node CIDR at once and causing general chaos. When that is complete, my calico network topology will look something like this:
-
-.Calico network diagram
-[%collapsible]
-====
-image::calico-bgp.png[]
-====
-
-==== MetalLB "integration"
-
-[.text-justify]
-I also run MetalLB in my cluster which is a "Bare-Metal" replacement for kubernetes' `LoadBalancer` concept aimed at hooking up cloud load balancers to kubernetes services. Since we already run a load-balancer inside the cluster and aren't running in a cloud that would provide us with one, this concept doesn't exactly make sense. Most people use MetalLB in layer-2 mode so that pods can behave like typical VMs on a network and acquire IP addresses via a mechanism reminiscent of DHCP. MetalLB also has a BGP mode but I consider it useless when I already run calico in the cluster. For this reason, I have completely disabled the MetalLB speaker which is the integral part of the software. I only use it as a mechanism to automatically assign addresses out of an address pool to LoadBalancer services. These ip addresses will be reachable without the speaker because Calico already advertises these addresses to my upstream router as soon as they are assigned.
-
-[.text-justify]
-In the future, I plan to remove MetalLB entirely and simply assign and advertise ``ExternalIP``s to services that I've currently assigned ``LoadBalancer``s to. This will actually make the whole ordeal more ergonomic for me because I will be able to specify the IP address in advance to coordinate with firewall rules instead of waiting for an IP address to be allocated and then creating a firewall rule.
+I used to use the Calico CNI but recently migrated to Cilium. The semantics are mostly the same when it comes to the BGP peering architecture, I hope to post updated documentation soon.
 
 === 🐙 ArgoCD
 
