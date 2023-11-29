@@ -4,6 +4,20 @@ let
   cfg = config.services.tdude.kubernetes.worker;
 in {
   environment.systemPackages = lib.mkIf cfg.enable (with pkgs; [ kubectl ]);
+  systemd.tmpfiles.rules = lib.mkIf cfg.enable [
+    "d /var/lib/kubelet/plugins_registry 0700 root root -"
+  ];
+
+  # Enable entwork filesystems for PVC mounts
+  services.openiscsi = lib.mkIf cfg.enable {
+    enable = true;
+    name = "iqn.2023-01.net.tdude:${config.networking.hostName}";
+  };
+  boot.kernelModules = lib.mkIf cfg.enable  [ "nfs" ];
+  boot.supportedFilesystems = lib.mkIf cfg.enable [ "nfs" ];
+
+  services.kubernetes.dataDir = "/var/lib/kubelet";
+
   services.kubernetes.kubelet = lib.mkIf cfg.enable (rec {
     enable = true;
     address = "::";
