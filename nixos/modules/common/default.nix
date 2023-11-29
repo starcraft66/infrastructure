@@ -55,13 +55,14 @@ in {
     boot.initrd.network.ssh.authorizedKeys = sshKeys
       ++ cfg.extraSshKeys;
 
-    services.prometheus.exporters.node = {
-      enable = true;
-      openFirewall = true;
-      listenAddress = "[::]";
-      enabledCollectors = [ "interrupts" "systemd" "tcpstat" "processes" ];
-      port = 9100;
-    };
+    # This is already running in k8s
+    # services.prometheus.exporters.node = {
+    #   enable = true;
+    #   openFirewall = true;
+    #   listenAddress = "[::]";
+    #   enabledCollectors = [ "interrupts" "systemd" "tcpstat" "processes" ];
+    #   port = 9100;
+    # };
 
     # services.promtail = {
     #   enable = true;
