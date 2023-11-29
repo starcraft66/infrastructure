@@ -1,8 +1,9 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let
   cfg = config.services.tdude.kubernetes.control-plane;
+  k8sversions = (import ../../../pkgs/kubernetes/default.nix {inherit pkgs;}).mkKubernetesPackages;
 in {
   imports = [ ./apiserver.nix ./controller-manager.nix ./scheduler.nix ./pki.nix ];
   options.services.tdude.kubernetes.control-plane = {
@@ -33,4 +34,5 @@ in {
     cfg.clusterCidrIpv4
     cfg.clusterCidrIpv6
   ];
+  config.services.kubernetes.package = lib.mkDefault k8sversions.kubernetes_1_27_8;
 }
