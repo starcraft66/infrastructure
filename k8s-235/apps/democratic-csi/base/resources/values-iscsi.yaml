@@ -94,3 +94,9 @@ driver:
       extentRpm: "7200"
       # 0-100 (0 == ignore)
       extentAvailThreshold: 0
+
+node:
+  driver:
+    extraEnv:
+      - name: ISCSIADM_HOST_PATH
+        value: /run/current-system/sw/bin/iscsiadm

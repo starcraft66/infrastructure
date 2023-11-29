@@ -15,7 +15,7 @@ generators:
 # - name: k8s.gcr.io/sig-storage/csi-resizer
 #   newTag: v1.3.0
 # - name: k8s.gcr.io/sig-storage/csi-snapshotter
-#   newTag: v4.2.1
+#   newTag: v6.2.1
 # - name: democraticcsi/democratic-csi
 #   newTag: latest
 # - name: k8s.gcr.io/sig-storage/csi-node-driver-registrar

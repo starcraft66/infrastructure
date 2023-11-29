@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
 - ./resources/namespace.yaml
 # Snapshot stuff
+- https://github.com/kubernetes-csi/external-snapshotter/deploy/kubernetes/csi-snapshotter?ref=v6.3.1
 - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/deploy/kubernetes/snapshot-controller/rbac-snapshot-controller.yaml
 - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/deploy/kubernetes/snapshot-controller/setup-snapshot-controller.yaml
 - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/e6e14c16019ece315f91e8389b08cfcbd07d2e49/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
@@ -12,21 +13,21 @@ helmCharts:
 - name: democratic-csi
   # includeCRDs: true
   releaseName: zfs-nfs
-  version: 0.13.7
+  version: 0.14.2
   repo: https://democratic-csi.github.io/charts/
   namespace: democratic-csi
   valuesFile: ./resources/values-nfs.yaml
 - name: democratic-csi
   # includeCRDs: true
   releaseName: zfs-nfs-spitfire-fast
-  version: 0.13.7
+  version: 0.14.2
   repo: https://democratic-csi.github.io/charts/
   namespace: democratic-csi
   valuesFile: ./resources/values-nfs-spitfire-fast.yaml
 - name: democratic-csi
   # includeCRDs: true
   releaseName: zfs-iscsi
-  version: 0.13.7
+  version: 0.14.2
   repo: https://democratic-csi.github.io/charts/
   namespace: democratic-csi
   valuesFile: ./resources/values-iscsi.yaml

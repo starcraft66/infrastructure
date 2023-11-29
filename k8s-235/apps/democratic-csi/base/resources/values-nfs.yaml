@@ -66,3 +66,9 @@ driver:
       datasetPermissionsMode: "0777"
       datasetPermissionsUser: root
       detachedSnapshotsDatasetParentName: spitfire/k8s-235/snapshots
+
+node:
+  driver:
+    extraEnv:
+      - name: ISCSIADM_HOST_PATH
+        value: /run/current-system/sw/bin/iscsiadm
