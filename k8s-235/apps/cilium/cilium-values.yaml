@@ -21,9 +21,6 @@ enableIPv6BIGTCP: false
 
 tunnelProtocol: ""
 
-bpf:
-  masquerade: true
-
 hubble:
   enabled: true
   relay:
@@ -34,10 +31,16 @@ hubble:
 prometheus:
   enabled: true
 
-kubeProxyReplacement: "true"
+kubeProxyReplacement: "false"
 
 routingMode: native
-ipv4NativeRoutingCIDR: 10.234.0.0/16
+# Cilium states that for native routing, all nodes need to have a route to other nodes
+# so we can't just rely on the default route to get us there.
+# https://docs.cilium.io/en/stable/network/concepts/routing/#id3
+# All nodes are located on the same L2 segment so we can enable direct routes
+# We should look into kube-router to get an equivalent
+# of calico's cluster mesh
+autoDirectNodeRoutes: true
 
 # I ususally access my services through a wireguard tunnel from home
 # or via external VPN access so I guess we'll take a global MTU tax

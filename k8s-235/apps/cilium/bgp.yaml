@@ -1,0 +1,28 @@
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumBGPPeeringPolicy
+metadata:
+ name: 01-bgp-peering-policy
+spec: # CiliumBGPPeeringPolicySpec
+  nodeSelector:
+   matchLabels:
+     kubernetes.io/os: linux
+  virtualRouters: # []CiliumBGPVirtualRouter
+  - localASN: 64513
+    exportPodCIDR: true
+    serviceSelector:
+      matchExpressions:
+         - {key: somekey, operator: NotIn, values: ['never-used-value']}
+    neighbors: # []CiliumBGPNeighbor
+    - peerAddress: '172.16.29.1/32'
+      peerASN: 64512
+    - peerAddress: '2a10:4741:36:29::1/128'
+      peerASN: 64512
+---
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: "pool"
+spec:
+  cidrs:
+  - cidr: "10.234.0.0/18"
+  - cidr: "2a10:4741:36:32:3::/80"
