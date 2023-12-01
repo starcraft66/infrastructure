@@ -17,6 +17,9 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
+  # Fix HP iLO4 console breakage
+  # boot.kernelParams = [ "intel_iommu=igfx_off" "intremap=off" ];
+
   boot.loader.grub.device = "/dev/vda";
 
   fileSystems."/" =
