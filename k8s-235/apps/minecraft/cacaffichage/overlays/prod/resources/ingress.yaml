@@ -20,6 +20,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: minecraft-v6
+            name: minecraft
             port:
               name: dynmap

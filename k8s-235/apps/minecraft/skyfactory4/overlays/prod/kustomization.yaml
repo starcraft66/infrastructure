@@ -37,7 +37,7 @@ patchesJson6902:
   target:
     group: ""
     kind: Service
-    name: minecraft-v6
+    name: minecraft
     version: v1
 
 configMapGenerator:
