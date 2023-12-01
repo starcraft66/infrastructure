@@ -55,6 +55,17 @@ in {
     boot.initrd.network.ssh.authorizedKeys = sshKeys
       ++ cfg.extraSshKeys;
 
+    boot.kernel.sysctl."net.core.rmem_max" = 2500000;
+    boot.kernel.sysctl."fs.inotify.max_user_instances" = 1024;
+
+    security.pam.loginLimits = [{
+      domain = "*";
+      type = "soft";
+      item = "nofile";
+      value = "655360";
+    }];
+
+
     # This is already running in k8s
     # services.prometheus.exporters.node = {
     #   enable = true;
