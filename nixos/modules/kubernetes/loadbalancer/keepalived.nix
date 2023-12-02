@@ -1,15 +1,21 @@
-{ lib, ...}:
+{ config, lib, ... }:
 
 let
   cfg = config.services.tdude.kubernetes.loadbalancer;
 in lib.mkIf cfg.enable {
   services.keepalived = {
     enable = true;
-    vrrpInstances.k8s = {
-      interface = "eno1.29";
+    vrrpInstances.k8s4 = {
+      interface = cfg.interface;
       priority = 100; # same priority for everyone, round-robin
-      virtualRouterId = 42;
-      virtualIps = [{ addr = virtualIP; }];
+      virtualRouterId = 81;
+      virtualIps = [{ addr = cfg.ipv4Address; }];
+    };
+    vrrpInstances.k8s6 = {
+      interface = cfg.interface;
+      priority = 100; # same priority for everyone, round-robin
+      virtualRouterId = 82;
+      virtualIps = [{ addr = cfg.ipv6Address; }];
     };
   };
 

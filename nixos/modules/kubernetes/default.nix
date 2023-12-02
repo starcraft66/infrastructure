@@ -4,5 +4,6 @@
     ./controlplane
     ./etcd
     ./worker
+    ./loadbalancer
   ];
 }

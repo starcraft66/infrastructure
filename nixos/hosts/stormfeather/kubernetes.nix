@@ -6,6 +6,7 @@
     "10.234.64.1"
     "2a10:4741:36:32:1::1"
   ];
+  services.tdude.kubernetes.control-plane.additionalApiserverAltNames = [ "k8s.235.tdude.co" ];
   services.tdude.kubernetes.control-plane.clusterCidrIpv4 = "10.234.128.0/18";
   services.tdude.kubernetes.control-plane.clusterCidrIpv6 = "2a10:4741:36:32:2::/104";
   services.tdude.kubernetes.control-plane.serviceCidrIpv4 = "10.234.64.0/18";
@@ -21,6 +22,10 @@
   services.tdude.kubernetes.worker.enable = true;
   # Cilium replaces kube-proxy
   services.tdude.kubernetes.worker.kube-proxy.enable = false;
+  services.tdude.kubernetes.loadbalancer.enable = true;
+  services.tdude.kubernetes.loadbalancer.interface = "enp10s0.29";
+  services.tdude.kubernetes.loadbalancer.ipv4Address = "172.16.29.8";
+  services.tdude.kubernetes.loadbalancer.ipv6Address = "2a10:4741:36:29::8:1";
 
   networking.firewall.enable = false;
 }

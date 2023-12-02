@@ -40,6 +40,15 @@ resource "cloudflare_record" "sassaflash-ilo_tdude_co" {
   proxied = false
 }
 
+resource "cloudflare_record" "k8s-235" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "k8s.235"
+  value   = "2a10:4741:36:29::8:1"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "registry_tdude_co-CNAME" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "registry"
@@ -159,7 +168,7 @@ resource "cloudflare_record" "auth_bedrock_tdude_co-e600072af53ca2808f9a70af1259
 resource "cloudflare_record" "stormfeather_235_tdude_co_AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stormfeather.235"
-  value   = "2a10:4741:36:29:6b:60ff:fe2a:7156"
+  value   = "2a10:4741:36:29:202:c9ff:fe9d:c36a"
   type    = "AAAA"
   ttl     = 1
   proxied = false

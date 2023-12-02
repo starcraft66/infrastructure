@@ -17,7 +17,7 @@ in {
         (mkKubernetesCertificateTemplate "apiserver" {
           pkiRole = "server";
           commonName = "${config.networking.hostName}.235.tdude.co";
-          altNames = [ "kubernetes" "kubernetes.default" "kubernetes.default.svc" "kubernetes.default.svc.cluster" "kubernetes.svc.cluster.local" ];
+          altNames = [ "kubernetes" "kubernetes.default" "kubernetes.default.svc" "kubernetes.default.svc.cluster" "kubernetes.svc.cluster.local" ] ++ cfg.additionalApiserverAltNames;
           inherit (cfg) ipSans;
         }))
       (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/kubelet-client-complete.pem" [ "kube-apiserver" ]

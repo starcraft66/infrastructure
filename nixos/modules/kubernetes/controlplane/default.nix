@@ -11,7 +11,7 @@ in {
     ipSans = mkOption {
       type = types.listOf types.str;
       default = [];
-      description = "List of SANs to add to the apiserver certificate";
+      description = "List of IP SANs to add to the apiserver certificate";
     };  
     clusterCidrIpv4 = mkOption {
       type = types.str;
@@ -28,6 +28,11 @@ in {
     serviceCidrIpv6 = mkOption {
       type = types.str;
       description = "The IPv6 service CIDR range for the kubernetes cluster";
+    };
+    additionalApiserverAltNames = mkOption {
+      type = types.listOf types.str;
+      default = [];
+      description = "Additional SANs to add to the apiserver certificate";
     };
   };
   config.services.kubernetes.clusterCidr = lib.concatStringsSep "," [
