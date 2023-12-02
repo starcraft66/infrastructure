@@ -21,7 +21,7 @@
   services.tdude.kubernetes.etcd.enable = true;
   services.tdude.kubernetes.worker.enable = true;
   # Cilium replaces kube-proxy
-  services.tdude.kubernetes.worker.kube-proxy.enable = false;
+  services.tdude.kubernetes.worker.kube-proxy.enable = true;
   services.tdude.kubernetes.loadbalancer.enable = true;
   services.tdude.kubernetes.loadbalancer.interface = "eno3.29";
   services.tdude.kubernetes.loadbalancer.ipv4Address = "172.16.29.8";
