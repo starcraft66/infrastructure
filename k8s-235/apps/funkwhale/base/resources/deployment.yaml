@@ -201,7 +201,11 @@ spec:
               envsubst "`env | awk -F = '{printf \" $%s\", $1}'`" < /etc/nginx/funkwhale.template > /etc/nginx/conf.d/default.conf
 
               # Add a hardcoded resolver configuration to ease S3 usage
-              echo "resolver $(grep nameserver /etc/resolv.conf | head -n1 | awk '{print $2}');" > /etc/nginx/conf.d/resolver.conf
+              # Disabled this because it causes:
+              # 023/12/02 04:01:21 [emerg] 15#15: invalid port in resolver "2a10:4741:36:32:1::2558" in /etc/nginx/conf.d/resolver.conf:1
+              # nginx: [emerg] invalid port in resolver "2a10:4741:36:32:1::2558" in /etc/nginx/conf.d/resolver.conf:1
+              # I could just fix the problem with [] but this behaviour shouldn't even be needed in the first place
+              # echo "resolver $(grep nameserver /etc/resolv.conf | head -n1 | awk '{print $2}');" > /etc/nginx/conf.d/resolver.conf
 
               # Launch nginx
               nginx -g 'daemon off;'
