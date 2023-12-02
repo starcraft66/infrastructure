@@ -40,13 +40,13 @@ spec:
             memory: "500Mi"
         readinessProbe:
           httpGet:
-              path: /
+              path: /ping
               port: 8989
           periodSeconds: 10
           failureThreshold: 3
         livenessProbe:
           httpGet:
-              path: /
+              path: /ping
               port: 8989
           initialDelaySeconds: 60
           periodSeconds: 10
