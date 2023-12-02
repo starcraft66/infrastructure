@@ -62,8 +62,8 @@
   boot.initrd.systemd.network.netdevs = config.systemd.network.netdevs;
 
   networking.vlans = {
-    "eno1.28" = { id = 28; interface = "eno1"; };
-    "eno1.29" = { id = 29; interface = "eno1"; };
+    "enp10s0.28" = { id = 28; interface = "enp10s0"; };
+    "enp10s0.29" = { id = 29; interface = "enp10s0"; };
   };
 
   networking.interfaces."enp10s0.29" = let
