@@ -18,9 +18,24 @@ spec:
       port: 443
       targetPort: 8443
       protocol: TCP
+  selector:
+    app.kubernetes.io/name: unifi-controller
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unpoller
+  labels:
+    app.kubernetes.io/name: unpoller
+spec:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+  - IPv6
+  - IPv4
+  ports:
     - name: metrics
       port: 9130
       targetPort: 9130
       protocol: TCP
   selector:
-    app.kubernetes.io/name: unifi-controller
+    app.kubernetes.io/name: unpoller

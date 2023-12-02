@@ -3,10 +3,10 @@ kind: ServiceMonitor
 metadata:
   name: unifi-controller-metrics
   labels:
-    app.kubernetes.io/name: unifi-controller
+    app.kubernetes.io/name: unpoller
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: unifi-controller
+      app.kubernetes.io/name: unpoller
   endpoints:
   - port: metrics
