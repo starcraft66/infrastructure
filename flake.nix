@@ -68,7 +68,7 @@
             sops-import-keys-hook
           ];
 
-          VAULT_ADDR = "http://[2a10:4741:36:29:26be:5ff:fe84:d8b0]:8200";
+          VAULT_ADDR = "https://[2a10:4741:36:29:26be:5ff:fe84:d8b0]:8200";
 
           KUSTOMIZE_PLUGIN_HOME = pkgs.buildEnv {
             name = "kustomize-plugins";
