@@ -50,9 +50,9 @@ driver:
       # the example below is useful for TrueNAS 12
       cli:
         paths:
-          zfs: /usr/local/sbin/zfs
-          zpool: /usr/local/sbin/zpool
-          sudo: /usr/local/bin/sudo
+          zfs: /usr/sbin/zfs
+          zpool: /usr/sbin/zpool
+          sudo: /usr/bin/sudo
           chroot: /usr/sbin/chroot
       # total volume name (zvol/<datasetParentName>/<pvc name>) length cannot exceed 63 chars
       # https://www.ixsystems.com/documentation/freenas/11.2-U5/storage.html#zfs-zvol-config-opts-tab
