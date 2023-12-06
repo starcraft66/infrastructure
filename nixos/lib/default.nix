@@ -93,5 +93,7 @@
     mkEtcdClientCertificateTemplate = commonName: writeDir: mkEtcdCertificateTemplate "client" "client" commonName writeDir;
     mkEtcdPeerCertificateTemplate = commonName: writeDir: mkEtcdCertificateTemplate "peer" "peer" commonName writeDir;
     mkKubernetesCertificateTemplate = name: spec: /*(pkiRole: commonName: altNames: ipSans:)*/ writeDir: mkCertificateTemplate "kubernetes" (mkUrlSafePkiRole spec.pkiRole) name spec.commonName spec.altNames spec.ipSans writeDir;
+    mkFrontProxyCertificateTemplate = pkiRole: name: commonName: writeDir: mkCertificateTemplate "front-proxy" pkiRole name commonName [ ] [ ] writeDir;
+    mkFrontProxyClientCertificateTemplate = commonName: writeDir: mkFrontProxyCertificateTemplate "client" "front-proxy-client" commonName writeDir;
   };
 }

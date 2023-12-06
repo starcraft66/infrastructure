@@ -68,6 +68,20 @@ in
 
     tlsCertFile = "/var/lib/secrets/kubernetes/apiserver.pem";
     tlsKeyFile = "/var/lib/secrets/kubernetes/apiserver-key.pem";
+
+    proxyClientKeyFile = "/var/lib/secrets/kubernetes/front-proxy-client-key.pem";
+    proxyClientCertFile = "/var/lib/secrets/kubernetes/front-proxy-client.pem";
+
+    # https://kubernetes.io/docs/tasks/extend-kubernetes/configure-aggregation-layer/
+    # Note: You can set this option to blank as --requestheader-allowed-names="".
+    # This will indicate to an extension apiserver that any CN is acceptable.
+    extraOpts = ''
+      --requestheader-client-ca-file=/var/lib/secrets/kubernetes/front-proxy-ca.pem \
+      --requestheader-allowed-names="" \
+      --requestheader-extra-headers-prefix=X-Remote-Extra- \
+      --requestheader-group-headers=X-Remote-Group \
+      --requestheader-username-headers=X-Remote-User
+    '';
   };
 
   systemd.services.kube-apiserver.after = [ "vault-agent-kubernetes-control-plane.service" "etcd.service" ];

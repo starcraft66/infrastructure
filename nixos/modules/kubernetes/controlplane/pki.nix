@@ -48,6 +48,7 @@ in {
           altNames = [ ];
           ipSans = [ ];
         }))
+      (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/front-proxy-complete.pem" [ "kube-apiserver" ] (mkFrontProxyClientCertificateTemplate "front-proxy-client"))
       (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/etcd-client-complete.pem" [ "kube-apiserver" ] (mkEtcdClientCertificateTemplate "${config.networking.hostName}.235.tdude.co"))
     ]);
 
