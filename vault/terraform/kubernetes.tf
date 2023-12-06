@@ -110,5 +110,5 @@ EOT
 resource "vault_approle_auth_backend_role" "kubernetes" {
   backend        = vault_auth_backend.approle.path
   role_name      = "${var.cluster_id}-node-kubernetes"
-  token_policies = [vault_policy.kubernetes_issue.name, vault_policy.etcd_client_issue.name]
+  token_policies = [vault_policy.kubernetes_issue.name, vault_policy.etcd_client_issue.name, vault_policy.front-proxy_issue.name]
 }

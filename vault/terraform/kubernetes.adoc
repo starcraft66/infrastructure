@@ -14,9 +14,13 @@ kubernetes_id=$(vault read --field=role_id auth/approle/role/k8s-235-1-node-kube
 kubernetes_secret=$(vault write --field=secret_id -f auth/approle/role/k8s-235-1-node-kubernetes/secret-id)
 etcd_id=$(vault read --field=role_id auth/approle/role/k8s-235-1-node-etcd/role-id)
 etcd_secret=$(vault write --field=secret_id -f auth/approle/role/k8s-235-1-node-etcd/secret-id)
+frontproxy_id=$(vault read --field=role_id auth/approle/role/k8s-235-1-node-front-proxy/role-id)
+frontproxy_secret=$(vault write --field=secret_id -f auth/approle/role/k8s-235-1-node-front-proxy/secret-id)
 mkdir -p  /var/lib/secrets/{kubernetes,etcd,coredns}
 echo $kubernetes_id > /var/lib/secrets/kubernetes/vault_agent_role_id
 echo $kubernetes_secret > /var/lib/secrets/kubernetes/vault_agent_secret_id
+echo $frontproxy_id > /var/lib/secrets/front-proxy/vault_agent_role_id
+echo $frontproxy_secret > /var/lib/secrets/front-proxy/vault_agent_secret_id
 echo $kubernetes_id > /var/lib/secrets/coredns/vault_agent_role_id
 echo $kubernetes_secret > /var/lib/secrets/coredns/vault_agent_secret_id
 echo $etcd_id > /var/lib/secrets/etcd/vault_agent_role_id
