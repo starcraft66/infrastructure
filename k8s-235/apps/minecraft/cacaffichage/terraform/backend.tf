@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    endpoint = "https://spitfire.235.tdude.co:9000/"
+    endpoint = "https://spitfire.235.tdude.co:9002/"
     bucket   = "k8s-235-minecraft-cacaffichage"
     key      = "terraform.tfstate"
     region   = "main"
