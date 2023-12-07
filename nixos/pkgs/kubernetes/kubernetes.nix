@@ -31,7 +31,7 @@ buildGoModule rec {
     sha256 = hash;
   };
 
-  vendorSha256 = null;
+  vendorHash = null;
 
   doCheck = false;
 
