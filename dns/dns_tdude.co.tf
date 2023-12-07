@@ -258,7 +258,7 @@ resource "cloudflare_record" "spitfire-bmc_235_tdude_co-AAAA" {
 resource "cloudflare_record" "spitfire_storage_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "spitfire.storage.235"
-  value   = "2607:fa48:6ed8:8a55:e61d:2dff:fe90:80fe"
+  value   = "2a10:4741:36:28:e61d:2dff:fe90:80fe"
   type    = "AAAA"
   ttl     = 1
   proxied = false
