@@ -98,7 +98,7 @@
             kubectl
             kubectx
             kubernetes-helm
-            terraform_1
+            opentofu
             sops
             kustomize
             kubetail
