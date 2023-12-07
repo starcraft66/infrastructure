@@ -113,6 +113,7 @@
             cilium-cli
             hubble
             cfssl
+            kubevirt
           ];
 
           shellHook = ''
