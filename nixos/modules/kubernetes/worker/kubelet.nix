@@ -9,6 +9,7 @@ in {
   ];
 
   # Enable entwork filesystems for PVC mounts
+  systemd.services.kubelet.path = with pkgs; [ openiscsi ];
   services.openiscsi = lib.mkIf cfg.enable {
     enable = true;
     name = "iqn.2023-01.net.tdude:${config.networking.hostName}";
