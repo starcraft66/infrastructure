@@ -49,6 +49,10 @@ in {
       };
     };
 
+    # This seems to hang the activation script
+    # https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1473408913
+    systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
+
     users.users.root.openssh.authorizedKeys.keys = sshKeys
       ++ cfg.extraSshKeys;
 
