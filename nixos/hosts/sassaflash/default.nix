@@ -9,7 +9,7 @@ rec {
     ./kubernetes.nix
     inputs.sops-nix.nixosModules.sops
   ];
-  pkgs = import inputs.nixpkgs {
+  pkgs = import inputs.nixos {
     inherit system;
     overlays = builtins.attrValues inputs.self.overlays;
   };
