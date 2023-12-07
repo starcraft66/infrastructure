@@ -7,6 +7,7 @@ rec {
     ./hardware.nix
     ./vault.nix
     ./kubernetes.nix
+    ./guigz-backup.nix
     inputs.sops-nix.nixosModules.sops
   ];
   pkgs = import inputs.nixos {
