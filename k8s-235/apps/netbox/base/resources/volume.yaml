@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: netbox
 spec:
   accessModes:
-  - "ReadWriteOnce"
+  - "ReadWriteMany"
   storageClassName: "freenas-nfs-csi"
   resources:
     requests:
