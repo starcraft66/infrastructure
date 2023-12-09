@@ -2,6 +2,7 @@
 	"recommendations": [
         "hediet.vscode-drawio",
         "streetsidesoftware.code-spell-checker",
-        "asciidoctor.asciidoctor-vscode"
+        "asciidoctor.asciidoctor-vscode",
+        "redhat.vscode-yaml",
 	]
 }
