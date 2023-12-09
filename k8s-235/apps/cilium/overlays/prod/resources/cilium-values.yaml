@@ -1,26 +1,34 @@
+# This is installed by Nix
 cni:
   install: false
 
+# Enable BGP
 bgpControlPlane:
   enabled: true
 
+# Use the pod subnet slices distributed by kube-apiserver to each kubelet
+# rather than reinventing the wheel with Cilium's native IPAM
 ipam:
   mode: kubernetes
 
+# Dual-stack
 ipv4:
   enabled: true
-
 ipv6:
   enabled: true
 
+# No masquerading of any kind, this will be performed by the router at the edge for v4
 enableIPv4Masquerade: false
 enableIPv6Masquerade: false
 
+# Have not been able to validate these
 enableIPv4BIGTCP: false
 enableIPv6BIGTCP: false
 
+# No tunelling, native routing only
 tunnelProtocol: ""
 
+# Enable observability
 hubble:
   enabled: true
   relay:
@@ -28,6 +36,7 @@ hubble:
   ui:
     enabled: true
 
+# Enable Prometheus metrics
 prometheus:
   enabled: true
 
@@ -38,6 +47,7 @@ kubeProxyReplacement: "false"
 # k8sServiceHost: "172.16.29.8"
 k8sServicePort: 443
 
+# Enable native routing (no tunelling)
 routingMode: native
 # Cilium states that for native routing, all nodes need to have a route to other nodes
 # so we can't just rely on the default route to get us there.
@@ -47,10 +57,14 @@ routingMode: native
 # of calico's cluster mesh
 autoDirectNodeRoutes: true
 
-# I ususally access my services through a wireguard tunnel from home
+# I usually access my services through a wireguard tunnel from home
 # or via external VPN access so I guess we'll take a global MTU tax
 # for this.
 # Original MTU: 1480 (Videotron sit tunnel)
 # New MTU: 1480 - 60 (Wireguard encapsulation) = 1420
 # -Tristan 23/02/2021
+# For some reason 1420 is still causing issues, didn't feel like debugging
+# so I just went with 1400 and it works. The videotron tunnel was replaced
+# with my own sit tunnel to AS208914's router.
+# -Tristan 08/12/2023
 MTU: 1400

@@ -578,3 +578,29 @@ spec:
   syncPolicy:
     automated:
       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cilium
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: kube-system
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/cilium/overlays/prod
+  ignoreDifferences:
+  - group: ""
+    kind: "Secret"
+    jsonPointers:
+    - /data/ca.crt
+    - /data/ca.key
+    - /data/tls.crt
+    - /data/tls.key
+  syncPolicy:
+    automated:
+      selfHeal: false
