@@ -45,9 +45,9 @@ patchesJson6902:
     kind: StatefulSet
     name: minecraft
   patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/resources/limits/memory
-      value: 12Gi
+    - op: add
+      path: /spec/replicas
+      value: 0
 
 configMapGenerator:
 - name: minecraft-env-vars
