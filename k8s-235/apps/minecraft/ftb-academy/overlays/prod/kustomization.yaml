@@ -56,7 +56,6 @@ configMapGenerator:
   - TYPE=FTBA
   - FTB_MODPACK_ID=88
   - FTB_MODPACK_VERSION_ID=2338
-  - FTB_FORCE_REINSTALL=true
   - DIFFICULTY=hard
   - ICON=""
   - MAX_PLAYERS=20
