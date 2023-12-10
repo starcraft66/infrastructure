@@ -90,7 +90,7 @@ in {
     #       filename = "/tmp/positions.yaml";
     #     };
     #     clients = [{
-    #       url = "http://176.16.2.5:3100/loki/api/v1/push";
+    #       url = "http://172.16.2.5:3100/loki/api/v1/push";
     #     }];
     #     scrape_configs = [{
     #       job_name = "journal";
