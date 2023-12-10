@@ -84,5 +84,5 @@ in
     '';
   };
 
-  systemd.services.kube-apiserver.after = [ "vault-agent-kubernetes-control-plane.service" "etcd.service" ];
+  systemd.services.kube-apiserver.after = lib.mkIf cfg.enable [ "vault-agent-kubernetes-control-plane.service" "etcd.service" ];
 }

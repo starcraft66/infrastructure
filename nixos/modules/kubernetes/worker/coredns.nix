@@ -29,7 +29,7 @@ in
 
   # Configure resolv.conf to point to local CoreDNS
   # networking.resolvconf.useLocalResolver = lib.mkIf cfg.enable true;
-  services.resolved.dnssec = "false";
+  services.resolved.dnssec = lib.mkIf cfg.enable "false";
 
   # Don't use resolved, use coredns instead
   # services.resolved.enable = lib.mkIf cfg.enable (lib.mkForce false);
@@ -67,5 +67,5 @@ in
     isSystemUser = true;
   };
 
-  systemd.services.coredns.after = [ "vault-agent-coredns.service" ];
+  systemd.services.coredns.after = lib.mkIf cfg.enable [ "vault-agent-coredns.service" ];
 }

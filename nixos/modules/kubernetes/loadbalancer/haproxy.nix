@@ -10,7 +10,7 @@ let
       "soarin.235.tdude.co"
     ];
 in {
-  services.haproxy = {
+  services.haproxy = lib.mkIf cfg.enable {
     enable = true;
     # TODO: backend healthchecks
     config = ''
