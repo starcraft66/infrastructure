@@ -23,6 +23,7 @@ in {
     networking.firewall.allowPing = true;
     networking.firewall.logRefusedConnections = false;
     services.openssh.enable = true;
+    services.uptimed.enable = true;
 
     programs.zsh.enable = true;
     users.defaultUserShell = pkgs.zsh;
