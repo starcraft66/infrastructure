@@ -127,6 +127,12 @@
               source <(kubectl completion bash) 2>/dev/null;
             fi
 
+            if [[ $(uname -a) == *WSL2* ]]; then
+              # Use windows-side gpg if running in WSL2
+              # to facilitate smartcard usage
+              export SOPS_GPG_EXEC="gpg.exe";
+            fi
+
             echo Touch the YubiKey.
             set -a
             eval "$(sops --decrypt --output-type dotenv secrets/nix-shell.yaml)"
