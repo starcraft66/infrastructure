@@ -126,7 +126,7 @@
 
             echo Touch the YubiKey.
             set -a
-            eval "$(sops --decrypt --output-type dotenv secrets/terraform-backend.yaml)"
+            eval "$(sops --decrypt --output-type dotenv secrets/nix-shell.yaml)"
             set +a
           '';
         };
