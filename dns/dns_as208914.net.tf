@@ -70,3 +70,12 @@ resource "cloudflare_record" "dkim_as208914_net" {
   ttl     = 1
   proxied = false
 }
+
+resource "cloudflare_record" "dkim_as208914_mail" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "mail._domainkey"
+  value   = "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzxbexjYz/71o/Ci7XIofTWZNEphc/0a4RVzVV3wX7tocZISGew2w+6+bPWScJJ7SsHSHyd8q99EgWl6XZJQu8otMOJJa5EPOZ/UolEB7z9zS1nK2eq/BQMLJfrT0yeti73fe2qsphpEfKoMxMTBF73y/Gn+A6uC12/CCgPncioR6kwAdbl5S/vZ+0Vt0Kyx0PpXgF/mjaEuUGHbTtA7cqdOdDFVjXVI6/+J7qVhV8AYyAebbS/l0/SHoFHQpxQRNr4iZ71KwNEXCewANNqoiGBXLzIH9+N/obZ+qWaF1siUVUfPZwG2ahGgM3QZENySX+N6/7jRdl+MZT5CROLjVgQIDAQAB"
+  type    = "TXT"
+  ttl     = 1
+  proxied = false
+}

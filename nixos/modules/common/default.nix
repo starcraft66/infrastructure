@@ -23,6 +23,7 @@ in {
     networking.firewall.allowPing = true;
     networking.firewall.logRefusedConnections = false;
     services.openssh.enable = true;
+    services.uptimed.enable = true;
 
     programs.zsh.enable = true;
     users.defaultUserShell = pkgs.zsh;
@@ -70,14 +71,14 @@ in {
     }];
 
 
-    # This is already running in k8s
-    # services.prometheus.exporters.node = {
-    #   enable = true;
-    #   openFirewall = true;
-    #   listenAddress = "[::]";
-    #   enabledCollectors = [ "interrupts" "systemd" "tcpstat" "processes" ];
-    #   port = 9100;
-    # };
+    # Assume this is already running in k8s if kubelet is enabled
+    services.prometheus.exporters.node = lib.mkIf (!config.services.kubernetes.kubelet.enable) {
+      enable = true;
+      openFirewall = true;
+      listenAddress = "[::]";
+      enabledCollectors = [ "interrupts" "systemd" "tcpstat" "processes" ];
+      port = 9100;
+    };
 
     # services.promtail = {
     #   enable = true;
@@ -90,7 +91,7 @@ in {
     #       filename = "/tmp/positions.yaml";
     #     };
     #     clients = [{
-    #       url = "http://176.16.2.5:3100/loki/api/v1/push";
+    #       url = "http://172.16.2.5:3100/loki/api/v1/push";
     #     }];
     #     scrape_configs = [{
     #       job_name = "journal";

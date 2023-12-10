@@ -513,6 +513,15 @@ resource "cloudflare_record" "_201608__domainkey_tdude_co-e93f862066906dc624a653
   proxied = false
 }
 
+resource "cloudflare_record" "dkim_tdude_mail" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "mail._domainkey"
+  value   = "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtqUHIM6dE7luX9HkKb9jZb6rxX2BSRYZMFEnf3gLtKRn4t20Y08TttIOAyiymHcGTwG6osChbnvRMZKff+NjlI7MfVVH0+hRgc0mJKWXjzIRkTUXOr9aTDmujwnYCfpJ/mCcckqNjBI4HaDBSo1i6glWinmm8U8zKORmp3SCMYttc0pTxs0Z7Lm9nJBFGxcqZEzANRHYkMLbfLM9+Khol1VnzFZZfSGag+bHRvNyhIJ+AXNLvdHoObEAa2RHm+yQUHmL+uH/La60kUhVSgDenlPivbjX/XXxqMudFJ1FDHI/JHtqzhYGFYhHGjDDMvh4Jg+MI1IxBqEPYuedt/v2+QIDAQAB"
+  type    = "TXT"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "_dmarc_tdude_co-4de172137b73fb7c61bcfa72f2aad7db" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "_dmarc"

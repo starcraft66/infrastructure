@@ -5,6 +5,7 @@ let
     sassaflash = import ./sassaflash { inherit inputs; };
     stormfeather = import ./stormfeather { inherit inputs; };
     soarin = import ./soarin { inherit inputs; };
+    stone = import ./stone { inherit inputs; };
   };
 
   inherit (inputs.nixpkgs) lib;

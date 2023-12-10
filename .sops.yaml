@@ -1,13 +1,24 @@
+keys:
+- &tristan 85974506EC695392044308059D98CDACFF04FD78
+- &argocd-k8s-235 2DADB88EC6EA687971F53F10E9936473C592AEDF
+- &stone 876BE5D8B88B57724CE7DCB184C0FF4EC256ACA1
 creation_rules:
-  - path_regex: k8s-235/apps/.*/secrets/.*\.yaml$
-    encrypted_regex: '^(data|stringData)$'
-    pgp: >-
-      85974506EC695392044308059D98CDACFF04FD78,
-      2DADB88EC6EA687971F53F10E9936473C592AEDF
-  - path_regex: vault/pki/.*\.yaml$
-    pgp: >-
-      85974506EC695392044308059D98CDACFF04FD78
-  - path_regex: secrets/.*\.yaml$
-    pgp: >-
-      85974506EC695392044308059D98CDACFF04FD78,
-      2DADB88EC6EA687971F53F10E9936473C592AEDF
+- path_regex: k8s-235/apps/.*/secrets/.*\.yaml$
+  encrypted_regex: '^(data|stringData)$'
+  key_groups:
+  - pgp:
+    - *tristan
+    - *argocd-k8s-235
+- path_regex: vault/pki/.*\.yaml$
+  key_groups:
+  - pgp:
+    - *tristan
+- path_regex: secrets/nix-shell\.yaml$
+  key_groups:
+  - pgp:
+    - *tristan
+- path_regex: secrets/stone\.yaml$
+  key_groups:
+  - pgp:
+    - *tristan
+    - *stone

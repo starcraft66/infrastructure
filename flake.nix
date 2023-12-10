@@ -2,6 +2,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixos.url = "github:nixos/nixpkgs/nixos-23.11";
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.05";
+    simple-nixos-mailserver.inputs.nixpkgs.follows = "nixos";
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -13,6 +15,8 @@
     colmena.inputs.nixpkgs.follows = "nixpkgs";
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
+    tdude-website.url = "git+https://git.tdude.co/tristan/www.tdude.co.git";
+    tdude-website.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (
@@ -83,11 +87,10 @@
             pathsToLink = [ "/lib" ];
           };
 
-          # For future usage
-          # sopsPGPKeyDirs = [
-          #   "./secrets/keys/hosts"
-          #   "./secrets/keys/users"
-          # ];
+          sopsPGPKeyDirs = [
+            "./secrets/keys/hosts"
+            "./secrets/keys/users"
+          ];
 
           buildInputs = with pkgs; [
             jq
@@ -124,9 +127,15 @@
               source <(kubectl completion bash) 2>/dev/null;
             fi
 
+            if [[ $(uname -a) == *WSL2* ]]; then
+              # Use windows-side gpg if running in WSL2
+              # to facilitate smartcard usage
+              export SOPS_GPG_EXEC="gpg.exe";
+            fi
+
             echo Touch the YubiKey.
             set -a
-            eval "$(sops --decrypt --output-type dotenv secrets/terraform-backend.yaml)"
+            eval "$(sops --decrypt --output-type dotenv secrets/nix-shell.yaml)"
             set +a
           '';
         };

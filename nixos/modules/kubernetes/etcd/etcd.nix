@@ -33,5 +33,5 @@ in {
     trustedCaFile = "/var/lib/secrets/etcd/etcd-ca.pem";
   };
 
-  systemd.services.etcd.after = [ "vault-agent-etcd.service" ];
+  systemd.services.etcd.after = lib.mkIf cfg.enable [ "vault-agent-etcd.service" ];
 }
