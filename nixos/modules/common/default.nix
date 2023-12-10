@@ -70,14 +70,14 @@ in {
     }];
 
 
-    # This is already running in k8s
-    # services.prometheus.exporters.node = {
-    #   enable = true;
-    #   openFirewall = true;
-    #   listenAddress = "[::]";
-    #   enabledCollectors = [ "interrupts" "systemd" "tcpstat" "processes" ];
-    #   port = 9100;
-    # };
+    # Assume this is already running in k8s if kubelet is enabled
+    services.prometheus.exporters.node = lib.mkIf (!config.services.kubernetes.kubelet.enable) {
+      enable = true;
+      openFirewall = true;
+      listenAddress = "[::]";
+      enabledCollectors = [ "interrupts" "systemd" "tcpstat" "processes" ];
+      port = 9100;
+    };
 
     # services.promtail = {
     #   enable = true;
