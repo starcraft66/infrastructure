@@ -43,6 +43,33 @@ resource "cloudflare_record" "yyz-r1_backdoor_as208914_net-A" {
   proxied = false
 }
 
+resource "cloudflare_record" "ams-r1_as208914_net-AAAA" {
+  zone_id = cloudflare_zone.as208914_net.id
+  name    = "ams-r1"
+  value   = "2a10:4741:38::1"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "ams-r1_backdoor_as208914_net-AAAA" {
+  zone_id = cloudflare_zone.as208914_net.id
+  name    = "ams-r1.backdoor"
+  value   = "2a0c:9a40:1072::706"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "ams-r1_backdoor_as208914_net-A" {
+  zone_id = cloudflare_zone.as208914_net.id
+  name    = "ams-r1.backdoor"
+  value   = "193.148.248.216"
+  type    = "A"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "mail" {
   zone_id  = cloudflare_zone.as208914_net.id
   name     = "as208914.net"
