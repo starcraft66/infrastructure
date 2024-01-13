@@ -50,6 +50,7 @@
     group = "haproxy";
     domain = "vault.235.tdude.co";
     dnsProvider = "cloudflare";
+    reloadServices = [ "haproxy" ];
   };
   
   networking.firewall.allowedTCPPorts = [ 8200 8201 ];
