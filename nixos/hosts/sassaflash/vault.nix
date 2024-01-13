@@ -39,6 +39,18 @@
       # tls_client_ca_file = "/etc/ssl/certs/vault-ca.pem"
     '';
   };
+
+  security.acme.acceptTerms = true;
+  security.acme.defaults.email = "tristan@tzone.org";
+  security.acme.defaults.credentialFiles = {
+    CLOUDFLARE_DNS_API_TOKEN_FILE = "/var/lib/secrets/acme/cloudflare-api-token";
+  };
+
+  security.acme.certs.vault = {
+    group = "haproxy";
+    domain = "vault.235.tdude.co";
+    dnsProvider = "cloudflare";
+  };
   
   networking.firewall.allowedTCPPorts = [ 8200 8201 ];
 }

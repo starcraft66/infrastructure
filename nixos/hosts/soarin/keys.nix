@@ -61,5 +61,16 @@ in lib.mkIf deploy-keys {
 
     uploadAt = "pre-activation";
   };
+  deployment.keys."cloudflare-api-token" = {
+    keyCommand = [ "sops" "-d" "--extract" "[\"cloudflare\"][\"token\"]" (toString ../../../vault/pki/cloudflare.yaml) ];
+
+    destDir = "/var/lib/secrets/acme";
+    name = "cloudflare-api-token";
+    user = "acme";
+    group = "acme";
+    permissions = "0400";
+
+    uploadAt = "pre-activation";
+  };
 }
 

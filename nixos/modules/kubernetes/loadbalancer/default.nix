@@ -11,13 +11,21 @@ in {
       type = types.str;
       description = "The interface to advertise the kubernetes apiserver on";
     };
-    ipv4Address = mkOption {
+    k8sIpv4Address = mkOption {
       type = types.str;
-      description = "The address to advertise the kubernetes apiserver on";
+      description = "The IPv4 address to advertise the kubernetes apiserver on";
     };
-    ipv6Address = mkOption {
+    k8sIpv6Address = mkOption {
       type = types.str;
-      description = "The address to advertise the kubernetes apiserver on";
+      description = "The IPv6 address to advertise the kubernetes apiserver on";
+    };
+    vaultIpv4Address = mkOption {
+      type = types.str;
+      description = "The IPv4 address to advertise the kubernetes apiserver on";
+    };
+    vaultIpv6Address = mkOption {
+      type = types.str;
+      description = "The IPv6 address to advertise the kubernetes apiserver on";
     };
   };
 }

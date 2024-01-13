@@ -33,11 +33,23 @@
     extraConfig = ''
       ui = true
 
-      api_addr = "http://${config.networking.hostName}.235.tdude.co:8200"
+      api_addr = "https://vault.235.tdude.co"
       cluster_addr = "https://${config.networking.hostName}.235.tdude.co:8201"
 
       # tls_client_ca_file = "/etc/ssl/certs/vault-ca.pem"
     '';
+  };
+
+  security.acme.acceptTerms = true;
+  security.acme.defaults.email = "tristan@tzone.org";
+  security.acme.defaults.credentialFiles = {
+    CLOUDFLARE_DNS_API_TOKEN_FILE = "/var/lib/secrets/acme/cloudflare-api-token";
+  };
+
+  security.acme.certs.vault = {
+    group = "haproxy";
+    domain = "vault.235.tdude.co";
+    dnsProvider = "cloudflare";
   };
   
   networking.firewall.allowedTCPPorts = [ 8200 8201 ];

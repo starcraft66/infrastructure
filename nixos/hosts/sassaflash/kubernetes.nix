@@ -24,8 +24,10 @@
   services.tdude.kubernetes.worker.kube-proxy.enable = true;
   services.tdude.kubernetes.loadbalancer.enable = true;
   services.tdude.kubernetes.loadbalancer.interface = "eno1.29";
-  services.tdude.kubernetes.loadbalancer.ipv4Address = "172.16.29.8";
-  services.tdude.kubernetes.loadbalancer.ipv6Address = "2a10:4741:36:29::8:1";
+  services.tdude.kubernetes.loadbalancer.k8sIpv4Address = "172.16.29.8";
+  services.tdude.kubernetes.loadbalancer.k8sIpv6Address = "2a10:4741:36:29::8:1";
+  services.tdude.kubernetes.loadbalancer.vaultIpv4Address = "172.16.29.9";
+  services.tdude.kubernetes.loadbalancer.vaultIpv6Address = "2a10:4741:36:29::9:1";
 
   networking.firewall.enable = false;
 }

@@ -9,13 +9,25 @@ in lib.mkIf cfg.enable {
       interface = cfg.interface;
       priority = 100; # same priority for everyone, round-robin
       virtualRouterId = 81;
-      virtualIps = [{ addr = cfg.ipv4Address; }];
+      virtualIps = [{ addr = cfg.k8sIpv4Address; }];
     };
     vrrpInstances.k8s6 = {
       interface = cfg.interface;
       priority = 100; # same priority for everyone, round-robin
       virtualRouterId = 82;
-      virtualIps = [{ addr = cfg.ipv6Address; }];
+      virtualIps = [{ addr = cfg.k8sIpv6Address; }];
+    };
+    vrrpInstances.vault4 = {
+      interface = cfg.interface;
+      priority = 100; # same priority for everyone, round-robin
+      virtualRouterId = 83;
+      virtualIps = [{ addr = cfg.vaultIpv4Address; }];
+    };
+    vrrpInstances.vault6 = {
+      interface = cfg.interface;
+      priority = 100; # same priority for everyone, round-robin
+      virtualRouterId = 84;
+      virtualIps = [{ addr = cfg.vaultIpv6Address; }];
     };
   };
 
