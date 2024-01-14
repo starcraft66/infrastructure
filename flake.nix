@@ -117,6 +117,7 @@
             hubble
             cfssl
             kubevirt
+            kubelogin-oidc
           ];
 
           shellHook = ''
@@ -126,6 +127,8 @@
             else
               source <(kubectl completion bash) 2>/dev/null;
             fi
+
+            export KUBECONFIG=kubeconfig.yaml
 
             if [[ $(uname -a) == *WSL2* ]]; then
               # Use windows-side gpg if running in WSL2
