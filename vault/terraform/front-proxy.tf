@@ -12,13 +12,13 @@ resource "vault_pki_secret_backend_role" "role_front-proxy_client" {
   allow_ip_sans    = true
   key_type         = "rsa"
   key_bits         = 4096
-  key_usage        = [ "DigitalSignature", "KeyEncipherment", "ClientAuth" ]
+  key_usage        = ["DigitalSignature", "KeyEncipherment", "ClientAuth"]
   allow_any_name   = true
   allow_subdomains = true
 }
 
 resource "vault_policy" "front-proxy_issue" {
-  name = "front-proxy-issue"
+  name   = "front-proxy-issue"
   policy = <<EOT
 path "${vault_mount.pki_front-proxy.path}/issue/*" {
   capabilities = [ "read", "create", "update" ]
