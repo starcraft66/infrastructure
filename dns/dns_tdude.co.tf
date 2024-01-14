@@ -667,3 +667,13 @@ resource "cloudflare_record" "fogserver_305-1700_AAAA" {
   ttl     = 1
   proxied = false
 }
+
+resource "cloudflare_record" "vault-235" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "vault.235"
+  value   = "2a10:4741:36:29::9:1"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+

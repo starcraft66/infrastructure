@@ -33,7 +33,7 @@
     extraConfig = ''
       ui = true
 
-      api_addr = "http://${config.networking.hostName}.235.tdude.co:8200"
+      api_addr = "https://vault.235.tdude.co"
       cluster_addr = "https://${config.networking.hostName}.235.tdude.co:8201"
 
       # tls_client_ca_file = "/etc/ssl/certs/vault-ca.pem"
