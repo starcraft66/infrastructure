@@ -39,5 +39,5 @@ in {
     cfg.clusterCidrIpv4
     cfg.clusterCidrIpv6
   ];
-  config.services.kubernetes.package = lib.mkDefault k8sversions.kubernetes_1_28_4;
+  config.services.kubernetes.package = lib.mkDefault k8sversions.kubernetes_1_29_0;
 }
