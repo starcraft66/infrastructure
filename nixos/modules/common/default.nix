@@ -36,6 +36,10 @@ in {
       tcpdump
     ];
 
+    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+      "vault-bin"
+    ];
+
     # Service Discovery
     services.lldpd.enable = true;
     services.avahi = {
