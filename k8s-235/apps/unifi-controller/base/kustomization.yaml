@@ -6,6 +6,6 @@ resources:
 
 images:
 - name: ghcr.io/linuxserver/unifi-controller
-  digest: sha256:d65513b089eb1cd20e822777c270e2068c05b86dd1a3f842975286b1181b525f
+  digest: sha256:0ae315a3a45635e443899e30e86bd507c2c48922cb27f4bc7241777885f4650e
 - name: ghcr.io/unpoller/unpoller
   newTag: v2.9.4
