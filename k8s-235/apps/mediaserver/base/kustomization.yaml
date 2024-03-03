@@ -22,7 +22,7 @@ images:
 - name: ghcr.io/linuxserver/jackett
   digest: sha256:482434c4b1bbe85f1bf4d98708a33e498a80a3b365ecfa8715560a735da05264
 - name: ghcr.io/linuxserver/radarr
-  digest: sha256:e660626b6f7e08298573dba7e89b0d40d1b11dceb9010a28074385567ad36fe7
+  digest: sha256:ea775bc8c1911ff5b51c6a1199c266032e6fd406d28199b2f188b6073c6b1c64
 - name: ghcr.io/linuxserver/sonarr
   digest: sha256:124ac6f806367d7b51a6e90ac376b6dff3ab092b398c3e7d79cec26442e66c40
 - name: ghcr.io/linuxserver/lidarr
