@@ -15,4 +15,4 @@ images:
 - name: guacamole/guacamole
   newTag: "1.5.3"
 - name: guacamole/guacd
-  newTag: "1.5.3"
+  newTag: "1.5.4"
