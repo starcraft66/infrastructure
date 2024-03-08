@@ -9,7 +9,7 @@ generators:
 - ./generators/secrets-generator.yaml
 
 # Let the Helm chart pin image versions
-# images:
+images:
 # - name: k8s.gcr.io/sig-storage/csi-provisioner
 #   newTag: v3.0.0
 # - name: k8s.gcr.io/sig-storage/csi-resizer
@@ -20,13 +20,13 @@ generators:
 #   newTag: latest
 # - name: k8s.gcr.io/sig-storage/csi-node-driver-registrar
 #   newTag: v2.4.0
-# - name: democraticcsi/democratic-csi
-#   newTag: latest
+- name: docker.io/democraticcsi/democratic-csi
+  newTag: next
 
 commonLabels:
   app.kubernetes.io/name: democratic-csi
 
-patchesJson6902:
+patches:
 - path: ./patches/leader-election-namespace.yaml
   target:
     group: apps
