@@ -37,7 +37,7 @@ spec:
             cpu: "0.25"
             memory: "250Mi"
           limits:
-            memory: "500Mi"
+            memory: "4Gi"
         readinessProbe:
           httpGet:
               path: /ping
