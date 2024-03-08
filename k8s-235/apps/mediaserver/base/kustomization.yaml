@@ -34,4 +34,4 @@ images:
 - name: ghcr.io/linuxserver/tautulli
   digest: sha256:bba5d290b0568f3d1df6bae05befb2c3621ec0349dd8372233c591e046fd8103
 - name: ghcr.io/linuxserver/overseerr
-  digest: sha256:afa85c37a725844a073e16ba870c6124943a9e8b05ed6791a1803e29c21f45a3
+  digest: sha256:254ed3aeff632f3c6ebf72ff220d5c36bf1459feb3f0a2d9efd3f2f0fa5dd01e
