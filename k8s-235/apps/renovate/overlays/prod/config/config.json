@@ -4,5 +4,6 @@
         "tristan/kube-prometheus-k8s-235"
     ],
     "dryRun": false,
-    "prConcurrentLimit": 100
+    "prConcurrentLimit": 100,
+    "prHourlyLimit": 0
 }
