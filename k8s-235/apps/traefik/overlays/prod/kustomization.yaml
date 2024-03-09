@@ -4,7 +4,7 @@ namespace: traefik
 
 images:
 - name: traefik
-  newTag: "v2.10.4"
+  newTag: "v2.11.0"
 - name: thomseddon/traefik-forward-auth
   newTag: "2"
 
