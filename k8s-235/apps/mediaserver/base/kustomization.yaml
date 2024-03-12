@@ -26,7 +26,7 @@ images:
 - name: ghcr.io/linuxserver/sonarr
   digest: sha256:86122cfebc3bdb59cc9c49e531bc79bf26e8f6aec2df2172c9aadb09f3d589b0
 - name: ghcr.io/linuxserver/lidarr
-  digest: sha256:a695aec5a08032c1a15e3d4b2c784952fe1f86071c377abf3ad19413657f4cbe
+  digest: sha256:d1a6175d03677a93e7ae1c8ed8209293e08329547355be160ca5e068219fe9fa
 - name: ghcr.io/linuxserver/prowlarr
   newTag: develop@sha256:2cfae23957dab3b45cdc6f3806bfe1a531feffe2f050f18c7e2de69c50250df6
 - name: ghcr.io/linuxserver/qbittorrent
