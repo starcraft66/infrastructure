@@ -677,3 +677,20 @@ resource "cloudflare_record" "vault-235" {
   proxied = false
 }
 
+resource "cloudflare_record" "lava_tdude_co-A" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "lava"
+  value   = "65.109.116.164"
+  type    = "A"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "lava_tdude_co-AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "lava"
+  value   = "2a01:4f9:3051:104f::1"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}

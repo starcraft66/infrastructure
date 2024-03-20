@@ -6,6 +6,7 @@ let
     stormfeather = import ./stormfeather { inherit inputs; };
     soarin = import ./soarin { inherit inputs; };
     stone = import ./stone { inherit inputs; };
+    lava = import ./lava { inherit inputs; };
   };
 
   inherit (inputs.nixpkgs) lib;
