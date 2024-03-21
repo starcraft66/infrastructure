@@ -4,6 +4,13 @@ stages:
 check:
   stage: check
   image: nixpkgs/nix
+  rules:
+  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    changes:
+    - flake.nix
+    - flake.lock
+    - shell.nix
+    - nixos/**/*
   before_script:
   - 'mkdir -p /etc/nix'
   - 'echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf'
