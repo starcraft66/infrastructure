@@ -29,6 +29,7 @@ let
     lib.mapAttrsToList (name: system: {
       ${system.system}.${name} = (inputs.nixos-generators.nixosGenerate {
         inherit (system) pkgs format;
+        inherit (system.nixosInput) lib;
         # Avoid conflicts between system and live media
         modules = lib.remove ./${name}/bootloader.nix (system.modules ++ (import ../modules));
         specialArgs = { inherit inputs; };
