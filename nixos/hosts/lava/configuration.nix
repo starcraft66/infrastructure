@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   hostName = "lava";
   networkInterface = "enp7s0";
@@ -48,7 +48,16 @@ in {
 
   networking.defaultGateway = { address = ipv4.gateway; interface = networkInterface; };
   networking.defaultGateway6 = { address = ipv6.gateway; interface = networkInterface; };
-  networking.nameservers = [ "8.8.8.8" ];
+  networking.nameservers = [
+    "2001:4860:4860::8888"
+    "2001:4860:4860::8844"
+    "2606:4700:4700::1111"
+    "2606:4700:4700::1001"
+    "8.8.8.8"
+    "8.8.4.4"
+    "1.1.1.1"
+    "1.0.0.1"
+  ];
   
   # networking.nftables.enable = true;
   networking.firewall = {
@@ -84,8 +93,8 @@ in {
     "ip=${ipv4.address}::${ipv4.gateway}:${ipv4.netmask}:${hostName}-initrd:${networkInterface}:off:8.8.8.8"
   ];
 
-  # SSH
   services.openssh.enable = true;
+  services.prometheus.exporters.node.openFirewall = lib.mkForce false;
 
   system.stateVersion = "23.11"; # Did you read the comment?
 }

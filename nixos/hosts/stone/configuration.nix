@@ -1,4 +1,4 @@
-{ config, pkgs, modulesPath, ... }:
+{ config, pkgs, lib, modulesPath, ... }:
 
 {
   imports = [
@@ -25,6 +25,7 @@
   };
 
   services.openssh.enable = true;
+  services.prometheus.exporters.node.openFirewall = lib.mkForce false;
 
   system.stateVersion = "23.11";
 }
