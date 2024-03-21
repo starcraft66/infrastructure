@@ -1,8 +1,0 @@
----
-timezone: "America/Toronto"
-lolisafe_version: latest
-lolisafe_installation_folder: "/opt/lolisafe"
-lolisafe_store_folder: "{{ lolisafe_installation_folder }}/store"
-lolisafe_database_folder: "{{ lolisafe_installation_folder }}/database"
-lolisafe_custom_pages_folder: "{{ lolisafe_installation_folder }}/custom"
-lolisafe_logs_folder: "{{ lolisafe_installation_folder }}/logs"

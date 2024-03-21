@@ -105,7 +105,6 @@ This listing intentionally doesn't cover the entire structure of the repo, it is
 [source,console]
 ----
 ./
-├── ansible/        # Ansible roles and playbooks for certain hosts
 ├── dns/            # Terraform files for misc. dns zones and records
 ├── k8s-235/        # All files related to my kubernetes cluster
 │  └── apps/        # Applications deployed on k8s using ArgoCD and Kustomize

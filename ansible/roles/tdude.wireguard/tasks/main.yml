@@ -1,6 +1,0 @@
----
-- include: debian.yml
-  when: ansible_os_family == "Debian" and ansible_connection == "ssh"
-
-- include: edgeos.yml
-  when: ansible_connection == "network_cli" and ansible_network_os == "edgeos"

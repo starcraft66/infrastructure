@@ -1,7 +1,0 @@
----
-- name: restart minecraft-discord-bridge
-  docker_compose:
-    project_src: "{{ minecraft_discord_bridge_installation_folder }}"
-    files: docker-compose.yml
-    state: present
-    restarted: yes

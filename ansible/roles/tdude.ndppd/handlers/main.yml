@@ -1,4 +1,0 @@
-- name: restart ndppd
-  systemd:
-    name: ndppd
-    state: restarted

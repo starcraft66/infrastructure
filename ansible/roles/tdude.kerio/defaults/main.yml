@@ -1,7 +1,0 @@
----
-timezone: "America/Toronto"
-kerio_installation_folder: "/opt/kerio"
-kerio_license_folder: "{{ kerio_installation_folder }}/license"
-kerio_store_folder: "{{ kerio_installation_folder }}/store"
-kerio_sslcert_folder: "{{ kerio_installation_folder }}/sslcert"
-kerio_connect_version: "latest"

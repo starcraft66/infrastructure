@@ -1,6 +1,0 @@
-- hosts:
-    - repo_server
-    - backup_client
-  become: true
-  roles:
-    - { role: starcraft66.borgbackup }
