@@ -4,7 +4,9 @@ stages:
 check:
   stage: check
   image: nixpkgs/nix
+  before_script:
+  - 'echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf'
   script:
   - 'nix --version'
-  - 'nix --experimental-features "nix-command flakes" flake show --all-systems'
-  - 'nix --experimental-features "nix-command flakes" flake check --all-systems --no-build --show-trace'
+  - 'nix flake show --all-systems'
+  - 'nix flake check --all-systems --no-build --show-trace'
