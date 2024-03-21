@@ -9,5 +9,5 @@ check:
   - 'echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf'
   script:
   - 'nix --version'
-  - 'nix flake check --all-systems --no-build --show-trace'
   - 'nix flake show --all-systems'
+  - 'nix flake check --all-systems --no-build --show-trace'
