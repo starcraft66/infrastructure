@@ -10,7 +10,7 @@ resource "cloudflare_zone_dnssec" "cgbpi_com" {
 resource "cloudflare_record" "cgbpi_com-eb568133c231b70e6464374bb646acd9" {
   zone_id = cloudflare_zone.cgbpi_com.id
   name    = "cgbpi.com"
-  value   = "135.181.141.139"
+  value   = "65.109.116.168"
   type    = "A"
   ttl     = 1
   proxied = false
@@ -19,7 +19,7 @@ resource "cloudflare_record" "cgbpi_com-eb568133c231b70e6464374bb646acd9" {
 resource "cloudflare_record" "cgbpi_com-57901067a65d87a9f31c4ddb3e28ccb5" {
   zone_id = cloudflare_zone.cgbpi_com.id
   name    = "cgbpi.com"
-  value   = "2a01:4f9:3a:15b0:9::2"
+  value   = "2a01:4f9:3051:104f:9::2"
   type    = "AAAA"
   ttl     = 1
   proxied = false
