@@ -6,7 +6,7 @@ resource "cloudflare_zone" "nerdsin_space" {
 resource "cloudflare_record" "turn_nerdsin_space-772814e8fbfef2c39c8977e269d3b3aa" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "turn"
-  value   = "bedrock.tdude.co"
+  value   = "lava.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -15,7 +15,7 @@ resource "cloudflare_record" "turn_nerdsin_space-772814e8fbfef2c39c8977e269d3b3a
 resource "cloudflare_record" "nerdsin_space-3ac2691767564a8029f9dcaefe7c7b01" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "nerdsin.space"
-  value   = "traefik.bedrock.tdude.co"
+  value   = "traefik.lava.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -34,7 +34,7 @@ resource "cloudflare_record" "nerdsin_space-b40126e8c919a22ec1d75a8090179a23" {
 resource "cloudflare_record" "minio_nerdsin_space_A" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "minio"
-  value   = "traefik.bedrock.tdude.co"
+  value   = "traefik.lava.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
