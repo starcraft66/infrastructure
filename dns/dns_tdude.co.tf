@@ -85,15 +85,6 @@ resource "cloudflare_record" "soarin-ilo_tdude_co" {
   proxied = false
 }
 
-resource "cloudflare_record" "status_tdude_co-759cab2fd5747721744d19e9f1b05f53" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "status"
-  value   = "traefik.bedrock.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "stone_tdude_co-9998baa886c316c0567b2cfbd3865b9f" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
