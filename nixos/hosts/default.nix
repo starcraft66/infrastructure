@@ -1,15 +1,15 @@
 { inputs, ... }:
 
 let
-  inherit (inputs.nixpkgs) lib;
-
   systems = {
-    sassaflash = import ./sassaflash { inherit inputs lib; };
-    stormfeather = import ./stormfeather { inherit inputs lib; };
-    soarin = import ./soarin { inherit inputs lib; };
-    stone = import ./stone { inherit inputs lib; };
-    lava = import ./lava { inherit inputs lib; };
+    sassaflash = import ./sassaflash { inherit inputs; };
+    stormfeather = import ./stormfeather { inherit inputs; };
+    soarin = import ./soarin { inherit inputs; };
+    stone = import ./stone { inherit inputs; };
+    lava = import ./lava { inherit inputs; };
   };
+
+  inherit (inputs.nixpkgs) lib;
 
   combine = a: b: a // b;
   combineAll = list: builtins.foldl' combine { } list;
