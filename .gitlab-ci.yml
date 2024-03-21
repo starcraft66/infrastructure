@@ -5,4 +5,4 @@ check:
   stage: check
   image: nixpkgs/nix
   script:
-  - 'nix --experimental-features "nix-command flakes" flake check --no-build --show-trace'
+  - 'nix --experimental-features "nix-command flakes" flake check --all-systems --no-build --show-trace'
