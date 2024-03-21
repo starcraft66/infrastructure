@@ -9,6 +9,8 @@
     };
   };
 
+  networking.firewall.trustedInterfaces = [ "docker0" ];
+
   # interfaces created by podman/docker compose bridges
   services.ndppd = {
     enable = true;
