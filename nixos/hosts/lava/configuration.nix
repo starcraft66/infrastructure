@@ -24,7 +24,12 @@ in {
   networking.useDHCP = false;
   networking.useNetworkd = true;
   networking.interfaces.${networkInterface} = {
-    ipv4 = { addresses = [{ address = ipv4.address; prefixLength = ipv4.prefixLength; }]; };
+    ipv4 = {
+      addresses = [
+        { address = ipv4.address; prefixLength = ipv4.prefixLength; }
+        { address = "65.109.116.168"; prefixLength = 32; } # kerio
+      ];
+    };
     ipv6 = {
       addresses = [
         { address = ipv6.address; prefixLength = ipv6.prefixLength; }
