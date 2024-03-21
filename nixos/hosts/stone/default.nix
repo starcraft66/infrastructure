@@ -11,7 +11,8 @@ rec {
     inputs.sops-nix.nixosModules.sops
     inputs.simple-nixos-mailserver.nixosModules.default
   ];
-  pkgs = import inputs.nixos {
+  nixosInput = inputs.nixos;
+  pkgs = import nixosInput {
     inherit system;
     overlays = builtins.attrValues inputs.self.overlays;
   };

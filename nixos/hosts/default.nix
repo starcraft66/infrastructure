@@ -2,9 +2,9 @@
 
 let
   systems = {
-    sassaflash = import ./sassaflash { inherit inputs; };
-    stormfeather = import ./stormfeather { inherit inputs; };
-    soarin = import ./soarin { inherit inputs; };
+    sassaflash = import ./sassaflash { inherit inputs lib; };
+    stormfeather = import ./stormfeather { inherit inputs lib; };
+    soarin = import ./soarin { inherit inputs lib; };
     stone = import ./stone { inherit inputs; };
     lava = import ./lava { inherit inputs; };
   };
@@ -18,9 +18,8 @@ let
     combineAll (map (key: { ${key} = combineAll (builtins.catAttrs key list); })
       (allAttrNames list));
 
-  # we aren't using the nixosSystem from the target nixpkgs but it likely doesn't matter
   generateNixosSystems = builtins.mapAttrs (name: system:
-    lib.nixosSystem {
+    system.nixosInput.lib.nixosSystem {
       inherit (system) system pkgs;
       modules = system.modules ++ [ ./${name}/bootloader.nix ] ++ (import ../modules);
       specialArgs = { inherit inputs; };
@@ -30,6 +29,8 @@ let
     lib.mapAttrsToList (name: system: {
       ${system.system}.${name} = (inputs.nixos-generators.nixosGenerate {
         inherit (system) pkgs format;
+        # https://github.com/nix-community/nixos-generators/blob/bf351a252ace47ad8f49b9da7fb23960d2016cbc/flake.nix#L67
+        inherit (system.nixosInput.lib) nixosSystem;
         # Avoid conflicts between system and live media
         modules = lib.remove ./${name}/bootloader.nix (system.modules ++ (import ../modules));
         specialArgs = { inherit inputs; };
