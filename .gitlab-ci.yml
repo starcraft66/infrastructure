@@ -5,6 +5,7 @@ check:
   stage: check
   image: nixpkgs/nix
   before_script:
+  - 'mkdir -p /etc/nix'
   - 'echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf'
   script:
   - 'nix --version'
