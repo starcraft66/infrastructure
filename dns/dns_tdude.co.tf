@@ -4,10 +4,10 @@ resource "cloudflare_zone" "tdude_co" {
   # id = "c802e5f57a27af705373d5d3570649f0"
 }
 
-resource "cloudflare_record" "cadvisor_bedrock_tdude_co-db5de91b27b5078488d6d32f51e08fdc" {
+resource "cloudflare_record" "cadvisor_bedrock_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
-  name    = "cadvisor.bedrock"
-  value   = "traefik.bedrock.tdude.co"
+  name    = "cadvisor.lava"
+  value   = "traefik.lava.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -156,10 +156,10 @@ resource "cloudflare_record" "_305-1700_tdude_co-1bdb980fa9e481c74caf8dd3d303084
   proxied = false
 }
 
-resource "cloudflare_record" "auth_bedrock_tdude_co-e600072af53ca2808f9a70af1259c10b" {
+resource "cloudflare_record" "auth_lava_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
-  name    = "auth.bedrock"
-  value   = "traefik.bedrock.tdude.co"
+  name    = "auth.lava"
+  value   = "traefik.lava.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -192,10 +192,10 @@ resource "cloudflare_record" "fleetfoot_235_tdude_co-0682464601437aabb4960f25ecb
   proxied = false
 }
 
-resource "cloudflare_record" "grafana_bedrock_tdude_co-cff47ef8a89f14bf6dd3ff10b1d68de1" {
+resource "cloudflare_record" "grafana_lava_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
-  name    = "grafana.bedrock"
-  value   = "traefik.bedrock.tdude.co"
+  name    = "grafana.lava"
+  value   = "traefik.lava.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -210,10 +210,10 @@ resource "cloudflare_record" "inspiron530_260_tdude_co-54898725081cdac5098dffb84
   proxied = false
 }
 
-resource "cloudflare_record" "monitor_bedrock_tdude_co-85e00f4ca90f98269d7dd6ef30aaeaca" {
+resource "cloudflare_record" "monitor_lava_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
-  name    = "monitor.bedrock"
-  value   = "traefik.bedrock.tdude.co"
+  name    = "monitor.lava"
+  value   = "traefik.lava.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -690,6 +690,24 @@ resource "cloudflare_record" "lava_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "lava"
   value   = "2a01:4f9:3051:104f::1"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "traefik_lava_tdude_co-A" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "traefik.lava.tdude.co"
+  value   = "65.109.116.164"
+  type    = "A"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "traefik_lava_tdude_co-AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "traefik.lava.tdude.co"
+  value   = "2a01:4f9:3051:104f:8::2"
   type    = "AAAA"
   ttl     = 1
   proxied = false
