@@ -18,9 +18,8 @@ let
     combineAll (map (key: { ${key} = combineAll (builtins.catAttrs key list); })
       (allAttrNames list));
 
-  # we aren't using the nixosSystem from the target nixpkgs but it likely doesn't matter
   generateNixosSystems = builtins.mapAttrs (name: system:
-    lib.nixosSystem {
+    system.nixosInput.lib.nixosSystem {
       inherit (system) system pkgs;
       modules = system.modules ++ [ ./${name}/bootloader.nix ] ++ (import ../modules);
       specialArgs = { inherit inputs; };

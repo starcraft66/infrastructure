@@ -9,7 +9,8 @@ rec {
     ./kubernetes.nix
     inputs.sops-nix.nixosModules.sops
   ];
-  pkgs = import inputs.nixos {
+  nixosInput = inputs.nixos;
+  pkgs = import nixosInput {
     inherit system;
     config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
       "vault-bin"
