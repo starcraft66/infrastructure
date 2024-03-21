@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 
 rec {
   system = "x86_64-linux";
@@ -13,6 +13,9 @@ rec {
   nixosInput = inputs.nixos;
   pkgs = import nixosInput {
     inherit system;
+    config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+      "vault-bin"
+    ];
     overlays = builtins.attrValues inputs.self.overlays;
   };
   hostname = "stormfeather.235.tdude.co";

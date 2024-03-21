@@ -2,9 +2,9 @@
 
 let
   systems = {
-    sassaflash = import ./sassaflash { inherit inputs; };
-    stormfeather = import ./stormfeather { inherit inputs; };
-    soarin = import ./soarin { inherit inputs; };
+    sassaflash = import ./sassaflash { inherit inputs lib; };
+    stormfeather = import ./stormfeather { inherit inputs lib; };
+    soarin = import ./soarin { inherit inputs lib; };
     stone = import ./stone { inherit inputs; };
     lava = import ./lava { inherit inputs; };
   };
