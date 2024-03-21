@@ -78,7 +78,8 @@ in {
     # Assume this is already running in k8s if kubelet is enabled
     services.prometheus.exporters.node = lib.mkIf (!config.services.kubernetes.kubelet.enable) {
       enable = true;
-      openFirewall = true;
+      # This only seems to work with iptables
+      openFirewall = !config.networking.nftables.enable;
       listenAddress = "[::]";
       enabledCollectors = [ "interrupts" "systemd" "tcpstat" "processes" ];
       port = 9100;
