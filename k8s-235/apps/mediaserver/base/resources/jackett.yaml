@@ -35,13 +35,13 @@ spec:
             memory: "500Mi"
         readinessProbe:
           httpGet:
-              path: /UI/Login
+              path: /UI/Dashboard
               port: 9117
           periodSeconds: 10
           failureThreshold: 3
         livenessProbe:
           httpGet:
-              path: /UI/Login
+              path: /UI/Dashboard
               port: 9117
           initialDelaySeconds: 60
           periodSeconds: 10
