@@ -70,7 +70,7 @@ resource "cloudflare_record" "git_tdude_co-15e863f9cc46997d6dff0c6f6d9d6b8b" {
 resource "cloudflare_record" "lolisafe_tdude_co-9452bcc45958fa18bd91f1e3c4c5db6d" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "lolisafe"
-  value   = "traefik.bedrock.tdude.co"
+  value   = "traefik.lava.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
