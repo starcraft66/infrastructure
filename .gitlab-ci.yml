@@ -1,0 +1,8 @@
+stages:
+- check
+
+check:
+  stage: check
+  image: nixpkgs/nix
+  script:
+  - 'nix --experimental-features "nix-command flakes" flake check --no-build'
