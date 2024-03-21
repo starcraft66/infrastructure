@@ -53,20 +53,16 @@ in {
   # networking.nftables.enable = true;
   networking.firewall = {
     enable = true;
+    # Needs to be disabled or else it breaks ipv6 routing via docker bridges
+    checkReversePath = false;
     # NixOS has a really shitty firewall that doesn't work with forwarded traffic
     # well, supposedly it does with the nftables backend but that didn't seem to work either
     # and apparently conflicts with docker, so here we go with the good old manual iptables
     # invocations
     extraCommands = ''
-      iptables -P FORWARD DROP
-      iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-      iptables -A FORWARD -i br-matrix -o ${networkInterface} -j ACCEPT
-      iptables -A FORWARD -i br-kerio -o ${networkInterface} -j ACCEPT
-      iptables -A FORWARD -i br-traefik -o ${networkInterface} -j ACCEPT
       ip6tables -P FORWARD DROP
       ip6tables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-      ip6tables -A FORWARD -i br-matrix -o br-traefik -j ACCEPT
-      ip6tables -A FORWARD -i br-traefik -o br-matrix -j ACCEPT
+      ip6tables -A FORWARD -p ipv6-icmp -j ACCEPT
       ip6tables -A FORWARD -i br-matrix -o ${networkInterface} -j ACCEPT
       ip6tables -A FORWARD -i br-kerio -o ${networkInterface} -j ACCEPT
       ip6tables -A FORWARD -i br-traefik -o ${networkInterface} -j ACCEPT
@@ -74,6 +70,9 @@ in {
       ip6tables -A FORWARD -i ${networkInterface} -o br-traefik -d 2a01:4f9:3051:104f:8::2 -p udp --dport 443 -j ACCEPT
     '';
   };
+
+  networking.firewall.interfaces.enp7s0.allowedTCPPorts = [ 22 80 443 ];
+  networking.firewall.interfaces.enp7s0.allowedUDPPorts = [ 443 ];
 
   # Remote unlocking, see <https://nixos.wiki/wiki/NixOS_on_ZFS>,
   # section "Unlock encrypted zfs via ssh on boot"
