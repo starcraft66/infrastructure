@@ -52,7 +52,7 @@ resource "cloudflare_record" "k8s-235" {
 resource "cloudflare_record" "registry_tdude_co-CNAME" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "registry"
-  value   = "traefik.bedrock.tdude.co"
+  value   = "traefik.lava.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -61,7 +61,7 @@ resource "cloudflare_record" "registry_tdude_co-CNAME" {
 resource "cloudflare_record" "git_tdude_co-15e863f9cc46997d6dff0c6f6d9d6b8b" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "git"
-  value   = "traefik.bedrock.tdude.co"
+  value   = "traefik.lava.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
