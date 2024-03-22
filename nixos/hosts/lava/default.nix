@@ -6,6 +6,7 @@ rec {
     ./configuration.nix
     ./hardware.nix
     ./containers.nix
+    ./turn.nix
     inputs.sops-nix.nixosModules.sops
   ];
   nixosInput = inputs.nixos;
