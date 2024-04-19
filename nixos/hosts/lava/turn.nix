@@ -1,23 +1,10 @@
 { ... }:
 {
-  security = {
-    acme = {
-      acceptTerms = true;
-      defaults = {
-        email = "tristan@tzone.org";
-        credentialFiles = {
-          CLOUDFLARE_DNS_API_TOKEN_FILE = "/var/lib/secrets/cloudflare-api-token";
-        };
-      };
-      certs = {
-        turnserver = {
-          domain = "turn.nerdsin.space";
-          group = "turnserver";
-          dnsProvider = "cloudflare";
-          reloadServices = [ "coturn" ];
-        };
-      };
-    };
+  security.acme.certs.turnserver = {
+    domain = "turn.nerdsin.space";
+    group = "turnserver";
+    dnsProvider = "cloudflare";
+    reloadServices = [ "coturn" ];
   };
 
   networking.firewall.interfaces.enp7s0.allowedTCPPorts = [ 3748 3749 5349 5350 ];

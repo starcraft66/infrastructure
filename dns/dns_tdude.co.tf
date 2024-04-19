@@ -703,3 +703,12 @@ resource "cloudflare_record" "traefik_lava_tdude_co-AAAA" {
   ttl     = 1
   proxied = false
 }
+
+resource "cloudflare_record" "nixcache_tdude_co-AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "nixcache.tdude.co"
+  value   = "2a01:4f9:3051:104f::2"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}

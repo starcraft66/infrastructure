@@ -33,6 +33,7 @@ in {
     ipv6 = {
       addresses = [
         { address = ipv6.address; prefixLength = ipv6.prefixLength; }
+        { address = "2a01:4f9:3051:104f::2"; prefixLength = 128; } # atticd
         { address = "2a01:4f9:3051:104f::3"; prefixLength = 128; } # Gitlab SSH
       ];
     };
@@ -80,8 +81,18 @@ in {
     '';
   };
 
-  networking.firewall.interfaces.enp7s0.allowedTCPPorts = [ 22 80 443 ];
+  networking.firewall.interfaces.enp7s0.allowedTCPPorts = [ 22 80 443 5201 ];
   networking.firewall.interfaces.enp7s0.allowedUDPPorts = [ 443 ];
+
+  security.acme = {
+    acceptTerms = true;
+    defaults = {
+      email = "tristan@tzone.org";
+      credentialFiles = {
+        CLOUDFLARE_DNS_API_TOKEN_FILE = "/var/lib/secrets/cloudflare-api-token";
+      };
+    };
+  };
 
   # Remote unlocking, see <https://nixos.wiki/wiki/NixOS_on_ZFS>,
   # section "Unlock encrypted zfs via ssh on boot"
