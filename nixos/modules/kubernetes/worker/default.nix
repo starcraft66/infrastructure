@@ -1,8 +1,7 @@
-{ config, name, lib, pkgs, ... }:
+{ config, name, lib, pkgs, inputs, ... }:
 with lib;
 let
   cfg = config.services.tdude.kubernetes.worker;
-  k8sversions = (import ../../../pkgs/kubernetes/default.nix {inherit pkgs;}).mkKubernetesPackages;
 in {
   imports = [ ./coredns.nix ./cilium.nix ./pki.nix ./proxy.nix ./kubelet.nix ];
 
@@ -31,5 +30,5 @@ in {
     cfg.clusterCidrIpv4
     cfg.clusterCidrIpv6
   ];
-  config.services.kubernetes.package = lib.mkOverride 999 k8sversions.kubernetes_1_29_1;
+  config.services.kubernetes.package = lib.mkOverride 999 inputs.self.packages.${pkgs.stdenv.system}.kubernetes_1_30_0;
 }
