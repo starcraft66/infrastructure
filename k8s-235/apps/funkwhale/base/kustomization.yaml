@@ -44,3 +44,7 @@ helmCharts:
       existingSecret: "funkwhale"
     global:
       storageClass: "freenas-nfs-csi"
+    master:
+      resourcesPreset: medium
+    replica:
+      resourcesPreset: medium
