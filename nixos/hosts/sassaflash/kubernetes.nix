@@ -29,5 +29,11 @@
   services.tdude.kubernetes.loadbalancer.vaultIpv4Address = "172.16.29.9";
   services.tdude.kubernetes.loadbalancer.vaultIpv6Address = "2a10:4741:36:29::9:1";
 
+  services.tdude.vault.enable = true;
+  services.tdude.vault.raftPeers = [
+    "soarin.235.tdude.co"
+    "stormfeather.235.tdude.co"
+  ];
+
   networking.firewall.enable = false;
 }

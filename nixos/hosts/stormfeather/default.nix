@@ -5,9 +5,9 @@ rec {
   modules = [
     ./configuration.nix
     ./hardware.nix
-    ./vault.nix
     ./kubernetes.nix
     ./guigz-backup.nix
+    ./acme.nix
     inputs.sops-nix.nixosModules.sops
   ];
   nixosInput = inputs.nixos;
