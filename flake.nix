@@ -99,7 +99,6 @@
             openssl
             git
             nixpkgs-fmt
-            ansible
             kubectl
             kubectx
             kubernetes-helm
@@ -107,7 +106,6 @@
             sops
             kustomize
             kubetail
-            krew
             yamllint
             gnupg
             ssh-to-pgp
