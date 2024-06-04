@@ -94,6 +94,15 @@ resource "cloudflare_record" "stone_tdude_co-9998baa886c316c0567b2cfbd3865b9f" {
   proxied = false
 }
 
+resource "cloudflare_record" "vpn_tdude_co" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "vpn"
+  value   = "stone.tdude.co"
+  type    = "CNAME"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "tdude_co-1661589aaef2dd9259f07d22951c6f35" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "tdude.co"

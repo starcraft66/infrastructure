@@ -8,6 +8,7 @@ rec {
     ./websites.nix
     ./hiddenservice.nix
     ./mailserver.nix
+    ./headscale.nix
     inputs.sops-nix.nixosModules.sops
     inputs.simple-nixos-mailserver.nixosModules.default
   ];
