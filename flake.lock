@@ -209,11 +209,11 @@
         "nixpkgs-lib": "nixpkgs-lib_2"
       },
       "locked": {
-        "lastModified": 1701473968,
-        "narHash": "sha256-YcVE5emp1qQ8ieHUnxt1wCZCC3ZfAS+SRRWZ2TMda7E=",
+        "lastModified": 1719994518,
+        "narHash": "sha256-pQMhCCHyQGRzdfAkdJ4cIWiw+JNuWsTX7f0ZYSyz0VY=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "34fed993f1674c8d06d58b37ce1e0fe5eebcb9f5",
+        "rev": "9227223f6d922fee3c7b190b2cc238a99527bbb7",
         "type": "github"
       },
       "original": {
@@ -255,11 +255,11 @@
     "hugo-theme-hyde-hyde": {
       "flake": false,
       "locked": {
-        "lastModified": 1645230795,
-        "narHash": "sha256-nAr145Phx/DOBp59ps9TIdSootyGI1OCD1+zVvWixdY=",
+        "lastModified": 1711233330,
+        "narHash": "sha256-s+TwaUZU7ufGRb3qaMCI+p8e3Znwme1Q7X1d2n/QPm8=",
         "owner": "htr3n",
         "repo": "hyde-hyde",
-        "rev": "58d10c23edf239730bcfc468833f0d67da9dc083",
+        "rev": "83fead65ec584bc974d46f056fdef6e74fe991de",
         "type": "github"
       },
       "original": {
@@ -365,20 +365,14 @@
     },
     "nixpkgs-lib_2": {
       "locked": {
-        "dir": "lib",
-        "lastModified": 1701253981,
-        "narHash": "sha256-ztaDIyZ7HrTAfEEUt9AtTDNoCYxUdSd6NrRHaYOIxtk=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "e92039b55bcd58469325ded85d4f58dd5a4eaf58",
-        "type": "github"
+        "lastModified": 1719876945,
+        "narHash": "sha256-Fm2rDDs86sHy0/1jxTOKB1118Q0O3Uc7EC0iXvXKpbI=",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/5daf0514482af3f97abaefc78a6606365c9108e2.tar.gz"
       },
       "original": {
-        "dir": "lib",
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/5daf0514482af3f97abaefc78a6606365c9108e2.tar.gz"
       }
     },
     "nixpkgs-stable": {
@@ -529,11 +523,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1702153396,
-        "narHash": "sha256-5+oS/+iFTYgy6jyUSuEpAptB9icDipgUgJqtl2ImjWc=",
+        "lastModified": 1720021777,
+        "narHash": "sha256-ChJ6immQWNyL9u+8EO/PNzvQX3o/kGt0lFJj770MIzc=",
         "ref": "refs/heads/master",
-        "rev": "f54918f5e9a7fa64b7355e45b72e622ab2ee2865",
-        "revCount": 21,
+        "rev": "ef4cbf6aea89e0ed8563a3fb26c56bdc7f7c9fcb",
+        "revCount": 22,
         "type": "git",
         "url": "https://git.tdude.co/tristan/www.tdude.co.git"
       },
