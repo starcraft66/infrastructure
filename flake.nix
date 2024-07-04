@@ -1,14 +1,14 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixos.url = "github:nixos/nixpkgs/nixos-23.11";
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.05";
+    nixos.url = "github:nixos/nixpkgs/nixos-24.05";
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
     simple-nixos-mailserver.inputs.nixpkgs.follows = "nixos";
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
     flake-parts.url = "github:hercules-ci/flake-parts";
     sops-nix.url = "github:Mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.inputs.nixpkgs.follows = "nixos";
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
     colmena.url = "github:zhaofengli/colmena";
@@ -16,9 +16,9 @@
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
     tdude-website.url = "git+https://git.tdude.co/tristan/www.tdude.co.git";
-    tdude-website.inputs.nixpkgs.follows = "nixpkgs";
+    tdude-website.inputs.nixpkgs.follows = "nixos";
     attic.url = "github:zhaofengli/attic";
-    attic.inputs.nixpkgs.follows = "nixpkgs";
+    attic.inputs.nixpkgs.follows = "nixos";
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (

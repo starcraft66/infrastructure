@@ -107,5 +107,5 @@ in {
   services.openssh.enable = true;
   services.prometheus.exporters.node.openFirewall = lib.mkForce false;
 
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "24.05"; # Did you read the comment?
 }
