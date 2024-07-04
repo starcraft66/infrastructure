@@ -60,6 +60,7 @@ let
             targetHost = system.hostname;
             targetPort = 22;
             replaceUnknownProfiles = true;
+            tags = system.tags or [];
           };
         })
       systems;

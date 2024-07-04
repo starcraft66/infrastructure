@@ -19,6 +19,7 @@ rec {
     overlays = builtins.attrValues inputs.self.overlays;
   };
   hostname = "stormfeather.235.tdude.co";
+  tags = [ "k8s-235" ];
   magicRollback = false; # set to false when changing net config
   format = "install-iso";
 }
