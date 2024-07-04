@@ -27,8 +27,9 @@ in {
     hostname = config.networking.fqdn;
     unschedulable = false;
 
-    extraOpts = lib.mkIf config.services.resolved.enable
-      ''--resolv-conf=/run/systemd/resolve/resolv.conf
+    extraOpts =
+      ''--cluster-dns=2a10:4741:36:32:1::2558,10.234.64.2 \
+        ${lib.optionalString config.services.resolved.enable "--resolv-conf=/run/systemd/resolve/resolv.conf"}
       '';
 
     kubeconfig = rec {
