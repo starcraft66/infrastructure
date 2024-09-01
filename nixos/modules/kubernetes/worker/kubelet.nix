@@ -14,7 +14,7 @@ in {
     enable = true;
     name = "iqn.2023-01.net.tdude:${config.networking.hostName}";
   };
-  boot.kernelModules = lib.mkIf cfg.enable  [ "nfs" ];
+  boot.kernelModules = lib.mkIf cfg.enable [ "nfs" ];
   boot.supportedFilesystems = lib.mkIf cfg.enable [ "nfs" ];
 
   services.kubernetes.dataDir = "/var/lib/kubelet";
