@@ -82,13 +82,13 @@
         options.onlink = "";
       }
     ];
-    ipv6.addresses = [ { address = "2a10:4741:36:29::7"; prefixLength = 64; } ];
+    ipv6.addresses = [ { address = "2a10:4741:36:29::6"; prefixLength = 64; } ];
     # v6 assigned via slaac
   };
 
   networking.interfaces."enp10s0.28" = {
     tempAddress = "disabled";
-    ipv6.addresses = [ { address = "2a10:4741:36:28::7"; prefixLength = 64; } ];
+    ipv6.addresses = [ { address = "2a10:4741:36:28::6"; prefixLength = 64; } ];
     # we only care about the implicit /64 for the storage vlan, no default route
     # v6 assigned via slaac
   };
