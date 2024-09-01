@@ -20,7 +20,7 @@ images:
 - name: plexinc/pms-docker
   digest: sha256:59d1161da69992171c9fd9fe25ba9d26ad7bb721409103f39c4a48381b88816c
 - name: ghcr.io/linuxserver/jackett
-  digest: sha256:e740db6968d33cade2112644993636acf4b485a0d6c783b02dce53ccc5ce9fba
+  digest: sha256:95ed254898f5be1f0e1ac553a2e6670f93f7e919afb84bb6f45d8930c8deaf07
 - name: ghcr.io/linuxserver/radarr
   digest: sha256:b034531ff81d3e5e1f9fd70c969746040b40e6484c88981ea5d0dee732c10bc3
 - name: ghcr.io/linuxserver/sonarr
