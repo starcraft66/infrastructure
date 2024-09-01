@@ -33,7 +33,7 @@ resource "cloudflare_record" "skyfactory4-v4" {
 resource "cloudflare_record" "skyfactory4-v6" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "skyfactory4.k8s.235"
-  value   = "2a10:4741:36:32:3::399d"
+  value   = "2a10:4741:36:32:3::8"
   type    = "AAAA"
   ttl     = 1
   proxied = false

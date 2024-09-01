@@ -33,7 +33,7 @@ resource "cloudflare_record" "ftb-ultimate-v4" {
 resource "cloudflare_record" "ftb-ultimate-v6" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "ftb-ultimate.k8s.235"
-  value   = "2a10:4741:36:32:3::c0da"
+  value   = "2a10:4741:36:32:3::5"
   type    = "AAAA"
   ttl     = 1
   proxied = false

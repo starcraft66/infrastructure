@@ -33,7 +33,7 @@ resource "cloudflare_record" "cacaffichage-ingress-v4" {
 resource "cloudflare_record" "cacaffichage-ingress-v6" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "cacaffichage"
-  value   = "2a10:4741:36:32:3::982c"
+  value   = "2a10:4741:36:32:3::4"
   type    = "AAAA"
   ttl     = 1
   proxied = false
