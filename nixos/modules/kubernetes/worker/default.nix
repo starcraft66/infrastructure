@@ -11,6 +11,11 @@ in {
       description = "Enable the kube-proxy service";
       default = true;
     };
+    nodeIps = mkOption {
+      type = types.listOf types.str;
+      default = [];
+      description = "List of IP addresses to publish in the host's Node object as InternalIPs";
+    };
     ipSans = mkOption {
       type = types.listOf types.str;
       default = [];

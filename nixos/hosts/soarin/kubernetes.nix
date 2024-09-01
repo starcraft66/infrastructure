@@ -20,6 +20,10 @@
   services.tdude.kubernetes.worker.clusterCidrIpv6 = "2a10:4741:36:32:2::/104";
   services.tdude.kubernetes.etcd.enable = true;
   services.tdude.kubernetes.worker.enable = true;
+  services.tdude.kubernetes.worker.nodeIps = [
+    (builtins.elemAt config.networking.interfaces."eno3.29".ipv4.addresses 0).address
+    (builtins.elemAt config.networking.interfaces."eno3.29".ipv6.addresses 0).address
+  ];
   # Cilium replaces kube-proxy
   services.tdude.kubernetes.worker.kube-proxy.enable = true;
   services.tdude.kubernetes.loadbalancer.enable = true;
