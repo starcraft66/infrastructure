@@ -7,7 +7,7 @@ namespace: renovate
 
 images:
 - name: renovate/renovate
-  newTag: "38.59.2"
+  newTag: "38.61.1"
 
 generators:
 - ./generators/secrets-generator.yaml
