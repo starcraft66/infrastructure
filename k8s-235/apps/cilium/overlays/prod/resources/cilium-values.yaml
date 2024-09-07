@@ -40,11 +40,9 @@ hubble:
 prometheus:
   enabled: true
 
-# Disabled for now due to issue accessing the loadbalancer endpoint from pods
-kubeProxyReplacement: "false"
+kubeProxyReplacement: "true"
 # k8s.235.tdude.co
-# k8sServiceHost: "2a10:4741:36:29::8:1"
-# k8sServiceHost: "172.16.29.8"
+k8sServiceHost: "2a10:4741:36:29::8:1"
 k8sServicePort: 443
 
 # Enable native routing (no tunelling)
