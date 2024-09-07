@@ -51,7 +51,7 @@ resource "cloudflare_record" "cacaffichage-v4" {
 resource "cloudflare_record" "cacaffichage-v6" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "cacaffichage.k8s.235"
-  value   = "2607:fa48:6ed8:8a54:3::2"
+  value   = "2a10:4741:36:32:3::4"
   type    = "AAAA"
   ttl     = 1
   proxied = false
