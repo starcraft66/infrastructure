@@ -10,8 +10,10 @@ resources:
 namespace: redis-operator
 
 images:
-- name: funkwhale/funkwhale
-  newTag: 1.2.10
+- name: funkwhale/api
+  newTag: 1.4.0
+- name: funkwhale/front
+  newTag: 1.4.0
 
 configMapGenerator:
 - name: funkwhale

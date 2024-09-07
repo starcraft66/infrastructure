@@ -19,4 +19,4 @@ spec:
       name: http
   selector:
     app.kubernetes.io/name: funkwhale
-    app.kubernetes.io/component: frontend
+    app.kubernetes.io/component: app
