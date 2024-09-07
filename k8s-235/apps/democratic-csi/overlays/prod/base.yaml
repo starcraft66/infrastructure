@@ -2350,14 +2350,12 @@ stringData:
     nfs:
       shareAlldirs: false
       shareAllowedHosts:
-      - 2607:fa48:6ed8:8a54:100::10
-      - 2607:fa48:6ed8:8a54:100::11
-      - 2607:fa48:6ed8:8a54:100::12
-      - 2607:fa48:6ed8:8a54:100::13
-      - 2607:fa48:6ed8:8a54:100::14
-      - 2607:fa48:6ed8:8a54:100::15
-      - 2607:fa48:6ed8:8a54:100::16
-      - 2607:fa48:6ed8:8a54:100::17
+      - 2a10:4741:36:28:26be:5ff:fe84:d8b0
+      - 2a10:4741:36:28:26be:5ff:fe84:f750
+      - 2a10:4741:36:28:202:c9ff:fe9d:c36a
+      - 2607:fa48:6ed8:8a55:26be:5ff:fe84:d8b0
+      - 2607:fa48:6ed8:8a55:26be:5ff:fe84:f750
+      - 2607:fa48:6ed8:8a55:202:c9ff:fe9d:c36a
       shareAllowedNetworks: []
       shareHost: spitfire.storage.235.tdude.co
       shareMapallGroup: ""
@@ -2406,14 +2404,12 @@ stringData:
     nfs:
       shareAlldirs: false
       shareAllowedHosts:
-      - 2607:fa48:6ed8:8a54:100::10
-      - 2607:fa48:6ed8:8a54:100::11
-      - 2607:fa48:6ed8:8a54:100::12
-      - 2607:fa48:6ed8:8a54:100::13
-      - 2607:fa48:6ed8:8a54:100::14
-      - 2607:fa48:6ed8:8a54:100::15
-      - 2607:fa48:6ed8:8a54:100::16
-      - 2607:fa48:6ed8:8a54:100::17
+      - 2a10:4741:36:28:26be:5ff:fe84:d8b0
+      - 2a10:4741:36:28:26be:5ff:fe84:f750
+      - 2a10:4741:36:28:202:c9ff:fe9d:c36a
+      - 2607:fa48:6ed8:8a55:26be:5ff:fe84:d8b0
+      - 2607:fa48:6ed8:8a55:26be:5ff:fe84:f750
+      - 2607:fa48:6ed8:8a55:202:c9ff:fe9d:c36a
       shareAllowedNetworks: []
       shareHost: spitfire.storage.235.tdude.co
       shareMapallGroup: ""
