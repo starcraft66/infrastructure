@@ -601,6 +601,12 @@ spec:
     - /data/ca.key
     - /data/tls.crt
     - /data/tls.key
+  - group: "apps"
+    kind: "DaemonSet"
+    name: "cilium"
+    namespace: "kube-system"
+    jsonPointers:
+    - /spec/template/spec/containers/0/volumeMounts/0/readOnly
   syncPolicy:
     automated:
       selfHeal: false
