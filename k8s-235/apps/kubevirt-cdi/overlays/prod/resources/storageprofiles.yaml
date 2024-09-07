@@ -9,8 +9,8 @@ spec:
     - ReadWriteMany
     - ReadWriteOnce
     - ReadOnlyMany
-    - ReadOnlyOnce
     volumeMode: Filesystem
+  cloneStrategy: csi-clone
 ---
 apiVersion: cdi.kubevirt.io/v1beta1
 kind: StorageProfile
@@ -22,8 +22,8 @@ spec:
     - ReadWriteMany
     - ReadWriteOnce
     - ReadOnlyMany
-    - ReadOnlyOnce
     volumeMode: Filesystem
+  cloneStrategy: csi-clone
 ---
 apiVersion: cdi.kubevirt.io/v1beta1
 kind: StorageProfile
@@ -33,5 +33,6 @@ spec:
   claimPropertySets:
   - accessModes:
     - ReadWriteOnce
-    - ReadOnlyOnce
+    - ReadOnlyMany
     volumeMode: Block
+  cloneStrategy: csi-clone
