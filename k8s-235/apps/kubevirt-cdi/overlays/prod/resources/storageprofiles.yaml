@@ -1,0 +1,37 @@
+---
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: StorageProfile
+metadata:
+  name: truenas-nfs-spitfire-fast
+spec:
+  claimPropertySets:
+  - accessModes:
+    - ReadWriteMany
+    - ReadWriteOnce
+    - ReadOnlyMany
+    - ReadOnlyOnce
+    volumeMode: Filesystem
+---
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: StorageProfile
+metadata:
+  name: freenas-nfs-csi
+spec:
+  claimPropertySets:
+  - accessModes:
+    - ReadWriteMany
+    - ReadWriteOnce
+    - ReadOnlyMany
+    - ReadOnlyOnce
+    volumeMode: Filesystem
+---
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: StorageProfile
+metadata:
+  name: freenas-iscsi-csi
+spec:
+  claimPropertySets:
+  - accessModes:
+    - ReadWriteOnce
+    - ReadOnlyOnce
+    volumeMode: Block
