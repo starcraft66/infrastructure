@@ -30,11 +30,11 @@ resource "cloudflare_record" "beyondroastbeef-v4" {
   proxied = false
 }
 
-# resource "cloudflare_record" "beyondroastbeef-v6" {
-#   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
-#   name    = "beyondroastbeef.k8s.235"
-#   value   = "2a10:4741:36:8a54:3::2"
-#   type    = "AAAA"
-#   ttl     = 1
-#   proxied = false
-# }
+resource "cloudflare_record" "beyondroastbeef-v6" {
+  zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
+  name    = "beyondroastbeef.k8s.235"
+  value   = "2a10:4741:36:32:3::9"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
