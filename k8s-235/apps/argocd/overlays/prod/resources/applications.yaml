@@ -607,6 +607,12 @@ spec:
     namespace: "kube-system"
     jsonPointers:
     - /spec/template/spec/containers/0/volumeMounts/0/readOnly
+  - group: "apps"
+    kind: "DaemonSet"
+    name: "cilium-envoy"
+    namespace: "kube-system"
+    jsonPointers:
+    - /spec/template/spec/containers/0/volumeMounts/0/readOnly
   syncPolicy:
     automated:
       selfHeal: false
