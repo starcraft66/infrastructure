@@ -25,7 +25,7 @@
     (builtins.elemAt config.networking.interfaces."eno1.29".ipv6.addresses 0).address
   ];
   # Cilium replaces kube-proxy
-  services.tdude.kubernetes.worker.kube-proxy.enable = true;
+  services.tdude.kubernetes.worker.kube-proxy.enable = false;
   services.tdude.kubernetes.loadbalancer.enable = true;
   services.tdude.kubernetes.loadbalancer.interface = "eno1.29";
   services.tdude.kubernetes.loadbalancer.k8sIpv4Address = "172.16.29.8";
