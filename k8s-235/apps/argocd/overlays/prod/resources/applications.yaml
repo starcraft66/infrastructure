@@ -604,3 +604,39 @@ spec:
   syncPolicy:
     automated:
       selfHeal: false
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubevirt
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: kubevirt
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/kubevirt/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubevirt-cdi
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: cdi
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s-235/apps/kubevirt-cdi/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
