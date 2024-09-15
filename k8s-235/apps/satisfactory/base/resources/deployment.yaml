@@ -52,15 +52,12 @@ spec:
         - name: PGID
           value: "1000"
         ports:
-        - name: query
-          containerPort: 15777
-          protocol: UDP
-        - name: beacon
-          containerPort: 15000
-          protocol: UDP
         - name: game
           containerPort: 7777
           protocol: UDP
+        - name: gametcp
+          containerPort: 7777
+          protocol: TCP
         volumeMounts:
         - name: savedata
           mountPath: /config

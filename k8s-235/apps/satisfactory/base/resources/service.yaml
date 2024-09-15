@@ -13,17 +13,13 @@ spec:
   - IPv4
   - IPv6
   ports:
-  - name: query
-    port: 15777
-    targetPort: query
+  - port: 7777
     protocol: UDP
-  - name: beacon
-    port: 15000
-    targetPort: beacon
-    protocol: UDP
-  - name: game
-    port: 7777
+    name: game
     targetPort: game
-    protocol: UDP
+  - port: 7777
+    protocol: TCP
+    name: gametcp
+    targetPort: gametcp
   selector:
     app.kubernetes.io/name: satisfactory
