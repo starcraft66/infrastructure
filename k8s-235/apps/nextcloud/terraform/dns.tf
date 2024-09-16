@@ -7,7 +7,7 @@ data "cloudflare_zones" "tdude_co" {
 resource "cloudflare_record" "nextcloud" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "cloud"
-  value   = "traefik.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+  content = "traefik.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -17,7 +17,7 @@ resource "cloudflare_record" "nextcloud" {
 resource "cloudflare_record" "nextcloud-v4" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "cloud4"
-  value   = "24.225.136.165"
+  content = "24.225.136.165"
   type    = "A"
   ttl     = 1
   proxied = false

@@ -25,7 +25,7 @@ resource "cloudflare_record" "gtnh-srv" {
 resource "cloudflare_record" "gtnh-v4" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "gtnh.k8s.235"
-  value   = "24.225.136.165"
+  content = "24.225.136.165"
   type    = "A"
   ttl     = 1
   proxied = false
@@ -34,7 +34,7 @@ resource "cloudflare_record" "gtnh-v4" {
 resource "cloudflare_record" "gtnh-v6" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "gtnh.k8s.235"
-  value   = "2a10:4741:36:32:3::7"
+  content = "2a10:4741:36:32:3::7"
   type    = "AAAA"
   ttl     = 1
   proxied = false

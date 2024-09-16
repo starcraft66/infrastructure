@@ -6,7 +6,7 @@ resource "cloudflare_zone" "nerdsin_space" {
 resource "cloudflare_record" "turn_nerdsin_space-772814e8fbfef2c39c8977e269d3b3aa" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "turn"
-  value   = "lava.tdude.co"
+  content = "lava.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -15,7 +15,7 @@ resource "cloudflare_record" "turn_nerdsin_space-772814e8fbfef2c39c8977e269d3b3a
 resource "cloudflare_record" "nerdsin_space-3ac2691767564a8029f9dcaefe7c7b01" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "nerdsin.space"
-  value   = "traefik.lava.tdude.co"
+  content = "traefik.lava.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -34,7 +34,7 @@ resource "cloudflare_record" "nerdsin_space-b40126e8c919a22ec1d75a8090179a23" {
 resource "cloudflare_record" "minio_nerdsin_space_A" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "minio"
-  value   = "traefik.lava.tdude.co"
+  content = "traefik.lava.tdude.co"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -43,7 +43,7 @@ resource "cloudflare_record" "minio_nerdsin_space_A" {
 resource "cloudflare_record" "_github-challenge-nerdsinspace_nerdsin_space_TXT" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "_github-challenge-nerdsinspace"
-  value   = "d792693e34"
+  content = "d792693e34"
   type    = "TXT"
   ttl     = 1
   proxied = false
@@ -103,7 +103,7 @@ resource "cloudflare_record" "_minecraft__tcp_nerdsin_space-d8276c70aea17f359f13
 resource "cloudflare_record" "mail__domainkey_nerdsin_space-83e7837cc7cae988e3e41d87514012ba" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "mail._domainkey"
-  value   = "v=DKIM1;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm0gvmm17deOjoiGJXoHh8qx3QVyf7IZzYQwYVwSlXqGQSJCzWmA56ij4kAbd3nmCm7dOauG6L/ftMsAhzMhtoI1fyFSEY6ZYnlLoQQMWk6QltYyZtfHhCgsTzhSvh/9VLhTY8knEXw9ejKCY3uUpWRk4RGXWTriz69zYP49yrmLqPpwTIyuz7gWlyIp21D4B2C4GmABiBJT/cEeEYYuUl53OXjW+4tXMMO+gfznm2zR3/1jwncNFSi1ESRIV3IDVyAJztqpoZXjZmILLpnos2T+bS7slWOR5ig1qi8+TQugexmCMbKbqhSob7KHleNBwu/LXaxYi5MJPJO7PgY+rwwIDAQAB"
+  content = "v=DKIM1;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm0gvmm17deOjoiGJXoHh8qx3QVyf7IZzYQwYVwSlXqGQSJCzWmA56ij4kAbd3nmCm7dOauG6L/ftMsAhzMhtoI1fyFSEY6ZYnlLoQQMWk6QltYyZtfHhCgsTzhSvh/9VLhTY8knEXw9ejKCY3uUpWRk4RGXWTriz69zYP49yrmLqPpwTIyuz7gWlyIp21D4B2C4GmABiBJT/cEeEYYuUl53OXjW+4tXMMO+gfznm2zR3/1jwncNFSi1ESRIV3IDVyAJztqpoZXjZmILLpnos2T+bS7slWOR5ig1qi8+TQugexmCMbKbqhSob7KHleNBwu/LXaxYi5MJPJO7PgY+rwwIDAQAB"
   type    = "TXT"
   ttl     = 1
   proxied = false
@@ -112,7 +112,7 @@ resource "cloudflare_record" "mail__domainkey_nerdsin_space-83e7837cc7cae988e3e4
 resource "cloudflare_record" "nerdsin_space-a820eaf032b56421482eda61544cff2b" {
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "nerdsin.space"
-  value   = "google-site-verification=D7t1NXuj14XKtlXk0sZ5d1JTsxph4BKdrfI9vv0HY-k"
+  content = "google-site-verification=D7t1NXuj14XKtlXk0sZ5d1JTsxph4BKdrfI9vv0HY-k"
   type    = "TXT"
   ttl     = 1
   proxied = false

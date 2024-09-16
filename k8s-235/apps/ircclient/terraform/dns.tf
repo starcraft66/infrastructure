@@ -7,7 +7,7 @@ data "cloudflare_zones" "tdude_co" {
 resource "cloudflare_record" "thelounge" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "irc"
-  value   = "traefik.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+  content = "traefik.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -16,7 +16,7 @@ resource "cloudflare_record" "thelounge" {
 resource "cloudflare_record" "znc" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "znc.irc"
-  value   = "traefik.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+  content = "traefik.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
   type    = "CNAME"
   ttl     = 1
   proxied = false

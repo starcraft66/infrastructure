@@ -24,7 +24,7 @@ resource "cloudflare_record" "cacaffichage-srv" {
 resource "cloudflare_record" "cacaffichage-ingress-v4" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "cacaffichage"
-  value   = "24.225.136.165"
+  content = "24.225.136.165"
   type    = "A"
   ttl     = 1
   proxied = false
@@ -33,7 +33,7 @@ resource "cloudflare_record" "cacaffichage-ingress-v4" {
 resource "cloudflare_record" "cacaffichage-ingress-v6" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "cacaffichage"
-  value   = "2a10:4741:36:32:3::4"
+  content = "2a10:4741:36:32:3::4"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -42,7 +42,7 @@ resource "cloudflare_record" "cacaffichage-ingress-v6" {
 resource "cloudflare_record" "cacaffichage-v4" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "cacaffichage.k8s.235"
-  value   = "24.225.136.165"
+  content = "24.225.136.165"
   type    = "A"
   ttl     = 1
   proxied = false
@@ -51,7 +51,7 @@ resource "cloudflare_record" "cacaffichage-v4" {
 resource "cloudflare_record" "cacaffichage-v6" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "cacaffichage.k8s.235"
-  value   = "2a10:4741:36:32:3::4"
+  content = "2a10:4741:36:32:3::4"
   type    = "AAAA"
   ttl     = 1
   proxied = false

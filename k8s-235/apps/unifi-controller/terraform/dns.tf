@@ -7,7 +7,7 @@ data "cloudflare_zones" "tdude_co" {
 resource "cloudflare_record" "unifi" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "unifi"
-  value   = "traefik.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+  content = "traefik.k8s.235.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -16,7 +16,7 @@ resource "cloudflare_record" "unifi" {
 resource "cloudflare_record" "unifi-235" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "unifi.235"
-  value   = "unifi.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+  content = "unifi.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -25,7 +25,7 @@ resource "cloudflare_record" "unifi-235" {
 resource "cloudflare_record" "unifi-260" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "unifi.260"
-  value   = "unifi.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+  content = "unifi.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
   type    = "CNAME"
   ttl     = 1
   proxied = false
@@ -34,7 +34,7 @@ resource "cloudflare_record" "unifi-260" {
 resource "cloudflare_record" "unifi-305-1700" {
   zone_id = lookup(data.cloudflare_zones.tdude_co.zones[0], "id")
   name    = "unifi.305-1700"
-  value   = "unifi.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
+  content = "unifi.${lookup(data.cloudflare_zones.tdude_co.zones[0], "name")}"
   type    = "CNAME"
   ttl     = 1
   proxied = false
