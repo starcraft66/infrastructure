@@ -11,7 +11,9 @@ in {
     extraOpts =
       ''--node-cidr-mask-size-ipv4 24 \
         --node-cidr-mask-size-ipv6 120 \
-        --service-cluster-ip-range=${config.services.kubernetes.apiserver.serviceClusterIpRange}
+        --service-cluster-ip-range=${config.services.kubernetes.apiserver.serviceClusterIpRange} \
+        --authorization-kubeconfig=${config.services.kubernetes.lib.mkKubeConfig "kube-controller-manager" config.services.kubernetes.controllerManager.kubeconfig} \
+        --authentication-kubeconfig=${config.services.kubernetes.lib.mkKubeConfig "kube-controller-manager" config.services.kubernetes.controllerManager.kubeconfig}
       '';
 
     serviceAccountKeyFile = "/var/lib/secrets/kubernetes/service-account-key.pem";
