@@ -1,0 +1,12 @@
+---
+- op: add
+  path: /spec/template/spec/volumes/2
+  value:
+    name: tls
+    secret:
+      secretName: satisfactory-cert
+      items:
+      - key: tls.crt
+        path: cert_chain.pem
+      - key: tls.key
+        path: private_key.pem

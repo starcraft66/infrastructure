@@ -9,7 +9,18 @@ images:
 resources:
 - ../../base
 - ./resources/namespace.yaml
+- ./resources/certificate.yaml
 - ./resources/volume.yaml
+
+patches:
+- path: ./patches/tls-certificate-volume.yaml
+  target:
+    kind: StatefulSet
+    name: satisfactory
+- path: ./patches/tls-certificate-volume-mount.yaml
+  target:
+    kind: StatefulSet
+    name: satisfactory
 
 configMapGenerator:
 - name: satisfactory-vars
@@ -20,5 +31,6 @@ configMapGenerator:
   - SERVERGAMEPORT=7777
   - SERVERIP="::"
 
-commonLabels:
-  app.kubernetes.io/name: satisfactory
+labels:
+- pairs:
+    app.kubernetes.io/name: satisfactory

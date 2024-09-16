@@ -16,6 +16,9 @@ spec:
       securityContext:
         fsGroup: 1000
         fsGroupChangePolicy: "OnRootMismatch"
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
       containers:
       - name: satisfactory
         image: "ghcr.io/wolveix/satisfactory-server/satisfactory-server:dev"
@@ -47,10 +50,8 @@ spec:
         - configMapRef:
             name: satisfactory-vars
         env:
-        - name: PUID
-          value: "1000"
-        - name: PGID
-          value: "1000"
+        - name: ROOTLESS
+          value: "true"
         ports:
         - name: game
           containerPort: 7777

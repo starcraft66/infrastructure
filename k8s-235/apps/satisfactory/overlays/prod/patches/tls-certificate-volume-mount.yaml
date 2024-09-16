@@ -1,0 +1,6 @@
+---
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/2
+  value:
+    name: tls
+    mountPath: /config/gamefiles/FactoryGame/Certificates

@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: satisfactory-cert
+spec:
+  secretName: satisfactory-cert
+  commonName: satisfactory.tdude.co
+  dnsNames:
+  - satisfactory.tdude.co
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
