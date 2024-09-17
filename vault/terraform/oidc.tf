@@ -50,7 +50,7 @@ resource "vault_identity_group" "admins" {
 
 resource "vault_identity_oidc_client" "grafana-k8s-235-1" {
   name        = "grafana-k8s-235-1"
-  client_type = "public"
+  client_type = "confidential"
   redirect_uris = [
     "https://monitoring.tdude.co/login/generic_oauth",
   ]
@@ -63,7 +63,7 @@ resource "vault_identity_oidc_client" "grafana-k8s-235-1" {
 
 resource "vault_identity_oidc_client" "argocd-k8s-235-1" {
   name        = "argocd-k8s-235-1"
-  client_type = "public"
+  client_type = "confidential"
   redirect_uris = [
     "https://gitops.tdude.co/api/dex/callback",
   ]
@@ -76,7 +76,7 @@ resource "vault_identity_oidc_client" "argocd-k8s-235-1" {
 
 resource "vault_identity_oidc_client" "oauth2-proxy-k8s-235-1" {
   name        = "oauth2-proxy-k8s-235-1"
-  client_type = "public"
+  client_type = "confidential"
   redirect_uris = [
     "https://auth.k8s.235.tdude.co/oauth2/callback",
   ]
