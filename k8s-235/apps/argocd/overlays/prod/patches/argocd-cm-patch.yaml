@@ -21,7 +21,7 @@ data:
         clientID: $dex.gitlab.clientId
         clientSecret: $dex.gitlab.clientSecret
         redirectURI: http://gitops.tdude.co/dex/callback
-    - type: OIDC
+    - type: oidc
       id: vault
       name: Vault
       config:
