@@ -1,0 +1,21 @@
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: discovery-helper
+spec:
+  endpoints:
+  - dnsName: unifi.235.tdude.co
+    recordTTL: 1
+    recordType: CNAME
+    targets:
+    - unifi.tdude.co
+  - dnsName: unifi.260.tdude.co
+    recordTTL: 1
+    recordType: CNAME
+    targets:
+    - unifi.tdude.co
+  - dnsName: unifi.305-1700.tdude.co
+    recordTTL: 1
+    recordType: CNAME
+    targets:
+    - unifi.tdude.co

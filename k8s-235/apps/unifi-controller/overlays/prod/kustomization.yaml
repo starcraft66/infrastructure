@@ -8,6 +8,7 @@ resources:
 - ./resources/ingress.yaml
 - ./resources/tlsoptions.yaml
 - ./resources/volume.yaml
+- ./resources/dns.yaml
 
 namespace: unifi
 
