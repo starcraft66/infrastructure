@@ -1,0 +1,3 @@
+- op: add
+  path: /metadata/annotations/external-dns.alpha.kubernetes.io~1target
+  value: traefik.k8s.235.tdude.co

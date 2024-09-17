@@ -4,5 +4,12 @@ resources:
 - ../../base
 - ./resources/nixos-control-plane.yaml
 
+patches:
+- path: ./patches/ingress-dns.yaml
+  target:
+    kind: Ingress
+    group: networking.k8s.io
+    version: v1
+
 generators:
 - ./generators/secrets-generator.yaml
