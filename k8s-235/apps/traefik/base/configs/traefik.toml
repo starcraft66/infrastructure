@@ -39,6 +39,9 @@
 
 [providers.kubernetescrd]
 [providers.kubernetesingress]
+  allowExternalNameServices = true
+[providers.kubernetesIngress.ingressEndpoint]
+  publishedService = "traefik/traefik"
 
 # HTTP/3 Experimental support
 [experimental]
