@@ -1,8 +1,5 @@
 - op: add
   path: /spec/template/spec/containers/0/args/-
-  value: --managed-record-types=SRV
-- op: add
-  path: /spec/template/spec/containers/0/args/-
   value: --source=crd
 - op: add
   path: /spec/template/spec/containers/0/args/-
