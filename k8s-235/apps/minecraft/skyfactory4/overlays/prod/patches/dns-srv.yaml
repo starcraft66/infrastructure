@@ -1,6 +1,6 @@
 - op: add
   path: /spec/endpoints/0/dnsName
-  value: _minecraft._tcp.ftb-ultimate.tdude.co
+  value: _minecraft._tcp.skyfactory4.tdude.co
 - op: replace
   path: /spec/endpoints/0/targets/0
-  value: "1 1 12347 ftb-ultimate.k8s.235.tdude.co"
+  value: "1 1 12347 skyfactory4.k8s.235.tdude.co"
