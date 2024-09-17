@@ -25,7 +25,7 @@ data:
       id: vault
       name: Vault
       config:
-        baseURL: https://vault.235.tdude.co/v1/identity/oidc/provider/default
+        issuer: https://vault.235.tdude.co/v1/identity/oidc/provider/default
         clientID: $dex.vault.clientId
         clientSecret: $dex.vault.clientSecret
         redirectURI: http://gitops.tdude.co/dex/callback
