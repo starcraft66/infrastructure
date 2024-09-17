@@ -21,6 +21,14 @@ data:
         clientID: $dex.gitlab.clientId
         clientSecret: $dex.gitlab.clientSecret
         redirectURI: http://gitops.tdude.co/dex/callback
+    - type: OIDC
+      id: vault
+      name: Vault
+      config:
+        baseURL: https://vault.tdude.co
+        clientID: $dex.vault.clientId
+        clientSecret: $dex.vault.clientSecret
+        redirectURI: http://gitops.tdude.co/dex/callback
   resource.customizations: |
     extensions/Ingress:
       health.lua: |
