@@ -48,6 +48,45 @@ resource "vault_identity_group" "admins" {
   }
 }
 
+resource "vault_identity_oidc_client" "grafana-k8s-235-1" {
+  name        = "grafana-k8s-235-1"
+  client_type = "public"
+  redirect_uris = [
+    "https://monitoring.tdude.co/login/generic_oauth",
+  ]
+  assignments = [
+    vault_identity_oidc_assignment.test.name
+  ]
+  id_token_ttl     = 2400
+  access_token_ttl = 7200
+}
+
+resource "vault_identity_oidc_client" "argocd-k8s-235-1" {
+  name        = "argocd-k8s-235-1"
+  client_type = "public"
+  redirect_uris = [
+    "https://gitops.tdude.co/api/dex/callback",
+  ]
+  assignments = [
+    vault_identity_oidc_assignment.test.name
+  ]
+  id_token_ttl     = 2400
+  access_token_ttl = 7200
+}
+
+resource "vault_identity_oidc_client" "oauth2-proxy-k8s-235-1" {
+  name        = "oauth2-proxy-k8s-235-1"
+  client_type = "public"
+  redirect_uris = [
+    "https://auth.k8s.235.tdude.co/oauth2/callback",
+  ]
+  assignments = [
+    vault_identity_oidc_assignment.test.name
+  ]
+  id_token_ttl     = 2400
+  access_token_ttl = 7200
+}
+
 resource "vault_identity_oidc_client" "kubernetes-k8s-235-1" {
   name        = "k8s-235-1"
   client_type = "public"
