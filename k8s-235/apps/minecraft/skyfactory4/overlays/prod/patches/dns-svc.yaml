@@ -1,0 +1,5 @@
+- op: add
+  path: /metadata/annotations
+  value:
+    external-dns.alpha.kubernetes.io/hostname: skyfactory4.k8s.235.tdude.co
+    external-dns.alpha.kubernetes.io/target: 24.225.136.165,2a10:4741:36:32:3::1

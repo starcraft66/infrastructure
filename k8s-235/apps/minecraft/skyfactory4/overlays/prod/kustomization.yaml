@@ -14,7 +14,7 @@ resources:
 generators:
 - ./generators/secrets-generator.yaml
 
-patchesJson6902:
+patches:
 - path: ./patches/persistence.yaml
   target:
     group: apps
@@ -39,6 +39,17 @@ patchesJson6902:
     kind: Service
     name: minecraft
     version: v1
+- path: ./patches/dns-svc.yaml
+  target:
+    kind: Service
+    name: minecraft
+    version: v1
+- path: ./patches/dns-srv.yaml
+  target:
+    group: externaldns.k8s.io
+    kind: DNSEndpoint
+    name: srv-record
+    version: v1alpha1
 
 configMapGenerator:
 - name: minecraft-env-vars

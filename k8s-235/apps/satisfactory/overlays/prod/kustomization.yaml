@@ -21,6 +21,11 @@ patches:
   target:
     kind: StatefulSet
     name: satisfactory
+- path: ./patches/dns-svc.yaml
+  target:
+    kind: Service
+    name: satisfactory
+    version: v1
 
 configMapGenerator:
 - name: satisfactory-vars

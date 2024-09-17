@@ -1,0 +1,11 @@
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+ name: srv-record
+spec:
+ endpoints:
+ - dnsName: _minecraft._tcp.server.tdude.co
+   recordType: SRV
+   targets:
+     - "1 1 12345 server.k8s.235.tdude.co"

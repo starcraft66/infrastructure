@@ -1,0 +1,17 @@
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: --txt-owner-id=k8s-235-1
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: --log-level=debug
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: --events
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: --provider=cloudflare
+- op: add
+  path: /spec/template/spec/containers/0/envFrom
+  value:
+  - secretRef:
+      name: external-dns-cloudflare-token

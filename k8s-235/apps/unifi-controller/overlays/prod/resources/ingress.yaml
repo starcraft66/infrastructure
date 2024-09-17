@@ -8,6 +8,7 @@ metadata:
     # traefik.ingress.kubernetes.io/router.middlewares: traefik-forward-auth@kubernetescrd
     traefik.ingress.kubernetes.io/router.tls.options: unifi-unifi@kubernetescrd
     traefik.ingress.kubernetes.io/router.tls: "true"
+    external-dns.alpha.kubernetes.io/target: "traefik.k8s.235.tdude.co"
 spec:
   ingressClassName: traefik
   tls:
