@@ -17,9 +17,8 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - echo "Installing KSOPS...";
-              mv ksops /custom-tools;
-              mv ksops.so /custom-tools;
-              mv $GOPATH/bin/kustomize /custom-tools/;
+              mv ksops /custom-tools/;
+              mv kustomize /custom-tools/;
               echo "Done.";
           volumeMounts:
             - mountPath: /custom-tools
@@ -38,12 +37,6 @@ spec:
             - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops-exec/ksops-exec
               name: custom-tools
               subPath: ksops
-            - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops.so
-              name: custom-tools
-              subPath: ksops.so
-            - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops-exec/ksops-exec.so
-              name: custom-tools
-              subPath: ksops.so
           # 4. Set the XDG_CONFIG_HOME env variable to allow kustomize to detect the plugin
           env:
             - name: XDG_CONFIG_HOME
