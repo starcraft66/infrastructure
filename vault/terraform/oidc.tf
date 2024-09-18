@@ -3,21 +3,30 @@ resource "vault_auth_backend" "userpass" {
   path = "userpass"
 }
 
-resource "vault_identity_oidc_assignment" "tristan_admin" {
+resource "vault_identity_oidc_assignment" "allowed_users" {
   name = "my-assignment"
   entity_ids = [
-    vault_identity_entity.tristan.id
+    vault_identity_entity.tristan.id,
+    vault_identity_entity.anon.id,
   ]
   group_ids = [
-    vault_identity_group.admins.id
+    vault_identity_group.admins.id,
   ]
 }
 
 resource "vault_identity_entity" "tristan" {
   name     = "tristan"
   metadata = {
-    name  = "Tristan"
+    name  = "Tristan Gosselin-Hane"
     email = "starcraft66@gmail.com"
+  }
+}
+
+resource "vault_identity_entity" "anon" {
+  name     = "anon"
+  metadata = {
+    name  = "Anonymous User"
+    email = "anonymous@tdude.co"
   }
 }
 
@@ -25,6 +34,12 @@ resource "vault_identity_entity_alias" "tristan" {
   name           = "tristan"
   mount_accessor = "auth_userpass_1fabbaea"
   canonical_id   = vault_identity_entity.tristan.id
+}
+
+resource "vault_identity_entity_alias" "anon" {
+  name           = "anon"
+  mount_accessor = "auth_userpass_1fabbaea"
+  canonical_id   = vault_identity_entity.anon.id
 }
 
 resource "vault_identity_group" "admins" {
@@ -44,7 +59,7 @@ resource "vault_identity_oidc_client" "grafana-k8s-235-1" {
     "https://monitoring.tdude.co/login/generic_oauth",
   ]
   assignments = [
-    vault_identity_oidc_assignment.tristan_admin.name
+    vault_identity_oidc_assignment.allowed_users.name
   ]
   id_token_ttl     = 2400
   access_token_ttl = 7200
@@ -57,7 +72,7 @@ resource "vault_identity_oidc_client" "argocd-k8s-235-1" {
     "https://gitops.tdude.co/api/dex/callback",
   ]
   assignments = [
-    vault_identity_oidc_assignment.tristan_admin.name
+    vault_identity_oidc_assignment.allowed_users.name
   ]
   id_token_ttl     = 2400
   access_token_ttl = 7200
@@ -70,7 +85,7 @@ resource "vault_identity_oidc_client" "oauth2-proxy-k8s-235-1" {
     "https://auth.k8s.235.tdude.co/oauth2/callback",
   ]
   assignments = [
-    vault_identity_oidc_assignment.tristan_admin.name
+    vault_identity_oidc_assignment.allowed_users.name
   ]
   id_token_ttl     = 2400
   access_token_ttl = 7200
@@ -84,7 +99,7 @@ resource "vault_identity_oidc_client" "kubernetes-k8s-235-1" {
     "http://localhost:18000"
   ]
   assignments = [
-    vault_identity_oidc_assignment.tristan_admin.name
+    vault_identity_oidc_assignment.allowed_users.name
   ]
   id_token_ttl     = 2400
   access_token_ttl = 7200
