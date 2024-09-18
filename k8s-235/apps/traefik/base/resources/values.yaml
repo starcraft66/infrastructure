@@ -1,0 +1,125 @@
+nameOverride: traefik
+fullnameOverride: traefik
+namespaceOverride: traefik
+
+serviceAccountAnnotations:
+  kustomize.config.k8s.io/behavior: replace
+
+autoscaling:
+  enabled: false
+deployment:
+  kind: Deployment
+  replicas: 8
+  additionalContainers:
+  - image: quay.io/oauth2-proxy/oauth2-proxy:v7.2.0
+    imagePullPolicy: IfNotPresent
+    name: oauth2-proxy
+    ports:
+    - containerPort: 4180
+      name: oauth2-proxy
+      protocol: TCP
+    - containerPort: 44180
+      name: oauth2-metrics
+      protocol: TCP
+    livenessProbe:
+      httpGet:
+        path: /ping
+        port: oauth2-proxy
+        scheme: HTTP
+      initialDelaySeconds: 0
+      timeoutSeconds: 1
+    readinessProbe:
+      httpGet:
+        path: /ping
+        port: oauth2-proxy
+        scheme: HTTP
+      initialDelaySeconds: 0
+      timeoutSeconds: 1
+      successThreshold: 1
+      periodSeconds: 10
+    args:
+    - --http-address=[::]:4180
+    - --metrics-address=[::]:44180
+    - --authenticated-emails-file=/etc/oauth2-proxy/authenticated-emails-list
+    # https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/overview#forwardauth-with-static-upstreams-configuration
+    - --upstream=static://202
+    - --reverse-proxy=true
+    - --skip-provider-button
+    - --cookie-secure=true
+    - --cookie-refresh=1h
+    - --cookie-expire=168h
+    envFrom:
+    - secretRef:
+        name: oauth2-proxy-secrets
+    volumeMounts:
+    - mountPath: /etc/oauth2-proxy
+      name: configaccesslist
+      readOnly: true
+  additionalVolumes:
+    - name: configaccesslist
+      secret:
+        secretName: oauth2-proxy-secrets
+        items:
+        - key: authenticated-emails-list
+          path: authenticated-emails-list
+
+certResolvers: {}
+
+ports:
+  websecure:
+    http3:
+      enabled: true
+      advertisedPort: 443
+
+hub:
+  enabled: false
+
+metrics:
+  prometheus:
+    service:
+      enabled: true
+    serviceMonitor:
+      enabled: true
+      jobLabel: traefik
+      interval: 30s
+      honorLabels: true
+
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+
+ingressRoute:
+  dashboard:
+    enabled: false
+
+providers:
+  kubernetesIngress:
+    ingressClass: traefik
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 3
+
+service:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+  - IPv4
+  - IPv6
+
+tlsOptions:
+  default:
+    minVersion: VersionTLS12
+    sniStrict: true
+    cipherSuites:
+  # Cipher suites using ECDSA keys are disabled because we are
+  # only using ECDSA certificates since traefik does not (yet?)
+  # support using a combination of RSA and ECDSA certificates
+  # like nginx does.
+    - "TLS_AES_256_GCM_SHA384"
+    - "TLS_CHACHA20_POLY1305_SHA256"
+    - "TLS_AES_128_GCM_SHA256"
+    - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+    - "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+    - "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"
+    - "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"
+    - "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"

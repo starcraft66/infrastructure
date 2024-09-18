@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- ./namespace.yaml
+- ./resources/namespace.yaml
 
 namespace: traefik
 
@@ -15,5 +15,5 @@ helmCharts:
   namespace: traefik
   releaseName: traefik
   repo: https://helm.traefik.io/traefik
-  valuesFile: ./values.yaml
+  valuesFile: ./resources/values.yaml
   version: 31.1.0
