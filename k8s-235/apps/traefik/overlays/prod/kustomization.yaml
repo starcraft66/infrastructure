@@ -10,6 +10,10 @@ resources:
 
 namespace: traefik
 
+images:
+- name: quay.io/oauth2-proxy/oauth2-proxy
+  newTag: v7.6.0
+
 patches:
 - path: ./patches/traefik-config-file.yaml
 - path: ./patches/oauth2-configuration.yaml
@@ -33,6 +37,5 @@ configMapGenerator:
   files:
   - traefik.toml=configs/traefik.toml
 
-images:
-- name: quay.io/oauth2-proxy/oauth2-proxy
-  newTag: v7.6.0
+generators:
+- ./generators/secrets-generator.yaml
