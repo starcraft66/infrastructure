@@ -11,24 +11,20 @@ data:
     - url: https://git.tdude.co/tristan/infrastructure.git
   repository.credentials: |
     - url: https://git.tdude.co/tristan/infrastructure.git
-  dex.config: |
-    connectors:
-    - type: gitlab
-      id: gitlab
-      name: Gitlab
-      config:
-        baseURL: https://git.tdude.co
-        clientID: $dex.gitlab.clientId
-        clientSecret: $dex.gitlab.clientSecret
-        redirectURI: http://gitops.tdude.co/dex/callback
-    - type: oidc
-      id: vault
-      name: Vault
-      config:
-        issuer: https://vault.235.tdude.co/v1/identity/oidc/provider/default
-        clientID: $dex.vault.clientId
-        clientSecret: $dex.vault.clientSecret
-        redirectURI: http://gitops.tdude.co/dex/callback
+  oidc.config: |
+    name: Vault
+    issuer: https://vault.235.tdude.co/v1/identity/oidc/provider/default
+    clientID: $oidc.vault.clientId
+    clientSecret: $oidc.vault.clientSecret
+    requestedScopes:
+    - profile
+    - email
+    - groups
+    requestedIDTokenClaims:
+      email:
+        essential: true
+      groups:
+        essential: true
   resource.customizations: |
     extensions/Ingress:
       health.lua: |
