@@ -17,6 +17,7 @@ data:
     clientID: $oidc.vault.clientId
     clientSecret: $oidc.vault.clientSecret
     requestedScopes:
+    - openid
     - profile
     - email
     - groups
