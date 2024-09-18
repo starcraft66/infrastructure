@@ -1,31 +1,38 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: traefik
-
-images:
-- name: traefik
-  newTag: "v2.11.8"
-- name: thomseddon/traefik-forward-auth
-  newTag: "2"
-
-# nameSuffix: -prod
 
 resources:
-- ../../base
-# - ./resources/autoscaler.yml
+- ../base
 - ./resources/ingress.yaml
+- ./resources/service.yaml
 - ./resources/middleware.yaml
-- ./resources/loadbalancer.yaml
-- ./resources/monitoring.yaml
 - ./resources/monitoring-rbac.yaml
 
-generators:
-- ./generators/secrets-generator.yaml
+namespace: traefik
 
-patchesJson6902:
-- target:
+patches:
+- path: ./patches/traefik-config-file.yaml
+- path: ./patches/oauth2-configuration.yaml
+  target:
     group: apps
-    version: v1
     kind: Deployment
     name: traefik
-  path: ./patches/add-oauth2-redirect-url.yaml
+    namespace: traefik
+    version: v1
+- path: ./patches/remove-helm-defaults.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: traefik
+    namespace: traefik
+    version: v1
+
+configMapGenerator:
+- name: traefik-config
+  namespace: traefik
+  files:
+  - traefik.toml=configs/traefik.toml
+
+images:
+- name: quay.io/oauth2-proxy/oauth2-proxy
+  newTag: v7.6.0
