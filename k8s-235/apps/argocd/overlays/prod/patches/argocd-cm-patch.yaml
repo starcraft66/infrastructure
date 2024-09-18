@@ -24,6 +24,8 @@ data:
     requestedIDTokenClaims:
       email:
         essential: true
+        values:
+        - starcraft66@gmail.com
       groups:
         essential: true
   resource.customizations: |
