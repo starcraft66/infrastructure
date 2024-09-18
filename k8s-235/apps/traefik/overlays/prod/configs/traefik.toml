@@ -1,0 +1,46 @@
+[entryPoints]
+  [entryPoints.web]
+    # Running as unprivileged user
+    address = ":8000"
+    [entryPoints.web.http]
+      [entryPoints.web.http.redirections]
+        [entryPoints.web.http.redirections.entryPoint]
+          # https://github.com/traefik/traefik-helm-chart/blob/a4dbf1a5833f03e675e1550f32d047cdbf07900c/traefik/templates/_podtemplate.tpl#L127
+          # This port is technically 8443 but it is accessed from the outside via 443
+          to = ":443"
+          scheme = "https"
+
+  [entryPoints.websecure]
+    # Running as unprivileged user
+    address = ":8443"
+    [entryPoints.websecure.http3]
+      advertisedPort = 443
+
+  [entryPoints.traefik]
+    address = ":9000"
+
+[log]
+  level = "INFO"
+
+[api]
+  dashboard = true
+  # To avoid using IngressRoute CRD.
+  # The dashboard has Auth Middleware anyway.
+  insecure = true
+
+[ping]
+
+# Needed for Unifi Controller and maybe ArgoCD
+[serversTransport]
+  insecureSkipVerify = true
+
+[metrics]
+  [metrics.prometheus]
+
+[providers.kubernetescrd]
+[providers.kubernetesingress]
+  allowExternalNameServices = true
+[providers.kubernetesIngress.ingressEndpoint]
+  publishedService = "traefik/traefik"
+
+# No ACME configuration because we are using cert-manager for certificate issuance
