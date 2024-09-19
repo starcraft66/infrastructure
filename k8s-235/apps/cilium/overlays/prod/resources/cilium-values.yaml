@@ -55,6 +55,16 @@ routingMode: native
 # of calico's cluster mesh
 autoDirectNodeRoutes: true
 
+# Enable direct server return to preserve the client's source IP
+# when externalTrafficPolicy is set to Cluster (required to share
+# a single IP between multiple LoadBalancer services targeting
+# the pods on different nodes)
+# https://docs.cilium.io/en/stable/network/kubernetes/kubeproxy-free/#direct-server-return-dsr-with-ipv4-option-ipv6-extension-header
+# https://github.com/cilium/cilium/issues/30700
+loadBalancer:
+  mode: dsr
+  dsrDispatch: opt
+
 # I usually access my services through a wireguard tunnel from home
 # or via external VPN access so I guess we'll take a global MTU tax
 # for this.
