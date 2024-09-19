@@ -64,6 +64,8 @@ autoDirectNodeRoutes: true
 loadBalancer:
   mode: dsr
   dsrDispatch: opt
+  protocolDifferentiation:
+    enabled: true
 
 # I usually access my services through a wireguard tunnel from home
 # or via external VPN access so I guess we'll take a global MTU tax
