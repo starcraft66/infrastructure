@@ -108,6 +108,8 @@ service:
   ipFamilies:
   - IPv4
   - IPv6
+  spec:
+    externalTrafficPolicy: Cluster
 
 tlsOptions:
   default:
