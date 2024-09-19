@@ -7,6 +7,3 @@ resources:
 - ./resources/monitoring-rbac.yaml
 
 namespace: nhackindustries
-
-generators:
-- ./generators/secrets-generator.yaml
