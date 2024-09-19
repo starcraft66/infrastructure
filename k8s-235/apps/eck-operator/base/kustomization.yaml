@@ -1,7 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-- https://download.elastic.co/downloads/eck/2.5.0/crds.yaml
-- https://download.elastic.co/downloads/eck/2.5.0/operator.yaml
 
 namespace: eck-operator
+
+helmCharts:
+- name: eck-operator
+  namespace: eck-operator
+  releaseName: eck-operator
+  repo: https://helm.elastic.co
+  includeCRDs: true
+  valuesFile: ./resources/values.yaml
+  version: 2.14.0

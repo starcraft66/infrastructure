@@ -1,0 +1,10 @@
+nameOverride: "elastic-operator"
+fullnameOverride: "elastic-operator"
+
+installCRDs: true
+
+podMonitor:
+  enabled: true
+
+podDisruptionBudget:
+  enabled: true
