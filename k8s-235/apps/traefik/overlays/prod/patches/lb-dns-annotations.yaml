@@ -1,6 +1,7 @@
 ---
-- path: /metadata/annotations
+- path: /metadata/annotations/external-dns.alpha.kubernetes.io~1hostname
   op: add
-  value:
-    external-dns.alpha.kubernetes.io/hostname: "traefik.k8s.235.tdude.co"
-    external-dns.alpha.kubernetes.io/target: "24.225.136.165,2a10:4741:36:32:3::2"
+  value: "traefik.k8s.235.tdude.co"
+- path: /metadata/annotations/external-dns.alpha.kubernetes.io~1target
+  op: add
+  value: "24.225.136.165,2a10:4741:36:32:3::2"

@@ -101,6 +101,9 @@ podDisruptionBudget:
   minAvailable: 3
 
 service:
+  single: false
+  annotations:
+    lbipam.cilium.io/sharing-key: "traefik-lb"
   ipFamilyPolicy: RequireDualStack
   ipFamilies:
   - IPv4
