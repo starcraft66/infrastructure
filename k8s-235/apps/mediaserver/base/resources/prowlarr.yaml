@@ -22,7 +22,7 @@ spec:
         imagePullPolicy: Always
         ports:
         - name: "http"
-          containerPort: 9117
+          containerPort: 9696
           protocol: TCP
         volumeMounts:
         - name: prowlarr-config

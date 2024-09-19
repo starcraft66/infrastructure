@@ -13,7 +13,7 @@ spec:
   ports:
   - name: http
     protocol: TCP
-    targetPort: 8686
+    targetPort: http
     port: 8686
   selector:
     app.kubernetes.io/name: lidarr

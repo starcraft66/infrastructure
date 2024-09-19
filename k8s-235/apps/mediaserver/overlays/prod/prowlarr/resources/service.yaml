@@ -13,7 +13,7 @@ spec:
   ports:
   - name: http
     protocol: TCP
-    targetPort: 9696
+    targetPort: http
     port: 80
   selector:
     app.kubernetes.io/name: prowlarr

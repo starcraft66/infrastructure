@@ -13,7 +13,7 @@ spec:
   ports:
   - name: pms
     port: 32400
-    targetPort: 32400
+    targetPort: pms
   selector:
     app.kubernetes.io/name: kube-plex
   type: ClusterIP

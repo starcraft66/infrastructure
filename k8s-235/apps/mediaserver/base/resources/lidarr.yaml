@@ -22,7 +22,7 @@ spec:
         imagePullPolicy: Always
         ports:
         - name: "http"
-          containerPort: 8989
+          containerPort: 8686
           protocol: TCP
         volumeMounts:
         - name: lidarr-config
