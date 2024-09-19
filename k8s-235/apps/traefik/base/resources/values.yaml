@@ -105,6 +105,8 @@ service:
   ipFamilies:
   - IPv4
   - IPv6
+  spec:
+    externalTrafficPolicy: Local
 
 tlsOptions:
   default:

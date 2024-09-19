@@ -16,6 +16,11 @@ images:
 
 patches:
 - path: ./patches/traefik-config-file.yaml
+- path: ./patches/lb-dns-annotations.yaml
+  target:
+    kind: Service
+    name: traefik
+    namespace: traefik
 - path: ./patches/oauth2-configuration.yaml
   target:
     group: apps
