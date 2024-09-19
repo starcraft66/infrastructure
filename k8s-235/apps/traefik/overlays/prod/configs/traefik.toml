@@ -19,6 +19,9 @@
   [entryPoints.traefik]
     address = ":9000"
 
+  [entryPoints.metrics]
+    address = ":9100"
+
 [log]
   level = "INFO"
 
@@ -36,6 +39,7 @@
 
 [metrics]
   [metrics.prometheus]
+    entryPoint = "metrics"
 
 [providers.kubernetescrd]
 [providers.kubernetesingress]
