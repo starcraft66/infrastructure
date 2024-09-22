@@ -588,7 +588,7 @@ resource "cloudflare_record" "traefik_bedrock_tdude_co-AAAA" {
 resource "cloudflare_record" "photofinish_305-1700" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "photofinish.305-1700.tdude.co"
-#  content = "2001:470:b08b:51::a"
+  #  content = "2001:470:b08b:51::a"
   content = "172.17.51.16"
   type    = "A"
   ttl     = 1
@@ -598,7 +598,7 @@ resource "cloudflare_record" "photofinish_305-1700" {
 resource "cloudflare_record" "ovirt_305-1700" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "ovirt.305-1700.tdude.co"
-#  content = "2001:470:b08b:51::b"
+  #  content = "2001:470:b08b:51::b"
   content = "172.17.51.17"
   type    = "A"
   ttl     = 1
