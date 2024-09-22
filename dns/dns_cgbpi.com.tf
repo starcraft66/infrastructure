@@ -46,7 +46,7 @@ resource "cloudflare_record" "www_cgbpi_com-1afc57880af38efcf6a04b38e6c637c8" {
 resource "cloudflare_record" "cgbpi_com-d8898859227d6ceb685fea81dc383140" {
   zone_id  = cloudflare_zone.cgbpi_com.id
   name     = "cgbpi.com"
-  value    = "cgbpi.com"
+  content  = "cgbpi.com"
   type     = "MX"
   priority = "10"
   ttl      = 1

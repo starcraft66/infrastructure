@@ -24,7 +24,7 @@ resource "cloudflare_record" "nerdsin_space-3ac2691767564a8029f9dcaefe7c7b01" {
 resource "cloudflare_record" "nerdsin_space-b40126e8c919a22ec1d75a8090179a23" {
   zone_id  = cloudflare_zone.nerdsin_space.id
   name     = "nerdsin.space"
-  value    = "cgbpi.com"
+  content  = "cgbpi.com"
   type     = "MX"
   priority = "10"
   ttl      = 1

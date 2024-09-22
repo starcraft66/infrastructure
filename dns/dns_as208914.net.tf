@@ -73,7 +73,7 @@ resource "cloudflare_record" "ams-r1_backdoor_as208914_net-A" {
 resource "cloudflare_record" "mail" {
   zone_id  = cloudflare_zone.as208914_net.id
   name     = "as208914.net"
-  value    = "stone.tdude.co"
+  content  = "stone.tdude.co"
   type     = "MX"
   priority = "10"
   ttl      = 1

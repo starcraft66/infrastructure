@@ -419,7 +419,7 @@ resource "cloudflare_record" "soarin_tdude_co-68d3dc90cd44a475929631c7a74f3e3f" 
 resource "cloudflare_record" "tdude_co-7a0081a70287ca28d715fca5b75d14b8" {
   zone_id  = cloudflare_zone.tdude_co.id
   name     = "tdude.co"
-  value    = "stone.tdude.co"
+  content  = "stone.tdude.co"
   type     = "MX"
   priority = "10"
   ttl      = 1
