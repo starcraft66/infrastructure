@@ -522,6 +522,15 @@ resource "cloudflare_record" "dkim_tdude_mail" {
   proxied = false
 }
 
+resource "cloudflare_record" "tdude_co_spf" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "@"
+  content = "v=spf1 mx -all"
+  type    = "TXT"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "_dmarc_tdude_co-4de172137b73fb7c61bcfa72f2aad7db" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "_dmarc"
