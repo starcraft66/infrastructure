@@ -585,22 +585,20 @@ resource "cloudflare_record" "traefik_bedrock_tdude_co-AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "photofinish_305-1700" {
+resource "cloudflare_record" "spike_305-1700_A" {
   zone_id = cloudflare_zone.tdude_co.id
-  name    = "photofinish.305-1700.tdude.co"
-  #  content = "2001:470:b08b:51::a"
+  name    = "spike.305-1700.tdude.co"
   content = "172.17.51.16"
   type    = "A"
   ttl     = 1
   proxied = false
 }
 
-resource "cloudflare_record" "ovirt_305-1700" {
+resource "cloudflare_record" "spike_305-1700_AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
-  name    = "ovirt.305-1700.tdude.co"
-  #  content = "2001:470:b08b:51::b"
-  content = "172.17.51.17"
-  type    = "A"
+  name    = "spike.305-1700.tdude.co"
+  content = "2001:470:b08b:51::16"
+  type    = "AAAA"
   ttl     = 1
   proxied = false
 }
@@ -664,15 +662,6 @@ resource "cloudflare_record" "borgbackup_235" {
   name    = "borgbackup.235"
   content = "2a10:4741:36:29:25:90ff:fe69:277d"
   type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "fogserver_305-1700_AAAA" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "fogserver.305-1700.tdude.co"
-  content = "172.16.2.4"
-  type    = "A"
   ttl     = 1
   proxied = false
 }
