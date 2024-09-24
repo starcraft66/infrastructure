@@ -7,6 +7,7 @@ let
     soarin = import ./soarin { inherit inputs lib; };
     stone = import ./stone { inherit inputs; };
     lava = import ./lava { inherit inputs; };
+    spike = import ./spike { inherit inputs lib; };
   };
 
   inherit (inputs.nixpkgs) lib;
