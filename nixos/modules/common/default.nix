@@ -70,7 +70,6 @@ in {
       value = "655360";
     }];
 
-
     # Assume this is already running in k8s if kubelet is enabled
     services.prometheus.exporters.node = lib.mkIf (!config.services.kubernetes.kubelet.enable) {
       enable = true;
@@ -114,6 +113,7 @@ in {
 
     nix = {
       package = pkgs.nix;
+      channel.enable = false;
       extraOptions = ''
         experimental-features = nix-command flakes
         keep-outputs = true
@@ -122,8 +122,6 @@ in {
         # nop out the global flake registry
         flake-registry = ${builtins.toFile "flake-registry" (builtins.toJSON { version = 2; flakes = [ ]; })}
       '';
-      # Pin nixpkgs for older Nix tools
-      nixPath = [ "nixpkgs=${pkgs.path}" ];
       settings = {
         trusted-users = [ "root" "@wheel" ];
       };
