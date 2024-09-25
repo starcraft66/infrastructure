@@ -55,7 +55,19 @@ let
     lib.mapAttrs
       (name: system: { name, nodes, ... }:
         {
-          imports = system.modules ++ [ ./${name}/bootloader.nix ./${name}/keys.nix ] ++ (import ../modules);
+          imports = system.modules ++ (import ../modules) ++
+          [ ./${name}/bootloader.nix
+            ./${name}/keys.nix
+            # Replicate the setup in
+            # https://github.com/NixOS/nixpkgs/blob/23cbb250f3bf4f516a2d0bf03c51a30900848075/flake.nix#L33-L41
+            # because colmena instantiates nixpkgs differently
+            # We also can't just pass the nixpkgs input to colmena instead of an already-instantiated version
+            # because it leads to:
+            # error: Passing a path to Nixpkgs as meta.nodeNixpkgs.spike is no longer accepted with Flakes.
+            ({ config, pkgs, lib, ... }: {
+              config.nixpkgs.flake.source = system.nixosInput.outPath;
+            })
+          ];
           deployment = {
             targetUser = "root";
             targetHost = system.hostname;
