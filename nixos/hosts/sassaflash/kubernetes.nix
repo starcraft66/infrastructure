@@ -32,8 +32,14 @@
   services.tdude.kubernetes.loadbalancer.interface = "eno1.29";
   services.tdude.kubernetes.loadbalancer.k8sIpv4Address = "172.16.29.8";
   services.tdude.kubernetes.loadbalancer.k8sIpv6Address = "2a10:4741:36:29::8:1";
+  services.tdude.kubernetes.loadbalancer.k8sBackendHostnames = [
+    "soarin.235.tdude.co"
+    "stormfeather.235.tdude.co"
+    "sassaflash.235.tdude.co"
+  ];
   services.tdude.kubernetes.loadbalancer.vaultIpv4Address = "172.16.29.9";
   services.tdude.kubernetes.loadbalancer.vaultIpv6Address = "2a10:4741:36:29::9:1";
+  services.tdude.kubernetes.loadbalancer.vaultSNI = "vault.235.tdude.co";
 
   services.tdude.vault.enable = true;
   services.tdude.vault.raftPeers = [
