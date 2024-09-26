@@ -33,6 +33,16 @@ in {
       default = [];
       description = "Additional SANs to add to the apiserver certificate";
     };
+    oidcIssuerUrl = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = "The URL of the OIDC issuer used to authenticate non-certificate-based requests to the apiserver";
+    };
+    oidcClientId = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = "The client ID for the OIDC client";
+    };
   };
   config.services.kubernetes.clusterCidr = lib.concatStringsSep "," [
     cfg.clusterCidrIpv4
