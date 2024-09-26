@@ -2,6 +2,7 @@
 
 with pkgs.lib.tdude.vault;
 let
+  pki = config.services.tdude.kubernetes.control-plane.pki;
   cfg = config.services.tdude.kubernetes.control-plane;
   lbCfg = config.services.tdude.kubernetes.loadbalancer;
 in {
@@ -13,7 +14,7 @@ in {
     [ (mkRestartServiceSudoersRule "kubernetes" [ "kube-apiserver" "kube-controller-manager" "kube-scheduler" ]) ];
 
   services.vault-agent.instances.kubernetes-control-plane = lib.mkIf cfg.enable
-    (mkVaultAgentInstance "kubernetes" "control-plane" [
+    (mkVaultAgentInstance "kubernetes" "control-plane" pki.vaultURL pki.vaultSNI [
       (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/server-complete.pem" [ "kube-apiserver" ]
         (mkKubernetesCertificateTemplate "apiserver" {
           pkiRole = "server";

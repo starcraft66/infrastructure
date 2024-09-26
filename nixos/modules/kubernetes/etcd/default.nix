@@ -27,5 +27,15 @@ with lib;
       default = "existing";
       description = "The initial cluster state of the etcd cluster";
     };
+    pki = {
+      vaultURL = mkOption {
+        type = types.str;
+        description = "The URL of the vault server";
+      };
+      vaultSNI = mkOption {
+        type = types.str;
+        description = "The SNI host to use to connect to the vault server";
+      };
+    };
   };
 }

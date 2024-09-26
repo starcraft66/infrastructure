@@ -38,7 +38,7 @@ in {
       caFile = "/var/lib/secrets/kubernetes/kubernetes-ca.pem";
       certFile = tlsCertFile;
       keyFile = tlsKeyFile;
-      server = "https://${config.networking.hostName}.235.tdude.co:6443";
+      server = "https://${config.networking.hostName}.${config.networking.domain}:6443";
     };
 
     clientCaFile = "/var/lib/secrets/kubernetes/kubernetes-ca.pem";

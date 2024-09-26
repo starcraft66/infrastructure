@@ -12,7 +12,7 @@ in
         health
         ready
         kubernetes cluster.local in-addr.arpa ip6.arpa {
-          endpoint https://${config.networking.hostName}.235.tdude.co:6443
+          endpoint https://${config.networking.hostName}.${config.networking.domain}:6443
           tls /var/lib/secrets/coredns/coredns.pem /var/lib/secrets/coredns/coredns-key.pem /var/lib/secrets/coredns/kubernetes-ca.pem
           pods verified
           fallthrough in-addr.arpa ip6.arpa

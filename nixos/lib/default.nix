@@ -28,7 +28,7 @@
       })
     ];
     # component: string, role: string, templates: [{ destination: string, source: string }]
-    mkVaultAgentInstance = component: role: templates: {
+    mkVaultAgentInstance = component: role: vaultURL: vaultSNI: templates: {
       enable = true;
       user = component;
       group = component;
@@ -69,8 +69,8 @@
         pid_file = if role != null then "/var/lib/secrets/${component}/vault-agent-${component}-${role}.pid" else "/var/lib/secrets/${component}/vault-agent-${component}.pid";
         vault = [
           {
-            address = "https://[::1]:8200";
-            tls_server_name = "vault.235.tdude.co";
+            address = vaultURL;
+            tls_server_name = vaultSNI;
             ca_cert = "/etc/ssl/certs/vault-ca.pem";
           }
         ];

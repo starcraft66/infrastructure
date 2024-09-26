@@ -2,6 +2,7 @@
 
 with pkgs.lib.tdude.vault;
 let
+  pki = config.services.tdude.kubernetes.worker.pki;
   cfg = config.services.tdude.kubernetes.worker;
 in {
   systemd.tmpfiles.rules = lib.mkIf cfg.enable [
@@ -15,7 +16,7 @@ in {
   ];
 
   services.vault-agent.instances.kubernetes-worker = lib.mkIf cfg.enable
-    (mkVaultAgentInstance "kubernetes" "control-plane" [
+    (mkVaultAgentInstance "kubernetes" "control-plane" pki.vaultURL pki.vaultSNI [
       (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/kube-proxy-complete.pem" [ "kube-proxy" ]
         (mkKubernetesCertificateTemplate "kube-proxy" {
           pkiRole = "client-system:node-proxier";
@@ -34,7 +35,7 @@ in {
     ]);
 
   services.vault-agent.instances.coredns = lib.mkIf cfg.enable
-    (mkVaultAgentInstance "coredns" null [
+    (mkVaultAgentInstance "coredns" null pki.vaultURL pki.vaultSNI [
       (mkVaultAgentTemplate "/var/lib/secrets/coredns/coredns-complete.pem" [ "coredns" ]
         (mkKubernetesCertificateTemplate "coredns" {
           pkiRole = "client";

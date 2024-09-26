@@ -64,7 +64,14 @@
     "soarin.235.tdude.co"
     "stormfeather.235.tdude.co"
   ];
-  services.vault.hostname = "vault.235.tdude.co";
+  services.tdude.vault.hostname = "vault.235.tdude.co";
+
+  services.tdude.kubernetes.control-plane.pki.vaultURL = "https://[::1]:8200";
+  services.tdude.kubernetes.control-plane.pki.vaultSNI = "vault.235.tdude.co";
+  services.tdude.kubernetes.etcd.pki.vaultURL = "https://[::1]:8200";
+  services.tdude.kubernetes.etcd.pki.vaultSNI = "vault.235.tdude.co";
+  services.tdude.kubernetes.worker.pki.vaultURL = "https://[::1]:8200";
+  services.tdude.kubernetes.worker.pki.vaultSNI = "vault.235.tdude.co";
 
   networking.firewall.enable = false;
 }
