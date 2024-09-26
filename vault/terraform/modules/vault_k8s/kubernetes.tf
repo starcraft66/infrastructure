@@ -112,3 +112,6 @@ resource "vault_approle_auth_backend_role" "kubernetes" {
   role_name      = "${var.cluster_id}-node-kubernetes"
   token_policies = [vault_policy.kubernetes_issue.name, vault_policy.etcd_client_issue.name, vault_policy.front-proxy_issue.name]
 }
+
+# Generate moved blocks for all of these resources to move them under module.vault_k8s
+

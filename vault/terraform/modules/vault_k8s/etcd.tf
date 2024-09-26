@@ -55,3 +55,5 @@ resource "vault_approle_auth_backend_role" "etcd" {
   role_name      = "${var.cluster_id}-node-etcd"
   token_policies = [vault_policy.etcd_issue.name]
 }
+
+# Generate moved blocks for all of these resources to move them under module.vault_k8s

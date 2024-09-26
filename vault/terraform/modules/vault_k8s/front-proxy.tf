@@ -25,3 +25,5 @@ path "${vault_mount.pki_front-proxy.path}/issue/*" {
 }
 EOT
 }
+
+# Generate moved blocks for all of these resources to move them under module.vault_k8s
