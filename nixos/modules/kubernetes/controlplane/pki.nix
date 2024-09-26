@@ -17,7 +17,7 @@ in {
       (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/server-complete.pem" [ "kube-apiserver" ]
         (mkKubernetesCertificateTemplate "apiserver" {
           pkiRole = "server";
-          commonName = "${config.networking.hostName}.235.tdude.co";
+          commonName = "${config.networking.hostName}.${config.networking.domain}";
           altNames = [ "kubernetes" "kubernetes.default" "kubernetes.default.svc" "kubernetes.default.svc.cluster" "kubernetes.svc.cluster.local" ] ++ cfg.additionalApiserverAltNames;
           ipSans = cfg.ipSans ++ lib.optionals lbCfg.enable [ lbCfg.k8sIpv4Address lbCfg.k8sIpv6Address ];
         }))
@@ -50,7 +50,7 @@ in {
           ipSans = [ ];
         }))
       (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/front-proxy-complete.pem" [ "kube-apiserver" ] (mkFrontProxyClientCertificateTemplate "front-proxy-client"))
-      (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/etcd-client-complete.pem" [ "kube-apiserver" ] (mkEtcdClientCertificateTemplate "${config.networking.hostName}.235.tdude.co"))
+      (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/etcd-client-complete.pem" [ "kube-apiserver" ] (mkEtcdClientCertificateTemplate "${config.networking.hostName}.${config.networking.domain}"))
     ]);
 
   systemd.services."vault-agent-kubernetes-control-plane".serviceConfig.ExecStartPost = lib.mkIf cfg.enable "${pkgs.coreutils}/bin/sleep 5";

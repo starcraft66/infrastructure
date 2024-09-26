@@ -7,8 +7,8 @@ in {
     enable = lib.mkIf cfg.enable true;
     name = config.networking.hostName;
 
-    advertiseClientUrls = [ "https://${config.networking.hostName}.235.tdude.co:2379" ];
-    initialAdvertisePeerUrls = [ "https://${config.networking.hostName}.235.tdude.co:2380" ];
+    advertiseClientUrls = [ "https://${config.networking.hostName}.${config.networking.domain}:2379" ];
+    initialAdvertisePeerUrls = [ "https://${config.networking.hostName}.${config.networking.domain}:2380" ];
     # TODO: Configure the etcd cluster members based on the colmena nodes
     initialCluster = [
       "sassaflash=https://sassaflash.235.tdude.co:2380"
