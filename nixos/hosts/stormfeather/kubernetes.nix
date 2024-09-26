@@ -21,6 +21,12 @@
   services.tdude.kubernetes.worker.clusterCidrIpv4 = "10.234.128.0/18";
   services.tdude.kubernetes.worker.clusterCidrIpv6 = "2a10:4741:36:32:2::/104";
   services.tdude.kubernetes.etcd.enable = true;
+  services.tdude.kubernetes.etcd.initialClusterState = "existing";
+  services.tdude.kubernetes.etcd.initialClusterPeers = {
+    soarin.hostname = "soarin.235.tdude.co";
+    stormfeather.hostname = "stormfeather.235.tdude.co";
+    sassaflash.hostname = "sassaflash.235.tdude.co";
+  };
   services.tdude.kubernetes.worker.enable = true;
   services.tdude.kubernetes.worker.nodeIps = [
     (builtins.elemAt config.networking.interfaces."enp10s0.29".ipv4.addresses 0).address

@@ -10,11 +10,9 @@ in {
     advertiseClientUrls = [ "https://${config.networking.hostName}.${config.networking.domain}:2379" ];
     initialAdvertisePeerUrls = [ "https://${config.networking.hostName}.${config.networking.domain}:2380" ];
     # TODO: Configure the etcd cluster members based on the colmena nodes
-    initialCluster = [
-      "sassaflash=https://sassaflash.235.tdude.co:2380"
-      "stormfeather=https://stormfeather.235.tdude.co:2380"
-      "soarin=https://soarin.235.tdude.co:2380"
-    ];
+    initialCluster = let
+      mkInitialClusterPeer = name: peerSpec: "${name}=https://${peerSpec.hostname}:2380";
+    in lib.mapAttrsToList mkInitialClusterPeer cfg.initialClusterPeers;
     # This needs to either be new on the first node, or the first node has to already have a data directory
     initialClusterState = "existing";
     listenClientUrls = [ "https://[::]:2379" ];
