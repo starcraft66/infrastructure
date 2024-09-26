@@ -43,6 +43,25 @@ in {
       default = null;
       description = "The client ID for the OIDC client";
     };
+    etcdServerUrls = mkOption {
+      type = types.listOf types.str;
+      default = [];
+      description = "List of etcd server URLs the apiserver should connect to";
+    };
+    pki = mkOption {
+      type = types.submodule {
+        options = {
+          vaultURL = mkOption {
+            type = types.str;
+            description = "The URL of the vault server";
+          };
+          vaultSNI = mkOption {
+            type = types.str;
+            description = "The SNI host to use to connect to the vault server";
+          };
+        };
+      };
+    };
   };
   config.services.kubernetes.clusterCidr = lib.concatStringsSep "," [
     cfg.clusterCidrIpv4

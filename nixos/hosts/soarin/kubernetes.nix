@@ -13,6 +13,11 @@
   services.tdude.kubernetes.control-plane.serviceCidrIpv6 = "2a10:4741:36:32:1::/112";
   services.tdude.kubernetes.control-plane.oidcIssuerUrl = "https://vault.235.tdude.co/v1/identity/oidc/provider/default";
   services.tdude.kubernetes.control-plane.oidcClientId = "2Fxqqt0TCnkjcIO2Q7YUI3da8HJVCkik";
+  services.tdude.kubernetes.control-plane.etcdServerUrls = [
+    "https://soarin.235.tdude.co:2379"
+    "https://stormfeather.235.tdude.co:2379"
+    "https://sassaflash.235.tdude.co:2379"
+  ];
   services.tdude.kubernetes.worker.ipSans = [
     (builtins.elemAt config.networking.interfaces."eno3.29".ipv4.addresses 0).address
     (builtins.elemAt config.networking.interfaces."eno3.29".ipv6.addresses 0).address

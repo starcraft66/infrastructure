@@ -51,7 +51,7 @@ in
     # advertiseAddress = "https://${config.networking.hostName}.235.tdude.co";
 
     etcd = {
-      servers = [ "https://${config.networking.hostName}.235.tdude.co:2379" ];
+      servers = cfg.etcdServerUrls;
       caFile = "/var/lib/secrets/kubernetes/etcd-ca.pem";
       certFile = "/var/lib/secrets/kubernetes/client.pem";
       keyFile = "/var/lib/secrets/kubernetes/client-key.pem";
