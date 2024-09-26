@@ -77,7 +77,7 @@ in
     # This will indicate to an extension apiserver that any CN is acceptable.
     extraOpts = ''
       --oidc-issuer-url=https://vault.235.tdude.co/v1/identity/oidc/provider/default \
-      --oidc-client-id=MF9CRIShkUJwqyJL9K1lBn4tqRVt2vUw \
+      --oidc-client-id=2Fxqqt0TCnkjcIO2Q7YUI3da8HJVCkik \
       --requestheader-client-ca-file=/var/lib/secrets/kubernetes/front-proxy-ca.pem \
       --requestheader-allowed-names="" \
       --requestheader-extra-headers-prefix=X-Remote-Extra- \
