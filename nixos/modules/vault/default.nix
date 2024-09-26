@@ -12,5 +12,9 @@ in {
       default = [];
       description = "List of raft peer hostnames";
     };
+    hostname = options.mkOption {
+      type = types.str;
+      description = "The hostname vault will be accessed from by clients";
+    };
   };
 }

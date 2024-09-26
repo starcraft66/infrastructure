@@ -6,7 +6,7 @@ in lib.mkIf cfg.enable {
   environment.systemPackages = with pkgs; [ vault openssl ];
   environment.sessionVariables = {
     # Allow the vault CLI to hit the local vault instance, not the active VIP
-    VAULT_ADDR = "https://${config.networking.hostName}.235.tdude.co:8200";
+    VAULT_ADDR = "https://${config.networking.hostName}.${config.networking.domain}:8200";
   };
 
   services.vault = {
@@ -34,8 +34,8 @@ in lib.mkIf cfg.enable {
     extraConfig = ''
       ui = true
 
-      api_addr = "https://vault.235.tdude.co"
-      cluster_addr = "https://${config.networking.hostName}.235.tdude.co:8201"
+      api_addr = "https://${cfg.hostname}"
+      cluster_addr = "https://${config.networking.hostName}.${config.networking.domain}:8201"
 
       # tls_client_ca_file = "/etc/ssl/certs/vault-ca.pem"
     '';
@@ -43,7 +43,7 @@ in lib.mkIf cfg.enable {
 
   security.acme.certs.vault = {
     group = "haproxy";
-    domain = "vault.235.tdude.co";
+    domain = cfg.hostname;
     dnsProvider = "cloudflare";
     reloadServices = [ "haproxy" ];
   };

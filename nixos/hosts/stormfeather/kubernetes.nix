@@ -40,6 +40,7 @@
     "soarin.235.tdude.co"
     "sassaflash.235.tdude.co"
   ];
+  services.vault.hostname = "vault.235.tdude.co";
 
   networking.firewall.enable = false;
 }
