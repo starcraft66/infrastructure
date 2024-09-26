@@ -29,6 +29,28 @@ in {
       type = types.str;
       description = "The IPv6 pod CIDR range for the kubernetes cluster";
     };
+    apiserverAddress = mkOption {
+      type = types.str;
+      description = "The address of the kubernetes apiserver";
+    };
+    dnsResolvers = mkOption {
+      type = types.listOf types.str;
+      description = "List of DNS resolvers to use for pod DNS resolution";
+    };
+    pki = mkOption {
+      type = types.submodule {
+        options = {
+          vaultURL = mkOption {
+            type = types.str;
+            description = "The URL of the vault server";
+          };
+          vaultSNI = mkOption {
+            type = types.str;
+            description = "The SNI host to use to connect to the vault server";
+          };
+        };
+      };
+    };
   };
 
   config.services.kubernetes.clusterCidr = lib.concatStringsSep "," [

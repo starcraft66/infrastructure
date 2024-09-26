@@ -37,6 +37,13 @@
     (builtins.elemAt config.networking.interfaces."eno1.29".ipv4.addresses 0).address
     (builtins.elemAt config.networking.interfaces."eno1.29".ipv6.addresses 0).address
   ];
+  services.tdude.kubernetes.worker.dnsResolvers = [
+    # CoreDNS running inside the cluster
+    "2a10:4741:36:32:1::2558"
+    "10.234.64.2"
+  ];
+  # Hit the api server directly on the host since we're running the control plane and workers on the same nodes in this cluster
+  services.tdude.kubernetes.worker.apiserverAddress = "https://${config.networking.hostName}.${config.networking.domain}:6443";
   # Cilium replaces kube-proxy
   services.tdude.kubernetes.worker.kube-proxy.enable = false;
   services.tdude.kubernetes.loadbalancer.enable = true;
