@@ -23,7 +23,7 @@ in {
       caFile = "/var/lib/secrets/kubernetes/kubernetes-ca.pem";
       certFile = "/var/lib/secrets/kubernetes/kube-controller-manager.pem";
       keyFile = "/var/lib/secrets/kubernetes/kube-controller-manager-key.pem";
-      server = "https://${config.networking.hostName}.235.tdude.co:6443";
+      server = "https://${config.networking.hostName}.${config.networking.domain}:6443";
     };
   };
 }
