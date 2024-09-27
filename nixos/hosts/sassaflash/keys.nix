@@ -7,7 +7,7 @@ let
   deploy-keys = false;
 in lib.mkIf deploy-keys {
   deployment.keys."vault-ca.pem" = {
-    keyCommand = [ "sops" "-d" "--extract" "[\"ca\"][\"cert\"]" (toString ../../../vault/pki/vault-mtls.yaml) ];
+    keyCommand = [ "sops" "-d" "--extract" "[\"ca\"][\"cert\"]" (toString ../../../vault/pki/235/vault-mtls.yaml) ];
 
     destDir = "/etc/ssl/certs";
     name = "vault-ca.pem";
@@ -18,7 +18,7 @@ in lib.mkIf deploy-keys {
     uploadAt = "pre-activation";
   };
   deployment.keys."vault-cert.pem" = {
-    keyCommand = [ "sops" "-d" "--extract" "[\"vault\"][\"cert\"]" (toString ../../../vault/pki/vault-mtls.yaml) ];
+    keyCommand = [ "sops" "-d" "--extract" "[\"vault\"][\"cert\"]" (toString ../../../vault/pki/235/vault-mtls.yaml) ];
 
     destDir = "/var/lib/vault";
     name = "vault-cert.pem";
@@ -29,7 +29,7 @@ in lib.mkIf deploy-keys {
     uploadAt = "pre-activation";
   };
   deployment.keys."vault-key.pem" = {
-    keyCommand = [ "sops" "-d" "--extract" "[\"vault\"][\"key\"]" (toString ../../../vault/pki/vault-mtls.yaml) ];
+    keyCommand = [ "sops" "-d" "--extract" "[\"vault\"][\"key\"]" (toString ../../../vault/pki/235/vault-mtls.yaml) ];
 
     destDir = "/var/lib/vault";
     name = "vault-key.pem";
@@ -40,7 +40,7 @@ in lib.mkIf deploy-keys {
     uploadAt = "pre-activation";
   };
   deployment.keys."service-account.pem" = {
-    keyCommand = [ "sops" "-d" "--extract" "[\"serviceaccount\"][\"pubkey\"]" (toString ../../../vault/pki/serviceaccount.yaml) ];
+    keyCommand = [ "sops" "-d" "--extract" "[\"serviceaccount\"][\"pubkey\"]" (toString ../../../vault/pki/235/serviceaccount.yaml) ];
 
     destDir = "/var/lib/secrets/kubernetes";
     name = "service-account.pem";
@@ -51,7 +51,7 @@ in lib.mkIf deploy-keys {
     uploadAt = "pre-activation";
   };
   deployment.keys."service-account-key.pem" = {
-    keyCommand = [ "sops" "-d" "--extract" "[\"serviceaccount\"][\"privkey\"]" (toString ../../../vault/pki/serviceaccount.yaml) ];
+    keyCommand = [ "sops" "-d" "--extract" "[\"serviceaccount\"][\"privkey\"]" (toString ../../../vault/pki/235/serviceaccount.yaml) ];
 
     destDir = "/var/lib/secrets/kubernetes";
     name = "service-account-key.pem";
