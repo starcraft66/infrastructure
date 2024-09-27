@@ -14,11 +14,11 @@ let
   dnsResolvers = [ "2a10:4741:37:88:1::2" "10.235.64.2" ];
   vaultAgentVaultURL = "https://[::1]:8200";
   vaultAgentVaultSNI = "vault.305-1700.tdude.co";
-  lbK8sIpv4Address = "172.16.29.8";
-  lbK8sIpv6Address = "2a10:4741:36:29::8:1";
+  lbK8sIpv4Address = "172.17.51.8";
+  lbK8sIpv6Address = "2a10:4741:37:51::8:1";
   lbK8sDomain = "k8s.305-1700.tdude.co";
-  lbVaultIpv4Address = "172.16.29.9";
-  lbVaultIpv6Address = "2a10:4741:36:29::9:1";
+  lbVaultIpv4Address = "172.17.51.9";
+  lbVaultIpv6Address = "2a10:4741:37:51::9:1";
   lbVaultDomain = "vault.305-1700.tdude.co";
   cfg = config.services.tdude.k8s-305-1700-1;
 in
