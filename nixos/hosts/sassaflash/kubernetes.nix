@@ -1,77 +1,14 @@
 { config, ... }: {
-  imports = [ ../../modules/kubernetes/controlplane ../../modules/kubernetes/etcd ../../modules/kubernetes/worker ];
+  imports = [
+    ../../modules/kubernetes/controlplane
+    ../../modules/kubernetes/etcd
+    ../../modules/kubernetes/worker
+    ../../modules/k8s-235-1
+  ];
 
-  services.tdude.kubernetes.control-plane.enable = true;
-  services.tdude.kubernetes.control-plane.ipSans = [
-    "10.234.64.1"
-    "2a10:4741:36:32:1::1"
-  ];
-  services.tdude.kubernetes.control-plane.additionalApiserverAltNames = [ "k8s.235.tdude.co" ];
-  services.tdude.kubernetes.control-plane.clusterCidrIpv4 = "10.234.128.0/18";
-  services.tdude.kubernetes.control-plane.clusterCidrIpv6 = "2a10:4741:36:32:2::/104";
-  services.tdude.kubernetes.control-plane.serviceCidrIpv4 = "10.234.64.0/18";
-  services.tdude.kubernetes.control-plane.serviceCidrIpv6 = "2a10:4741:36:32:1::/112";
-  services.tdude.kubernetes.control-plane.oidcIssuerUrl = "https://vault.235.tdude.co/v1/identity/oidc/provider/default";
-  services.tdude.kubernetes.control-plane.oidcClientId = "2Fxqqt0TCnkjcIO2Q7YUI3da8HJVCkik";
-  services.tdude.kubernetes.control-plane.etcdServerUrls = [
-    "https://soarin.235.tdude.co:2379"
-    "https://stormfeather.235.tdude.co:2379"
-    "https://sassaflash.235.tdude.co:2379"
-  ];
-  services.tdude.kubernetes.worker.ipSans = [
-    (builtins.elemAt config.networking.interfaces."eno1.29".ipv4.addresses 0).address
-    (builtins.elemAt config.networking.interfaces."eno1.29".ipv6.addresses 0).address
-    "2a10:4741:36:28:26be:5ff:fe84:d8b0" # slaac address, hardcoded for now
-  ];
-  services.tdude.kubernetes.worker.clusterCidrIpv4 = "10.234.128.0/18";
-  services.tdude.kubernetes.worker.clusterCidrIpv6 = "2a10:4741:36:32:2::/104";
-  services.tdude.kubernetes.etcd.enable = true;
-  services.tdude.kubernetes.etcd.initialClusterState = "existing";
-  services.tdude.kubernetes.etcd.initialClusterPeers = {
-    soarin.hostname = "soarin.235.tdude.co";
-    stormfeather.hostname = "stormfeather.235.tdude.co";
-    sassaflash.hostname = "sassaflash.235.tdude.co";
+  services.tdude.k8s-235-1 = {
+    enable = true;
+    primaryNetworkInterface = "eno1.29";
+    slaacAddress = "2a10:4741:36:28:26be:5ff:fe84:d8b0";
   };
-  services.tdude.kubernetes.worker.enable = true;
-  services.tdude.kubernetes.worker.nodeIps = [
-    (builtins.elemAt config.networking.interfaces."eno1.29".ipv4.addresses 0).address
-    (builtins.elemAt config.networking.interfaces."eno1.29".ipv6.addresses 0).address
-  ];
-  services.tdude.kubernetes.worker.dnsResolvers = [
-    # CoreDNS running inside the cluster
-    "2a10:4741:36:32:1::2558"
-    "10.234.64.2"
-  ];
-  # Hit the api server directly on the host since we're running the control plane and workers on the same nodes in this cluster
-  services.tdude.kubernetes.worker.apiserverAddress = "https://${config.networking.hostName}.${config.networking.domain}:6443";
-  # Cilium replaces kube-proxy
-  services.tdude.kubernetes.worker.kube-proxy.enable = false;
-  services.tdude.kubernetes.loadbalancer.enable = true;
-  services.tdude.kubernetes.loadbalancer.interface = "eno1.29";
-  services.tdude.kubernetes.loadbalancer.k8sIpv4Address = "172.16.29.8";
-  services.tdude.kubernetes.loadbalancer.k8sIpv6Address = "2a10:4741:36:29::8:1";
-  services.tdude.kubernetes.loadbalancer.k8sBackendHostnames = [
-    "soarin.235.tdude.co"
-    "stormfeather.235.tdude.co"
-    "sassaflash.235.tdude.co"
-  ];
-  services.tdude.kubernetes.loadbalancer.vaultIpv4Address = "172.16.29.9";
-  services.tdude.kubernetes.loadbalancer.vaultIpv6Address = "2a10:4741:36:29::9:1";
-  services.tdude.kubernetes.loadbalancer.vaultSNI = "vault.235.tdude.co";
-
-  services.tdude.vault.enable = true;
-  services.tdude.vault.raftPeers = [
-    "soarin.235.tdude.co"
-    "stormfeather.235.tdude.co"
-  ];
-  services.tdude.vault.hostname = "vault.235.tdude.co";
-
-  services.tdude.kubernetes.control-plane.pki.vaultURL = "https://[::1]:8200";
-  services.tdude.kubernetes.control-plane.pki.vaultSNI = "vault.235.tdude.co";
-  services.tdude.kubernetes.etcd.pki.vaultURL = "https://[::1]:8200";
-  services.tdude.kubernetes.etcd.pki.vaultSNI = "vault.235.tdude.co";
-  services.tdude.kubernetes.worker.pki.vaultURL = "https://[::1]:8200";
-  services.tdude.kubernetes.worker.pki.vaultSNI = "vault.235.tdude.co";
-
-  networking.firewall.enable = false;
 }
