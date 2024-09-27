@@ -1,0 +1,17 @@
+{
+    "CN": "vault.305-1700.tdude.co",
+    "key": {
+        "algo": "ecdsa",
+        "size": 521
+    },
+    "names": [
+        {
+            "C": "CA",
+            "ST": "QC",
+            "L": "Montreal",
+            "O": "tdude.co",
+            "OU": "Vault Infrastructure Certificate Authority"
+        }
+    ]
+}
+
