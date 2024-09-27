@@ -26,3 +26,39 @@ systemctl restart vault-agent-{coredns,etcd,kubernetes-worker,kubernetes-control
 ----
 
 Once complete, make sure to `rm ~/.vault-token` to remove the root token from the system.
+
+== Build the admin kubeconfig
+
+To bootstrap OIDC authenticaiton, we first need to gain admin access to the cluster to create the proper `ClusterRoleBinding` for the OIDC account. We will get admin by building an admin kubeconfig file using the following script:
+
+[source,bash]
+---
+#!/usr/bin/env bash
+
+CLUSTER_NAME="k8s-305-1700-1"
+ADMIN_USER="admin"
+CONTEXT_NAME="admin@$CLUSTER_NAME"
+SERVER="https://k8s.305-1700.tdude.co"
+CERT_DIR="/var/lib/secrets/kubernetes"
+
+kubectl config set-cluster $CLUSTER_NAME \
+    --certificate-authority=${CERT_DIR}/kubernetes-ca.pem \
+    --embed-certs=true \
+    --server=$SERVER \
+    --kubeconfig=admin.kubeconfig
+
+kubectl config set-credentials $ADMIN_USER \
+    --client-certificate=${CERT_DIR}/admin.pem \
+    --client-key=${CERT_DIR}/admin-key.pem \
+    --embed-certs=true \
+    --kubeconfig=admin.kubeconfig
+
+kubectl config set-context $CONTEXT_NAME \
+    --cluster=$CLUSTER_NAME \
+    --user=$ADMIN_USER \
+    --kubeconfig=admin.kubeconfig
+
+kubectl config use-context $CONTEXT_NAME --kubeconfig=admin.kubeconfig
+
+echo "Admin kubeconfig created as admin.kubeconfig"
+---
