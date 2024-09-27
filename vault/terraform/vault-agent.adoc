@@ -1,23 +1,19 @@
 == Kubernetes PKI management using Hashicorp Vault
 
-* sdf
+Once Vault is up and running and provisioned with the terraform config in this folder, the following script can be used to create the necessary environment and authentication tokens for `vault-agent` to start issuing and rotating certificates for the Kubernetes cluster.
 
-
-=== 📂 Repository structure
-
-[.text-justify]
-This listing intentionally doesn't cover the entire structure of the repo, it is meant to be a high-level overview of where various components are located.
+Make sure to first `vault login` with the root token and then run the following script:
 
 [source,console]
 ----
-CLUSTER_NAME=k8s-235-1
+CLUSTER_NAME=<name of cluster>
 kubernetes_id=$(vault read --field=role_id auth/approle/role/$CLUSTER_NAME-node-kubernetes/role-id)
 kubernetes_secret=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-kubernetes/secret-id)
 etcd_id=$(vault read --field=role_id auth/approle/role/$CLUSTER_NAME-node-etcd/role-id)
 etcd_secret=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-etcd/secret-id)
 frontproxy_id=$(vault read --field=role_id auth/approle/role/$CLUSTER_NAME-node-front-proxy/role-id)
 frontproxy_secret=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-front-proxy/secret-id)
-mkdir -p  /var/lib/secrets/{kubernetes,etcd,coredns}
+mkdir -p /var/lib/secrets/{kubernetes,etcd,coredns,front-proxy}
 echo $kubernetes_id > /var/lib/secrets/kubernetes/vault_agent_role_id
 echo $kubernetes_secret > /var/lib/secrets/kubernetes/vault_agent_secret_id
 echo $frontproxy_id > /var/lib/secrets/front-proxy/vault_agent_role_id
@@ -28,3 +24,5 @@ echo $etcd_id > /var/lib/secrets/etcd/vault_agent_role_id
 echo $etcd_secret > /var/lib/secrets/etcd/vault_agent_secret_id
 systemctl restart vault-agent-{coredns,etcd,kubernetes-worker,kubernetes-control-plane}
 ----
+
+Once complete, make sure to `rm ~/.vault-token` to remove the root token from the system.
