@@ -35,6 +35,12 @@
       options = [ "zfsutil" ];
     };
 
+  fileSystems."/var/lib/containerd/io.containerd.snapshotter.v1.zfs" =
+    { device = "spike/containerd";
+      fsType = "zfs";
+      options = [ "zfsutil" ];
+    };
+
   fileSystems."/home" =
     { device = "spike/home";
       fsType = "zfs";
