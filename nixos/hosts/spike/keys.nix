@@ -4,7 +4,7 @@ let
   # Set this to true on the first deploy to install vault TLS certificates
   # This is disabled otherwise because it requires a lot of yubikey-confirming
   # due to the sops operations
-  deploy-keys = false;
+  deploy-keys = true;
 in lib.mkIf deploy-keys {
   deployment.keys."vault-ca.pem" = {
     keyCommand = [ "sops" "-d" "--extract" "[\"ca\"][\"cert\"]" (toString ../../../vault/pki/305-1700/vault-mtls.yaml) ];

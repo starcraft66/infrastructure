@@ -3,8 +3,10 @@
 rec {
   system = "x86_64-linux";
   modules = [
+    ./acme.nix
     ./configuration.nix
     ./hardware.nix
+    ./kubernetes.nix
     inputs.sops-nix.nixosModules.sops
   ];
   nixosInput = inputs.nixos;
