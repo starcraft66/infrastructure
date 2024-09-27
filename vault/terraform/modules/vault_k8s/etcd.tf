@@ -5,6 +5,30 @@ resource "vault_mount" "pki_etcd" {
   max_lease_ttl_seconds     = 315360000 # 32 Days
 }
 
+resource "vault_pki_secret_backend_root_cert" "etcd" {
+  depends_on            = [vault_mount.pki_etcd]
+  backend               = vault_mount.pki_etcd.path
+  type                  = "internal"
+  common_name           = "${var.cluster_id}/pki/etcd"
+  ttl                   = "315360000"
+  format                = "pem"
+  private_key_format    = "der"
+  key_type              = "rsa"
+  key_bits              = 4096
+  exclude_cn_from_sans  = true
+}
+
+resource "vault_pki_secret_backend_issuer" "etcd" {
+  backend     = vault_pki_secret_backend_root_cert.etcd.backend
+  issuer_ref  = vault_pki_secret_backend_root_cert.etcd.issuer_id
+}
+
+resource "vault_pki_secret_backend_config_issuers" "etcd" {
+  backend                       = vault_mount.pki_etcd.path
+  default                       = vault_pki_secret_backend_issuer.etcd.issuer_id
+  default_follows_latest_issuer = true
+}
+
 resource "vault_pki_secret_backend_role" "role_etcd_peer" {
   backend          = vault_mount.pki_etcd.path
   name             = "peer"

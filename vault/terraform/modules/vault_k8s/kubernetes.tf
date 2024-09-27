@@ -5,6 +5,30 @@ resource "vault_mount" "pki_kubernetes" {
   max_lease_ttl_seconds     = 315360000 # 32 Days
 }
 
+resource "vault_pki_secret_backend_root_cert" "kubernetes" {
+  depends_on            = [vault_mount.pki_kubernetes]
+  backend               = vault_mount.pki_kubernetes.path
+  type                  = "internal"
+  common_name           = "${var.cluster_id}/pki/kubernetes"
+  ttl                   = "315360000"
+  format                = "pem"
+  private_key_format    = "der"
+  key_type              = "rsa"
+  key_bits              = 4096
+  exclude_cn_from_sans  = true
+}
+
+resource "vault_pki_secret_backend_issuer" "kubernetes" {
+  backend     = vault_pki_secret_backend_root_cert.kubernetes.backend
+  issuer_ref  = vault_pki_secret_backend_root_cert.kubernetes.issuer_id
+}
+
+resource "vault_pki_secret_backend_config_issuers" "kubernetes" {
+  backend                       = vault_mount.pki_kubernetes.path
+  default                       = vault_pki_secret_backend_issuer.kubernetes.issuer_id
+  default_follows_latest_issuer = true
+}
+
 resource "vault_pki_secret_backend_role" "role_kubernetes_peer_group_membership" {
   backend           = vault_mount.pki_kubernetes.path
   name              = "peer-${replace(each.value, ":", "_")}"
