@@ -32,7 +32,7 @@ Once complete, make sure to `rm ~/.vault-token` to remove the root token from th
 To bootstrap OIDC authenticaiton, we first need to gain admin access to the cluster to create the proper `ClusterRoleBinding` for the OIDC account. We will get admin by building an admin kubeconfig file using the following script:
 
 [source,bash]
----
+----
 #!/usr/bin/env bash
 
 CLUSTER_NAME="k8s-305-1700-1"
@@ -61,4 +61,4 @@ kubectl config set-context $CONTEXT_NAME \
 kubectl config use-context $CONTEXT_NAME --kubeconfig=admin.kubeconfig
 
 echo "Admin kubeconfig created as admin.kubeconfig"
----
+----
