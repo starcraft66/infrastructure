@@ -18,14 +18,14 @@ in {
   services.vault-agent.instances.kubernetes-worker = lib.mkIf cfg.enable
     (mkVaultAgentInstance "kubernetes" "control-plane" pki.vaultURL pki.vaultSNI [
       (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/kube-proxy-complete.pem" [ "kube-proxy" ]
-        (mkKubernetesCertificateTemplate "kube-proxy" {
+        (mkKubernetesCertificateTemplate pki.clusterName "kube-proxy" {
           pkiRole = "client-system:node-proxier";
           commonName = "system:kube-proxy";
           altNames = [ ];
           ipSans = [ ];
         }))
       (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/worker-complete.pem" [ "kubelet" ]
-        (mkKubernetesCertificateTemplate "worker" {
+        (mkKubernetesCertificateTemplate pki.clusterName "worker" {
           pkiRole = "peer-system:nodes";
           # The part after system:node: must match services.kubernetes.kubelet.hostname
           commonName = "system:node:${config.networking.fqdn}";
@@ -37,7 +37,7 @@ in {
   services.vault-agent.instances.coredns = lib.mkIf cfg.enable
     (mkVaultAgentInstance "coredns" null pki.vaultURL pki.vaultSNI [
       (mkVaultAgentTemplate "/var/lib/secrets/coredns/coredns-complete.pem" [ "coredns" ]
-        (mkKubernetesCertificateTemplate "coredns" {
+        (mkKubernetesCertificateTemplate pki.clusterName "coredns" {
           pkiRole = "client";
           commonName = "system:coredns";
           altNames = [ ];

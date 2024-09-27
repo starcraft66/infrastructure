@@ -1,6 +1,7 @@
 { config, lib, ... }:
 
 let
+  clusterName = "k8s-235-1";
   clusterCidrIpv4 = "10.234.128.0/18";
   clusterCidrIpv6 = "2a10:4741:36:32:2::/104";
   serviceCidrIpv4 = "10.234.64.0/18";
@@ -87,10 +88,13 @@ in
 
     services.tdude.kubernetes.control-plane.pki.vaultURL = vaultAgentVaultURL;
     services.tdude.kubernetes.control-plane.pki.vaultSNI = vaultAgentVaultSNI;
+    services.tdude.kubernetes.control-plane.pki.clusterName = clusterName;
     services.tdude.kubernetes.etcd.pki.vaultURL = vaultAgentVaultURL;
     services.tdude.kubernetes.etcd.pki.vaultSNI = vaultAgentVaultSNI;
+    services.tdude.kubernetes.etcd.pki.clusterName = clusterName;
     services.tdude.kubernetes.worker.pki.vaultURL = vaultAgentVaultURL;
     services.tdude.kubernetes.worker.pki.vaultSNI = vaultAgentVaultSNI;
+    services.tdude.kubernetes.worker.pki.clusterName = clusterName;
 
     networking.firewall.enable = false;
   };

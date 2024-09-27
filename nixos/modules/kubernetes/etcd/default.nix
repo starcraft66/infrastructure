@@ -36,6 +36,10 @@ with lib;
         type = types.str;
         description = "The SNI host to use to connect to the vault server";
       };
+      clusterName = mkOption {
+        type = types.str;
+        description = "The name of the kubernetes cluster";
+      };
     };
   };
 }

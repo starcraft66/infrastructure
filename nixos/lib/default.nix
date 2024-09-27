@@ -76,10 +76,10 @@
         ];
       };
     };
-    mkCertificateTemplate = component: pkiRole: name: commonName: altNames: ipSans: writeDir: prev.writeTextFile {
+    mkCertificateTemplate = clusterName: component: pkiRole: name: commonName: altNames: ipSans: writeDir: prev.writeTextFile {
       name = "${component}-${name}-cert.ctmpl";
       text = ''
-        {{- with pkiCert "k8s-235-1/pki/${component}/issue/${pkiRole}" "ttl=768h" "common_name=${commonName}" ${if altNames != [] then "\"alt_names=${libprev.concatStringsSep "," altNames}\"" else ""} ${if ipSans != [] then "\"ip_sans=${libprev.concatStringsSep "," ipSans}\"" else ""} -}}
+        {{- with pkiCert "${clusterName}/pki/${component}/issue/${pkiRole}" "ttl=768h" "common_name=${commonName}" ${if altNames != [] then "\"alt_names=${libprev.concatStringsSep "," altNames}\"" else ""} ${if ipSans != [] then "\"ip_sans=${libprev.concatStringsSep "," ipSans}\"" else ""} -}}
         {{ .Cert }}{{ .CA }}{{ .Key }}
         {{ .Key | writeToFile "${writeDir}/${name}-key.pem" "" "" "0600" }}
         {{ .CA | writeToFile "${writeDir}/${component}-ca.pem" "" "" "0640" }}
@@ -88,12 +88,12 @@
       '';
     };
     mkUrlSafePkiRole = pkiRole: libprev.replaceStrings [ ":" ] [ "_" ] pkiRole;
-    mkEtcdCertificateTemplate = pkiRole: name: commonName: writeDir: mkCertificateTemplate "etcd" pkiRole name commonName [ ] [ ] writeDir;
-    mkEtcdServerCertificateTemplate = commonName: writeDir: mkEtcdCertificateTemplate "server" "server" commonName writeDir;
-    mkEtcdClientCertificateTemplate = commonName: writeDir: mkEtcdCertificateTemplate "client" "client" commonName writeDir;
-    mkEtcdPeerCertificateTemplate = commonName: writeDir: mkEtcdCertificateTemplate "peer" "peer" commonName writeDir;
-    mkKubernetesCertificateTemplate = name: spec: /*(pkiRole: commonName: altNames: ipSans:)*/ writeDir: mkCertificateTemplate "kubernetes" (mkUrlSafePkiRole spec.pkiRole) name spec.commonName spec.altNames spec.ipSans writeDir;
-    mkFrontProxyCertificateTemplate = pkiRole: name: commonName: writeDir: mkCertificateTemplate "front-proxy" pkiRole name commonName [ ] [ ] writeDir;
-    mkFrontProxyClientCertificateTemplate = commonName: writeDir: mkFrontProxyCertificateTemplate "client" "front-proxy-client" commonName writeDir;
+    mkEtcdCertificateTemplate = clusterName: pkiRole: name: commonName: writeDir: mkCertificateTemplate clusterName "etcd" pkiRole name commonName [ ] [ ] writeDir;
+    mkEtcdServerCertificateTemplate = clusterName: commonName: writeDir: mkEtcdCertificateTemplate clusterName "server" "server" commonName writeDir;
+    mkEtcdClientCertificateTemplate = clusterName: commonName: writeDir: mkEtcdCertificateTemplate clusterName"client" "client" commonName writeDir;
+    mkEtcdPeerCertificateTemplate = clusterName: commonName: writeDir: mkEtcdCertificateTemplate clusterName "peer" "peer" commonName writeDir;
+    mkKubernetesCertificateTemplate = clusterName: name: spec: /*(pkiRole: commonName: altNames: ipSans:)*/ writeDir: mkCertificateTemplate clusterName "kubernetes" (mkUrlSafePkiRole spec.pkiRole) name spec.commonName spec.altNames spec.ipSans writeDir;
+    mkFrontProxyCertificateTemplate = clusterName: pkiRole: name: commonName: writeDir: mkCertificateTemplate clusterName "front-proxy" pkiRole name commonName [ ] [ ] writeDir;
+    mkFrontProxyClientCertificateTemplate = clusterName: commonName: writeDir: mkFrontProxyCertificateTemplate clusterName "client" "front-proxy-client" commonName writeDir;
   };
 }

@@ -14,8 +14,8 @@ in {
 
   services.vault-agent.instances.etcd = lib.mkIf cfg.enable 
     (mkVaultAgentInstance "etcd" null pki.vaultURL pki.vaultSNI [
-      (mkVaultAgentTemplate "/var/lib/secrets/etcd/server-complete.pem" [ "etcd" ] (mkEtcdServerCertificateTemplate "${config.networking.hostName}.${config.networking.domain}"))
-      (mkVaultAgentTemplate "/var/lib/secrets/etcd/peer-complete.pem" [ "etcd" ] (mkEtcdPeerCertificateTemplate "${config.networking.hostName}.${config.networking.domain}"))
+      (mkVaultAgentTemplate "/var/lib/secrets/etcd/server-complete.pem" [ "etcd" ] (mkEtcdServerCertificateTemplate pki.clusterName "${config.networking.hostName}.${config.networking.domain}"))
+      (mkVaultAgentTemplate "/var/lib/secrets/etcd/peer-complete.pem" [ "etcd" ] (mkEtcdPeerCertificateTemplate pki.clusterName "${config.networking.hostName}.${config.networking.domain}"))
     ]);
 
   # give vault-agent some time to render secrets before dependent services

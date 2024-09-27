@@ -1,13 +1,14 @@
 { config, lib, ... }:
 
 let
+  clusterName = "k8s-305-1700-1";
   clusterCidrIpv4 = "10.235.128.0/18";
   clusterCidrIpv6 = "2a10:4741:37:88:2::/104";
   serviceCidrIpv4 = "10.235.64.0/18";
   serviceCidrIpv6 = "2a10:4741:37:88:1::/112";
   apiserverK8sSvcAdresses = [ "10.235.64.1" "2a10:4741:37:88:1::1" ];
   oidcIssuerUrl = "https://vault.305-1700.tdude.co/v1/identity/oidc/provider/default";
-  oidcClientId = "2Fxqqt0TCnkjcIO2Q7YUI3da8HJVCkik";
+  oidcClientId = "hJ6PJMNvxsEzL7UMHQUev1bziLbxFdPO";
   clusterMembers = {
     spike = "spike.305-1700.tdude.co";
   };
@@ -85,10 +86,13 @@ in
 
     services.tdude.kubernetes.control-plane.pki.vaultURL = vaultAgentVaultURL;
     services.tdude.kubernetes.control-plane.pki.vaultSNI = vaultAgentVaultSNI;
+    services.tdude.kubernetes.control-plane.pki.clusterName = clusterName;
     services.tdude.kubernetes.etcd.pki.vaultURL = vaultAgentVaultURL;
     services.tdude.kubernetes.etcd.pki.vaultSNI = vaultAgentVaultSNI;
+    services.tdude.kubernetes.etcd.pki.clusterName = clusterName;
     services.tdude.kubernetes.worker.pki.vaultURL = vaultAgentVaultURL;
     services.tdude.kubernetes.worker.pki.vaultSNI = vaultAgentVaultSNI;
+    services.tdude.kubernetes.worker.pki.clusterName = clusterName;
 
     networking.firewall.enable = false;
   };
