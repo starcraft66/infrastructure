@@ -14,7 +14,7 @@ in {
       mkInitialClusterPeer = name: peerSpec: "${name}=https://${peerSpec.hostname}:2380";
     in lib.mapAttrsToList mkInitialClusterPeer cfg.initialClusterPeers;
     # This needs to either be new on the first node, or the first node has to already have a data directory
-    initialClusterState = "existing";
+    initialClusterState = cfg.initialClusterState;
     listenClientUrls = [ "https://[::]:2379" ];
     listenPeerUrls = [ "https://[::]:2380" ];
 
