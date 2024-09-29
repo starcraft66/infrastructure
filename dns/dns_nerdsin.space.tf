@@ -53,11 +53,8 @@ resource "cloudflare_record" "_matrix__tcp_nerdsin_space-aa2b554a2832c865d149451
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "_matrix._tcp"
   data {
-    name     = "nerdsin.space"
     port     = 443
     priority = 10
-    proto    = "_tcp"
-    service  = "_matrix"
     target   = "nerdsin.space"
     weight   = 0
   }
@@ -70,11 +67,8 @@ resource "cloudflare_record" "_matrix__tcp_staging_nerdsin_space-6f7da27c1882659
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "_matrix._tcp.staging"
   data {
-    name     = "staging.nerdsin.space"
     port     = 443
     priority = 1
-    proto    = "_tcp"
-    service  = "_matrix"
     target   = "staging.nerdsin.space"
     weight   = 1
   }
@@ -87,11 +81,8 @@ resource "cloudflare_record" "_minecraft__tcp_nerdsin_space-d8276c70aea17f359f13
   zone_id = cloudflare_zone.nerdsin_space.id
   name    = "_minecraft._tcp"
   data {
-    name     = "nerdsin.space"
     port     = 25565
     priority = 10
-    proto    = "_tcp"
-    service  = "_minecraft"
     target   = "mc.fiki.dev"
     weight   = 10
   }
