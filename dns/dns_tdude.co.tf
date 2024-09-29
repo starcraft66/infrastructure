@@ -168,7 +168,7 @@ resource "cloudflare_record" "auth_lava_tdude_co" {
 resource "cloudflare_record" "stormfeather_235_tdude_co_AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stormfeather.235"
-  content = "2a10:4741:36:29:202:c9ff:fe9d:c36a"
+  content = "2a10:4741:36:29::6"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -177,7 +177,7 @@ resource "cloudflare_record" "stormfeather_235_tdude_co_AAAA" {
 resource "cloudflare_record" "sassaflash_235_tdude_co_AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "sassaflash.235"
-  content = "2a10:4741:36:29:26be:5ff:fe84:d8b0"
+  content = "2a10:4741:36:29::5"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -410,7 +410,7 @@ resource "cloudflare_record" "smtp_tdude_co-8831319c8ac7c5fe14007b106ec64abf" {
 resource "cloudflare_record" "soarin_tdude_co-68d3dc90cd44a475929631c7a74f3e3f" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "soarin.235"
-  content = "2a10:4741:36:29:26be:5ff:fe84:f750"
+  content = "2a10:4741:36:28::7"
   type    = "AAAA"
   ttl     = 1
   proxied = false
