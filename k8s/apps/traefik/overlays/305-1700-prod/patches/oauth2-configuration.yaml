@@ -1,6 +1,6 @@
 - path: /spec/template/spec/containers/1/args/-
   op: add
-  value: --redirect-url=https://auth.k8s.235.tdude.co/oauth2/callback
+  value: --redirect-url=https://auth.k8s.305-1700.tdude.co/oauth2/callback
 - path: /spec/template/spec/containers/1/args/-
   op: add
   value: --cookie-domain=tdude.co
@@ -9,7 +9,7 @@
   value: --whitelist-domain=.tdude.co
 - path: /spec/template/spec/containers/1/args/-
   op: add
-  value: --cookie-name=_oauth2_proxy_k8s_235
+  value: --cookie-name=_oauth2_proxy_k8s_305-1700
 - path: /spec/template/spec/containers/1/args/-
   op: add
   value: --provider=oidc
@@ -18,4 +18,4 @@
   value: --provider-display-name="Vault"
 - path: /spec/template/spec/containers/1/args/-
   op: add
-  value: --oidc-issuer-url=https://vault.235.tdude.co/v1/identity/oidc/provider/default
+  value: --oidc-issuer-url=https://vault.305-1700.tdude.co/v1/identity/oidc/provider/default
