@@ -128,7 +128,7 @@
               source <(kubectl completion bash) 2>/dev/null;
             fi
 
-            export KUBECONFIG=${./kubeconfig.yaml}
+            export KUBECONFIG=$(git rev-parse --show-toplevel)/kubeconfig.yaml
 
             if [[ $(uname -a) == *WSL2* ]]; then
               # Use windows-side gpg if running in WSL2
