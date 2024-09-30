@@ -58,42 +58,42 @@ spec:
 #   syncPolicy:
 #     automated:
 #       selfHeal: true
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: cert-manager
-#   namespace: argocd
-# spec:
-#   project: production
-#   destination:
-#     namespace: cert-manager
-#     server: https://kubernetes.default.svc
-#   source:
-#     repoURL: https://git.tdude.co/tristan/infrastructure.git
-#     targetRevision: master
-#     path: k8s/apps/cert-manager/overlays/305-1700-prod
-#   syncPolicy:
-#     automated:
-#       selfHeal: true
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: external-dns
-#   namespace: argocd
-# spec:
-#   project: production
-#   destination:
-#     namespace: external-dns
-#     server: https://kubernetes.default.svc
-#   source:
-#     repoURL: https://git.tdude.co/tristan/infrastructure.git
-#     targetRevision: master
-#     path: k8s/apps/external-dns/overlays/305-1700-prod
-#   syncPolicy:
-#     automated:
-#       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: cert-manager
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/cert-manager/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-dns
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: external-dns
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/external-dns/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
