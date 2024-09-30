@@ -1,0 +1,84 @@
+# This is installed by Nix
+cni:
+  install: false
+
+# Enable BGP
+bgpControlPlane:
+  enabled: true
+
+operator:
+  # We only have one node
+  replicas: 1
+
+# Use the pod subnet slices distributed by kube-apiserver to each kubelet
+# rather than reinventing the wheel with Cilium's native IPAM
+ipam:
+  mode: kubernetes
+
+# Dual-stack
+ipv4:
+  enabled: true
+ipv6:
+  enabled: true
+
+# No masquerading of any kind, this will be performed by the router at the edge for v4
+enableIPv4Masquerade: false
+enableIPv6Masquerade: false
+
+# Have not been able to validate these
+enableIPv4BIGTCP: false
+enableIPv6BIGTCP: false
+
+# No tunelling, native routing only
+tunnelProtocol: ""
+
+# Enable observability
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true
+
+# Enable Prometheus metrics
+prometheus:
+  enabled: true
+
+kubeProxyReplacement: "true"
+# k8s.235.tdude.co
+k8sServiceHost: "2a10:4741:37:51::8:1"
+k8sServicePort: 443
+
+# Enable native routing (no tunelling)
+routingMode: native
+# Cilium states that for native routing, all nodes need to have a route to other nodes
+# so we can't just rely on the default route to get us there.
+# https://docs.cilium.io/en/stable/network/concepts/routing/#id3
+# All nodes are located on the same L2 segment so we can enable direct routes
+# We should look into kube-router to get an equivalent
+# of calico's cluster mesh
+autoDirectNodeRoutes: true
+
+# Enable direct server return to preserve the client's source IP
+# when externalTrafficPolicy is set to Cluster (required to share
+# a single IP between multiple LoadBalancer services targeting
+# the pods on different nodes)
+# https://docs.cilium.io/en/stable/network/kubernetes/kubeproxy-free/#direct-server-return-dsr-with-ipv4-option-ipv6-extension-header
+# https://github.com/cilium/cilium/issues/30700
+loadBalancer:
+  mode: dsr
+  dsrDispatch: opt
+  protocolDifferentiation:
+    enabled: true
+
+# I usually access my services through a wireguard tunnel from home
+# or via external VPN access so I guess we'll take a global MTU tax
+# for this.
+# Original MTU: 1480 (Videotron sit tunnel)
+# New MTU: 1480 - 60 (Wireguard encapsulation) = 1420
+# -Tristan 23/02/2021
+# For some reason 1420 is still causing issues, didn't feel like debugging
+# so I just went with 1400 and it works. The videotron tunnel was replaced
+# with my own sit tunnel to AS208914's router.
+# -Tristan 08/12/2023
+MTU: 1400

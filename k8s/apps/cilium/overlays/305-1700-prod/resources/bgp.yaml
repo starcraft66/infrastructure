@@ -1,0 +1,78 @@
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: pool
+spec:
+  blocks:
+  - cidr: "10.235.0.0/18"
+  - cidr: "2a10:4741:37:88:3::/80"
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPClusterConfig
+metadata:
+  name: bgp-spike
+spec:
+  bgpInstances:
+  - name: spike
+    localASN: 64513
+    peers:
+    - name: 305-1700-gw-v4
+      peerASN: 64512
+      peerAddress: 172.17.51.1
+      peerConfigRef:
+        name: cilium-peer-v4
+    - name: 305-1700-gw-v6
+      peerASN: 64512
+      peerAddress: 2a10:4741:37:51::1
+      peerConfigRef:
+        name: cilium-peer-v6
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPPeerConfig
+metadata:
+  name: cilium-peer-v4
+spec:
+  families:
+  - afi: ipv4
+    safi: unicast
+    advertisements:
+      matchLabels:
+        advertise: "bgp"
+  gracefulRestart:
+    enabled: true
+    restartTimeSeconds: 15
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPPeerConfig
+metadata:
+  name: cilium-peer-v6
+spec:
+  families:
+  - afi: ipv6
+    safi: unicast
+    advertisements:
+      matchLabels:
+        advertise: "bgp"
+  gracefulRestart:
+    enabled: true
+    restartTimeSeconds: 15
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPAdvertisement
+metadata:
+  name: bgp-advertisements
+  labels:
+    advertise: bgp
+spec:
+  advertisements:
+  - advertisementType: "PodCIDR"
+  - advertisementType: "Service"
+    service:
+      addresses:
+      - ClusterIP
+      - ExternalIP
+      - LoadBalancerIP
+    selector:
+      matchExpressions:
+      # All services
+      - {key: somekey, operator: NotIn, values: ['never-used-value']}

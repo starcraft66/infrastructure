@@ -220,41 +220,41 @@ spec:
 #   syncPolicy:
 #     automated:
 #       selfHeal: true
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: cilium
-#   namespace: argocd
-# spec:
-#   project: production
-#   destination:
-#     namespace: kube-system
-#     server: https://kubernetes.default.svc
-#   source:
-#     repoURL: https://git.tdude.co/tristan/infrastructure.git
-#     targetRevision: master
-#     path: k8s/apps/cilium/overlays/305-1700-prod
-#   ignoreDifferences:
-#   - group: ""
-#     kind: "Secret"
-#     jsonPointers:
-#     - /data/ca.crt
-#     - /data/ca.key
-#     - /data/tls.crt
-#     - /data/tls.key
-#   - group: "apps"
-#     kind: "DaemonSet"
-#     name: "cilium"
-#     namespace: "kube-system"
-#     jsonPointers:
-#     - /spec/template/spec/containers/0/volumeMounts/0/readOnly
-#   - group: "apps"
-#     kind: "DaemonSet"
-#     name: "cilium-envoy"
-#     namespace: "kube-system"
-#     jsonPointers:
-#     - /spec/template/spec/containers/0/volumeMounts/0/readOnly
-#   syncPolicy:
-#     automated:
-#       selfHeal: false
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cilium
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: kube-system
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/cilium/overlays/305-1700-prod
+  ignoreDifferences:
+  - group: ""
+    kind: "Secret"
+    jsonPointers:
+    - /data/ca.crt
+    - /data/ca.key
+    - /data/tls.crt
+    - /data/tls.key
+  - group: "apps"
+    kind: "DaemonSet"
+    name: "cilium"
+    namespace: "kube-system"
+    jsonPointers:
+    - /spec/template/spec/containers/0/volumeMounts/0/readOnly
+  - group: "apps"
+    kind: "DaemonSet"
+    name: "cilium-envoy"
+    namespace: "kube-system"
+    jsonPointers:
+    - /spec/template/spec/containers/0/volumeMounts/0/readOnly
+  syncPolicy:
+    automated:
+      selfHeal: false
