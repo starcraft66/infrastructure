@@ -12,18 +12,9 @@ images:
   newTag: 0f0f52d4-dirty 
 
 patches:
-- path: ./patches/cloudflare.yaml
+- path: ./patches/dns-ownership.yaml
   target:
     group: apps
     kind: Deployment
     name: external-dns
     version: v1
-- path: ./patches/rbac.yaml
-  target:
-    group: rbac.authorization.k8s.io
-    kind: ClusterRole
-    name: external-dns
-    version: v1
-
-generators:
-- ./generators/secrets-generator.yaml

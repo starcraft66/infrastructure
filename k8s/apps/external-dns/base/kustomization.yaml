@@ -7,6 +7,23 @@ resources:
 
 namespace: external-dns
 
+patches:
+- path: ./patches/cloudflare.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: external-dns
+    version: v1
+- path: ./patches/rbac.yaml
+  target:
+    group: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: external-dns
+    version: v1
+
+generators:
+- ./generators/secrets-generator.yaml
+
 labels:
 - pairs:
     app.kubernetes.io/name: external-dns
