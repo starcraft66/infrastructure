@@ -4,7 +4,7 @@ metadata:
   name: argocd-cm
   namespace: argocd
 data:
-  url: https://gitops.tdude.co
+  url: https://gitops.305-1700.tdude.co
   repositories: |
     - url: https://git.tdude.co/tristan/infrastructure.git
   repository.credentials: |
