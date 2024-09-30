@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
 - https://github.com/argoproj/argo-cd/manifests/cluster-install?ref=v2.12.3
 # - https://github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v2.8.2
-# - https://github.com/argoproj-labs/argocd-image-updater/manifests/base?ref=v0.11.0
 - ./metrics/argocd-serviceMonitor.yaml
 - ./metrics/argocd-server-serviceMonitor.yaml
 # I don't use Dex at the moment and it doesn't seem to produce metrics

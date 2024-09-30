@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: argocd-image-updater-config
-  namespace: argocd
-data:
-  # log.level can be one of trace, debug, info, warn or error
-  log.level: info
