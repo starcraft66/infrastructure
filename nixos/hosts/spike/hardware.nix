@@ -70,6 +70,9 @@
   # TODO: upstream the fix
   boot.initrd.systemd.network.netdevs = config.systemd.network.netdevs;
 
+  # Disable SLAAC, we have a static network configuration
+  systemd.network.networks."40-enp8s0".ipv6AcceptRAConfig = { UseAutonomousPrefix = false; };
+
   networking.interfaces."enp8s0" = let
     ip = "172.17.51.16";
     gateway = "172.17.51.1";
@@ -87,7 +90,16 @@
       }
     ];
     ipv6.addresses = [ { address = "2a10:4741:37:51::16"; prefixLength = 64; } ];
-    # v6 assigned via slaac
+    ipv6.routes = [
+      # Default route
+      {
+        address = "::";
+        prefixLength = 0;
+        via = "2a10:4741:37:51::1";
+        options.src = "2a10:4741:37:51::16";
+        options.onlink = "";
+      }
+    ];
   };
 
   networking.nameservers = [ "2a10:4741:37:51::1" "172.17.51.1" ];
