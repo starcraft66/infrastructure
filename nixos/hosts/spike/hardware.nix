@@ -9,7 +9,7 @@
 
   boot.initrd.availableKernelModules = [ "e1000e" "mlx4_core" "mlx4_en" "ahci" "xhci_pci" "ata_generic" "ehci_pci" "ums_realtek" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ "e1000e" "mlx4_core" "mlx4_en" ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "dummy" ];
   boot.extraModulePackages = [ ];
 
   networking.hostId = "387f35ea";
