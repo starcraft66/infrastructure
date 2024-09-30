@@ -90,7 +90,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s/apps/traefik/overlays/prod
+    path: k8s/apps/traefik/overlays/235-prod
   syncPolicy:
     automated:
       selfHeal: true

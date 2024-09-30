@@ -94,24 +94,24 @@ spec:
 #   syncPolicy:
 #     automated:
 #       selfHeal: true
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: traefik
-#   namespace: argocd
-# spec:
-#   project: production
-#   destination:
-#     namespace: traefik
-#     server: https://kubernetes.default.svc
-#   source:
-#     repoURL: https://git.tdude.co/tristan/infrastructure.git
-#     targetRevision: master
-#     path: k8s/apps/traefik/overlays/305-1700-prod
-#   syncPolicy:
-#     automated:
-#       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: traefik
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/traefik/overlays/305-1700-prod
+  syncPolicy:
+    automated:
+      selfHeal: true
 # ---
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application

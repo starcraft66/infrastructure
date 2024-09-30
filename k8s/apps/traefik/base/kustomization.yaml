@@ -2,18 +2,29 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- ./resources/namespace.yaml
+- ../helmbase
+- ./resources/service.yaml
+- ./resources/middleware.yaml
+- ./resources/monitoring-rbac.yaml
 
 namespace: traefik
 
-helmCharts:
-- apiVersions:
-  - monitoring.coreos.com/v1
-  - policy/v1/PodDisruptionBudget
-  includeCRDs: true
-  name: traefik
+images:
+- name: quay.io/oauth2-proxy/oauth2-proxy
+  newTag: v7.6.0
+
+patches:
+- path: ./patches/traefik-config-file.yaml
+- path: ./patches/remove-helm-defaults.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: traefik
+    namespace: traefik
+    version: v1
+
+configMapGenerator:
+- name: traefik-config
   namespace: traefik
-  releaseName: traefik
-  repo: https://helm.traefik.io/traefik
-  valuesFile: ./resources/values.yaml
-  version: 31.1.1
+  files:
+  - traefik.toml=configs/traefik.toml

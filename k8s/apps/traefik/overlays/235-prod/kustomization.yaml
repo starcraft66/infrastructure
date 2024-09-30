@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base
+- ./resources/ingress.yaml
+
+namespace: traefik
+
+patches:
+- path: ./patches/oauth2-configuration.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: traefik
+    namespace: traefik
+    version: v1
+- path: ./patches/lb-dns-annotations.yaml
+  target:
+    kind: Service
+    name: traefik
+    namespace: traefik
+
+generators:
+- ./generators/secrets-generator.yaml
