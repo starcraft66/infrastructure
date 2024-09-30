@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+data:
+  url: https://gitops.tdude.co
+  repositories: |
+    - url: https://git.tdude.co/tristan/infrastructure.git
+  repository.credentials: |
+    - url: https://git.tdude.co/tristan/infrastructure.git
+  oidc.config: |
+    name: Vault
+    issuer: https://vault.305-1700.tdude.co/v1/identity/oidc/provider/default
+    clientID: $oidc.vault.clientId
+    clientSecret: $oidc.vault.clientSecret
+    requestedScopes:
+    - openid
+    - profile
+    - email
+    - groups
+    requestedIDTokenClaims:
+      email:
+        essential: true
+        values:
+        - starcraft66@gmail.com
+      groups:
+        essential: true

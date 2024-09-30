@@ -7,12 +7,10 @@ resources:
 - ./resources/applications.yaml
 - ./resources/ingress.yaml
 
-patchesStrategicMerge:
-- ./patches/argocd-cm-patch.yaml
-- ./patches/argocd-gpg-keys-cm-patch.yaml
-- ./patches/argocd-rbac-cm-patch.yaml
-- ./patches/argo-cd-repo-server-ksops-patch.yaml
-- ./patches/argo-cd-import-pgp-key.yaml
+# - ./patches/argocd-gpg-keys-cm-patch.yaml
+# - ./patches/argocd-rbac-cm-patch.yaml
+# - ./patches/argo-cd-repo-server-ksops-patch.yaml
+# - ./patches/argo-cd-import-pgp-key.yaml
 # - ./patches/argocd-image-updater-config.yaml
 # - ./patches/argocd-image-updater-metrics.yaml
 # - ./patches/argocd-image-updater-check-interval.yaml
@@ -25,3 +23,5 @@ namespace: argocd
 
 generators:
 - ./generators/secrets-generator.yaml
+patches:
+- path: ./patches/argocd-cm-patch.yaml

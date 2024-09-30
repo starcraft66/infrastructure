@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: production
+  namespace: argocd
+spec:
+  sourceRepos:
+  - 'https://git.tdude.co/tristan/infrastructure.git'
+  destinations:
+  - namespace: '*'
+    server: 'https://kubernetes.default.svc'
+  # Allow all resources in cluster for now
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  roles:
+  # A role which provides read-only access to all applications in the project
+  - name: read-only
+    description: Read-only privileges to production
+    policies:
+    - p, proj:production:read-only, applications, get, production/*, allow
+    groups:
+    - tdude

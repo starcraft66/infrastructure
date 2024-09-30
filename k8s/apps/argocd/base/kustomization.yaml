@@ -3,14 +3,29 @@ kind: Kustomization
 resources:
 - https://github.com/argoproj/argo-cd/manifests/cluster-install?ref=v2.12.3
 # - https://github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v2.8.2
-- ./metrics/argocd-serviceMonitor.yaml
-- ./metrics/argocd-server-serviceMonitor.yaml
 # I don't use Dex at the moment and it doesn't seem to produce metrics
 # when unconfigured.
 # - ./metrics/argocd-dex-server-serviceMonitor.yaml
+- ./metrics/argocd-serviceMonitor.yaml
+- ./metrics/argocd-server-serviceMonitor.yaml
 - ./metrics/argocd-repo-server-serviceMonitor.yaml
-- ./metrics/argocd-image-updater-serviceMonitor.yaml
-# - ./argocd-roles.yml
 - ./namespace.yaml
 
 namespace: argocd
+patches:
+- path: ./patches/argocd-cm-patch.yaml
+- path: ./patches/argocd-gpg-keys-cm-patch.yaml
+- path: ./patches/argo-cd-repo-server-ksops-patch.yaml
+- path: ./patches/argo-cd-import-pgp-key.yaml
+
+configMapGenerator:
+- name: argocd-rbac-cm
+  behavior: merge
+  literals:
+  - policy.default="role:readonly"
+  - scopes="[groups, email]"
+  files:
+  - policy.csv=files/policy.csv
+
+generatorOptions:
+  disableNameSuffixHash: true

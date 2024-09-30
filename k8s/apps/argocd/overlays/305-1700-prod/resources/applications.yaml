@@ -1,0 +1,260 @@
+# In this file, all applications running in
+# our production cluster are listed. Simply add
+# a new 'Application' resource to this list to
+# sync them with Git.
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/argocd/overlays/305-1700-prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: monitoring
+#   namespace: argocd
+# spec:
+#   project: production
+#   destination:
+#     namespace: monitoring
+#     server: https://kubernetes.default.svc
+#   source:
+#     repoURL: https://git.tdude.co/tristan/infrastructure.git
+#     targetRevision: master
+#     path: k8s/apps/monitoring/overlays/305-1700-prod
+#   syncPolicy:
+#     automated:
+#       selfHeal: true
+#     syncOptions:
+#     - ServerSideApply=true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: logging-operator
+#   namespace: argocd
+# spec:
+#   project: production
+#   destination:
+#     namespace: logging
+#     server: https://kubernetes.default.svc
+#   source:
+#     repoURL: https://git.tdude.co/tristan/infrastructure.git
+#     targetRevision: master
+#     path: k8s/apps/logging-operator/overlays/305-1700-prod
+#   syncPolicy:
+#     automated:
+#       selfHeal: true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: cert-manager
+#   namespace: argocd
+# spec:
+#   project: production
+#   destination:
+#     namespace: cert-manager
+#     server: https://kubernetes.default.svc
+#   source:
+#     repoURL: https://git.tdude.co/tristan/infrastructure.git
+#     targetRevision: master
+#     path: k8s/apps/cert-manager/overlays/305-1700-prod
+#   syncPolicy:
+#     automated:
+#       selfHeal: true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: external-dns
+#   namespace: argocd
+# spec:
+#   project: production
+#   destination:
+#     namespace: external-dns
+#     server: https://kubernetes.default.svc
+#   source:
+#     repoURL: https://git.tdude.co/tristan/infrastructure.git
+#     targetRevision: master
+#     path: k8s/apps/external-dns/overlays/305-1700-prod
+#   syncPolicy:
+#     automated:
+#       selfHeal: true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: traefik
+#   namespace: argocd
+# spec:
+#   project: production
+#   destination:
+#     namespace: traefik
+#     server: https://kubernetes.default.svc
+#   source:
+#     repoURL: https://git.tdude.co/tristan/infrastructure.git
+#     targetRevision: master
+#     path: k8s/apps/traefik/overlays/305-1700-prod
+#   syncPolicy:
+#     automated:
+#       selfHeal: true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: democratic-csi
+#   namespace: argocd
+# spec:
+#   project: production
+#   destination:
+#     namespace: democratic-csi
+#     server: https://kubernetes.default.svc
+#   source:
+#     repoURL: https://git.tdude.co/tristan/infrastructure.git
+#     targetRevision: master
+#     path: k8s/apps/democratic-csi/overlays/305-1700-prod
+#   syncPolicy:
+#     automated:
+#       selfHeal: true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: mediaserver
+#   namespace: argocd
+# spec:
+#   project: production
+#   destination:
+#     namespace: mediaserver
+#     server: https://kubernetes.default.svc
+#   source:
+#     repoURL: https://git.tdude.co/tristan/infrastructure.git
+#     targetRevision: master
+#     path: k8s/apps/mediaserver/overlays/305-1700-prod
+#   syncPolicy:
+#     automated:
+#       selfHeal: true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: nextcloud
+#   namespace: argocd
+# spec:
+#   project: production
+#   destination:
+#     namespace: nextcloud
+#     server: https://kubernetes.default.svc
+#   source:
+#     repoURL: https://git.tdude.co/tristan/infrastructure.git
+#     targetRevision: master
+#     path: k8s/apps/nextcloud/overlays/305-1700-prod
+#   syncPolicy:
+#     automated:
+#       selfHeal: true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: funkwhale
+#   namespace: argocd
+# spec:
+#   project: production
+#   destination:
+#     namespace: funkwhale
+#     server: https://kubernetes.default.svc
+#   source:
+#     repoURL: https://git.tdude.co/tristan/infrastructure.git
+#     targetRevision: master
+#     path: k8s/apps/funkwhale/overlays/305-1700-prod
+#   syncPolicy:
+#     automated:
+#       selfHeal: true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: minecraft-gtnh
+#   namespace: argocd
+# spec:
+#   project: production
+#   destination:
+#     namespace: gtnh
+#     server: https://kubernetes.default.svc
+#   source:
+#     repoURL: https://git.tdude.co/tristan/infrastructure.git
+#     targetRevision: master
+#     path: k8s/apps/minecraft/gtnh/overlays/305-1700-prod
+#   syncPolicy:
+#     automated:
+#       selfHeal: true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: cloudnative-pg
+#   namespace: argocd
+# spec:
+#   project: production
+#   destination:
+#     namespace: cnpg
+#     server: https://kubernetes.default.svc
+#   source:
+#     repoURL: https://git.tdude.co/tristan/infrastructure.git
+#     targetRevision: master
+#     path: k8s/apps/cloudnative-pg/overlays/305-1700-prod
+#   syncPolicy:
+#     automated:
+#       selfHeal: true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: cilium
+#   namespace: argocd
+# spec:
+#   project: production
+#   destination:
+#     namespace: kube-system
+#     server: https://kubernetes.default.svc
+#   source:
+#     repoURL: https://git.tdude.co/tristan/infrastructure.git
+#     targetRevision: master
+#     path: k8s/apps/cilium/overlays/305-1700-prod
+#   ignoreDifferences:
+#   - group: ""
+#     kind: "Secret"
+#     jsonPointers:
+#     - /data/ca.crt
+#     - /data/ca.key
+#     - /data/tls.crt
+#     - /data/tls.key
+#   - group: "apps"
+#     kind: "DaemonSet"
+#     name: "cilium"
+#     namespace: "kube-system"
+#     jsonPointers:
+#     - /spec/template/spec/containers/0/volumeMounts/0/readOnly
+#   - group: "apps"
+#     kind: "DaemonSet"
+#     name: "cilium-envoy"
+#     namespace: "kube-system"
+#     jsonPointers:
+#     - /spec/template/spec/containers/0/volumeMounts/0/readOnly
+#   syncPolicy:
+#     automated:
+#       selfHeal: false
