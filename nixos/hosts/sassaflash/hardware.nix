@@ -9,7 +9,7 @@
   # tg3, mlx4_en and mlx4_core are used for initrd networking
   boot.initrd.availableKernelModules = [ "tg3" "mlx4_core" "mlx4_en" "hpsa" "ehci_pci" "ahci" "uhci_hcd" "hpsa" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ "mlx4_core" "mlx4_en" "tg3" "8021q" ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "dummy" ];
   boot.extraModulePackages = [ ];
 
   # Fix HP iLO4 console breakage

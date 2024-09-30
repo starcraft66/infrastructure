@@ -37,11 +37,16 @@ in
   # Using some relatively well-known IP addresses for the local DNS server
   # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html
 
-  networking.interfaces.lo.ipv4.addresses = lib.mkIf cfg.enable [
+  systemd.network.netdevs.dummy0.netdevConfig = lib.mkIf (cfg.enable && config.networking.useNetworkd) {
+    Kind = "dummy";
+    Name = "dummy0";
+  };
+
+  networking.interfaces.dummy0.ipv4.addresses = lib.mkIf cfg.enable [
     { address = "169.254.169.254"; prefixLength = 32; }
   ];
 
-  networking.interfaces.lo.ipv6.addresses = lib.mkIf cfg.enable [
+  networking.interfaces.dummy0.ipv6.addresses = lib.mkIf cfg.enable [
     { address = "fd00:ec2::254"; prefixLength = 128; }
   ];
 
