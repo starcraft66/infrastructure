@@ -16,7 +16,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/argocd/overlays/prod
+    path: k8s/apps/argocd/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -34,7 +34,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/monitoring/overlays/prod
+    path: k8s/apps/monitoring/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -54,7 +54,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/logging-operator/overlays/prod
+    path: k8s/apps/logging-operator/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -72,7 +72,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/cert-manager/overlays/prod
+    path: k8s/apps/cert-manager/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -90,7 +90,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/traefik/overlays/prod
+    path: k8s/apps/traefik/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -108,7 +108,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/democratic-csi/overlays/prod
+    path: k8s/apps/democratic-csi/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -126,7 +126,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/awx/overlays/prod
+    path: k8s/apps/awx/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -144,7 +144,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/elk-nhackindustries/overlays/prod
+    path: k8s/apps/elk-nhackindustries/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -162,7 +162,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/guacamole/overlays/prod
+    path: k8s/apps/guacamole/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -192,7 +192,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/mediaserver/overlays/prod
+    path: k8s/apps/mediaserver/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -210,7 +210,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/nextcloud/overlays/prod
+    path: k8s/apps/nextcloud/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -228,7 +228,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/pomf/overlays/prod
+    path: k8s/apps/pomf/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -250,7 +250,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/unifi-controller/overlays/prod
+    path: k8s/apps/unifi-controller/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -268,7 +268,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/minecraft/cacaffichage/overlays/prod
+    path: k8s/apps/minecraft/cacaffichage/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -286,7 +286,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/minecraft/ftb-ultimate/overlays/prod
+    path: k8s/apps/minecraft/ftb-ultimate/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -304,7 +304,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/minecraft/skyfactory4/overlays/prod
+    path: k8s/apps/minecraft/skyfactory4/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -322,7 +322,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/renovate/overlays/prod
+    path: k8s/apps/renovate/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -340,7 +340,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/letsencrypt-cron
+    path: k8s/apps/letsencrypt-cron
   syncPolicy:
     automated:
       selfHeal: true
@@ -358,7 +358,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/ctfnote/overlays/prod
+    path: k8s/apps/ctfnote/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -376,7 +376,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/satisfactory/overlays/prod
+    path: k8s/apps/satisfactory/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -394,7 +394,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/minecraft/beyondroastbeef/overlays/prod
+    path: k8s/apps/minecraft/beyondroastbeef/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -412,7 +412,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/netbox/overlays/prod
+    path: k8s/apps/netbox/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -430,7 +430,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/funkwhale/overlays/prod
+    path: k8s/apps/funkwhale/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -448,7 +448,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/photoprism/overlays/prod
+    path: k8s/apps/photoprism/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -466,7 +466,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/crossplane/overlays/prod
+    path: k8s/apps/crossplane/overlays/prod
   syncPolicy:
     automated:
       selfHeal: false
@@ -484,7 +484,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/percona-xtradb-operator/overlays/prod
+    path: k8s/apps/percona-xtradb-operator/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -502,7 +502,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/eck-operator/overlays/prod
+    path: k8s/apps/eck-operator/overlays/prod
   syncPolicy:
     automated:
       selfHeal: false
@@ -520,7 +520,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/ircclient/overlays/prod
+    path: k8s/apps/ircclient/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -538,7 +538,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/minecraft/ftb-academy/overlays/prod
+    path: k8s/apps/minecraft/ftb-academy/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -556,7 +556,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/minecraft/gtnh/overlays/prod
+    path: k8s/apps/minecraft/gtnh/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -574,7 +574,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/cloudnative-pg/overlays/prod
+    path: k8s/apps/cloudnative-pg/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -592,7 +592,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/cilium/overlays/prod
+    path: k8s/apps/cilium/overlays/prod
   ignoreDifferences:
   - group: ""
     kind: "Secret"
@@ -630,7 +630,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/kubevirt/overlays/prod
+    path: k8s/apps/kubevirt/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -648,7 +648,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/kubevirt-cdi/overlays/prod
+    path: k8s/apps/kubevirt-cdi/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true
@@ -666,7 +666,7 @@ spec:
   source:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
-    path: k8s-235/apps/external-dns/overlays/prod
+    path: k8s/apps/external-dns/overlays/prod
   syncPolicy:
     automated:
       selfHeal: true

@@ -37,15 +37,15 @@ I used to use the Calico CNI but recently migrated to Cilium. The semantics are 
 
 [.text-justify]
 ArgoCD is an central part of my cluster. Once the initial control-plane for the cluster is deployed by ansible, the only application that must be installed manually into the cluster is ArgoCD. Once installed, it will take over the lifecycle of all of the applications in this repository to be deployed into the cluster.
-ArgoCD deploys everything in the `k8s-235/apps` folder including itself. A commit webhook in GitLab will cause ArgoCD to sync the repository on every commit. Authentication to ArgoCD is done through GitLab's SSO.
+ArgoCD deploys everything in the `k8s/apps` folder including itself. A commit webhook in GitLab will cause ArgoCD to sync the repository on every commit. Authentication to ArgoCD is done through GitLab's SSO.
 
 [.text-justify]
-To deploy ArgoCD, go into the `k8s-235/apps/argocd` and run `kustomize build --enable-alpha-plugins overlays/prod | kubectl apply -f -`. ArgoCD will become available at https://gitops.tdude.co.
+To deploy ArgoCD, go into the `k8s/apps/argocd` and run `kustomize build --enable-alpha-plugins overlays/prod | kubectl apply -f -`. ArgoCD will become available at https://gitops.tdude.co.
 
 ==== Kustomize
 
 [.text-justify]
-Kustomize touts itself to be a template-free solution to manage application deployments on kubernetes in stark contrast to the popular Helm package manager. All of the manifests in `k8s-235/apps` are assembled with kustomize before being applied. ArgoCD runs kustomize which builds the manifests and applies them to the cluster.
+Kustomize touts itself to be a template-free solution to manage application deployments on kubernetes in stark contrast to the popular Helm package manager. All of the manifests in `k8s/apps` are assembled with kustomize before being applied. ArgoCD runs kustomize which builds the manifests and applies them to the cluster.
 
 ==== SOPS
 
@@ -83,7 +83,7 @@ Traefik is configured to accept TLS 1.2 and 1.3 connections only and sets strict
 === 💾 Democratic-csi
 
 [.text-justify]
-No kubernetes cluster is complete without persistent storage for stateful applications. My hypervisors aren't particularly interesting in terms of storage, but I do have a NAS with plenty of storage so let's use that! I use the https://github.com/democratic-csi/democratic-csi/[democratic-csi] CSI storage driver in my cluster to provide network programmatic access to network storage on my NAS to my kubernetes nodes. This works by making calls to the TrueNAS http api to provision new ZFS datasets or ZVOLs and exporting it over NFS or iSCSI depending on the type of share. The configuration in `k8s-235/apps/democratic-csi` defines 3 distinct ``StorageClass``es for different purposes:
+No kubernetes cluster is complete without persistent storage for stateful applications. My hypervisors aren't particularly interesting in terms of storage, but I do have a NAS with plenty of storage so let's use that! I use the https://github.com/democratic-csi/democratic-csi/[democratic-csi] CSI storage driver in my cluster to provide network programmatic access to network storage on my NAS to my kubernetes nodes. This works by making calls to the TrueNAS http api to provision new ZFS datasets or ZVOLs and exporting it over NFS or iSCSI depending on the type of share. The configuration in `k8s/apps/democratic-csi` defines 3 distinct ``StorageClass``es for different purposes:
 
 - `freenas-nfs-csi`
 - `freenas-iscsi-csi`
