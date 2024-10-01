@@ -17,6 +17,8 @@
   services.zfs.trim.enable = true;
   services.zfs.autoScrub.enable = true;
 
+  services.xserver.videoDrivers = [ "nvidia" ];
+
   fileSystems."/" =
     { device = "spike/root";
       fsType = "zfs";
