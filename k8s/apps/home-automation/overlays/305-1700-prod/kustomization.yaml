@@ -9,6 +9,3 @@ namespace: home-automation
 images:
 - name: ghcr.io/coder/code-server:4.92.2
   newTag: 4.92.2
-
-generators:
-- ./generators/secrets-generator.yaml
