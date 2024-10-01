@@ -18,6 +18,7 @@
   services.zfs.autoScrub.enable = true;
 
   services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia-container-toolkit.enable = true;
 
   fileSystems."/" =
     { device = "spike/root";
