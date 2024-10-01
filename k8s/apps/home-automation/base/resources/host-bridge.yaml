@@ -1,0 +1,22 @@
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: host-bridge
+spec:
+  config: |
+    {
+      "cniVersion": "0.3.0",
+      "type": "ipvlan",
+      "master": "enp8s0",
+      "linkInContainer": false,
+      "ipam": {
+        "type": "host-local",
+        "ranges": [
+          [ {
+            "subnet": "172.17.51.0/24",
+            "rangeStart": "172.17.51.250",
+            "rangeEnd": "172.17.51.254"
+          } ]
+        ]
+      }
+    }

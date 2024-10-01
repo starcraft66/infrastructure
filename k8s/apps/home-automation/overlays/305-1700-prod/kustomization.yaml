@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+- ./resources/ingress.yaml
+
+namespace: home-automation
+
+images:
+- name: ghcr.io/coder/code-server:4.92.2
+  newTag: 4.92.2
+
+generators:
+- ./generators/secrets-generator.yaml

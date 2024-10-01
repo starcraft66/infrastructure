@@ -1,0 +1,30 @@
+nameOverride: home-assistant
+fullnameOverride: home-assistant
+
+env:
+- name: TZ
+  value: America/Toronto
+- name: DATABASE_URL
+  valueFrom:
+    secretKeyRef:
+      name: home-assistant-app
+      key: uri
+
+# Attach multus host bridge
+podAnnotations:
+  k8s.v1.cni.cncf.io/networks: host-bridge
+
+persistence:
+  enabled: true
+  storageClass: zfs-local-dataset
+  accessMode: ReadWriteOnce
+  size: 10Gi
+
+serviceMonitor:
+  # requires HA integration:  https://www.home-assistant.io/integrations/prometheus/
+  enabled: false
+
+addons:
+  # Code-server addon configuration
+  codeserver:
+    enabled: true
