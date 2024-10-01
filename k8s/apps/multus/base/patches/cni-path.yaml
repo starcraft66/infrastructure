@@ -10,6 +10,8 @@
     name: cni
   - mountPath: /host/etc/cni/multus.d
     name: multusd
+  - mountPath: /host/opt/cni/bin
+    name: cnibin
 - op: replace
   path: /spec/template/spec/volumes
   value:
@@ -20,4 +22,6 @@
     hostPath:
       path: /etc/cni/multus.d
       type: ""
+  - name: cnibin
+    emptyDir: {}
     
