@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../305-1700-base
+
+namespace: democratic-csi
+
+# Let the Helm chart pin image versions
+images: []
+# - name: k8s.gcr.io/sig-storage/csi-provisioner
+#   newTag: v3.0.0
+# - name: k8s.gcr.io/sig-storage/csi-resizer
+#   newTag: v1.3.0
+# - name: k8s.gcr.io/sig-storage/csi-snapshotter
+#   newTag: v6.2.1
+# - name: democraticcsi/democratic-csi
+#   newTag: latest
+# - name: k8s.gcr.io/sig-storage/csi-node-driver-registrar
+#   newTag: v2.4.0
+
+commonLabels:
+  app.kubernetes.io/name: democratic-csi

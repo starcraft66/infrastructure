@@ -112,24 +112,24 @@ spec:
   syncPolicy:
     automated:
       selfHeal: true
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: democratic-csi
-#   namespace: argocd
-# spec:
-#   project: production
-#   destination:
-#     namespace: democratic-csi
-#     server: https://kubernetes.default.svc
-#   source:
-#     repoURL: https://git.tdude.co/tristan/infrastructure.git
-#     targetRevision: master
-#     path: k8s/apps/democratic-csi/overlays/305-1700-prod
-#   syncPolicy:
-#     automated:
-#       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: democratic-csi
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: democratic-csi
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/democratic-csi/overlays/305-1700-prod
+  syncPolicy:
+    automated:
+      selfHeal: true
 # ---
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
