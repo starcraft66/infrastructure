@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   clusterName = "k8s-305-1700-1";
@@ -37,6 +37,32 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    # Multus for Home Assistant host bridge
+    systemd.tmpfiles.rules = [
+      "d /etc/cni/multus.d 0770 root root -"
+    ];
+    services.kubernetes.kubelet.cni.packages = with pkgs; [ multus-cni ];
+    services.kubernetes.kubelet.cni.config = lib.mkForce [{
+      name = "multus-cni-network";
+      type = "multus";
+      capabilities = {
+        portMappings = true;
+      };
+      delegates = [
+        {
+          cniVersion = "0.3.1";
+          name = "default-cni-network";
+          plugins = [
+            {
+              name = "cilium";
+              type = "cilium-cni";
+            }
+          ];
+        }
+      ];
+      kubeconfig = "/etc/cni/multus.d/multus.kubeconfig";
+    }];
+
     services.tdude.kubernetes.control-plane.enable = true;
     services.tdude.kubernetes.control-plane.ipSans = apiserverK8sSvcAdresses;
     services.tdude.kubernetes.control-plane.additionalApiserverAltNames = [ lbK8sDomain ];

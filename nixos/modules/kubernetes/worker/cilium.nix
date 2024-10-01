@@ -2,15 +2,15 @@
 
 let
   cfg = config.services.tdude.kubernetes.worker;
-in {
-  environment.systemPackages = lib.mkIf cfg.enable (with pkgs; [ cilium-cli ]);
-  services.kubernetes.kubelet.cni.packages = lib.mkIf cfg.enable [ pkgs.cni-plugin-cilium ];
-  services.kubernetes.kubelet.cni.config = lib.mkIf cfg.enable [{
+in lib.mkIf cfg.enable {
+  environment.systemPackages = with pkgs; [ cilium-cli ];
+  services.kubernetes.kubelet.cni.packages = with pkgs; [ cni-plugin-cilium ];
+  services.kubernetes.kubelet.cni.config = [{
     name = "cilium";
     type = "cilium-cni";
     cniVersion = "0.3.1";
   }];
-  networking = lib.mkIf cfg.enable {
+  networking = {
     firewall = {
       allowPing = true;
       logReversePathDrops = true;
@@ -24,5 +24,5 @@ in {
       ];
     };
   };
-  boot.kernelModules = lib.mkIf cfg.enable [ "ip6_tables" "ip6table_mangle" "ip6table_raw" "ip6table_filter" ];
+  boot.kernelModules = [ "ip6_tables" "ip6table_mangle" "ip6table_raw" "ip6table_filter" ];
 }

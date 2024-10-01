@@ -1,0 +1,23 @@
+- op: replace
+  path: /spec/template/spec/containers/0/args
+  value:
+  - --multus-conf-file=/host/etc/cni/net.d/11-multus.conf
+  - --cni-conf-dir=/host/etc/cni
+- op: replace
+  path: /spec/template/spec/containers/0/volumeMounts
+  value:
+  - mountPath: /host/etc/cni/net.d/11-multus.conf
+    name: cni
+  - mountPath: /host/etc/cni/multus.d
+    name: multusd
+- op: replace
+  path: /spec/template/spec/volumes
+  value:
+  - name: cni
+    hostPath:
+      path: /etc/cni/net.d/11-multus.conf
+  - name: multusd
+    hostPath:
+      path: /etc/cni/multus.d
+      type: ""
+    

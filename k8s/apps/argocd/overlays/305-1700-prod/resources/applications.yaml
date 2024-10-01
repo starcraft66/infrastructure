@@ -19,7 +19,8 @@ spec:
     path: k8s/apps/argocd/overlays/305-1700-prod
   syncPolicy:
     automated:
-      selfHeal: true
+      selfHeal: false
+    syncOptions:    - SkipDryRunOnMissingResource=true
 # ---
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
@@ -75,7 +76,9 @@ spec:
     path: k8s/apps/cert-manager/overlays/prod
   syncPolicy:
     automated:
-      selfHeal: true
+      selfHeal: false
+    syncOptions:
+    - SkipDryRunOnMissingResource=true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -93,7 +96,9 @@ spec:
     path: k8s/apps/external-dns/overlays/305-1700-prod
   syncPolicy:
     automated:
-      selfHeal: true
+      selfHeal: false
+    syncOptions:
+    - SkipDryRunOnMissingResource=true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -111,7 +116,9 @@ spec:
     path: k8s/apps/traefik/overlays/305-1700-prod
   syncPolicy:
     automated:
-      selfHeal: true
+      selfHeal: false
+    syncOptions:
+    - SkipDryRunOnMissingResource=true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -129,7 +136,9 @@ spec:
     path: k8s/apps/democratic-csi/overlays/305-1700-prod
   syncPolicy:
     automated:
-      selfHeal: true
+      selfHeal: false
+    syncOptions:
+    - SkipDryRunOnMissingResource=true
 # ---
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
@@ -219,8 +228,9 @@ spec:
     path: k8s/apps/cloudnative-pg/overlays/prod
   syncPolicy:
     automated:
-      selfHeal: true
+      selfHeal: false
     syncOptions:
+    - SkipDryRunOnMissingResource=true
     - ServerSideApply=true
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -260,6 +270,8 @@ spec:
   syncPolicy:
     automated:
       selfHeal: false
+    syncOptions:
+    - SkipDryRunOnMissingResource=true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -275,6 +287,24 @@ spec:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
     path: k8s/apps/nvidia-device-plugin/overlays/305-1700-prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: multus
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: kube-system
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/multus/overlays/305-1700-prod
   syncPolicy:
     automated:
       selfHeal: true
