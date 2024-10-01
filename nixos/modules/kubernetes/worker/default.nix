@@ -7,6 +7,10 @@ in {
 
   options.services.tdude.kubernetes.worker = {
     enable = options.mkEnableOption "Enable the kubernetes control-plane role";
+    nvidia.enable = options.mkEnableOption {
+      description = "Enable the nvidia container runtime class";
+      default = false;
+    };
     kube-proxy.enable = options.mkEnableOption {
       description = "Enable the kube-proxy service";
       default = true;

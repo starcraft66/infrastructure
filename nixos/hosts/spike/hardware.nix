@@ -19,6 +19,8 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia-container-toolkit.enable = true;
+  # Very important, needed to expose the GPU driver to containers
+  hardware.opengl.enable = true;
 
   fileSystems."/" =
     { device = "spike/root";

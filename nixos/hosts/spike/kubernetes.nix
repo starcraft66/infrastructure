@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   imports = [
     ../../modules/kubernetes/controlplane
     ../../modules/kubernetes/etcd

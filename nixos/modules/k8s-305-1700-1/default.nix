@@ -58,6 +58,7 @@ in
     services.tdude.kubernetes.etcd.initialClusterState = "new";
     services.tdude.kubernetes.etcd.initialClusterPeers = lib.mapAttrs (name: hostname: { hostname = hostname; }) clusterMembers;
     services.tdude.kubernetes.worker.enable = true;
+    services.tdude.kubernetes.worker.nvidia.enable = true;
     services.tdude.kubernetes.worker.nodeIps = [
       (builtins.elemAt config.networking.interfaces.${cfg.primaryNetworkInterface}.ipv4.addresses 0).address
       (builtins.elemAt config.networking.interfaces.${cfg.primaryNetworkInterface}.ipv6.addresses 0).address

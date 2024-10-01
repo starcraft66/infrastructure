@@ -2,24 +2,36 @@
 
 let
   cfg = config.services.tdude.kubernetes.worker;
-in {
-  environment.systemPackages = lib.mkIf cfg.enable (with pkgs; [ kubectl ]);
-  systemd.tmpfiles.rules = lib.mkIf cfg.enable [
+in lib.mkIf cfg.enable {
+  environment.systemPackages = with pkgs; [ kubectl ];
+  systemd.tmpfiles.rules = [
     "d /var/lib/kubelet/plugins_registry 0700 root root -"
   ];
 
   # Enable entwork filesystems for PVC mounts
   systemd.services.kubelet.path = with pkgs; [ openiscsi ];
-  services.openiscsi = lib.mkIf cfg.enable {
+  services.openiscsi = {
     enable = true;
     name = "iqn.2023-01.net.tdude:${config.networking.hostName}";
   };
-  boot.kernelModules = lib.mkIf cfg.enable [ "nfs" ];
-  boot.supportedFilesystems = lib.mkIf cfg.enable [ "nfs" ];
+  boot.kernelModules = [ "nfs" ];
+  boot.supportedFilesystems = [ "nfs" ];
 
   services.kubernetes.dataDir = "/var/lib/kubelet";
 
-  services.kubernetes.kubelet = lib.mkIf cfg.enable (rec {
+  virtualisation.containerd.settings.plugins."io.containerd.grpc.v1.cri".containerd.runtimes.nvidia = lib.mkIf cfg.nvidia.enable {
+    runtime_type = "io.containerd.runc.v2";
+    runtime_root = "";
+    runtime_engine = "";
+    privileged_without_host_devices = false;
+    options = {
+      BinaryName = "${pkgs.nvidia-container-toolkit}/bin/nvidia-container-runtime";
+    };
+  };
+
+  systemd.services.containerd.path = lib.mkIf cfg.nvidia.enable [ pkgs.libnvidia-container ];
+
+  services.kubernetes.kubelet = rec {
     enable = true;
     address = "::";
     # Must resolve to node IP because the apiserver will use this to reach the kubelet
@@ -44,9 +56,9 @@ in {
     clientCaFile = "/var/lib/secrets/kubernetes/kubernetes-ca.pem";
     tlsCertFile = "/var/lib/secrets/kubernetes/worker.pem";
     tlsKeyFile = "/var/lib/secrets/kubernetes/worker-key.pem";
-  });
+  };
 
-  networking.firewall.allowedTCPPorts = lib.mkIf cfg.enable [
+  networking.firewall.allowedTCPPorts = [
     config.services.kubernetes.kubelet.port
   ];
 }
