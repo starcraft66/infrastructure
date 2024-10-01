@@ -66,6 +66,11 @@
     "eno3.29" = { id = 29; interface = "eno3"; };
   };
 
+  systemd.network.netdevs.dummy0.netdevConfig = {
+    Kind = "dummy";
+    Name = "dummy0";
+  };
+
   networking.interfaces."eno3.29" = let 
     ip = "172.16.29.22";
     gateway = "172.16.29.1";

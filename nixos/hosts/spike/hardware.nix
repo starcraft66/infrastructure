@@ -76,6 +76,11 @@
   # Disable SLAAC, we have a static network configuration
   systemd.network.networks."40-enp8s0".ipv6AcceptRAConfig = { UseAutonomousPrefix = false; };
 
+  systemd.network.netdevs.dummy0.netdevConfig = {
+    Kind = "dummy";
+    Name = "dummy0";
+  };
+
   networking.interfaces."enp8s0" = let
     ip = "172.17.51.16";
     gateway = "172.17.51.1";

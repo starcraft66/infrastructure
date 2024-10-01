@@ -66,6 +66,11 @@
     "enp10s0.29" = { id = 29; interface = "enp10s0"; };
   };
 
+  systemd.network.netdevs.dummy0.netdevConfig = {
+    Kind = "dummy";
+    Name = "dummy0";
+  };
+
   networking.interfaces."enp10s0.29" = let
     ip = "172.16.29.21";
     gateway = "172.16.29.1";

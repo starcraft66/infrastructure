@@ -2,9 +2,9 @@
 let
   cfg = config.services.tdude.kubernetes.worker;
 in
-{
+lib.mkIf cfg.enable {
   services.coredns = {
-    # enable = lib.mkIf cfg.enable true;
+    # enable = true;
     enable = false;
     config = ''
       .:53 {
@@ -29,7 +29,7 @@ in
 
   # Configure resolv.conf to point to local CoreDNS
   # networking.resolvconf.useLocalResolver = lib.mkIf cfg.enable true;
-  services.resolved.dnssec = lib.mkIf cfg.enable "false";
+  services.resolved.dnssec = "false";
 
   # Don't use resolved, use coredns instead
   # services.resolved.enable = lib.mkIf cfg.enable (lib.mkForce false);
@@ -37,16 +37,11 @@ in
   # Using some relatively well-known IP addresses for the local DNS server
   # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html
 
-  systemd.network.netdevs.dummy0.netdevConfig = lib.mkIf (cfg.enable && config.networking.useNetworkd) {
-    Kind = "dummy";
-    Name = "dummy0";
-  };
-
-  networking.interfaces.dummy0.ipv4.addresses = lib.mkIf cfg.enable [
+  networking.interfaces.dummy0.ipv4.addresses = [
     { address = "169.254.169.254"; prefixLength = 32; }
   ];
 
-  networking.interfaces.dummy0.ipv6.addresses = lib.mkIf cfg.enable [
+  networking.interfaces.dummy0.ipv6.addresses = [
     { address = "fd00:ec2::254"; prefixLength = 128; }
   ];
 
@@ -67,14 +62,14 @@ in
 
   # services.kubernetes.kubelet.clusterDns = [ "2a10:4741:36:32:1::2558", "10.234.64.2" ];
 
-  networking.firewall.allowedTCPPorts = lib.mkIf cfg.enable [ 53 ];
-  networking.firewall.allowedUDPPorts = lib.mkIf cfg.enable [ 53 ];
+  networking.firewall.allowedTCPPorts = [ 53 ];
+  networking.firewall.allowedUDPPorts = [ 53 ];
 
-  users.groups.coredns = lib.mkIf cfg.enable { };
-  users.users.coredns = lib.mkIf cfg.enable {
+  users.groups.coredns = { };
+  users.users.coredns = {
     group = "coredns";
     isSystemUser = true;
   };
 
-  systemd.services.coredns.after = lib.mkIf cfg.enable [ "vault-agent-coredns.service" ];
+  systemd.services.coredns.after = [ "vault-agent-coredns.service" ];
 }
