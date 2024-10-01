@@ -1,0 +1,7 @@
+nameOverride: nvidia-device-plugin
+fullnameOverride: nvidia-device-plugin
+
+deviceDiscoveryStrategy: nvml
+runtimeClassName: nvidia
+gfd:
+  enabled: true
