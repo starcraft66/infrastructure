@@ -3,7 +3,7 @@ keys:
 - &argocd-k8s-235 2DADB88EC6EA687971F53F10E9936473C592AEDF
 - &stone 876BE5D8B88B57724CE7DCB184C0FF4EC256ACA1
 creation_rules:
-- path_regex: k8s-235/apps/.*/secrets/.*\.yaml$
+- path_regex: k8s/apps/.*/secrets/.*\.yaml$
   encrypted_regex: '^(data|stringData)$'
   key_groups:
   - pgp:
