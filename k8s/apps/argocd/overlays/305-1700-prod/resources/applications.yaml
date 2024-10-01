@@ -202,24 +202,24 @@ spec:
 #   syncPolicy:
 #     automated:
 #       selfHeal: true
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: cloudnative-pg
-#   namespace: argocd
-# spec:
-#   project: production
-#   destination:
-#     namespace: cnpg
-#     server: https://kubernetes.default.svc
-#   source:
-#     repoURL: https://git.tdude.co/tristan/infrastructure.git
-#     targetRevision: master
-#     path: k8s/apps/cloudnative-pg/overlays/305-1700-prod
-#   syncPolicy:
-#     automated:
-#       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cloudnative-pg
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: cnpg
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/cloudnative-pg/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
