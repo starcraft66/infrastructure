@@ -1,0 +1,13 @@
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/-
+  value:
+    mountPath: /mosquitto/password_file
+    subPath: password_file
+    name: mosquitto-password-file
+- op: add
+  path: /spec/template/spec/volumes/-
+  value:
+    name: mosquitto-password-file
+    secret:
+      secretName: mosquitto-creds
+      defaultMode: 0700

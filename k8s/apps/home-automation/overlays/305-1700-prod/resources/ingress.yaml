@@ -11,6 +11,8 @@ spec:
   ingressClassName: traefik
   tls:
   - hosts:
+    - zwave.305-1700.tdude.co
+    - zigbee.305-1700.tdude.co
     - ha.305-1700.tdude.co
     - files.ha.305-1700.tdude.co
     secretName: home-assistant-cert
@@ -39,6 +41,8 @@ spec:
   ingressClassName: traefik
   tls:
   - hosts:
+    - zwave.305-1700.tdude.co
+    - zigbee.305-1700.tdude.co
     - ha.305-1700.tdude.co
     - files.ha.305-1700.tdude.co
     secretName: home-assistant-cert
@@ -53,3 +57,63 @@ spec:
             name: home-assistant-codeserver
             port:
               name: codeserver
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zigbee2mqtt
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    external-dns.alpha.kubernetes.io/target: "traefik.k8s.305-1700.tdude.co"
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-forward-auth@kubernetescrd
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - zwave.305-1700.tdude.co
+    - zigbee.305-1700.tdude.co
+    - ha.305-1700.tdude.co
+    - files.ha.305-1700.tdude.co
+    secretName: home-assistant-cert
+  rules:
+  - host: zigbee.305-1700.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: zigbee2mqtt
+            port:
+              name: main
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zwavejs2mqtt
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    external-dns.alpha.kubernetes.io/target: "traefik.k8s.305-1700.tdude.co"
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-forward-auth@kubernetescrd
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - zwave.305-1700.tdude.co
+    - zigbee.305-1700.tdude.co
+    - ha.305-1700.tdude.co
+    - files.ha.305-1700.tdude.co
+    secretName: home-assistant-cert
+  rules:
+  - host: zwave.305-1700.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: zwavejs2mqtt
+            port:
+              name: main

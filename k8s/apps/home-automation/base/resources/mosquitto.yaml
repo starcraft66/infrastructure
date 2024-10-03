@@ -1,0 +1,23 @@
+auth:
+  enabled: true
+
+configmap:
+  config:
+    enabled: true
+    data:
+      password.conf: |
+        password_file /mosquitto/password_file
+
+persistence:
+  data:
+    enabled: true
+  configinc:
+    enabled: true
+    mountPath: "/mosquitto/configinc"
+    type: emptyDir
+  auth:
+    enabled: true
+    mountPath: "/mosquitto/configinc/password.conf"
+    subPath: "password.conf"
+    type: configmap
+    objectName: config

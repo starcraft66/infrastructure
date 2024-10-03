@@ -10,7 +10,25 @@ namespace: home-automation
 helmCharts:
 - name: home-assistant
   releaseName: home-assistant
-  valuesFile: ./resources/values.yaml
+  valuesFile: ./resources/home-assistant.yaml
   version: 0.2.79
   repo: http://pajikos.github.io/home-assistant-helm-chart/
+  namespace: home-automation
+- name: mosquitto
+  releaseName: mosquitto
+  valuesFile: ./resources/mosquitto.yaml
+  version: 16.1.11
+  repo: oci://tccr.io/truecharts
+  namespace: home-automation
+- name: zwavejs2mqtt
+  releaseName: zwavejs2mqtt
+  valuesFile: ./resources/zwavejs2mqtt.yaml
+  version: 21.8.0
+  repo: oci://tccr.io/truecharts
+  namespace: home-automation
+- name: zigbee2mqtt
+  releaseName: zigbee2mqtt
+  valuesFile: ./resources/zigbee2mqtt.yaml
+  version: 13.3.4
+  repo: oci://tccr.io/truecharts
   namespace: home-automation

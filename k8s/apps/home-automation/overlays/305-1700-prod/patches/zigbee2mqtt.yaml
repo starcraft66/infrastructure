@@ -1,0 +1,75 @@
+- op: add
+  path: /spec/template/spec/initContainers/0/env/-
+  value:
+    name: ZIGBEE2MQTT_CONFIG_SERIAL_PORT
+    value: "/dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2234262-if00"
+- op: remove
+  path: /spec/template/spec/containers/0/env/12
+- op: remove
+  path: /spec/template/spec/containers/0/env/12
+- op: remove
+  path: /spec/template/spec/initContainers/0/env/12
+- op: remove
+  path: /spec/template/spec/initContainers/0/env/12
+- op: remove
+  path: /spec/template/spec/initContainers/0/env/12
+- op: remove
+  path: /spec/template/spec/initContainers/0/env/12
+- op: remove
+  path: /spec/template/spec/initContainers/0/env/12
+- op: remove
+  path: /spec/template/spec/initContainers/0/env/12
+- op: remove
+  path: /spec/template/spec/initContainers/0/env/12
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: ZIGBEE2MQTT_CONFIG_MQTT_USER
+    valueFrom:
+      secretKeyRef:
+        name: mosquitto-creds
+        key: username
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: mosquitto-creds
+        key: password
+- op: add
+  path: /spec/template/spec/initContainers/0/env/-
+  value:
+    name: ZIGBEE2MQTT_CONFIG_MQTT_USER
+    valueFrom:
+      secretKeyRef:
+        name: mosquitto-creds
+        key: username
+- op: add
+  path: /spec/template/spec/initContainers/0/env/-
+  value:
+    name: ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: mosquitto-creds
+        key: password
+- op: add
+  path: /spec/template/spec/initContainers/0/env/-
+  value:
+    name: ZIGBEE2MQTT_CONFIG_PERMIT_JOIN
+    value: "false"
+- op: add
+  path: /spec/template/spec/initContainers/0/env/-
+  value:
+    name: ZIGBEE2MQTT_CONFIG_MQTT_SERVER
+    value: mqtt://mosquitto
+- op: add
+  path: /spec/template/spec/initContainers/0/env/-
+  value:
+    name: ZIGBEE2MQTT_CONFIG_MQTT_BASE_TOPIC
+    value: zigbee2mqtt
+- op: add
+  path: /spec/template/spec/initContainers/0/env/-
+  value:
+    name: ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER
+    value: deconz

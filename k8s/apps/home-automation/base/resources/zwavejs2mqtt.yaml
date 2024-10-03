@@ -1,0 +1,22 @@
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          resources:
+            requests:
+              squat.ai/zwave: 1
+            limits:
+              squat.ai/zwave: 1
+
+persistence:
+  config:
+    enabled: true
+
+portal:
+  open:
+    enabled: true
+
+securityContext:
+  container:
+    runAsGroup: 27

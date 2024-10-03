@@ -6,6 +6,21 @@ resources:
 
 namespace: home-automation
 
-images:
-- name: ghcr.io/coder/code-server:4.92.2
-  newTag: 4.92.2
+patches:
+- path: ./patches/mosquitto.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: mosquitto
+    namespace: home-automation
+    version: v1
+- path: ./patches/zigbee2mqtt.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: zigbee2mqtt
+    namespace: home-automation
+    version: v1
+
+generators:
+- ./generators/secrets-generator.yaml
