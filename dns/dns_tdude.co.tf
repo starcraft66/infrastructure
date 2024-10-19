@@ -410,7 +410,7 @@ resource "cloudflare_record" "smtp_tdude_co-8831319c8ac7c5fe14007b106ec64abf" {
 resource "cloudflare_record" "soarin_tdude_co-68d3dc90cd44a475929631c7a74f3e3f" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "soarin.235"
-  content = "2a10:4741:36:28::7"
+  content = "2a10:4741:36:29::7"
   type    = "AAAA"
   ttl     = 1
   proxied = false
