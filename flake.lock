@@ -274,6 +274,21 @@
         "type": "github"
       }
     },
+    "just-flake": {
+      "locked": {
+        "lastModified": 1713316411,
+        "narHash": "sha256-NkJfU6H+6vgHkPtZ2ESbZ/h2wnsDQrZvB4vbdUIBx8Q=",
+        "owner": "juspay",
+        "repo": "just-flake",
+        "rev": "0e33952a4bcd16cd54ee3aba8111606c237d4526",
+        "type": "github"
+      },
+      "original": {
+        "owner": "juspay",
+        "repo": "just-flake",
+        "type": "github"
+      }
+    },
     "nixlib": {
       "locked": {
         "lastModified": 1727571693,
@@ -420,6 +435,7 @@
         "deploy-rs": "deploy-rs",
         "flake-compat": "flake-compat_4",
         "flake-parts": "flake-parts_2",
+        "just-flake": "just-flake",
         "nixos": "nixos",
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs",

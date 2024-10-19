@@ -7,6 +7,7 @@
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
     flake-parts.url = "github:hercules-ci/flake-parts";
+    just-flake.url = "github:juspay/just-flake";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixos";
     deploy-rs.url = "github:serokell/deploy-rs";
@@ -27,6 +28,7 @@
 
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
+        inputs.just-flake.flakeModule
       ];
 
       flake = {
@@ -68,8 +70,69 @@
           };
         };
 
+        just-flake.features = {
+          unlock = {
+            enable = true;
+            justfile = let
+              expectFDEUnlock = pkgs.writeScript "expect" ''
+                #!${pkgs.expect}/bin/expect -f
+                log_user 0
+                set timeout 10
+                set server [lindex $argv 0]
+                set password [lindex $argv 1]
+                spawn ssh -t -p2222 -lroot $server -- systemctl default
+                expect "🔐 Please enter passphrase for disk"
+                send "$password\n"
+                interact
+              '';
+              expectVaultUnseal = pkgs.writeScript "expect" ''
+                #!${pkgs.expect}/bin/expect -f
+                set timeout 10
+                set server [lindex $argv 0]
+                set password [lindex $argv 1]
+                spawn ssh -t -lroot $server -- vault operator unseal
+                expect "Unseal Key (will be hidden):"
+                send "$password\n"
+                interact
+              '';
+              unlockScript = pkgs.writeScript "unlock" ''
+                #!/usr/bin/env bash
+                set -e
+                read -s -p "Enter password: " password
+                for host in $@; do
+                  ${expectFDEUnlock} $host $password
+                done
+              '';
+              unsealScript = pkgs.writeScript "unseal" ''
+                #!/usr/bin/env bash
+                set -e
+                read -s -p "Enter password: " password
+                for host in $@; do
+                  ${expectVaultUnseal} $host $password
+                done
+              '';
+            in ''
+              unlock-235:
+                @${unlockScript} stormfeather.235.tdude.co sassaflash.235.tdude.co soarin.235.tdude.co
+
+              unseal-235:
+                @${unsealScript} stormfeather.235.tdude.co sassaflash.235.tdude.co soarin.235.tdude.co
+
+              unlock-305-1700:
+                @${unlockScript} spike.305-1700.tdude.co
+
+              unseal-305-1700:
+                @${unsealScript} spike.305-1700.tdude.co
+            '';
+          };
+        };
+
         devShells.default = pkgs.mkShell {
           name = "infrastructure";
+
+          inputsFrom = [
+            config.just-flake.outputs.devShell
+          ];
 
           nativeBuildInputs = with pkgs; [
             sops-import-keys-hook
