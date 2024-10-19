@@ -603,51 +603,6 @@ resource "cloudflare_record" "spike_305-1700_AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "traefik_305-1700" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "traefik.305-1700.tdude.co"
-  content = "2a10:4741:37:d::2"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "cloud_305-1700" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "cloud.305-1700"
-  content = "traefik.305-1700.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "portainer_305-1700" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "portainer.305-1700"
-  content = "traefik.305-1700.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "ha_305-1700" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "ha.305-1700"
-  content = "traefik.305-1700.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "zwavejs_305-1700" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "zwavejs.305-1700"
-  content = "traefik.305-1700.tdude.co"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
 resource "cloudflare_record" "soyberry" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "soyberry.305-1700"
