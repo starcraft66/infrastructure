@@ -45,14 +45,11 @@
   networking.useDHCP = lib.mkDefault false;
   networking.useNetworkd = lib.mkDefault true;
 
-  # Disable SLAAC on the native vlan
-  # The switch port has its native vlan set to 29
-  # So that initrd networking which doesn't support
-  # vlan configuration afaik can work.
-  # boot.kernel.sysctl = {
-  #   "net.ipv6.conf.eno3.autoconf" = 0;
-  #   "net.ipv6.conf.eno3.accept_ra" = 0; 
-  # };
+  # Disable SLAAC
+  boot.kernel.sysctl = {
+    "net.ipv6.conf.eno3/29.autoconf" = 0;
+    # "net.ipv6.conf.eno3.accept_ra" = 0;
+  };
 
   # Temporary hack to make VLANs create during stage 1
   # initrd networking
@@ -88,7 +85,7 @@
       }
     ];
     ipv6.addresses = [ { address = "2a10:4741:36:29::7"; prefixLength = 64; } ];
-    # v6 assigned via slaac
+    # v6 default route assigned via slaac
   };
 
   networking.interfaces."eno3.28" = {
