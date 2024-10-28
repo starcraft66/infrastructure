@@ -54,6 +54,8 @@
     "net.ipv6.conf.enp10s0.autoconf" = 0;
     "net.ipv6.conf.enp10s0.accept_ra" = 0;
   };
+  systemd.network.networks."40-enp10s0.29".networkConfig.IPv6AcceptRA = "no";
+  systemd.network.networks."40-enp10s0.28".networkConfig.IPv6AcceptRA = "no";
 
   # Temporary hack to make VLANs create during stage 1
   # initrd networking
