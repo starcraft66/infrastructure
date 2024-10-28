@@ -5,3 +5,4 @@
 terraform.tfstate
 terraform.tfstate.*
 charts
+just-flake.just
