@@ -4,6 +4,9 @@ metadata:
   name: logging
 spec:
   fluentd:
+    resources:
+      limits:
+        memory: 3Gi
     bufferStorageVolume:
       pvc:
         spec:
