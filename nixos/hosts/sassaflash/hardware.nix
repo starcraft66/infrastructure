@@ -48,7 +48,11 @@
   # Disable SLAAC
   boot.kernel.sysctl = {
     "net.ipv6.conf.eno1/29.autoconf" = 0;
-    # "net.ipv6.conf.eno1.accept_ra" = 0;
+    "net.ipv6.conf.eno1/29.accept_ra" = 0;
+    "net.ipv6.conf.eno1/28.autoconf" = 0;
+    "net.ipv6.conf.eno1/28.accept_ra" = 0;
+    "net.ipv6.conf.eno1.autoconf" = 0;
+    "net.ipv6.conf.eno1.accept_ra" = 0;
   };
 
   # Temporary hack to make VLANs create during stage 1
@@ -69,23 +73,34 @@
   };
 
   networking.interfaces."eno1.29" = let 
-    ip = "172.16.29.20";
-    gateway = "172.16.29.1";
+    ip4 = "172.16.29.20";
+    gateway4 = "172.16.29.1";
+    ip6 = "2a10:4741:36:29::5";
+    gateway6 = "2a10:4741:36:29::1";
   in {
     tempAddress = "disabled";
-    ipv4.addresses = [ { address = ip; prefixLength = 24; } ];
+    ipv4.addresses = [ { address = ip4; prefixLength = 24; } ];
     ipv4.routes = [
       # Default route
       {
         address = "0.0.0.0";
         prefixLength = 0;
-        via = gateway;
-        options.src = ip;
+        via = gateway4;
+        options.src = ip4;
         options.onlink = "";
       }
     ];
-    ipv6.addresses = [ { address = "2a10:4741:36:29::5"; prefixLength = 64; } ];
-    # v6 default route assigned via slaac
+    ipv6.addresses = [ { address = ip6; prefixLength = 64; } ];
+    ipv6.routes = [
+      # Default route
+      {
+        address = "::";
+        prefixLength = 0;
+        via = gateway6;
+        options.src = ip6;
+        options.onlink = "";
+      }
+    ];
   };
 
   networking.interfaces."eno1.28" = {
