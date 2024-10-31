@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- https://git.tdude.co/tristan/kube-prometheus-k8s-235.git//manifests-305-1700?ref=v1.0.1
+- ./resources/nixos-control-plane.yaml
+
+patches:
+- path: ./patches/ingress-dns.yaml
+  target:
+    kind: Ingress
+    group: networking.k8s.io
+    version: v1
+# https://github.com/prometheus-community/helm-charts/issues/1500 workaround
+- path: patches/argocd-replace-crd.yaml
+  target:
+    group: apiextensions.k8s.io  
+    version: v1
+    kind: CustomResourceDefinition
+    name: prometheuses.monitoring.coreos.com  
+
+generators:
+- ./generators/secrets-generator.yaml

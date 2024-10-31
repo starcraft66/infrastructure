@@ -21,26 +21,26 @@ spec:
     automated:
       selfHeal: false
     syncOptions:    - SkipDryRunOnMissingResource=true
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: monitoring
-#   namespace: argocd
-# spec:
-#   project: production
-#   destination:
-#     namespace: monitoring
-#     server: https://kubernetes.default.svc
-#   source:
-#     repoURL: https://git.tdude.co/tristan/infrastructure.git
-#     targetRevision: master
-#     path: k8s/apps/monitoring/overlays/305-1700-prod
-#   syncPolicy:
-#     automated:
-#       selfHeal: true
-#     syncOptions:
-#     - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/monitoring/overlays/305-1700-prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true
 # ---
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
