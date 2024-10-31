@@ -20,7 +20,8 @@ spec:
   syncPolicy:
     automated:
       selfHeal: false
-    syncOptions:    - SkipDryRunOnMissingResource=true
+    syncOptions:
+    - SkipDryRunOnMissingResource=true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
