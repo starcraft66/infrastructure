@@ -17,7 +17,7 @@
       advertisedPort = 443
 
   [entryPoints.traefik]
-    address = ":9000"
+    address = ":8080"
 
   [entryPoints.metrics]
     address = ":9100"
