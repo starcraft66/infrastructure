@@ -42,6 +42,7 @@
           };
           local-packages = self: super: {
             cni-plugin-cilium = super.callPackage ./nixos/pkgs/cni-plugin-cilium.nix { };
+            alertmanager-discord = super.callPackage ./nixos/pkgs/alertmanager-discord.nix { };
           };
         };
       } // (

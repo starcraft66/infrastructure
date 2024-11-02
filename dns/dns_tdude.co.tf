@@ -362,6 +362,15 @@ resource "cloudflare_record" "legacy_tdude_co-39a6af77e769f2e69db5387e1398af2d" 
   proxied = false
 }
 
+resource "cloudflare_record" "monitoring_tdude_co" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "monitoring"
+  content = "stone.tdude.co"
+  type    = "CNAME"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "STAR_mc_auth_tdude_co-5ee27ab64a29423afad6c2f70ef9d614" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "*.mc.auth"

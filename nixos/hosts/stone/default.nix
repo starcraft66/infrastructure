@@ -8,7 +8,9 @@ rec {
     ./websites.nix
     ./hiddenservice.nix
     ./mailserver.nix
+    ./monitoring.nix
     ./headscale.nix
+    ../../modules/alertmanager-discord
     inputs.sops-nix.nixosModules.sops
     inputs.simple-nixos-mailserver.nixosModules.default
   ];
