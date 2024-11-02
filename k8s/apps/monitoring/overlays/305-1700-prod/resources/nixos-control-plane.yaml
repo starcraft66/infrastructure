@@ -20,9 +20,7 @@ metadata:
     app.kubernetes.io/name: kube-controller-manager
 subsets:
 - addresses:
-  - ip: 2a10:4741:36:29::5 # sassaflash.235.tdude.co
-  - ip: 2a10:4741:36:29::6 # stormfeather.235.tdude.co
-  - ip: 2a10:4741:36:29::7 # soarin.235.tdude.co
+  - ip: 2001:470:b08b:51::16 # spike.305-1700.tdude.co
   ports:
   - name: https-metrics
     port: 10252
@@ -49,9 +47,7 @@ metadata:
     app.kubernetes.io/name: kube-scheduler
 subsets:
 - addresses:
-  - ip: 2a10:4741:36:29::5 # sassaflash.235.tdude.co
-  - ip: 2a10:4741:36:29::6 # stormfeather.235.tdude.co
-  - ip: 2a10:4741:36:29::7 # soarin.235.tdude.co
+  - ip: 2001:470:b08b:51::16 # spike.305-1700.tdude.co
   ports:
   - name: https-metrics
     port: 10251
