@@ -597,7 +597,7 @@ resource "cloudflare_record" "spike_305-1700_A" {
 resource "cloudflare_record" "spike_305-1700_AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "spike.305-1700.tdude.co"
-  content = "2001:470:b08b:51::16"
+  content = "2a10:4741:37:51::16"
   type    = "AAAA"
   ttl     = 1
   proxied = false
