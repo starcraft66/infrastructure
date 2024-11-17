@@ -13,7 +13,7 @@ helmCharts:
 - name: democratic-csi
   # includeCRDs: true
   releaseName: zfs-local-dataset
-  version: 0.14.6
+  version: 0.14.7
   repo: https://democratic-csi.github.io/charts/
   namespace: democratic-csi
   valuesFile: ./resources/values-zfs-local.yaml
