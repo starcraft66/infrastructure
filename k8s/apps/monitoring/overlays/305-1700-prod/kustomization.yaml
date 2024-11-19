@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- https://git.tdude.co/tristan/kube-prometheus-k8s-235.git//manifests-305-1700?ref=v1.0.1
+- https://git.tdude.co/tristan/kube-prometheus-k8s-235.git//manifests-305-1700?ref=v1.1.0
 - ./resources/nixos-control-plane.yaml
 
 patches:
