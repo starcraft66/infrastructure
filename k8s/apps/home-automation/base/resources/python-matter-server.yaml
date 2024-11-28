@@ -24,7 +24,6 @@ spec:
         app.kubernetes.io/component: matter-server
         app.kubernetes.io/part-of: home-automation
     spec:
-      hostNetwork: true
       containers:
       - name: python-matter-server
         image: ghcr.io/home-assistant-libs/python-matter-server:6.6
