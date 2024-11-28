@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: matter-server
+  namespace: homeassistant
+  labels:
+    app.kubernetes.io/name: matter-server
+    app.kubernetes.io/component: matter-server
+    app.kubernetes.io/part-of: home-automation
+spec:
+  serviceName: matter-server
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: matter-server
+      app.kubernetes.io/component: matter-server
+      app.kubernetes.io/part-of: home-automation
+  template:
+    metadata:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: host-bridge
+      labels:
+        app.kubernetes.io/name: matter-server
+        app.kubernetes.io/component: matter-server
+        app.kubernetes.io/part-of: home-automation
+    spec:
+      hostNetwork: true
+      containers:
+      - name: python-matter-server
+        image: ghcr.io/home-assistant-libs/python-matter-server:6.6
+        env:
+        - name: TZ
+          value: "America/Montreal"
+        ports:
+        - name: ws
+          containerPort: 5580
+          protocol: TCP
+        volumeMounts:
+        - name: python-matter-server-data
+          mountPath: /data/
+        resources:
+          requests:
+            cpu: 100m
+            memory: 48Mi
+          limits:
+            memory: 1.5Gi
+      volumes:
+      - name: python-matter-server-data
+        persistentVolumeClaim:
+          claimName: python-matter-server-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matter-server
+  namespace: homeassistant
+  labels:
+    app.kubernetes.io/name: matter-server
+    app.kubernetes.io/component: matter-server
+    app.kubernetes.io/part-of: home-automation
+spec:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+  - IPv6
+  - IPv4
+  ports:
+  - name: ws
+    port: 5580
+    targetPort: ws
+  selector:
+    app.kubernetes.io/name: matter-server
+    app.kubernetes.io/component: matter-server
+    app.kubernetes.io/part-of: home-automation
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: python-matter-server-data
+  namespace: homeassistant
+  labels:
+    app.kubernetes.io/name: matter-server
+    app.kubernetes.io/component: matter-server
+    app.kubernetes.io/part-of: home-automation
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: zfs-local-dataset
+  resources:
+    requests:
+      storage: 500Mi

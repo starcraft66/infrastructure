@@ -4,8 +4,14 @@ resources:
 - ./resources/namespace.yaml
 - ./resources/host-bridge.yaml
 - ./resources/postgres.yaml
+- ./resources/python-matter-server.yaml
 
 namespace: home-automation
+
+images:
+- name: ghcr.io/home-assistant-libs/python-matter-server
+  newName: ghcr.io/home-assistant-libs/python-matter-server
+  newTag: "6.6.1"
 
 helmCharts:
 - name: home-assistant
