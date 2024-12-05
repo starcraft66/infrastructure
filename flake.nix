@@ -1,8 +1,8 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixos.url = "github:nixos/nixpkgs/nixos-24.05";
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
+    nixos.url = "github:nixos/nixpkgs/nixos-24.11";
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
     simple-nixos-mailserver.inputs.nixpkgs.follows = "nixos";
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
