@@ -18,8 +18,6 @@
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
     tdude-website.url = "git+https://git.tdude.co/tristan/www.tdude.co.git";
     tdude-website.inputs.nixpkgs.follows = "nixos";
-    attic.url = "github:zhaofengli/attic";
-    attic.inputs.nixpkgs.follows = "nixos";
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (

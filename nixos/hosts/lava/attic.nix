@@ -17,7 +17,7 @@
     enable = true;
 
     # Replace with absolute path to your credentials file
-    credentialsFile = "/var/lib/secrets/atticd";
+    environmentFile = "/var/lib/secrets/atticd";
 
     settings = {
       listen = "[::1]:58345";

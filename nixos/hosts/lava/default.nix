@@ -9,7 +9,6 @@ rec {
     ./turn.nix
     ./attic.nix
     inputs.sops-nix.nixosModules.sops
-    inputs.attic.nixosModules.atticd
   ];
   nixosInput = inputs.nixos;
   pkgs = import nixosInput {
