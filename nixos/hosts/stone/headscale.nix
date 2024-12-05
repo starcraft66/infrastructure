@@ -10,8 +10,8 @@ in {
       port = 48372;
       settings = {
         server_url = "https://${vpnDomain}";
-        dns_config = {
-          base_domain = vpnDomain;
+        dns = {
+          base_domain = "d.${vpnDomain}";
         };
       };
       settings = { logtail.enabled = false; };
