@@ -17,7 +17,7 @@ helmCharts:
 - name: home-assistant
   releaseName: home-assistant
   valuesFile: ./resources/home-assistant.yaml
-  version: 0.2.88
+  version: 0.2.91
   repo: http://pajikos.github.io/home-assistant-helm-chart/
   namespace: home-automation
 - name: mosquitto
