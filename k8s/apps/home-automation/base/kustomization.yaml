@@ -29,7 +29,7 @@ helmCharts:
 - name: zwavejs2mqtt
   releaseName: zwavejs2mqtt
   valuesFile: ./resources/zwavejs2mqtt.yaml
-  version: 21.15.3
+  version: 21.15.5
   repo: oci://tccr.io/truecharts
   namespace: home-automation
 - name: zigbee2mqtt
