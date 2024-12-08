@@ -7,7 +7,7 @@ resources:
 
 images:
 - name: photoprism/photoprism
-  newTag: "20220121"
+  newTag: "240915"
 
 generators:
 - ./generators/secrets-generator.yaml
