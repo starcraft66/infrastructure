@@ -22,7 +22,7 @@ helmCharts:
 - name: redis
   releaseName: netbox-redis
   version: 20.x
-  repo: https://charts.bitnami.com/bitnami
+  repo: oci://registry-1.docker.io/bitnamicharts
   namespace: netbox
   valuesInline:
     auth:

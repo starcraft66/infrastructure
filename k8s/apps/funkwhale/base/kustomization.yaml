@@ -39,7 +39,7 @@ helmCharts:
 - name: redis
   releaseName: funkwhale-redis
   version: 20.6.1
-  repo: https://charts.bitnami.com/bitnami
+  repo: oci://registry-1.docker.io/bitnamicharts
   namespace: funkwhale
   valuesInline:
     auth:

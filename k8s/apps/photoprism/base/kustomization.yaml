@@ -14,7 +14,7 @@ helmCharts:
   includeCRDs: true
   releaseName: photoprism
   version: 20.2.1
-  repo: https://charts.bitnami.com/bitnami
+  repo: oci://registry-1.docker.io/bitnamicharts
   namespace: photoprism
   valuesInline:
     auth:
