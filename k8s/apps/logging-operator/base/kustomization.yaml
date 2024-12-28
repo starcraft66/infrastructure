@@ -11,7 +11,7 @@ helmCharts:
   includeCRDs: true
   releaseName: logging
   version: 3.17.10
-  repo: https://kubernetes-charts.banzaicloud.com
+  repo: oci://ghcr.io/kube-logging/helm-charts
   namespace: logging
   valuesInline:
     createCustomResource: false
