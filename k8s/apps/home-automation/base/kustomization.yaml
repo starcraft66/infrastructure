@@ -23,7 +23,7 @@ helmCharts:
 - name: mosquitto
   releaseName: mosquitto
   valuesFile: ./resources/mosquitto.yaml
-  version: 16.4.0
+  version: 16.4.1
   repo: oci://tccr.io/truecharts
   namespace: home-automation
 - name: zwavejs2mqtt
