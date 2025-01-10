@@ -285,7 +285,7 @@ resource "cloudflare_record" "firestreak-bmc_235_tdude_co-AAAA" {
 resource "cloudflare_record" "firestreak_storage_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "firestreak.storage.235"
-  content = "2607:fa48:6ed8:8a55:f652:14ff:fea2:89ec"
+  content = "2a10:4741:36:28:f652:14ff:fea2:89ec"
   type    = "AAAA"
   ttl     = 1
   proxied = false
