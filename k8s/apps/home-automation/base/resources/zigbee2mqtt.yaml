@@ -1,3 +1,10 @@
+# https://github.com/Koenkk/zigbee2mqtt/issues/25385#issuecomment-2569870293
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: ["ALL"]
+    add: ["NET_BIND_SERVICE"]
 workload:
   main:
     podSpec:
