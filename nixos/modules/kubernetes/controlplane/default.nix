@@ -71,5 +71,5 @@ in {
     cfg.clusterCidrIpv4
     cfg.clusterCidrIpv6
   ];
-  config.services.kubernetes.package = lib.mkDefault inputs.self.packages.${pkgs.stdenv.system}.kubernetes_1_31_0;
+  config.services.kubernetes.package = lib.mkDefault inputs.self.packages.${pkgs.stdenv.system}.kubernetes_1_32_0;
 }
