@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: attention-attention-deployment
+  labels:
+    app.kubernetes.io/name: attention-attention
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: attention-attention
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: attention-attention
+    spec:
+      containers:
+      - name: attention-attention
+        image: ghcr.io/starcraft66/attention-attention/attention-attention:v1.0.1-x86_64
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: TZ
+          value: America/Toronto
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        envFrom:
+        - secretRef:
+            name: discord-token
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "1Gi"
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          allowPrivilegeEscalation: false

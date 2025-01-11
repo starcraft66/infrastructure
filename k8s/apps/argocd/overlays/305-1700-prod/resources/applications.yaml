@@ -347,3 +347,23 @@ spec:
       selfHeal: false
     syncOptions:
     - SkipDryRunOnMissingResource=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: attention-attention
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: attention-attention
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/attention-attention/overlays/305-1700-prod
+  syncPolicy:
+    automated:
+      selfHeal: false
+    syncOptions:
+    - SkipDryRunOnMissingResource=true
