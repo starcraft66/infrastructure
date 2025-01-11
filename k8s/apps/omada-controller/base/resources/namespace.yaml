@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: omada
+  labels:
+    prometheus: k8s

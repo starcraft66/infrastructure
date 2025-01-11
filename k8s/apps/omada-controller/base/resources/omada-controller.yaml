@@ -1,0 +1,24 @@
+nameOverride: omada-controller
+fullnameOverride: omada-controller
+
+service:
+  omada-tcp:
+    annotations:
+      io.cilium/lb-ipam-sharing-key: omada-controller
+    type: LoadBalancer
+    ipFamilyPolicy: RequireDualStack
+    ipFamilies:
+    - IPv6
+    - IPv4
+  omada-udp:
+    annotations:
+      io.cilium/lb-ipam-sharing-key: omada-controller
+    type: LoadBalancer
+    ipFamilyPolicy: RequireDualStack
+    ipFamilies:
+    - IPv6
+    - IPv4
+
+env:
+- name: TZ
+  value: America/Toronto

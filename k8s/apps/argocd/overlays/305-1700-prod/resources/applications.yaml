@@ -327,3 +327,23 @@ spec:
   syncPolicy:
     automated:
       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: omada-controller
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: omada
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/omada-controller/overlays/305-1700-prod
+  syncPolicy:
+    automated:
+      selfHeal: false
+    syncOptions:
+    - SkipDryRunOnMissingResource=true

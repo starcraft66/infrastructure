@@ -1,0 +1,21 @@
+- op: add
+  path: /spec/ports/0
+  value:
+    name: http
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+- op: add
+  path: /spec/ports/0
+  value:
+    name: main
+    port: 8043
+    protocol: TCP
+    targetPort: 8043
+- op: add
+  path: /spec/ports/0
+  value:
+    name: comm
+    port: 8843
+    protocol: TCP
+    targetPort: 8843

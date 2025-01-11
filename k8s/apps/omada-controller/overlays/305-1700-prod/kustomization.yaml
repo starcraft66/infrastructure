@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+- ./resources/ingress.yaml
+
+namespace: omada
+
+patches:
+# Expose the http/s ports on an LB TP-Link products will connect to and inform to
+# We only use the ingress for the web interface
+- path: ./patches/lb-ports.yaml
+  target:
+    kind: Service
+    name: omada-controller-omada-tcp
+    namespace: omada
+    version: v1
