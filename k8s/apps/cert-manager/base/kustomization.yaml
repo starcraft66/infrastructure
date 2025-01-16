@@ -10,7 +10,7 @@ helmCharts:
 - name: cert-manager
   includeCRDs: true
   releaseName: cert-manager
-  version: v1.16.2
+  version: v1.16.3
   repo: https://charts.jetstack.io
   namespace: cert-manager
   valuesInline:
