@@ -10,6 +10,7 @@ rec {
     ./mailserver.nix
     ./monitoring.nix
     ./headscale.nix
+    ./tunnel.nix
     ../../modules/alertmanager-discord
     inputs.sops-nix.nixosModules.sops
     inputs.simple-nixos-mailserver.nixosModules.default
