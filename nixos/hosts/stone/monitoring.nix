@@ -132,7 +132,7 @@ in {
     settings.server = {
       domain = "monitoring.tdude.co";
       http_port = 3000;
-      http_addr = "[::1]";
+      http_addr = "::1";
     };
   };
 
