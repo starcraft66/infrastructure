@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  # Address of 235-gw on the other side of wg0 to hit its blackbox_exporter
+  tunnel235Address = "2a0c:9a46:636:f0::1";
   # The actual shit to monitor
   icmpTargets = [
     "235.tdude.co" # 235
@@ -9,6 +11,14 @@ let
 
   httpTargets = [
     "example.com"
+  ];
+
+  sshTargets235 = [
+    "stormfeather.235.tdude.co:22"
+    "soarin.235.tdude.co:22"
+    "sassaflash.235.tdude.co:22"
+    "spitfire.235.tdude.co:22"
+    "firestreak.235.tdude.co:22"
   ];
 
   # https://github.com/prometheus/blackbox_exporter/blob/master/CONFIGURATION.md
@@ -99,6 +109,22 @@ let
               description = "The ICMP probe response time for target {{ $labels.instance }} has exceeded 200ms for 5 minutes.";
             };
           }
+
+          # Alert for SSH Probe - fires if SSH probe fails
+          {
+            alert = "SshProbe235GwDown";
+            expr = ''
+              probe_success{job="ssh_probe_235-gw"} == 0
+            '';
+            for = "1m";
+            labels = {
+              severity = "critical";
+            };
+            annotations = {
+              summary = "SSH probe failed for target {{ $labels.instance }}";
+              description = "The SSH probe for target {{ $labels.instance }} has failed for over 1 minute.";
+            };
+          }
         ];
       }
     ];
@@ -159,7 +185,7 @@ in {
       }
     ];
     scrapeConfigs = let
-      mkRelabelConfigs = port: [
+      mkRelabelConfigs = host: port: [
         {
           source_labels = [ "__address__" ];
           target_label = "__param_target";
@@ -170,7 +196,7 @@ in {
         }
         {
           target_label = "__address__";
-          replacement = "localhost:${toString port}";
+          replacement = "${host}:${toString port}";
         }
       ];
       in [
@@ -191,7 +217,7 @@ in {
         static_configs = [{
           targets = httpTargets;
         }];
-        relabel_configs = mkRelabelConfigs 9115;
+        relabel_configs = mkRelabelConfigs "localhost" 9115;
       }
       {
         job_name = "icmp_probe";
@@ -201,7 +227,18 @@ in {
         static_configs = [{
           targets = icmpTargets;
         }];
-        relabel_configs = mkRelabelConfigs 9115;
+        relabel_configs = mkRelabelConfigs "localhost" 9115;
+      }
+      {
+        job_name = "ssh_probe_235-gw";
+        metrics_path = "/probe";
+        scrape_interval = "10s";
+        params.module = [ "ssh_banner" ];
+        static_configs = [{
+          targets = sshTargets235;
+        }];
+
+        relabel_configs = mkRelabelConfigs "[${tunnel235Address}]" 9115;
       }
     ];
   };
