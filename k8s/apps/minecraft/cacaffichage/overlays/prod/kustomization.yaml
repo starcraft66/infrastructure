@@ -4,7 +4,7 @@ namespace: cacaffichage
 
 images:
 - name: itzg/minecraft-server
-  newTag: "java17"
+  newTag: "java21"
 
 resources:
 - ../../../base
