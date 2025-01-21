@@ -108,6 +108,8 @@ configMapGenerator:
   # Disable programmatically pulling dynmap until solution to
   # https://github.com/itzg/docker-minecraft-server/issues/1307 is found
   # - SPIGET_RESOURCES="274,18494"
+  # Supposedly this should work: https://github.com/itzg/docker-minecraft-server/issues/1378#issuecomment-1380252586
+  - MODS="https://dynmap.us/builds/dynmap/Dynmap-3.7-beta-8-spigot.jar"
 - name: discordsrv-config
   files:
   - alerts.yml=files/DiscordSRV/alerts.yml
