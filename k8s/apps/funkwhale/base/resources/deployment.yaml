@@ -42,7 +42,7 @@ spec:
               name: funkwhale
           resources:
             limits:
-              memory: 128Mi
+              memory: 512Mi
             requests:
               cpu: 10m
               memory: 75Mi
