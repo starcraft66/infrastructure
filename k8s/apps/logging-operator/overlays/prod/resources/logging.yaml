@@ -3,18 +3,4 @@ kind: Logging
 metadata:
   name: logging
 spec:
-  fluentd:
-    resources:
-      limits:
-        memory: 3Gi
-    bufferStorageVolume:
-      pvc:
-        spec:
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 10Gi
-          storageClassName: truenas-nfs-spitfire-fast
-          volumeMode: Filesystem
   controlNamespace: logging
