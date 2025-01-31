@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
 - ../../base
+- ./resources/fluentbit.yaml
 - ./resources/elasticsearch.yaml
 - ./resources/ingress.yaml
 - ./resources/output.yaml
