@@ -1,0 +1,11 @@
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: FluentbitAgent
+metadata:
+  name: default
+spec:
+  filterKubernetes:
+    namespace_annotations: "On"
+    namespace_labels: "On"
+  image:
+    repository: ghcr.io/fluent/fluent-bit
+    tag: 3.0.0
