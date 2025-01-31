@@ -21,6 +21,10 @@ storageClasses:
     node-publish-secret:
     controller-expand-secret:
 
+controller:
+  externalSnapshotter:
+    enabled: false
+
 driver:
   config:
     driver: freenas-nfs

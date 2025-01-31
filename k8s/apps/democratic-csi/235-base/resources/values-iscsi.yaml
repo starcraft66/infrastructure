@@ -22,6 +22,8 @@ storageClasses:
     controller-expand-secret:
 
 controller:
+  externalSnapshotter:
+    enabled: false
   externalProvisioner:
     extraArgs:
     - --volume-name-uuid-length=16
