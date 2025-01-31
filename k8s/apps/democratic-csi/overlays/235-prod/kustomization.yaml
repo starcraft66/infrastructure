@@ -23,9 +23,6 @@ images:
 - name: docker.io/democraticcsi/democratic-csi
   newTag: v1.9.3
 
-commonLabels:
-  app.kubernetes.io/name: democratic-csi
-
 patches:
 - path: ./patches/leader-election-namespace.yaml
   target:
