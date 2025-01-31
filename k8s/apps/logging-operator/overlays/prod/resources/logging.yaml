@@ -17,5 +17,4 @@ spec:
               storage: 10Gi
           storageClassName: truenas-nfs-spitfire-fast
           volumeMode: Filesystem
-  fluentbit: {}
   controlNamespace: logging
