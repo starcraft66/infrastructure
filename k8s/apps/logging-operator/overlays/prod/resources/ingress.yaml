@@ -10,10 +10,10 @@ spec:
   ingressClassName: traefik
   tls:
   - hosts:
-    - logs.monitoring.tdude.co
+    - logs.monitoring.235.tdude.co
     secretName: logs-monitoring-tdude-co-tls
   rules:
-  - host: logs.monitoring.tdude.co
+  - host: logs.monitoring.235.tdude.co
     http:
       paths:
       - path: /
@@ -23,13 +23,3 @@ spec:
             name: kibana-kb-http
             port:
               name: https
-  # - host: elasticsearch.elk.nhackindustries.com
-  #   http:
-  #     paths:
-  #     - path: /
-  #       pathType: Prefix
-  #       backend:
-  #         service:
-  #           name: elasticsearch-es-http
-  #           port:
-  #             name: https
