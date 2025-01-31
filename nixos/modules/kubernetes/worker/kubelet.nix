@@ -30,6 +30,11 @@ in lib.mkIf cfg.enable {
   };
 
   systemd.services.containerd.path = lib.mkIf cfg.nvidia.enable [ pkgs.libnvidia-container ];
+  systemd.services.containerd.serviceConfig = {
+    # Applies to all containers spawned
+    # More sane than the default 1024 that causes issues with fluentd
+    LimitNOFILE = 65536;
+  };
 
   services.kubernetes.kubelet = rec {
     enable = true;
