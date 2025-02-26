@@ -4,4 +4,4 @@
   value: "traefik.k8s.305-1700.tdude.co"
 - path: /metadata/annotations/external-dns.alpha.kubernetes.io~1target
   op: add
-  value: "206.172.162.225,2a10:4741:37:88:3::"
+  value: "142.120.167.206,2a10:4741:37:88:3::"
