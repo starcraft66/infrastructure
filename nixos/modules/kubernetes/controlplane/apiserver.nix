@@ -24,6 +24,17 @@ let
         readonly = true;
       };
     };
+
+  # Create the audit policy YAML file
+  auditPolicy = pkgs.writeText "audit-policy.yaml" ''
+    apiVersion: audit.k8s.io/v1
+    kind: Policy
+    rules:
+      - level: RequestResponse
+        resources:
+          - group: kubevirt.io
+            resources: ["VirtualMachineInstancePresets"]
+  '';
 in
 {
   networking.firewall.allowedTCPPorts = lib.mkIf cfg.enable [ 6443 ];
@@ -76,6 +87,9 @@ in
     # Note: You can set this option to blank as --requestheader-allowed-names="".
     # This will indicate to an extension apiserver that any CN is acceptable.
     extraOpts = ''
+      --audit-policy-file=${auditPolicy} \
+      --audit-log-maxage=7 \
+      --audit-log-path=/tmp/kubernetes-audit.log \
       ${lib.optionalString (cfg.oidcIssuerUrl != null) "--oidc-issuer-url=${cfg.oidcIssuerUrl}"} \
       ${lib.optionalString (cfg.oidcClientId != null) "--oidc-client-id=${cfg.oidcClientId}"} \
       --requestheader-client-ca-file=/var/lib/secrets/kubernetes/front-proxy-ca.pem \

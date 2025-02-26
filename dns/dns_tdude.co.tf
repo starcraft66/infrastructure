@@ -703,3 +703,12 @@ resource "cloudflare_dns_record" "k8s-305-1700" {
   ttl     = 1
   proxied = false
 }
+
+resource "cloudflare_dns_record" "ups_235" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "ups.235"
+  content = "2a10:4741:36:24:2c0:b7ff:fe59:bb6d"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}

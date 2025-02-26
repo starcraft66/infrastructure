@@ -116,6 +116,8 @@
 
   networking.nameservers = [ "2a10:4741:36:25::1" "172.32.25.1" ];
 
+  services.tdude.ups-235.enable = true;
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
