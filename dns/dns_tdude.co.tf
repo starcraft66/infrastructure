@@ -1,10 +1,12 @@
 resource "cloudflare_zone" "tdude_co" {
-  zone       = "tdude.co"
-  account_id = "2b4b7b075ea5f723e423aaee08c09e4d"
+  name = "tdude.co"
+  account = {
+    id = "2b4b7b075ea5f723e423aaee08c09e4d"
+  }
   # id = "c802e5f57a27af705373d5d3570649f0"
 }
 
-resource "cloudflare_record" "cadvisor_bedrock_tdude_co" {
+resource "cloudflare_dns_record" "cadvisor_bedrock_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "cadvisor.lava"
   content = "traefik.lava.tdude.co"
@@ -13,7 +15,7 @@ resource "cloudflare_record" "cadvisor_bedrock_tdude_co" {
   proxied = false
 }
 
-resource "cloudflare_record" "fleetfoot-ilo_tdude_co" {
+resource "cloudflare_dns_record" "fleetfoot-ilo_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "fleetfoot-ilo.235"
   content = "2a10:4741:36:24:29c:2ff:fea5:346c"
@@ -22,7 +24,7 @@ resource "cloudflare_record" "fleetfoot-ilo_tdude_co" {
   proxied = false
 }
 
-resource "cloudflare_record" "stormfeather-ilo_tdude_co" {
+resource "cloudflare_dns_record" "stormfeather-ilo_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stormfeather-ilo.235"
   content = "2a10:4741:36:24:b6b5:2fff:feef:9766"
@@ -31,7 +33,7 @@ resource "cloudflare_record" "stormfeather-ilo_tdude_co" {
   proxied = false
 }
 
-resource "cloudflare_record" "sassaflash-ilo_tdude_co" {
+resource "cloudflare_dns_record" "sassaflash-ilo_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "sassaflash-ilo.235"
   content = "2a10:4741:36:24:b6b5:2fff:fee9:cd36"
@@ -40,7 +42,7 @@ resource "cloudflare_record" "sassaflash-ilo_tdude_co" {
   proxied = false
 }
 
-resource "cloudflare_record" "k8s-235" {
+resource "cloudflare_dns_record" "k8s-235" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "k8s.235"
   content = "2a10:4741:36:29::8:1"
@@ -49,7 +51,7 @@ resource "cloudflare_record" "k8s-235" {
   proxied = false
 }
 
-resource "cloudflare_record" "registry_tdude_co-CNAME" {
+resource "cloudflare_dns_record" "registry_tdude_co-CNAME" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "registry"
   content = "traefik.lava.tdude.co"
@@ -58,7 +60,7 @@ resource "cloudflare_record" "registry_tdude_co-CNAME" {
   proxied = false
 }
 
-resource "cloudflare_record" "git_tdude_co-15e863f9cc46997d6dff0c6f6d9d6b8b" {
+resource "cloudflare_dns_record" "git_tdude_co-15e863f9cc46997d6dff0c6f6d9d6b8b" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "git"
   content = "traefik.lava.tdude.co"
@@ -67,7 +69,7 @@ resource "cloudflare_record" "git_tdude_co-15e863f9cc46997d6dff0c6f6d9d6b8b" {
   proxied = false
 }
 
-resource "cloudflare_record" "lolisafe_tdude_co-9452bcc45958fa18bd91f1e3c4c5db6d" {
+resource "cloudflare_dns_record" "lolisafe_tdude_co-9452bcc45958fa18bd91f1e3c4c5db6d" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "lolisafe"
   content = "traefik.lava.tdude.co"
@@ -76,7 +78,7 @@ resource "cloudflare_record" "lolisafe_tdude_co-9452bcc45958fa18bd91f1e3c4c5db6d
   proxied = false
 }
 
-resource "cloudflare_record" "soarin-ilo_tdude_co" {
+resource "cloudflare_dns_record" "soarin-ilo_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "soarin-ilo.235"
   content = "2a10:4741:36:24:29c:2ff:fe9b:abf2"
@@ -85,7 +87,7 @@ resource "cloudflare_record" "soarin-ilo_tdude_co" {
   proxied = false
 }
 
-resource "cloudflare_record" "stone_tdude_co-9998baa886c316c0567b2cfbd3865b9f" {
+resource "cloudflare_dns_record" "stone_tdude_co-9998baa886c316c0567b2cfbd3865b9f" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
   content = "158.69.211.121"
@@ -94,7 +96,7 @@ resource "cloudflare_record" "stone_tdude_co-9998baa886c316c0567b2cfbd3865b9f" {
   proxied = false
 }
 
-resource "cloudflare_record" "vpn_tdude_co" {
+resource "cloudflare_dns_record" "vpn_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "vpn"
   content = "stone.tdude.co"
@@ -103,7 +105,7 @@ resource "cloudflare_record" "vpn_tdude_co" {
   proxied = false
 }
 
-resource "cloudflare_record" "tdude_co-1661589aaef2dd9259f07d22951c6f35" {
+resource "cloudflare_dns_record" "tdude_co-1661589aaef2dd9259f07d22951c6f35" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "tdude.co"
   content = "158.69.211.121"
@@ -112,7 +114,7 @@ resource "cloudflare_record" "tdude_co-1661589aaef2dd9259f07d22951c6f35" {
   proxied = false
 }
 
-resource "cloudflare_record" "www_tdude_co-87e4f41d905d3b6116f38c416dbbd036" {
+resource "cloudflare_dns_record" "www_tdude_co-87e4f41d905d3b6116f38c416dbbd036" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "www"
   content = "158.69.211.121"
@@ -120,7 +122,7 @@ resource "cloudflare_record" "www_tdude_co-87e4f41d905d3b6116f38c416dbbd036" {
   ttl     = 1
   proxied = false
 }
-resource "cloudflare_record" "_235-gw_235_tdude_co-f7e5fb3735adc924b4e04b0887a65270" {
+resource "cloudflare_dns_record" "_235-gw_235_tdude_co-f7e5fb3735adc924b4e04b0887a65270" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "235-gw.235"
   content = "2a10:4741:33:1::2"
@@ -129,7 +131,7 @@ resource "cloudflare_record" "_235-gw_235_tdude_co-f7e5fb3735adc924b4e04b0887a65
   proxied = false
 }
 
-resource "cloudflare_record" "_235_tdude_co-b73dce106a455e5ba493ea51f4ac61b6" {
+resource "cloudflare_dns_record" "_235_tdude_co-b73dce106a455e5ba493ea51f4ac61b6" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "235"
   content = "2a10:4741:33:1::2"
@@ -138,7 +140,7 @@ resource "cloudflare_record" "_235_tdude_co-b73dce106a455e5ba493ea51f4ac61b6" {
   proxied = false
 }
 
-resource "cloudflare_record" "_305-1700-gw_305-1700_tdude_co-55c277d95f2b6c7d6d077a3732742e5e" {
+resource "cloudflare_dns_record" "_305-1700-gw_305-1700_tdude_co-55c277d95f2b6c7d6d077a3732742e5e" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "305-1700-gw.305-1700"
   content = "2a10:4741:33:2::2"
@@ -147,7 +149,7 @@ resource "cloudflare_record" "_305-1700-gw_305-1700_tdude_co-55c277d95f2b6c7d6d0
   proxied = false
 }
 
-resource "cloudflare_record" "_305-1700_tdude_co-1bdb980fa9e481c74caf8dd3d3030848" {
+resource "cloudflare_dns_record" "_305-1700_tdude_co-1bdb980fa9e481c74caf8dd3d3030848" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "305-1700"
   content = "2a10:4741:33:2::2"
@@ -156,7 +158,7 @@ resource "cloudflare_record" "_305-1700_tdude_co-1bdb980fa9e481c74caf8dd3d303084
   proxied = false
 }
 
-resource "cloudflare_record" "auth_lava_tdude_co" {
+resource "cloudflare_dns_record" "auth_lava_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "auth.lava"
   content = "traefik.lava.tdude.co"
@@ -165,7 +167,7 @@ resource "cloudflare_record" "auth_lava_tdude_co" {
   proxied = false
 }
 
-resource "cloudflare_record" "stormfeather_235_tdude_co_AAAA" {
+resource "cloudflare_dns_record" "stormfeather_235_tdude_co_AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stormfeather.235"
   content = "2a10:4741:36:29::6"
@@ -174,7 +176,7 @@ resource "cloudflare_record" "stormfeather_235_tdude_co_AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "sassaflash_235_tdude_co_AAAA" {
+resource "cloudflare_dns_record" "sassaflash_235_tdude_co_AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "sassaflash.235"
   content = "2a10:4741:36:29::5"
@@ -183,7 +185,7 @@ resource "cloudflare_record" "sassaflash_235_tdude_co_AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "fleetfoot_235_tdude_co-0682464601437aabb4960f25ecb9b1b4" {
+resource "cloudflare_dns_record" "fleetfoot_235_tdude_co-0682464601437aabb4960f25ecb9b1b4" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "fleetfoot.235"
   content = "2a10:4741:36:29:7c53:9eff:fe70:7df3"
@@ -192,7 +194,7 @@ resource "cloudflare_record" "fleetfoot_235_tdude_co-0682464601437aabb4960f25ecb
   proxied = false
 }
 
-resource "cloudflare_record" "grafana_lava_tdude_co" {
+resource "cloudflare_dns_record" "grafana_lava_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "grafana.lava"
   content = "traefik.lava.tdude.co"
@@ -201,7 +203,7 @@ resource "cloudflare_record" "grafana_lava_tdude_co" {
   proxied = false
 }
 
-resource "cloudflare_record" "inspiron530_260_tdude_co-54898725081cdac5098dffb842814fed" {
+resource "cloudflare_dns_record" "inspiron530_260_tdude_co-54898725081cdac5098dffb842814fed" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "inspiron530.260"
   content = "2607:fa48:6eca:a751:ac0:5b71:3ca0:a163"
@@ -210,7 +212,7 @@ resource "cloudflare_record" "inspiron530_260_tdude_co-54898725081cdac5098dffb84
   proxied = false
 }
 
-resource "cloudflare_record" "monitor_lava_tdude_co" {
+resource "cloudflare_dns_record" "monitor_lava_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "monitor.lava"
   content = "traefik.lava.tdude.co"
@@ -219,7 +221,7 @@ resource "cloudflare_record" "monitor_lava_tdude_co" {
   proxied = false
 }
 
-resource "cloudflare_record" "stone_tdude_co-8e4a8fb614f12b4a8e2bada62a41396b" {
+resource "cloudflare_dns_record" "stone_tdude_co-8e4a8fb614f12b4a8e2bada62a41396b" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
   content = "2607:5300:201:3100::7e8c"
@@ -228,7 +230,7 @@ resource "cloudflare_record" "stone_tdude_co-8e4a8fb614f12b4a8e2bada62a41396b" {
   proxied = false
 }
 
-resource "cloudflare_record" "tdude_co-c65f52f200afd91efed739ab5122adf1" {
+resource "cloudflare_dns_record" "tdude_co-c65f52f200afd91efed739ab5122adf1" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "tdude.co"
   content = "2607:5300:201:3100::7e8c"
@@ -237,7 +239,7 @@ resource "cloudflare_record" "tdude_co-c65f52f200afd91efed739ab5122adf1" {
   proxied = false
 }
 
-resource "cloudflare_record" "spitfire_235_tdude_co-AAAA" {
+resource "cloudflare_dns_record" "spitfire_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "spitfire.235"
   content = "2a10:4741:36:29:225:90ff:fe86:9cd6"
@@ -246,7 +248,7 @@ resource "cloudflare_record" "spitfire_235_tdude_co-AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "spitfire-bmc_235_tdude_co-AAAA" {
+resource "cloudflare_dns_record" "spitfire-bmc_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "spitfire-bmc.235"
   content = "2a10:4741:36:24:0225:90ff:fe86:fb4c"
@@ -255,7 +257,7 @@ resource "cloudflare_record" "spitfire-bmc_235_tdude_co-AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "spitfire_storage_235_tdude_co-AAAA" {
+resource "cloudflare_dns_record" "spitfire_storage_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "spitfire.storage.235"
   content = "2a10:4741:36:28:e61d:2dff:fe90:80fe"
@@ -264,7 +266,7 @@ resource "cloudflare_record" "spitfire_storage_235_tdude_co-AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "firestreak_235_tdude_co-AAAA" {
+resource "cloudflare_dns_record" "firestreak_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "firestreak.235"
   content = "2a10:4741:36:29:225:90ff:fe86:9cd2"
@@ -273,7 +275,7 @@ resource "cloudflare_record" "firestreak_235_tdude_co-AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "firestreak-bmc_235_tdude_co-AAAA" {
+resource "cloudflare_dns_record" "firestreak-bmc_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "firestreak-bmc.235"
   content = "2a10:4741:36:24:0225:90ff:fe86:fb4a"
@@ -282,7 +284,7 @@ resource "cloudflare_record" "firestreak-bmc_235_tdude_co-AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "firestreak_storage_235_tdude_co-AAAA" {
+resource "cloudflare_dns_record" "firestreak_storage_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "firestreak.storage.235"
   content = "2a10:4741:36:28:f652:14ff:fea2:89ec"
@@ -291,7 +293,7 @@ resource "cloudflare_record" "firestreak_storage_235_tdude_co-AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "www_tdude_co-110da07cb7c67be474675d1b2b7a6af6" {
+resource "cloudflare_dns_record" "www_tdude_co-110da07cb7c67be474675d1b2b7a6af6" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "www"
   content = "2607:5300:201:3100::7e8c"
@@ -300,10 +302,10 @@ resource "cloudflare_record" "www_tdude_co-110da07cb7c67be474675d1b2b7a6af6" {
   proxied = false
 }
 
-resource "cloudflare_record" "tdude_co-7dec68f62be8c7fd1afc990a62611dfd" {
+resource "cloudflare_dns_record" "tdude_co-7dec68f62be8c7fd1afc990a62611dfd" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "tdude.co"
-  data {
+  data = {
     flags = 0
     tag   = "iodef"
     value = "mailto:tristan@tdude.co"
@@ -313,10 +315,10 @@ resource "cloudflare_record" "tdude_co-7dec68f62be8c7fd1afc990a62611dfd" {
   proxied = false
 }
 
-resource "cloudflare_record" "tdude_co-62ff3f5817cd2f7a41790bb0ad4d24c1" {
+resource "cloudflare_dns_record" "tdude_co-62ff3f5817cd2f7a41790bb0ad4d24c1" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "tdude.co"
-  data {
+  data = {
     flags = 0
     tag   = "issue"
     value = "letsencrypt.org"
@@ -326,7 +328,7 @@ resource "cloudflare_record" "tdude_co-62ff3f5817cd2f7a41790bb0ad4d24c1" {
   proxied = false
 }
 
-resource "cloudflare_record" "bunker_tdude_co-81c215b5dfa5022bba6f7d87199d1986" {
+resource "cloudflare_dns_record" "bunker_tdude_co-81c215b5dfa5022bba6f7d87199d1986" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "bunker"
   content = "guillaumemercier.com"
@@ -335,7 +337,7 @@ resource "cloudflare_record" "bunker_tdude_co-81c215b5dfa5022bba6f7d87199d1986" 
   proxied = false
 }
 
-resource "cloudflare_record" "fleetfoot_tdude_co-7f7bb593122417df90d1af665407b0ce" {
+resource "cloudflare_dns_record" "fleetfoot_tdude_co-7f7bb593122417df90d1af665407b0ce" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "fleetfoot"
   content = "235.tdude.co"
@@ -344,7 +346,7 @@ resource "cloudflare_record" "fleetfoot_tdude_co-7f7bb593122417df90d1af665407b0c
   proxied = false
 }
 
-resource "cloudflare_record" "imap_tdude_co-4f31c8d9fb1291a080af75741456cae6" {
+resource "cloudflare_dns_record" "imap_tdude_co-4f31c8d9fb1291a080af75741456cae6" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "imap"
   content = "tdude.co"
@@ -353,7 +355,7 @@ resource "cloudflare_record" "imap_tdude_co-4f31c8d9fb1291a080af75741456cae6" {
   proxied = false
 }
 
-resource "cloudflare_record" "legacy_tdude_co-39a6af77e769f2e69db5387e1398af2d" {
+resource "cloudflare_dns_record" "legacy_tdude_co-39a6af77e769f2e69db5387e1398af2d" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "legacy"
   content = "stone.tdude.co"
@@ -362,7 +364,7 @@ resource "cloudflare_record" "legacy_tdude_co-39a6af77e769f2e69db5387e1398af2d" 
   proxied = false
 }
 
-resource "cloudflare_record" "monitoring_tdude_co" {
+resource "cloudflare_dns_record" "monitoring_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "monitoring"
   content = "stone.tdude.co"
@@ -371,7 +373,7 @@ resource "cloudflare_record" "monitoring_tdude_co" {
   proxied = false
 }
 
-resource "cloudflare_record" "STAR_mc_auth_tdude_co-5ee27ab64a29423afad6c2f70ef9d614" {
+resource "cloudflare_dns_record" "STAR_mc_auth_tdude_co-5ee27ab64a29423afad6c2f70ef9d614" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "*.mc.auth"
   content = "235.tdude.co"
@@ -380,7 +382,7 @@ resource "cloudflare_record" "STAR_mc_auth_tdude_co-5ee27ab64a29423afad6c2f70ef9
   proxied = false
 }
 
-resource "cloudflare_record" "STAR_mcdev_auth_tdude_co-d8e71bc4d0eb37fe5e3a60d19df768e6" {
+resource "cloudflare_dns_record" "STAR_mcdev_auth_tdude_co-d8e71bc4d0eb37fe5e3a60d19df768e6" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "*.mcdev.auth"
   content = "305-1700.tdude.co"
@@ -389,7 +391,7 @@ resource "cloudflare_record" "STAR_mcdev_auth_tdude_co-d8e71bc4d0eb37fe5e3a60d19
   proxied = false
 }
 
-resource "cloudflare_record" "STAR_localhost4_tdude_co-CNAME" {
+resource "cloudflare_dns_record" "STAR_localhost4_tdude_co-CNAME" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "*.localhost4"
   content = "localhost4.tdude.co"
@@ -398,7 +400,7 @@ resource "cloudflare_record" "STAR_localhost4_tdude_co-CNAME" {
   proxied = false
 }
 
-resource "cloudflare_record" "localhost4_tdude_co-A" {
+resource "cloudflare_dns_record" "localhost4_tdude_co-A" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "localhost4"
   content = "127.0.0.1"
@@ -407,7 +409,7 @@ resource "cloudflare_record" "localhost4_tdude_co-A" {
   proxied = false
 }
 
-resource "cloudflare_record" "smtp_tdude_co-8831319c8ac7c5fe14007b106ec64abf" {
+resource "cloudflare_dns_record" "smtp_tdude_co-8831319c8ac7c5fe14007b106ec64abf" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "smtp"
   content = "tdude.co"
@@ -416,7 +418,7 @@ resource "cloudflare_record" "smtp_tdude_co-8831319c8ac7c5fe14007b106ec64abf" {
   proxied = false
 }
 
-resource "cloudflare_record" "soarin_tdude_co-68d3dc90cd44a475929631c7a74f3e3f" {
+resource "cloudflare_dns_record" "soarin_tdude_co-68d3dc90cd44a475929631c7a74f3e3f" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "soarin.235"
   content = "2a10:4741:36:29::7"
@@ -425,7 +427,7 @@ resource "cloudflare_record" "soarin_tdude_co-68d3dc90cd44a475929631c7a74f3e3f" 
   proxied = false
 }
 
-resource "cloudflare_record" "tdude_co-7a0081a70287ca28d715fca5b75d14b8" {
+resource "cloudflare_dns_record" "tdude_co-7a0081a70287ca28d715fca5b75d14b8" {
   zone_id  = cloudflare_zone.tdude_co.id
   name     = "tdude.co"
   content  = "stone.tdude.co"
@@ -435,10 +437,10 @@ resource "cloudflare_record" "tdude_co-7a0081a70287ca28d715fca5b75d14b8" {
   proxied  = false
 }
 
-resource "cloudflare_record" "stone_tdude_co-2179ebef8a058bba0e28d359c8bea8ed" {
+resource "cloudflare_dns_record" "stone_tdude_co-2179ebef8a058bba0e28d359c8bea8ed" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
-  data {
+  data = {
     algorithm   = 1
     fingerprint = "EE92EB97F26A9CE1B9C4452F429708B5BEFB1EC3"
     type        = 1
@@ -448,10 +450,10 @@ resource "cloudflare_record" "stone_tdude_co-2179ebef8a058bba0e28d359c8bea8ed" {
   proxied = false
 }
 
-resource "cloudflare_record" "stone_tdude_co-f7eab1022b4fa2ea46c02d454ec60fd9" {
+resource "cloudflare_dns_record" "stone_tdude_co-f7eab1022b4fa2ea46c02d454ec60fd9" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
-  data {
+  data = {
     algorithm   = 1
     fingerprint = "5A905B9C8F5E8A9FB8B03B50CC33480A5FE3BB4865E5D7A724F9FCE7BFD2F7F3"
     type        = 2
@@ -461,10 +463,10 @@ resource "cloudflare_record" "stone_tdude_co-f7eab1022b4fa2ea46c02d454ec60fd9" {
   proxied = false
 }
 
-resource "cloudflare_record" "stone_tdude_co-d8d0c4a3f9343987ed015d04c9fde84c" {
+resource "cloudflare_dns_record" "stone_tdude_co-d8d0c4a3f9343987ed015d04c9fde84c" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
-  data {
+  data = {
     algorithm   = 3
     fingerprint = "78AEFE1AA58613C12494D80A0C11E216CF685F0B"
     type        = 1
@@ -474,10 +476,10 @@ resource "cloudflare_record" "stone_tdude_co-d8d0c4a3f9343987ed015d04c9fde84c" {
   proxied = false
 }
 
-resource "cloudflare_record" "stone_tdude_co-26756bbbe9a8d030ff95e98b8a094c54" {
+resource "cloudflare_dns_record" "stone_tdude_co-26756bbbe9a8d030ff95e98b8a094c54" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
-  data {
+  data = {
     algorithm   = 3
     fingerprint = "7ECB56E084127FDDCA1C7907FF5F6F2060540A5012B35D745FE5DDA96D494773"
     type        = 2
@@ -487,10 +489,10 @@ resource "cloudflare_record" "stone_tdude_co-26756bbbe9a8d030ff95e98b8a094c54" {
   proxied = false
 }
 
-resource "cloudflare_record" "stone_tdude_co-54891e7099e62a0309807495d5c2b331" {
+resource "cloudflare_dns_record" "stone_tdude_co-54891e7099e62a0309807495d5c2b331" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
-  data {
+  data = {
     algorithm   = 4
     fingerprint = "9F8843F8F6525551397ED50C114F6E55964CA466"
     type        = 1
@@ -500,10 +502,10 @@ resource "cloudflare_record" "stone_tdude_co-54891e7099e62a0309807495d5c2b331" {
   proxied = false
 }
 
-resource "cloudflare_record" "stone_tdude_co-7355b626ba8aa8028c6871fa64f5dae9" {
+resource "cloudflare_dns_record" "stone_tdude_co-7355b626ba8aa8028c6871fa64f5dae9" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stone"
-  data {
+  data = {
     algorithm   = 4
     fingerprint = "C2EBF70430B5CAB202C80D390A80C2A53859898055D81094B7ED3E386884926B"
     type        = 2
@@ -513,7 +515,7 @@ resource "cloudflare_record" "stone_tdude_co-7355b626ba8aa8028c6871fa64f5dae9" {
   proxied = false
 }
 
-resource "cloudflare_record" "_201608__domainkey_tdude_co-e93f862066906dc624a65310026c16cc" {
+resource "cloudflare_dns_record" "_201608__domainkey_tdude_co-e93f862066906dc624a65310026c16cc" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "201608._domainkey"
   content = "v=DKIM1; k=rsa; s=email; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyxeUzz+l0IQZG0Nn7CJgroSmazG4p0azC1nyydwkZ9nKQ0H5en9dNClX8Epw6onyn8sqYpQQoBhW/TgMBjvmFZp9zOZxddCxgR3vAckeTUtiLR7F4hI339xyXhQgnVsQNCglTGaz27ca/WXVByp13A5cqXnu1V7r+9xVlteXrs2OdCehtDRnRfWBZR13yifeKTLUWJ444T5K4wjqRf5oApJKTcLi6S+fVK3eDJ2hm0Yvre1vMrJhz+zoLvUNyujxZAlkx+Me/bFxqTu3dFSUo8ySaWaNhBPu1CePQ4Jc+1AoRAUOz2sx5SyT12s/0dBa3gJnP2SKCzHZTjERNfiPHwIDAQAB"
@@ -522,7 +524,7 @@ resource "cloudflare_record" "_201608__domainkey_tdude_co-e93f862066906dc624a653
   proxied = false
 }
 
-resource "cloudflare_record" "dkim_tdude_mail" {
+resource "cloudflare_dns_record" "dkim_tdude_mail" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "mail._domainkey"
   content = "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtqUHIM6dE7luX9HkKb9jZb6rxX2BSRYZMFEnf3gLtKRn4t20Y08TttIOAyiymHcGTwG6osChbnvRMZKff+NjlI7MfVVH0+hRgc0mJKWXjzIRkTUXOr9aTDmujwnYCfpJ/mCcckqNjBI4HaDBSo1i6glWinmm8U8zKORmp3SCMYttc0pTxs0Z7Lm9nJBFGxcqZEzANRHYkMLbfLM9+Khol1VnzFZZfSGag+bHRvNyhIJ+AXNLvdHoObEAa2RHm+yQUHmL+uH/La60kUhVSgDenlPivbjX/XXxqMudFJ1FDHI/JHtqzhYGFYhHGjDDMvh4Jg+MI1IxBqEPYuedt/v2+QIDAQAB"
@@ -531,7 +533,7 @@ resource "cloudflare_record" "dkim_tdude_mail" {
   proxied = false
 }
 
-resource "cloudflare_record" "tdude_co_spf" {
+resource "cloudflare_dns_record" "tdude_co_spf" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "@"
   content = "v=spf1 mx -all"
@@ -540,7 +542,7 @@ resource "cloudflare_record" "tdude_co_spf" {
   proxied = false
 }
 
-resource "cloudflare_record" "_dmarc_tdude_co-4de172137b73fb7c61bcfa72f2aad7db" {
+resource "cloudflare_dns_record" "_dmarc_tdude_co-4de172137b73fb7c61bcfa72f2aad7db" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "_dmarc"
   content = "v=DMARC1; p=none; fo=d; adkim=s; aspf=r"
@@ -549,7 +551,7 @@ resource "cloudflare_record" "_dmarc_tdude_co-4de172137b73fb7c61bcfa72f2aad7db" 
   proxied = false
 }
 
-resource "cloudflare_record" "tdude_co-1c2a6f94ff74d3f858a9a0f0b7e5f45f" {
+resource "cloudflare_dns_record" "tdude_co-1c2a6f94ff74d3f858a9a0f0b7e5f45f" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "tdude.co"
   content = "google-site-verification=-ng_xi5Q6NBrXbeKYkm2nf3qC622567dqciT7BYKS8Y"
@@ -558,7 +560,7 @@ resource "cloudflare_record" "tdude_co-1c2a6f94ff74d3f858a9a0f0b7e5f45f" {
   proxied = false
 }
 
-resource "cloudflare_record" "bedrock_tdude_co-A" {
+resource "cloudflare_dns_record" "bedrock_tdude_co-A" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "bedrock"
   content = "135.181.141.143"
@@ -567,7 +569,7 @@ resource "cloudflare_record" "bedrock_tdude_co-A" {
   proxied = false
 }
 
-resource "cloudflare_record" "bedrock_tdude_co-AAAA" {
+resource "cloudflare_dns_record" "bedrock_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "bedrock"
   content = "2a01:4f9:3a:15b0::2"
@@ -576,7 +578,7 @@ resource "cloudflare_record" "bedrock_tdude_co-AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "traefik_bedrock_tdude_co-A" {
+resource "cloudflare_dns_record" "traefik_bedrock_tdude_co-A" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "traefik.bedrock.tdude.co"
   content = "135.181.141.143"
@@ -585,7 +587,7 @@ resource "cloudflare_record" "traefik_bedrock_tdude_co-A" {
   proxied = false
 }
 
-resource "cloudflare_record" "traefik_bedrock_tdude_co-AAAA" {
+resource "cloudflare_dns_record" "traefik_bedrock_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "traefik.bedrock.tdude.co"
   content = "2a01:4f9:3a:15b0:8::2"
@@ -594,7 +596,7 @@ resource "cloudflare_record" "traefik_bedrock_tdude_co-AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "spike_305-1700_A" {
+resource "cloudflare_dns_record" "spike_305-1700_A" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "spike.305-1700.tdude.co"
   content = "172.17.51.16"
@@ -603,7 +605,7 @@ resource "cloudflare_record" "spike_305-1700_A" {
   proxied = false
 }
 
-resource "cloudflare_record" "spike_305-1700_AAAA" {
+resource "cloudflare_dns_record" "spike_305-1700_AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "spike.305-1700.tdude.co"
   content = "2a10:4741:37:51::16"
@@ -612,7 +614,7 @@ resource "cloudflare_record" "spike_305-1700_AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "soyberry" {
+resource "cloudflare_dns_record" "soyberry" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "soyberry.305-1700"
   content = "2a10:4741:37:51:dea6:32ff:fe99:a276"
@@ -621,7 +623,7 @@ resource "cloudflare_record" "soyberry" {
   proxied = false
 }
 
-resource "cloudflare_record" "borgbackup_235" {
+resource "cloudflare_dns_record" "borgbackup_235" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "borgbackup.235"
   content = "2a10:4741:36:29:25:90ff:fe69:277d"
@@ -630,7 +632,7 @@ resource "cloudflare_record" "borgbackup_235" {
   proxied = false
 }
 
-resource "cloudflare_record" "vault-235" {
+resource "cloudflare_dns_record" "vault-235" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "vault.235"
   content = "2a10:4741:36:29::9:1"
@@ -639,7 +641,7 @@ resource "cloudflare_record" "vault-235" {
   proxied = false
 }
 
-resource "cloudflare_record" "lava_tdude_co-A" {
+resource "cloudflare_dns_record" "lava_tdude_co-A" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "lava"
   content = "65.109.116.164"
@@ -648,7 +650,7 @@ resource "cloudflare_record" "lava_tdude_co-A" {
   proxied = false
 }
 
-resource "cloudflare_record" "lava_tdude_co-AAAA" {
+resource "cloudflare_dns_record" "lava_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "lava"
   content = "2a01:4f9:3051:104f::1"
@@ -657,7 +659,7 @@ resource "cloudflare_record" "lava_tdude_co-AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "traefik_lava_tdude_co-A" {
+resource "cloudflare_dns_record" "traefik_lava_tdude_co-A" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "traefik.lava.tdude.co"
   content = "65.109.116.164"
@@ -666,7 +668,7 @@ resource "cloudflare_record" "traefik_lava_tdude_co-A" {
   proxied = false
 }
 
-resource "cloudflare_record" "traefik_lava_tdude_co-AAAA" {
+resource "cloudflare_dns_record" "traefik_lava_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "traefik.lava.tdude.co"
   content = "2a01:4f9:3051:104f:8::2"
@@ -675,7 +677,7 @@ resource "cloudflare_record" "traefik_lava_tdude_co-AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "nixcache_tdude_co-AAAA" {
+resource "cloudflare_dns_record" "nixcache_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "nixcache.tdude.co"
   content = "2a01:4f9:3051:104f::2"
@@ -684,7 +686,7 @@ resource "cloudflare_record" "nixcache_tdude_co-AAAA" {
   proxied = false
 }
 
-resource "cloudflare_record" "vault-305-1700" {
+resource "cloudflare_dns_record" "vault-305-1700" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "vault.305-1700"
   content = "2a10:4741:37:51::9:1"
@@ -693,7 +695,7 @@ resource "cloudflare_record" "vault-305-1700" {
   proxied = false
 }
 
-resource "cloudflare_record" "k8s-305-1700" {
+resource "cloudflare_dns_record" "k8s-305-1700" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "k8s.305-1700"
   content = "2a10:4741:37:51::8:1"
