@@ -10,3 +10,9 @@
     apiGroups: ["externaldns.k8s.io"]
     resources: ["dnsendpoints/status"]
     verbs: ["*"]
+- op: add
+  path: /rules/-
+  value:
+    apiGroups: ["gateway.networking.k8s.io"]
+    resources: ["gateways","httproutes","tlsroutes","tcproutes","udproutes"] 
+    verbs: ["get","watch","list"]

@@ -15,6 +15,18 @@
   value: --source=crd
 - op: add
   path: /spec/template/spec/containers/0/args/-
+  value: --source=gateway-httproute
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: --source=gateway-tlsroute
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: --source=gateway-tcproute
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: --source=gateway-udproute
+- op: add
+  path: /spec/template/spec/containers/0/args/-
   value: --log-level=debug
 - op: add
   path: /spec/template/spec/containers/0/args/-
