@@ -37,6 +37,19 @@ resource "vault_identity_oidc_client" "oauth2-proxy-k8s" {
   access_token_ttl = 7200
 }
 
+resource "vault_identity_oidc_client" "envoy-gateway-k8s" {
+  name        = "envoy-gateway-${var.cluster_id}"
+  client_type = "confidential"
+  redirect_uris = [
+    var.envoy_gateway_redirect_uri,
+  ]
+  assignments = [
+    var.oidc_allowed_users_assignment_name,
+  ]
+  id_token_ttl     = 2400
+  access_token_ttl = 7200
+}
+
 resource "vault_identity_oidc_client" "kubernetes" {
   name        = "kubernetes-${var.cluster_id}"
   client_type = "public"

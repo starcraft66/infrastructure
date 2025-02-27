@@ -6,27 +6,30 @@ resource "vault_mount" "pki_front-proxy" {
 }
 
 resource "vault_pki_secret_backend_root_cert" "front-proxy" {
-  depends_on            = [vault_mount.pki_front-proxy]
-  backend               = vault_mount.pki_front-proxy.path
-  type                  = "internal"
-  common_name           = "${var.cluster_id}/pki/front-proxy"
-  ttl                   = "315360000"
-  format                = "pem"
-  private_key_format    = "der"
-  key_type              = "rsa"
-  key_bits              = 4096
-  exclude_cn_from_sans  = true
+  depends_on           = [vault_mount.pki_front-proxy]
+  backend              = vault_mount.pki_front-proxy.path
+  type                 = "internal"
+  common_name          = "${var.cluster_id}/pki/front-proxy"
+  ttl                  = "315360000"
+  format               = "pem"
+  private_key_format   = "der"
+  key_type             = "rsa"
+  key_bits             = 4096
+  exclude_cn_from_sans = true
+  count                = var.generate_root_certs ? 1 : 0
 }
 
 resource "vault_pki_secret_backend_issuer" "front-proxy" {
-  backend     = vault_pki_secret_backend_root_cert.front-proxy.backend
-  issuer_ref  = vault_pki_secret_backend_root_cert.front-proxy.issuer_id
+  backend    = vault_pki_secret_backend_root_cert.front-proxy[0].backend
+  issuer_ref = vault_pki_secret_backend_root_cert.front-proxy[0].issuer_id
+  count      = var.generate_root_certs ? 1 : 0
 }
 
 resource "vault_pki_secret_backend_config_issuers" "front-proxy" {
   backend                       = vault_mount.pki_front-proxy.path
-  default                       = vault_pki_secret_backend_issuer.front-proxy.issuer_id
+  default                       = vault_pki_secret_backend_issuer.front-proxy[0].issuer_id
   default_follows_latest_issuer = true
+  count                         = var.generate_root_certs ? 1 : 0
 }
 
 resource "vault_pki_secret_backend_role" "role_front-proxy_client" {

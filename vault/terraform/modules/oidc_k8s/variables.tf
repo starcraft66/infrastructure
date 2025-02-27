@@ -8,6 +8,11 @@ variable "oauth2_proxy_redirect_uri" {
   type        = string
 }
 
+variable "envoy_gateway_redirect_uri" {
+  description = "The redirect URI for the Envoy Gateway OIDC client"
+  type        = string
+}
+
 variable "grafana_redirect_uri" {
   description = "The redirect URI for the Grafana OIDC client"
   type        = string
