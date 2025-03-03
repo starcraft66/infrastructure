@@ -152,4 +152,4 @@ find k8s/**/secrets/*.yaml -name '*.yaml' | xargs -i sops updatekeys -y {}
 include::dns/README.adoc[leveloffset=+1]
 
 // Kubernetes chapter
-include::k8s-235/README.adoc[leveloffset=+1]
+include::k8s/README.adoc[leveloffset=+1]
