@@ -367,3 +367,21 @@ spec:
       selfHeal: false
     syncOptions:
     - SkipDryRunOnMissingResource=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minecraft-gtnh
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: gtnh
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/minecraft/gtnh/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: false
