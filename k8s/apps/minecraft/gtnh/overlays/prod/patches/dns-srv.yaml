@@ -3,4 +3,4 @@
   value: _minecraft._tcp.gtnh.tdude.co
 - op: replace
   path: /spec/endpoints/0/targets/0
-  value: "1 1 12350 gtnh.k8s.235.tdude.co"
+  value: "1 1 12350 gtnh.k8s.305-1700.tdude.co"
