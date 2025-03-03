@@ -4,7 +4,7 @@ namespace: gtnh
 
 images:
 - name: itzg/minecraft-server
-  newTag: "java8-multiarch"
+  newTag: "java21"
 
 resources:
 - ../../../base
@@ -56,7 +56,7 @@ configMapGenerator:
   literals:
   - EULA=TRUE
   - TYPE=CURSEFORGE
-  - CF_SERVER_MOD=GTNewHorizonsServer-1.7.10-2.1.2.3.zip
+  - CF_SERVER_MOD=GT_New_Horizons_2.7.3_Server_Java_17-21.zip
   - CF_BASE_DIR=/data
   - DIFFICULTY=hard
   - ICON=""
