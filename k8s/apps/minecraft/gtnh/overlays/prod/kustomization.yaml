@@ -55,9 +55,9 @@ configMapGenerator:
 - name: minecraft-env-vars
   literals:
   - EULA=TRUE
-  - TYPE=CURSEFORGE
-  - CF_SERVER_MOD=GT_New_Horizons_2.7.3_Server_Java_17-21.zip
-  - CF_BASE_DIR=/data
+  - TYPE=FORGE
+  - VERSION=1.7.10
+  - FORGE_VERSION=10.13.4.1614
   - DIFFICULTY=hard
   - ICON=""
   - MAX_PLAYERS=20
