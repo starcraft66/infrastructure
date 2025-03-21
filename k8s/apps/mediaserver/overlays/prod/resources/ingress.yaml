@@ -21,6 +21,7 @@ spec:
     - qbittorrent.tdude.co
     - tautulli.tdude.co
     - mediaserver.tdude.co
+    - requests.mediaserver.tdude.co
     secretName: mediaserver-k8s-235-tdude-co-tls
   rules:
   - host: sonarr.tdude.co
@@ -108,16 +109,6 @@ spec:
   tls:
   - secretName: mediaserver-k8s-235-tdude-co-tls
   rules:
-  - host: mediaserver.tdude.co
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: overseerr
-            port:
-              name: http
   - host: plex.tdude.co
     http:
       paths:
@@ -128,3 +119,37 @@ spec:
             name: kube-plex
             port:
               name: pms
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mediaserver-public
+  annotations:
+  # Provisioned by cert-manager in the ingress above
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    external-dns.alpha.kubernetes.io/target: "traefik.k8s.235.tdude.co"
+spec:
+  ingressClassName: traefik
+  tls:
+  - secretName: mediaserver-k8s-235-tdude-co-tls
+  rules:
+  - host: requests.mediaserver.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: overseerr
+            port:
+              name: http
+  - host: mediaserver.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jellyfin
+            port:
+              name: http

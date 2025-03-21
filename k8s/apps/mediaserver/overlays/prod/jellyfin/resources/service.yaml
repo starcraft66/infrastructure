@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: jellyfin
+  name: jellyfin
+spec:
+  # Container doesn't seem to listen on ipv6??
+  ipFamilyPolicy: SingleStack
+  # ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+  # - IPv6
+  - IPv4
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  selector:
+    app.kubernetes.io/name: jellyfin
+  type: ClusterIP

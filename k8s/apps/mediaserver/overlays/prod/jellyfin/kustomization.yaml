@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ./resources/nfs-volume.yaml
+- ./resources/volume.yaml
+- ./resources/service.yaml
+- ./resources/monitoring.yaml
+
+commonLabels:
+  app.kubernetes.io/name: jellyfin
+
+images:
+- name: ghcr.io/jellyfin/jellyfin
+  newTag: "10.10.6"

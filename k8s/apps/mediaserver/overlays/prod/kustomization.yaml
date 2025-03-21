@@ -12,6 +12,7 @@ resources:
 - ./qbittorrent
 - ./tautulli
 - ./overseerr
+- ./jellyfin
 
 namespace: mediaserver
 

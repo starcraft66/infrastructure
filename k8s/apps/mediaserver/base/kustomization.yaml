@@ -10,6 +10,7 @@ resources:
 - ./resources/qbittorrent.yaml
 - ./resources/tautulli.yaml
 - ./resources/overseerr.yaml
+- ./resources/jellyfin.yaml
 - ./resources/pvc.yaml
 - ./resources/rbac.yaml
 - ./resources/namespace.yaml
