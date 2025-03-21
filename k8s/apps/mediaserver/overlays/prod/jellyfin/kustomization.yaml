@@ -8,7 +8,3 @@ resources:
 
 commonLabels:
   app.kubernetes.io/name: jellyfin
-
-images:
-- name: ghcr.io/jellyfin/jellyfin
-  newTag: "10.10.6"

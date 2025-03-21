@@ -31,3 +31,7 @@ configMapGenerator:
   literals:
   - PUID=1014
   - PGID=1015
+
+images:
+- name: ghcr.io/jellyfin/jellyfin
+  newTag: "10.10.6"
