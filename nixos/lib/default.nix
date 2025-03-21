@@ -66,6 +66,10 @@
         #   }
         # ];
         template = templates;
+        template_config = {
+          # Re-render the template (issue certificates) at 2/3 of the lease duration (their lifetime)
+          lease_renewal_threshold = 0.66;
+        };
         pid_file = if role != null then "/var/lib/secrets/${component}/vault-agent-${component}-${role}.pid" else "/var/lib/secrets/${component}/vault-agent-${component}.pid";
         vault = [
           {
