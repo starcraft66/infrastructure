@@ -19,7 +19,7 @@ spec:
     spec:
       hostname: "jellyfin"
       containers:
-      - name: plex
+      - name: jellyfin
         image: "ghcr.io/jellyfin/jellyfin:2025031705"
         imagePullPolicy: IfNotPresent
         readinessProbe:
