@@ -17,13 +17,13 @@ in {
 
   services.vault-agent.instances.kubernetes-worker = lib.mkIf cfg.enable
     (mkVaultAgentInstance "kubernetes" "control-plane" pki.vaultURL pki.vaultSNI [
-      (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/kube-proxy-complete.pem" [ "kube-proxy" ]
+      (lib.mkIf cfg.kube-proxy.enable (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/kube-proxy-complete.pem" [ "kube-proxy" ]
         (mkKubernetesCertificateTemplate pki.clusterName "kube-proxy" {
           pkiRole = "client-system:node-proxier";
           commonName = "system:kube-proxy";
           altNames = [ ];
           ipSans = [ ];
-        }))
+        })))
       (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/worker-complete.pem" [ "kubelet" ]
         (mkKubernetesCertificateTemplate pki.clusterName "worker" {
           pkiRole = "peer-system:nodes";
