@@ -34,4 +34,4 @@ configMapGenerator:
 
 images:
 - name: ghcr.io/jellyfin/jellyfin
-  newTag: "10.10.6"
+  newTag: "10.10.7"
