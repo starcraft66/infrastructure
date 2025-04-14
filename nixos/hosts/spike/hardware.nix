@@ -18,6 +18,9 @@
   services.zfs.autoScrub.enable = true;
 
   services.xserver.videoDrivers = [ "nvidia" ];
+
+  # Not supported on this GPU
+  hardware.nvidia.open = false;
   hardware.nvidia-container-toolkit.enable = true;
   # Very important, needed to expose the GPU driver to containers
   hardware.opengl.enable = true;
