@@ -46,7 +46,7 @@ prometheus:
 
 kubeProxyReplacement: "true"
 # k8s.235.tdude.co
-k8sServiceHost: "2a10:4741:37:51::8:1"
+k8sServiceHost: "2a0c:9a46:637:51::8:1"
 k8sServicePort: 443
 
 # Enable native routing (no tunelling)

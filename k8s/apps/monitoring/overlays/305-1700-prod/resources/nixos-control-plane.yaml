@@ -20,7 +20,7 @@ metadata:
     app.kubernetes.io/name: kube-controller-manager
 subsets:
 - addresses:
-  - ip: 2a10:4741:37:51::16 # spike.305-1700.tdude.co
+  - ip: 2a0c:9a46:637:51::16 # spike.305-1700.tdude.co
   ports:
   - name: https-metrics
     port: 10252
@@ -47,7 +47,7 @@ metadata:
     app.kubernetes.io/name: kube-scheduler
 subsets:
 - addresses:
-  - ip: 2a10:4741:37:51::16 # spike.305-1700.tdude.co
+  - ip: 2a0c:9a46:637:51::16 # spike.305-1700.tdude.co
   ports:
   - name: https-metrics
     port: 10251

@@ -608,7 +608,7 @@ resource "cloudflare_dns_record" "spike_305-1700_A" {
 resource "cloudflare_dns_record" "spike_305-1700_AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "spike.305-1700.tdude.co"
-  content = "2a10:4741:37:51::16"
+  content = "2a0c:9a46:637:51::16"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -617,7 +617,7 @@ resource "cloudflare_dns_record" "spike_305-1700_AAAA" {
 resource "cloudflare_dns_record" "soyberry" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "soyberry.305-1700"
-  content = "2a10:4741:37:51:dea6:32ff:fe99:a276"
+  content = "2a0c:9a46:637:51:dea6:32ff:fe99:a276"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -689,7 +689,7 @@ resource "cloudflare_dns_record" "nixcache_tdude_co-AAAA" {
 resource "cloudflare_dns_record" "vault-305-1700" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "vault.305-1700"
-  content = "2a10:4741:37:51::9:1"
+  content = "2a0c:9a46:637:51::9:1"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -698,7 +698,7 @@ resource "cloudflare_dns_record" "vault-305-1700" {
 resource "cloudflare_dns_record" "k8s-305-1700" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "k8s.305-1700"
-  content = "2a10:4741:37:51::8:1"
+  content = "2a0c:9a46:637:51::8:1"
   type    = "AAAA"
   ttl     = 1
   proxied = false

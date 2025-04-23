@@ -3,23 +3,23 @@
 let
   clusterName = "k8s-305-1700-1";
   clusterCidrIpv4 = "10.235.128.0/18";
-  clusterCidrIpv6 = "2a10:4741:37:88:2::/104";
+  clusterCidrIpv6 = "2a0c:9a46:637:88:2::/104";
   serviceCidrIpv4 = "10.235.64.0/18";
-  serviceCidrIpv6 = "2a10:4741:37:88:1::/112";
-  apiserverK8sSvcAdresses = [ "10.235.64.1" "2a10:4741:37:88:1::1" ];
+  serviceCidrIpv6 = "2a0c:9a46:637:88:1::/112";
+  apiserverK8sSvcAdresses = [ "10.235.64.1" "2a0c:9a46:637:88:1::1" ];
   oidcIssuerUrl = "https://vault.305-1700.tdude.co/v1/identity/oidc/provider/default";
   oidcClientId = "hJ6PJMNvxsEzL7UMHQUev1bziLbxFdPO";
   clusterMembers = {
     spike = "spike.305-1700.tdude.co";
   };
-  dnsResolvers = [ "2a10:4741:37:88:1::2" "10.235.64.2" ];
+  dnsResolvers = [ "2a0c:9a46:637:88:1::2" "10.235.64.2" ];
   vaultAgentVaultURL = "https://[::1]:8200";
   vaultAgentVaultSNI = "vault.305-1700.tdude.co";
   lbK8sIpv4Address = "172.17.51.8";
-  lbK8sIpv6Address = "2a10:4741:37:51::8:1";
+  lbK8sIpv6Address = "2a0c:9a46:637:51::8:1";
   lbK8sDomain = "k8s.305-1700.tdude.co";
   lbVaultIpv4Address = "172.17.51.9";
-  lbVaultIpv6Address = "2a10:4741:37:51::9:1";
+  lbVaultIpv6Address = "2a0c:9a46:637:51::9:1";
   lbVaultDomain = "vault.305-1700.tdude.co";
   cfg = config.services.tdude.k8s-305-1700-1;
 in

@@ -102,20 +102,20 @@
         options.onlink = "";
       }
     ];
-    ipv6.addresses = [ { address = "2a10:4741:37:51::16"; prefixLength = 64; } ];
+    ipv6.addresses = [ { address = "2a0c:9a46:637:51::16"; prefixLength = 64; } ];
     ipv6.routes = [
       # Default route
       {
         address = "::";
         prefixLength = 0;
-        via = "2a10:4741:37:51::1";
-        options.src = "2a10:4741:37:51::16";
+        via = "2a0c:9a46:637:51::1";
+        options.src = "2a0c:9a46:637:51::16";
         options.onlink = "";
       }
     ];
   };
 
-  networking.nameservers = [ "2a10:4741:37:51::1" "172.17.51.1" ];
+  networking.nameservers = [ "2a0c:9a46:637:51::1" "172.17.51.1" ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
