@@ -153,7 +153,7 @@ resource "cloudflare_dns_record" "_305-1700-gw_305-1700_tdude_co-55c277d95f2b6c7
 resource "cloudflare_dns_record" "_305-1700_tdude_co-1bdb980fa9e481c74caf8dd3d3030848" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "305-1700.tdude.co"
-  content = "2a10:4741:33:2::2"
+  content = "2a0c:9a46:633:2::2"
   type    = "AAAA"
   ttl     = 1
   proxied = false
