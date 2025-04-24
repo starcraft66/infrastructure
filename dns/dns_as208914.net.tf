@@ -12,7 +12,7 @@ resource "cloudflare_zone" "as208914_net" {
 
 resource "cloudflare_dns_record" "lg_as208914_net-AAAA" {
   zone_id = cloudflare_zone.as208914_net.id
-  name    = "lg"
+  name    = "lg.as208914.net"
   content = "2a10:4741:32::1"
   type    = "AAAA"
   ttl     = 1
@@ -21,7 +21,7 @@ resource "cloudflare_dns_record" "lg_as208914_net-AAAA" {
 
 resource "cloudflare_dns_record" "yyz-r1_as208914_net-AAAA" {
   zone_id = cloudflare_zone.as208914_net.id
-  name    = "yyz-r1"
+  name    = "yyz-r1.as208914.net"
   content = "2a10:4741:33::1"
   type    = "AAAA"
   ttl     = 1
@@ -30,7 +30,7 @@ resource "cloudflare_dns_record" "yyz-r1_as208914_net-AAAA" {
 
 resource "cloudflare_dns_record" "yyz-r1_backdoor_as208914_net-AAAA" {
   zone_id = cloudflare_zone.as208914_net.id
-  name    = "yyz-r1.backdoor"
+  name    = "yyz-r1.backdoor.as208914.net"
   content = "2001:19f0:b001:9ad:5400:4ff:fe8e:d98e"
   type    = "AAAA"
   ttl     = 1
@@ -39,7 +39,7 @@ resource "cloudflare_dns_record" "yyz-r1_backdoor_as208914_net-AAAA" {
 
 resource "cloudflare_dns_record" "yyz-r1_backdoor_as208914_net-A" {
   zone_id = cloudflare_zone.as208914_net.id
-  name    = "yyz-r1.backdoor"
+  name    = "yyz-r1.backdoor.as208914.net"
   content = "137.220.55.38"
   type    = "A"
   ttl     = 1
@@ -48,7 +48,7 @@ resource "cloudflare_dns_record" "yyz-r1_backdoor_as208914_net-A" {
 
 resource "cloudflare_dns_record" "ams-r1_as208914_net-AAAA" {
   zone_id = cloudflare_zone.as208914_net.id
-  name    = "ams-r1"
+  name    = "ams-r1.as208914.net"
   content = "2a10:4741:38::1"
   type    = "AAAA"
   ttl     = 1
@@ -57,7 +57,7 @@ resource "cloudflare_dns_record" "ams-r1_as208914_net-AAAA" {
 
 resource "cloudflare_dns_record" "ams-r1_backdoor_as208914_net-AAAA" {
   zone_id = cloudflare_zone.as208914_net.id
-  name    = "ams-r1.backdoor"
+  name    = "ams-r1.backdoor.as208914.net"
   content = "2a0c:9a40:1072::706"
   type    = "AAAA"
   ttl     = 1
@@ -66,7 +66,7 @@ resource "cloudflare_dns_record" "ams-r1_backdoor_as208914_net-AAAA" {
 
 resource "cloudflare_dns_record" "ams-r1_backdoor_as208914_net-A" {
   zone_id = cloudflare_zone.as208914_net.id
-  name    = "ams-r1.backdoor"
+  name    = "ams-r1.backdoor.as208914.net"
   content = "193.148.248.216"
   type    = "A"
   ttl     = 1
@@ -85,7 +85,7 @@ resource "cloudflare_dns_record" "mail" {
 
 resource "cloudflare_dns_record" "geo_as208914_net-CNAME" {
   zone_id = cloudflare_zone.as208914_net.id
-  name    = "geo"
+  name    = "geo.as208914.net"
   content = "starcraft66.github.io"
   type    = "CNAME"
   ttl     = 1
@@ -94,7 +94,7 @@ resource "cloudflare_dns_record" "geo_as208914_net-CNAME" {
 
 resource "cloudflare_dns_record" "dkim_as208914_net" {
   zone_id = cloudflare_zone.as208914_net.id
-  name    = "201608._domainkey"
+  name    = "201608._domainkey.as208914.net"
   content = "v=DKIM1; k=rsa; s=email; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyxeUzz+l0IQZG0Nn7CJgroSmazG4p0azC1nyydwkZ9nKQ0H5en9dNClX8Epw6onyn8sqYpQQoBhW/TgMBjvmFZp9zOZxddCxgR3vAckeTUtiLR7F4hI339xyXhQgnVsQNCglTGaz27ca/WXVByp13A5cqXnu1V7r+9xVlteXrs2OdCehtDRnRfWBZR13yifeKTLUWJ444T5K4wjqRf5oApJKTcLi6S+fVK3eDJ2hm0Yvre1vMrJhz+zoLvUNyujxZAlkx+Me/bFxqTu3dFSUo8ySaWaNhBPu1CePQ4Jc+1AoRAUOz2sx5SyT12s/0dBa3gJnP2SKCzHZTjERNfiPHwIDAQAB"
   type    = "TXT"
   ttl     = 1
@@ -102,8 +102,8 @@ resource "cloudflare_dns_record" "dkim_as208914_net" {
 }
 
 resource "cloudflare_dns_record" "dkim_as208914_mail" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "mail._domainkey"
+  zone_id = cloudflare_zone.as208914_net.id
+  name    = "mail._domainkey.as208914.net"
   content = "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzxbexjYz/71o/Ci7XIofTWZNEphc/0a4RVzVV3wX7tocZISGew2w+6+bPWScJJ7SsHSHyd8q99EgWl6XZJQu8otMOJJa5EPOZ/UolEB7z9zS1nK2eq/BQMLJfrT0yeti73fe2qsphpEfKoMxMTBF73y/Gn+A6uC12/CCgPncioR6kwAdbl5S/vZ+0Vt0Kyx0PpXgF/mjaEuUGHbTtA7cqdOdDFVjXVI6/+J7qVhV8AYyAebbS/l0/SHoFHQpxQRNr4iZ71KwNEXCewANNqoiGBXLzIH9+N/obZ+qWaF1siUVUfPZwG2ahGgM3QZENySX+N6/7jRdl+MZT5CROLjVgQIDAQAB"
   type    = "TXT"
   ttl     = 1

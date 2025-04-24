@@ -16,7 +16,7 @@ resource "cloudflare_dns_record" "shitsta_in-4f4799fae5fde1ad79648fc0d33c7df2" {
 
 resource "cloudflare_dns_record" "www_shitsta_in-3af6dcfe4bbd6279024e017eedc4c8c9" {
   zone_id = cloudflare_zone.shitsta_in.id
-  name    = "www"
+  name    = "www.shitsta.in"
   content = "158.69.211.121"
   type    = "A"
   ttl     = 1
@@ -34,7 +34,7 @@ resource "cloudflare_dns_record" "shitsta_in-9b9b29824b41802c9e8a16ac226214d1" {
 
 resource "cloudflare_dns_record" "www_shitsta_in-c1590f325d584763e05763b0d356ea80" {
   zone_id = cloudflare_zone.shitsta_in.id
-  name    = "www"
+  name    = "www.shitsta.in"
   content = "2607:5300:201:3100::7e8c"
   type    = "AAAA"
   ttl     = 1
