@@ -126,7 +126,7 @@ resource "cloudflare_dns_record" "www_tdude_co-87e4f41d905d3b6116f38c416dbbd036"
 resource "cloudflare_dns_record" "_235-gw_235_tdude_co-f7e5fb3735adc924b4e04b0887a65270" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "235-gw.235.tdude.co"
-  content = "2a10:4741:33:1::2"
+  content = "2a0c:9a46:633:1::2"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -135,7 +135,7 @@ resource "cloudflare_dns_record" "_235-gw_235_tdude_co-f7e5fb3735adc924b4e04b088
 resource "cloudflare_dns_record" "_235_tdude_co-b73dce106a455e5ba493ea51f4ac61b6" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "235.tdude.co"
-  content = "2a10:4741:33:1::2"
+  content = "2a0c:9a46:633:1::2"
   type    = "AAAA"
   ttl     = 1
   proxied = false
