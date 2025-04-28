@@ -12,6 +12,7 @@ in
   sops.secrets."mailserver-hashedpw-tristan@tdude.co" = { };
   sops.secrets."mailserver-hashedpw-git@tdude.co" = { };
   sops.secrets."mailserver-hashedpw-ups-235@tdude.co" = { };
+  sops.secrets."mailserver-hashedpw-paperless@tdude.co" = { };
 
   services.monit = {
     config = lib.mkBefore ''
@@ -46,6 +47,9 @@ in
       };
       "ups-235@tdude.co" = {
         hashedPasswordFile = config.sops.secrets."mailserver-hashedpw-ups-235@tdude.co".path;
+      };
+      "paperless@tdude.co" = {
+        hashedPasswordFile = config.sops.secrets."mailserver-hashedpw-paperless@tdude.co".path;
       };
     };
     extraVirtualAliases = {
