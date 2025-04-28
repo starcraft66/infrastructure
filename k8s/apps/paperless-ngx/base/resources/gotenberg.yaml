@@ -1,0 +1,92 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gotenberg
+  labels:
+    app.kubernetes.io/name: gotenberg
+    app.kubernetes.io/instance: gotenberg
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: gotenberg
+    app.kubernetes.io/instance: gotenberg
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gotenberg
+  labels:
+    app.kubernetes.io/name: gotenberg
+    app.kubernetes.io/instance: gotenberg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gotenberg
+      app.kubernetes.io/instance: gotenberg
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gotenberg
+        app.kubernetes.io/instance: gotenberg
+    spec:
+      securityContext: {}
+      volumes:
+      - name: sec-ctx-vol
+        emptyDir: {}
+      containers:
+        - name: gotenberg
+          command:
+          - "gotenberg"
+          # The gotenberg chromium route is used to convert .eml files. We do not
+          # want to allow external content like tracking pixels or even javascript.
+          - "--chromium-disable-javascript=true"
+          - "--chromium-allow-list=file:///tmp/.*"
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1001
+          image: "thecodingmachine/gotenberg:8"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - name: sec-ctx-vol
+            mountPath: /tmp
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            timeoutSeconds: 30
+            failureThreshold: 20
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            timeoutSeconds: 30
+            failureThreshold: 20
+            periodSeconds: 5
+          resources:
+            limits:
+              memory: 2000Mi
+            requests:
+              cpu: "1"
+              memory: 500Mi

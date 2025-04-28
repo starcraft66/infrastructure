@@ -1,0 +1,86 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tika
+  labels:
+    app.kubernetes.io/name: tika
+    app.kubernetes.io/instance: tika
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: tika
+    app.kubernetes.io/instance: tika
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tika
+  labels:
+    app.kubernetes.io/name: tika
+    app.kubernetes.io/instance: tika
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tika
+      app.kubernetes.io/instance: tika
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tika
+        app.kubernetes.io/instance: tika
+    spec:
+      securityContext: {}
+      volumes:
+      - name: sec-ctx-vol
+        emptyDir: {}
+      containers:
+        - name: tika
+          securityContext:
+            allowPrivilegeEscalation: true
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: 35002
+            runAsNonRoot: true
+            runAsUser: 35002
+          image: "apache/tika:2.9.0.0"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - name: sec-ctx-vol
+            mountPath: /tmp
+          ports:
+            - name: http
+              containerPort: 9998
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 9998
+              scheme: HTTP
+            initialDelaySeconds: 15
+            timeoutSeconds: 30
+            failureThreshold: 20
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 9998
+              scheme: HTTP
+            initialDelaySeconds: 15
+            timeoutSeconds: 30
+            failureThreshold: 20
+            periodSeconds: 5
+          resources:
+            limits:
+              memory: 2000Mi
+            requests:
+              cpu: "1"
+              memory: 1500Mi

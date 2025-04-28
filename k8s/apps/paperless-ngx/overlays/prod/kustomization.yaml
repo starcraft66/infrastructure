@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+- ./resources/ingress.yaml
+
+generators:
+- ./generators/secrets-generator.yaml
+
+configMapGenerator:
+- name: paperless-ngx
+  literals:
+  - PAPERLESS_DBENGINE=postgresql
+  - PAPERLESS_DBHOST=paperless-ngx-postgres-rw
+  - PAPERLESS_TIME_ZONE=America/Toronto
+  - PAPERLESS_URL=https://docs.tdude.co
+
+namespace: paperless-ngx
+

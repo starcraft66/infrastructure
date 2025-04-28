@@ -638,3 +638,21 @@ spec:
   syncPolicy:
     automated:
       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: paperless-ngx
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: paperless-ngx
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/paperless-ngx/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true

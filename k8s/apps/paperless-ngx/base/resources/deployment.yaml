@@ -1,0 +1,80 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-ngx
+  labels:
+    app.kubernetes.io/name: paperless-ngx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: paperless-ngx
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: paperless-ngx
+    spec:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+        runAsNonRoot: true
+      containers:
+        - name: paperless-ngx
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: "ghcr.io/paperless-ngx/paperless-ngx:latest"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PAPERLESS_TIKA_ENABLED
+              value: "1"
+            - name: PAPERLESS_TIKA_GOTENBERG_ENDPOINT
+              value: http://gotenberg
+            - name: PAPERLESS_TIKA_ENDPOINT
+              value: http://tika
+          envFrom:
+          - configMapRef:
+              name: paperless-ngx
+          - secretRef:
+              name: paperless-ngx
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /login/
+              port: http
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              memory: 2Gi
+          volumeMounts:
+            - name: paperless-ngx-data
+              mountPath: /usr/src/paperless/data
+              subPath: data
+            - name: paperless-ngx-data
+              mountPath: /usr/src/paperless/media
+              subPath: media
+            - name: paperless-ngx-data
+              mountPath: /usr/src/paperless/export
+              subPath: export
+            - name: paperless-ngx-data
+              mountPath: /usr/src/paperless/consume
+              subPath: consume
+            - name: sec-ctx-vol
+              mountPath: /tmp
+      volumes:
+        - name: sec-ctx-vol
+          emptyDir: {}
+        - name: paperless-ngx-data
+          persistentVolumeClaim:
+            claimName: paperless-ngx-data

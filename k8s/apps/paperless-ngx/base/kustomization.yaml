@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ./resources/namespace.yaml
+- ./resources/deployment.yaml
+- ./resources/tika.yaml
+- ./resources/gotenberg.yaml
+- ./resources/postgres.yaml
+- ./resources/service.yaml
+# - ./resources/servicemonitor.yaml
+- ./resources/volume.yaml
+
+images:
+- name: ghcr.io/paperless-ngx/paperless-ngx
+  # Don't upgrade to 2.15.3 until the following issue is resolved:
+  # https://github.com/just-containers/s6-overlay/issues/600
+  newTag: "2.14.7"
+- name: thecodingmachine/gotenberg"
+  newTag: "8.0.0"
+- name: "apache/tika"
+  newTag: "2.9.0.0"
+
+namespace: paperless-ngx
+
+helmCharts:
+- name: redis
+  releaseName: paperless-ngx-redis
+  version: 20.x
+  repo: oci://registry-1.docker.io/bitnamicharts
+  namespace: paperless-ngx
+  valuesInline:
+    auth:
+      existingSecret: "paperless-ngx-redis"
+    global:
+      storageClass: "truenas-nfs-spitfire-fast"

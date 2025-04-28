@@ -1,0 +1,14 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: paperless-ngx-data
+  labels:
+    app.kubernetes.io/name: paperless-ngx
+spec:
+  accessModes:
+  - "ReadWriteMany"
+  storageClassName: "freenas-nfs-csi"
+  resources:
+    requests:
+      storage: "10Gi"
