@@ -10,6 +10,7 @@ let
     { version = "1.30.2"; hash = "sha256-cxWltHCwb01QsIRSieXwYtImrSfvJLBhN3VIJkxOzX8="; }
     { version = "1.31.0"; hash = "sha256-Oy638nIuz2xWVvMGWHUeI4T7eycXIfT+XHp0U7h8G9w="; }
     { version = "1.32.0"; hash = "sha256-VpinMMWvFYpcqDC9f3q/oEqUHRz7thHMs0bKt6AaNms="; }
+    { version = "1.33.0"; hash = "sha256-5MlMBsYf8V7BvV6xaeRMVSRaE+TpG8xJkMwVGm/fVdo="; }
     # ... add other versions with their hashes
   ];
 
