@@ -48,7 +48,7 @@
           nixosHosts = import ./nixos/hosts { inherit inputs; };
         in
         {
-          inherit (nixosHosts) nixosConfigurations deploy packages colmena;
+          inherit (nixosHosts) nixosConfigurations deploy packages colmenaHive;
         }
       );
 

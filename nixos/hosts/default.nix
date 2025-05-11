@@ -88,7 +88,7 @@ in {
   nixosConfigurations = generateNixosSystems systems;
   packages = mergeVmImages systems;
   deploy = mergeDeployRsProfiles systems;
-  colmena = (generateColmenaNodes systems) // {
+  colmenaHive = inputs.colmena.lib.makeHive ((generateColmenaNodes systems) // {
     meta = {
       # dummy nixpkgs that won't be used
       nixpkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
@@ -97,7 +97,7 @@ in {
       };
       nodeNixpkgs = generateColmenaNixpkgs systems;
     };
-  };
+  });
   checks =
     builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy)
     inputs.deploy-rs.lib;
