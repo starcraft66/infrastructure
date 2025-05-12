@@ -1,6 +1,9 @@
 auth:
   enabled: true
 
+podOptions:
+  hostUsers: true
+
 configmap:
   config:
     enabled: true
