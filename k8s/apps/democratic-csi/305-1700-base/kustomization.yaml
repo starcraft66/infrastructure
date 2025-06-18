@@ -3,8 +3,8 @@ kind: Kustomization
 resources:
 - ./resources/namespace.yaml
 # Snapshot stuff
-- https://github.com/kubernetes-csi/external-snapshotter/deploy/kubernetes/csi-snapshotter?ref=v8.2.1
-- https://github.com/kubernetes-csi/external-snapshotter/deploy/kubernetes/snapshot-controller?ref=v8.2.1
+- https://github.com/kubernetes-csi/external-snapshotter/deploy/kubernetes/csi-snapshotter?ref=v8.3.0
+- https://github.com/kubernetes-csi/external-snapshotter/deploy/kubernetes/snapshot-controller?ref=v8.3.0
 - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/e6e14c16019ece315f91e8389b08cfcbd07d2e49/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
 - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/e6e14c16019ece315f91e8389b08cfcbd07d2e49/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
 - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/e6e14c16019ece315f91e8389b08cfcbd07d2e49/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
