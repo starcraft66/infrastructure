@@ -35,6 +35,6 @@ helmCharts:
 - name: zigbee2mqtt
   releaseName: zigbee2mqtt
   valuesFile: ./resources/zigbee2mqtt.yaml
-  version: 14.3.1
+  version: 14.6.0
   repo: oci://tccr.io/truecharts
   namespace: home-automation
