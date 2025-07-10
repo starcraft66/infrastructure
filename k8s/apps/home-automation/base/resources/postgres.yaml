@@ -4,6 +4,14 @@ metadata:
   name: home-assistant
 spec:
   instances: 1
+  postgresql:
+    topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          cnpg.io/cluster: home-assistant
   bootstrap:
     initdb:
       database: home-assistant

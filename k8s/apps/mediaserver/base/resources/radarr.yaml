@@ -16,6 +16,13 @@ spec:
       labels:
         app.kubernetes.io/name: radarr
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: radarr
       containers:
       - name: radarr
         image: ghcr.io/linuxserver/radarr:latest

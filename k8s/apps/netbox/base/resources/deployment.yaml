@@ -5,16 +5,27 @@ metadata:
   name: netbox-worker
   labels:
     app.kubernetes.io/name: netbox
+    app.kubernetes.io/component: worker
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: netbox
+      app.kubernetes.io/component: worker
   template:
     metadata:
       labels:
         app.kubernetes.io/name: netbox
+        app.kubernetes.io/component: worker
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: netbox
+            app.kubernetes.io/component: worker
       serviceAccountName: netbox
       securityContext:
         fsGroup: 1000
@@ -97,16 +108,27 @@ metadata:
   name: netbox
   labels:
     app.kubernetes.io/name: netbox
+    app.kubernetes.io/component: app
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: netbox
+      app.kubernetes.io/component: app
   template:
     metadata:
       labels:
         app.kubernetes.io/name: netbox
+        app.kubernetes.io/component: app
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: netbox
+            app.kubernetes.io/component: app
       serviceAccountName: netbox
       securityContext:
         fsGroup: 1000

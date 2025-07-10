@@ -1,6 +1,15 @@
 nameOverride: home-assistant
 fullnameOverride: home-assistant
 
+topologySpreadConstraints:
+- maxSkew: 1
+  topologyKey: kubernetes.io/hostname
+  whenUnsatisfiable: ScheduleAnyway
+  labelSelector:
+    matchLabels:
+      app.kubernetes.io/name: home-assistant
+      app.kubernetes.io/instance: home-assistant
+
 env:
 - name: TZ
   value: America/Toronto

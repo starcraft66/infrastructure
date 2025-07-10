@@ -17,6 +17,13 @@ spec:
       labels:
         app.kubernetes.io/name: jellyfin
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: jellyfin
       hostname: "jellyfin"
       containers:
       - name: jellyfin

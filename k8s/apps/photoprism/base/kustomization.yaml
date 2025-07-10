@@ -23,3 +23,23 @@ helmCharts:
       enabled: true
     global:
       storageClass: truenas-nfs-spitfire-fast
+    primary:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: mariadb
+            app.kubernetes.io/instance: photoprism
+            app.kubernetes.io/component: primary
+    secondary:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: mariadb
+            app.kubernetes.io/instance: photoprism
+            app.kubernetes.io/component: secondary

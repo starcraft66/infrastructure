@@ -33,3 +33,23 @@ helmCharts:
       existingSecret: "paperless-ngx-redis"
     global:
       storageClass: "truenas-nfs-spitfire-fast"
+    master:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: redis
+            app.kubernetes.io/instance: paperless-ngx-redis
+            app.kubernetes.io/component: master
+    replica:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: redis
+            app.kubernetes.io/instance: paperless-ngx-redis
+            app.kubernetes.io/component: replica

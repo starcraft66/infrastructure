@@ -13,6 +13,13 @@ spec:
       labels:
         app.kubernetes.io/name: thelounge
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: thelounge
       containers:
       - name: thelounge
         image: lscr.io/linuxserver/thelounge:latest

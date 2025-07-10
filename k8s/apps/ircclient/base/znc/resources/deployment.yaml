@@ -15,6 +15,13 @@ spec:
       labels:
         app.kubernetes.io/name: znc
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: znc
       containers:
       - name: znc
         image: lscr.io/linuxserver/znc:latest

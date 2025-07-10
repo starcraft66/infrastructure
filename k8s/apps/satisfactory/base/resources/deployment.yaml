@@ -13,6 +13,13 @@ spec:
       labels:
         app.kubernetes.io/name: satisfactory
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: satisfactory
       securityContext:
         fsGroup: 1000
         fsGroupChangePolicy: "OnRootMismatch"

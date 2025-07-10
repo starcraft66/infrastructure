@@ -12,6 +12,13 @@ spec:
       labels:
         app.kubernetes.io/name: pomf
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: pomf
       containers:
       - name: pomf-nginx
         image: nginx:alpine

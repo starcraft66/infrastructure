@@ -13,6 +13,13 @@ spec:
       labels:
         app.kubernetes.io/name: unifi-controller
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: unifi-controller
       containers:
       - name: unifi-controller
         image: ghcr.io/linuxserver/unifi-controller:latest
@@ -74,6 +81,13 @@ spec:
       labels:
         app.kubernetes.io/name: unpoller
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: unpoller
       containers:
       - name: unpoller
         image: ghcr.io/unpoller/unpoller:latest

@@ -16,6 +16,13 @@ spec:
       labels:
         app.kubernetes.io/name: overseerr
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: overseerr
       containers:
       - name: overseerr
         image: ghcr.io/linuxserver/overseerr:latest

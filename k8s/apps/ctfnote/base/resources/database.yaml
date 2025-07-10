@@ -4,6 +4,14 @@ metadata:
   name: postgres-ctfnote
 spec:
   instances: 1
+  postgresql:
+    topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          cnpg.io/cluster: postgres-ctfnote
   bootstrap:
     initdb:
       database: ctfnote

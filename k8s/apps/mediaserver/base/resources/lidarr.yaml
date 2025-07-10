@@ -16,6 +16,13 @@ spec:
       labels:
         app.kubernetes.io/name: lidarr
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: lidarr
       containers:
       - name: lidarr
         image: ghcr.io/linuxserver/lidarr:latest

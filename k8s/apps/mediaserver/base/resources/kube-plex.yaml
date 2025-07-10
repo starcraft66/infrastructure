@@ -18,6 +18,13 @@ spec:
       labels:
         app.kubernetes.io/name: kube-plex
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: kube-plex
       serviceAccountName: kube-plex
       hostname: "kube-plex"
       # initContainers:

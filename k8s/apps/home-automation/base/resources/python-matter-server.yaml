@@ -24,6 +24,15 @@ spec:
         app.kubernetes.io/component: matter-server
         app.kubernetes.io/part-of: home-automation
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: matter-server
+            app.kubernetes.io/component: matter-server
+            app.kubernetes.io/part-of: home-automation
       containers:
       - name: python-matter-server
         image: ghcr.io/home-assistant-libs/python-matter-server:6.6

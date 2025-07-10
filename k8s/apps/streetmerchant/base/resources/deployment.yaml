@@ -12,6 +12,13 @@ spec:
       labels:
         app.kubernetes.io/name: streetmerchant
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: streetmerchant
       containers:
         - name: streetmerchant
           image: ghcr.io/jef/streetmerchant:nightly

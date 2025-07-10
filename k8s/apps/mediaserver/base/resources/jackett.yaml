@@ -16,6 +16,13 @@ spec:
       labels:
         app.kubernetes.io/name: jackett
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: jackett
       containers:
       - name: jackett
         image: ghcr.io/linuxserver/jackett:latest

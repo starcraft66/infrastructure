@@ -4,6 +4,14 @@ metadata:
   name: paperless-ngx-postgres
 spec:
   instances: 1
+  postgresql:
+    topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          cnpg.io/cluster: paperless-ngx-postgres
   bootstrap:
     initdb:
       database: paperless

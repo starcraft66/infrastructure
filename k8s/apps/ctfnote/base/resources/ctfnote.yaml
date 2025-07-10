@@ -15,6 +15,13 @@ spec:
       labels:
         app.kubernetes.io/name: ctfnote-frontend
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: ctfnote-frontend
       containers:
       - name: ctfnote-frontend
         image: ghcr.io/starcraft66/ctfnote-frontend:latest
@@ -42,6 +49,13 @@ spec:
       labels:
         app.kubernetes.io/name: ctfnote
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: ctfnote
       containers:
       - name: ctfnote
         command:
@@ -89,6 +103,13 @@ spec:
       labels:
         app.kubernetes.io/name: hedgedoc
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: hedgedoc
       containers:
       - name: hedgedoc
         image: quay.io/hedgedoc/hedgedoc:1.9.0-alpine

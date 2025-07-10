@@ -18,6 +18,13 @@ spec:
       labels:
         app.kubernetes.io/name: nextcloud
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: nextcloud
       containers:
       - name: nextcloud
         image: "nextcloud:19.0.3-apache"

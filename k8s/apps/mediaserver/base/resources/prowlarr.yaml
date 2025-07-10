@@ -16,6 +16,13 @@ spec:
       labels:
         app.kubernetes.io/name: prowlarr
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: prowlarr
       containers:
       - name: prowlarr
         image: ghcr.io/linuxserver/prowlarr:latest

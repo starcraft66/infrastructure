@@ -13,6 +13,13 @@ spec:
       labels:
         app.kubernetes.io/name: guacamole-guacd
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: guacamole-guacd
       containers:
       - name: guacamole-daemon
         image:  guacamole/guacd

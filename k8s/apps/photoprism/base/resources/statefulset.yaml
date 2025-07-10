@@ -14,6 +14,13 @@ spec:
       labels:
         app.kubernetes.io/name: photoprism
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: photoprism
       securityContext:
         fsGroup: 1000
         fsGroupChangePolicy: "OnRootMismatch"

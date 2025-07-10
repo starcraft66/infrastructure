@@ -14,6 +14,13 @@ spec:
       labels:
         app.kubernetes.io/name: minecraft
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: minecraft
       securityContext:
         runAsUser: 1000
         fsGroup: 2000

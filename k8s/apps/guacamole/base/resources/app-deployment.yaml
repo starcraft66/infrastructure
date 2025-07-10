@@ -13,6 +13,13 @@ spec:
       labels:
         app.kubernetes.io/name: guacamole-app
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: guacamole-app
       containers:
       - name: guacamole-app
         image: guacamole/guacamole

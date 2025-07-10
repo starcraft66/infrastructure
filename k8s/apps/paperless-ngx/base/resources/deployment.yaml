@@ -15,6 +15,13 @@ spec:
       labels:
         app.kubernetes.io/name: paperless-ngx
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: paperless-ngx
       securityContext:
         fsGroup: 1000
         fsGroupChangePolicy: "OnRootMismatch"

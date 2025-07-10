@@ -14,6 +14,13 @@ spec:
       labels:
         app.kubernetes.io/name: attention-attention
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: attention-attention
       containers:
       - name: attention-attention
         image: ghcr.io/starcraft66/attention-attention/attention-attention:v1.0.1-x86_64

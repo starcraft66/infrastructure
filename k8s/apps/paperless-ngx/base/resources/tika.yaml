@@ -36,6 +36,14 @@ spec:
         app.kubernetes.io/name: tika
         app.kubernetes.io/instance: tika
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: tika
+            app.kubernetes.io/instance: tika
       securityContext: {}
       volumes:
       - name: sec-ctx-vol

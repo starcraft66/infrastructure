@@ -5,16 +5,27 @@ metadata:
   name: funkwhale-beat
   labels:
     app.kubernetes.io/name: funkwhale
+    app.kubernetes.io/component: beat
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: funkwhale
+      app.kubernetes.io/component: beat
   template:
     metadata:
       labels:
         app.kubernetes.io/name: funkwhale
+        app.kubernetes.io/component: beat
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: funkwhale
+            app.kubernetes.io/component: beat
       containers:
         - name: celery-beat
           image: "funkwhale/api:1.4.0"
@@ -53,16 +64,27 @@ metadata:
   name: funkwhale-worker
   labels:
     app.kubernetes.io/name: funkwhale
+    app.kubernetes.io/component: worker
 spec:
   replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: funkwhale
+      app.kubernetes.io/component: worker
   template:
     metadata:
       labels:
         app.kubernetes.io/name: funkwhale
+        app.kubernetes.io/component: worker
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: funkwhale
+            app.kubernetes.io/component: worker
       containers:
         - name: worker
           image: "funkwhale/api:1.4.0"
@@ -123,6 +145,14 @@ spec:
         app.kubernetes.io/name: funkwhale
         app.kubernetes.io/component: app
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: funkwhale
+            app.kubernetes.io/component: app
       containers:
         - name: funkwhale
           image: "funkwhale/api:1.4.0"

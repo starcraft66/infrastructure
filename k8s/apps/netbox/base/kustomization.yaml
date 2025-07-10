@@ -29,3 +29,23 @@ helmCharts:
       existingSecret: "netbox"
     global:
       storageClass: "freenas-nfs-csi"
+    master:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: redis
+            app.kubernetes.io/instance: netbox-redis
+            app.kubernetes.io/component: master
+    replica:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: redis
+            app.kubernetes.io/instance: netbox-redis
+            app.kubernetes.io/component: replica

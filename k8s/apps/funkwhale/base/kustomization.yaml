@@ -48,5 +48,23 @@ helmCharts:
       storageClass: "freenas-nfs-csi"
     master:
       resourcesPreset: medium
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: redis
+            app.kubernetes.io/instance: funkwhale-redis
+            app.kubernetes.io/component: master
     replica:
       resourcesPreset: medium
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: redis
+            app.kubernetes.io/instance: funkwhale-redis
+            app.kubernetes.io/component: replica
