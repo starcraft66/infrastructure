@@ -3,4 +3,4 @@ kind: Provider
 metadata:
   name: provider-sql
 spec:
-  package: "crossplane-contrib/provider-sql:v0.12.0"
+  package: "xpkg.crossplane.io/crossplane-contrib/provider-sql:v0.12.0"
