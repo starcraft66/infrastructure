@@ -51,7 +51,9 @@ in
     # advertiseAddress = "https://${config.networking.hostName}.235.tdude.co";
 
     etcd = {
-      servers = cfg.etcdServerUrls;
+      # Stacked etcd topology to be resilient to etcd node failures
+      # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/ha-topology/#stacked-etcd-topology
+      servers = [ "https://${config.networking.hostName}.${config.networking.domain}:2379" ];
       caFile = "/var/lib/secrets/kubernetes/etcd-ca.pem";
       certFile = "/var/lib/secrets/kubernetes/client.pem";
       keyFile = "/var/lib/secrets/kubernetes/client-key.pem";
