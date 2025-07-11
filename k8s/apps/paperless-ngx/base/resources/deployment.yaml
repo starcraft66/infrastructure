@@ -32,10 +32,9 @@ spec:
             capabilities:
               drop:
               - ALL
-            readOnlyRootFilesystem: false
-            runAsGroup: 1000
-            runAsNonRoot: true
+            allowPrivilegeEscalation: false
             runAsUser: 1000
+            runAsGroup: 1000
           image: "ghcr.io/paperless-ngx/paperless-ngx:latest"
           imagePullPolicy: IfNotPresent
           env:
