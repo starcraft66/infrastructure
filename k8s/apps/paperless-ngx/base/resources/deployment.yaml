@@ -45,6 +45,8 @@ spec:
               value: http://gotenberg
             - name: PAPERLESS_TIKA_ENDPOINT
               value: http://tika
+            - name: S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES
+              value: "1"
           envFrom:
           - configMapRef:
               name: paperless-ngx
@@ -65,22 +67,26 @@ spec:
             limits:
               memory: 2Gi
           volumeMounts:
-            - name: paperless-ngx-data
-              mountPath: /usr/src/paperless/data
-              subPath: data
-            - name: paperless-ngx-data
-              mountPath: /usr/src/paperless/media
-              subPath: media
-            - name: paperless-ngx-data
-              mountPath: /usr/src/paperless/export
-              subPath: export
-            - name: paperless-ngx-data
-              mountPath: /usr/src/paperless/consume
-              subPath: consume
-            - name: sec-ctx-vol
-              mountPath: /tmp
+          - name: paperless-ngx-data
+            mountPath: /usr/src/paperless/data
+            subPath: data
+          - name: paperless-ngx-data
+            mountPath: /usr/src/paperless/media
+            subPath: media
+          - name: paperless-ngx-data
+            mountPath: /usr/src/paperless/export
+            subPath: export
+          - name: paperless-ngx-data
+            mountPath: /usr/src/paperless/consume
+            subPath: consume
+          - name: sec-ctx-vol
+            mountPath: /tmp
+          - name: run
+            mountPath: /run
       volumes:
         - name: sec-ctx-vol
+          emptyDir: {}
+        - name: run
           emptyDir: {}
         - name: paperless-ngx-data
           persistentVolumeClaim:
