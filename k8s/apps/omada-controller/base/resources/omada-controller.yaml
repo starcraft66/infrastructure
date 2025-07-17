@@ -2,6 +2,9 @@ nameOverride: omada-controller
 fullnameOverride: omada-controller
 
 service:
+  comm:
+    annotations:
+      traefik.ingress.kubernetes.io/service.serversscheme: "https"
   omada-tcp:
     annotations:
       io.cilium/lb-ipam-sharing-key: omada-controller
