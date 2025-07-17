@@ -6,6 +6,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/service.serversscheme: "https"
     external-dns.alpha.kubernetes.io/target: "traefik.k8s.305-1700.tdude.co"
 spec:
   ingressClassName: traefik
