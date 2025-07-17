@@ -22,3 +22,7 @@ service:
 env:
 - name: TZ
   value: America/Toronto
+
+resources:
+  limits:
+    memory: 4Gi
