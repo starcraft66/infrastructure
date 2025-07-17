@@ -2,7 +2,7 @@ nameOverride: omada-controller
 fullnameOverride: omada-controller
 
 service:
-  comm:
+  main:
     annotations:
       traefik.ingress.kubernetes.io/service.serversscheme: "https"
   omada-tcp:
