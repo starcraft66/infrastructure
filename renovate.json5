@@ -1,0 +1,35 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "nix": {
+        "enabled": true,
+        "lockFileMaintenance": {
+            "enabled": true,
+        },
+    },
+    "packageRules": [
+        {
+            "description": "Group mediaserver stack dependencies which usually have no proper semver versioning",
+            "matchFileNames": [
+                "k8s/apps/mediaserver/**"
+            ],
+            "matchManagers": [
+                "kustomize"
+            ],
+            "groupName": "mediaserver packages",
+            "pinDigests": true,
+        },
+        // home-automation packages
+        {
+            "description": "Group home-automation stack dependencies",
+            "matchFileNames": [
+                "k8s/apps/home-automation/**"
+            ],
+            "matchManagers": [
+                "kustomize",
+                "helm",
+            ],
+            "groupName": "home automation packages",
+            "pinDigests": true,
+        },
+    ]
+}
