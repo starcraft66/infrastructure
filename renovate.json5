@@ -13,7 +13,8 @@
                 "k8s/apps/mediaserver/**"
             ],
             "matchManagers": [
-                "kustomize"
+                "kustomize",
+                "helm-values",
             ],
             "groupName": "mediaserver packages",
             "pinDigests": true,
@@ -26,7 +27,7 @@
             ],
             "matchManagers": [
                 "kustomize",
-                "helm",
+                "helm-values",
             ],
             "groupName": "home automation packages",
             "pinDigests": true,
