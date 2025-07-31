@@ -10,7 +10,6 @@ let
   ];
 
   httpTargets = [
-    "example.com"
   ];
 
   sshTargets235 = [
