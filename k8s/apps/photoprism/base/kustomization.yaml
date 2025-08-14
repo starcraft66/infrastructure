@@ -24,6 +24,11 @@ helmCharts:
     global:
       storageClass: truenas-nfs-spitfire-fast
     primary:
+      resources:
+        limits:
+          memory: 8Gi
+        requests:
+          memory: 2Gi
       topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
