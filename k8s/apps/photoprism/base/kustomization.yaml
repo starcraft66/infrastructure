@@ -13,7 +13,7 @@ helmCharts:
 - name: mariadb
   includeCRDs: true
   releaseName: photoprism
-  version: 21.0.3
+  version: 21.0.8
   repo: oci://registry-1.docker.io/bitnamicharts
   namespace: photoprism
   valuesInline:
