@@ -11,7 +11,7 @@ namespace: traefik
 
 images:
 - name: quay.io/oauth2-proxy/oauth2-proxy
-  newTag: v7.11.0
+  newTag: v7.12.0
 
 patches:
 - path: ./patches/traefik-config-file.yaml
