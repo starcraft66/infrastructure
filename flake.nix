@@ -33,7 +33,7 @@
         overlays = {
           inputs = final: prev: { inherit inputs; };
           colmena = inputs.colmena.overlays.default;
-          deploy-rs = inputs.deploy-rs.overlay;
+          deploy-rs = inputs.deploy-rs.overlays.default;
           spos-nix = inputs.sops-nix.overlays.default;
           lib = final: prev: {
             lib = prev.lib.extend (libfinal: libprev: import ./nixos/lib { inherit final prev libfinal libprev; });
