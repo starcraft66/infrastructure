@@ -8,6 +8,7 @@ securityContext:
       add: ["NET_BIND_SERVICE"]
 workload:
   main:
+    strategy: Recreate
     podSpec:
       initContainers:
         init-config:

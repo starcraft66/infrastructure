@@ -1,5 +1,6 @@
 workload:
   main:
+    strategy: Recreate
     podSpec:
       containers:
         main:
