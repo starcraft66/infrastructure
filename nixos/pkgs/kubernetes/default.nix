@@ -11,6 +11,8 @@ let
     { version = "1.31.0"; hash = "sha256-Oy638nIuz2xWVvMGWHUeI4T7eycXIfT+XHp0U7h8G9w="; }
     { version = "1.32.0"; hash = "sha256-VpinMMWvFYpcqDC9f3q/oEqUHRz7thHMs0bKt6AaNms="; }
     { version = "1.33.0"; hash = "sha256-5MlMBsYf8V7BvV6xaeRMVSRaE+TpG8xJkMwVGm/fVdo="; }
+    { version = "1.34.0"; hash = "sha256-rKy4X01pX+kovJ8b2JHV0KuzHJ7PYZ08eDEO3GeuPoc="; }
+    { version = "1.34.1"; hash = "sha256-18AMfS2OnInTmdr5fLwtuKaeyGQSiAtk29BjuHl6qQA="; }
     # ... add other versions with their hashes
   ];
 
