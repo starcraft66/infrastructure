@@ -23,7 +23,7 @@
   hardware.nvidia.open = false;
   hardware.nvidia-container-toolkit.enable = true;
   # Very important, needed to expose the GPU driver to containers
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   fileSystems."/" =
     { device = "spike/root";

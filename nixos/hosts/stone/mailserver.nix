@@ -67,7 +67,5 @@ in
     monitoring.alertAddress = "starcraft66@gmail.com";
 
     certificateScheme = "acme-nginx";
-
-    fullTextSearch.indexAttachments = true;
   };
 }
