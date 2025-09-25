@@ -11,30 +11,30 @@ namespace: home-automation
 images:
 - name: ghcr.io/home-assistant-libs/python-matter-server
   newName: ghcr.io/home-assistant-libs/python-matter-server
-  newTag: "8.0.0@sha256:8fd1ea29ab5eca1c5e87cb983c9797b469ad315f6667c73a28b2c4c23a75923c"
+  newTag: "8.1.0@sha256:170aa093ce91c76cde4cc390918307590f0f5558fcec93f913af3cb019e6562a"
 
 helmCharts:
 - name: home-assistant
   releaseName: home-assistant
   valuesFile: ./resources/home-assistant.yaml
-  version: 0.3.13
+  version: 0.3.22
   repo: http://pajikos.github.io/home-assistant-helm-chart/
   namespace: home-automation
 - name: mosquitto
   releaseName: mosquitto
   valuesFile: ./resources/mosquitto.yaml
-  version: 17.2.0
+  version: 17.6.0
   repo: oci://tccr.io/truecharts
   namespace: home-automation
 - name: zwavejs2mqtt
   releaseName: zwavejs2mqtt
   valuesFile: ./resources/zwavejs2mqtt.yaml
-  version: 24.3.1
+  version: 24.5.1
   repo: oci://tccr.io/truecharts
   namespace: home-automation
 - name: zigbee2mqtt
   releaseName: zigbee2mqtt
   valuesFile: ./resources/zigbee2mqtt.yaml
-  version: 15.2.0
+  version: 15.7.0
   repo: oci://tccr.io/truecharts
   namespace: home-automation
