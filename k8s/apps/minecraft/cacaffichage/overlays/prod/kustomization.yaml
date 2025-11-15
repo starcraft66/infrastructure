@@ -104,12 +104,12 @@ configMapGenerator:
   - JVM_OPTS=""
   - ENABLE_RCON=true
   - SERVER_IP="::"
-  - SPIGET_RESOURCES="18494"
+  # - SPIGET_RESOURCES="18494"
   # Disable programmatically pulling dynmap until solution to
   # https://github.com/itzg/docker-minecraft-server/issues/1307 is found
   # - SPIGET_RESOURCES="274,18494"
   # Supposedly this should work: https://github.com/itzg/docker-minecraft-server/issues/1378#issuecomment-1380252586
-  - MODS="https://dynmap.us/builds/dynmap/Dynmap-3.7-beta-11-spigot.jar,https://download.discordsrv.com/v2/DiscordSRV/DiscordSRV/release/download/v1.30.2/DiscordSRV-Build-1.30.2.jar,https://mediafilez.forgecdn.net/files/7128/203/multiverse-core-5.3.3.jar,https://cdn.modrinth.com/data/qvdtDX3s/versions/MeYBNg6N/multiverse-inventories-5.2.0.jar,https://download.luckperms.net/1609/bukkit/loader/LuckPerms-Bukkit-5.5.20.jar"
+  - MODS="https://github.com/jacob1/dynmap/releases/download/v1.21.10-spigot.0/Dynmap-3.7-beta-11-1.21.9-spigot-spigot.jar,https://download.discordsrv.com/v2/DiscordSRV/DiscordSRV/release/download/v1.30.2/DiscordSRV-Build-1.30.2.jar,https://mediafilez.forgecdn.net/files/7128/203/multiverse-core-5.3.3.jar,https://cdn.modrinth.com/data/qvdtDX3s/versions/MeYBNg6N/multiverse-inventories-5.2.0.jar,https://download.luckperms.net/1609/bukkit/loader/LuckPerms-Bukkit-5.5.20.jar"
 - name: discordsrv-config
   files:
   - alerts.yml=files/DiscordSRV/alerts.yml
