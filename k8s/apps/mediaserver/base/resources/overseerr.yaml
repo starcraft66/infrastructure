@@ -36,7 +36,7 @@ spec:
           protocol: TCP
         volumeMounts:
         - name: overseerr-config
-          mountPath: /config
+          mountPath: /app/config
         resources:
           requests:
             cpu: "0.25"
