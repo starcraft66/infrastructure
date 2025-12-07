@@ -25,7 +25,7 @@ spec:
             app.kubernetes.io/name: overseerr
       containers:
       - name: overseerr
-        image: ghcr.io/linuxserver/overseerr:latest
+        image: ghcr.io/fallenbagel/jellyseerr:latest
         imagePullPolicy: Always
         # env:
         # - name: "HOST"

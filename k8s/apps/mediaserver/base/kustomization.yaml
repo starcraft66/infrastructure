@@ -34,5 +34,5 @@ images:
   newTag: 5.1.2@sha256:344512822c3325e2238cb46639e77759448ff556e0568fbedf168814690eea4d
 - name: ghcr.io/linuxserver/tautulli
   digest: sha256:e59ad4e5ad8ba315696b47944869b84989984e6c335e8df38e5f8bccce31fd18
-- name: ghcr.io/linuxserver/overseerr
-  digest: sha256:bad11167104f7b0ff0beb924c9568bb7ea991c225949a209d0b8b00a5434479d
+- name: ghcr.io/fallenbagel/jellyseer
+  digest: sha256:499fbe958fa4a0c93172a231c14898986556bb28bd5cd569a0f41dbf887b04d7
