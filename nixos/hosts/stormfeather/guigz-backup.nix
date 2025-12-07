@@ -5,5 +5,4 @@
   networking.bridges.vmbr0.interfaces = [ "enp10s0.30" ];
 
   virtualisation.libvirtd.enable = true;
-  virtualisation.libvirtd.qemu.ovmf.enable = true;
 }

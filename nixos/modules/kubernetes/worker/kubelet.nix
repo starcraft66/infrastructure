@@ -8,8 +8,12 @@ in lib.mkIf cfg.enable {
     "d /var/lib/kubelet/plugins_registry 0700 root root -"
   ];
 
-  # Enable entwork filesystems for PVC mounts
-  systemd.services.kubelet.path = with pkgs; [ openiscsi ];
+  systemd.services.kubelet.path = with pkgs; [ 
+    # Enable entwork filesystems for PVC mounts
+    openiscsi
+    # Enable user namespaces
+    shadow
+  ];
   services.openiscsi = {
     enable = true;
     name = "iqn.2023-01.net.tdude:${config.networking.hostName}";
@@ -19,13 +23,41 @@ in lib.mkIf cfg.enable {
 
   services.kubernetes.dataDir = "/var/lib/kubelet";
 
-  virtualisation.containerd.settings.plugins."io.containerd.grpc.v1.cri".containerd.runtimes.nvidia = lib.mkIf cfg.nvidia.enable {
-    runtime_type = "io.containerd.runc.v2";
-    runtime_root = "";
-    runtime_engine = "";
-    privileged_without_host_devices = false;
-    options = {
-      BinaryName = "${pkgs.nvidia-container-toolkit}/bin/nvidia-container-runtime";
+  # User namespaces
+  # https://kubernetes.io/docs/concepts/workloads/pods/user-namespaces/#set-up-a-node-to-support-user-namespaces
+
+  users.groups.kubelet = {};
+  users.users.kubelet = {
+    group = "kubelet";
+    isSystemUser = true;
+    description = "Kubernetes kubelet user";
+
+    # 110 * 65536 = 7208960 (enough for default maxPods)
+    subUidRanges = [
+      {
+        startUid = 196608;  # first aligned multiple after tristan’s range
+        count    = 7208960; # 110 * 65536, enough for default maxPods
+      }
+    ];
+
+    subGidRanges = [
+      {
+        startGid = 196608;
+        count    = 7208960;
+      }
+    ];
+  };
+
+  virtualisation.containerd.settings.plugins."io.containerd.grpc.v1.cri".containerd = {
+    ignore_image_defined_volumes = true;
+    runtimes.nvidia = lib.mkIf cfg.nvidia.enable {
+      runtime_type = "io.containerd.runc.v2";
+      runtime_root = "";
+      runtime_engine = "";
+      privileged_without_host_devices = false;
+      options = {
+        BinaryName = "${pkgs.nvidia-container-toolkit}/bin/nvidia-container-runtime";
+      };
     };
   };
 
