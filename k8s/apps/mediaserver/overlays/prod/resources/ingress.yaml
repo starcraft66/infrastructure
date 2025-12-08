@@ -22,6 +22,7 @@ spec:
     - tautulli.tdude.co
     - mediaserver.tdude.co
     - requests.mediaserver.tdude.co
+    - invites.mediaserver.tdude.co
     secretName: mediaserver-k8s-235-tdude-co-tls
   rules:
   - host: sonarr.tdude.co
@@ -133,6 +134,16 @@ spec:
   tls:
   - secretName: mediaserver-k8s-235-tdude-co-tls
   rules:
+  - host: invites.mediaserver.tdude.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wizarr
+            port:
+              name: http
   - host: requests.mediaserver.tdude.co
     http:
       paths:
