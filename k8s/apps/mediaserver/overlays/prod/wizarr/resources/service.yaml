@@ -6,9 +6,10 @@ metadata:
   labels:
     app.kubernetes.io/name: wizarrr
 spec:
-  ipFamilyPolicy: RequireDualStack
+  # wizarr hardcoded an ipv4 listener in their dockerfile
+  # https://github.com/wizarrrr/wizarr/blob/main/Dockerfile#L108
+  ipFamilyPolicy: SingleStack
   ipFamilies:
-  - IPv6
   - IPv4
   ports:
   - name: http
