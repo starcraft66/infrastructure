@@ -5,4 +5,4 @@ resources:
 - ./resources/service.yaml
 
 commonLabels:
-  app.kubernetes.io/name: wizarrr
+  app.kubernetes.io/name: wizarr
