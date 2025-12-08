@@ -2,19 +2,19 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: wizarrr
+  name: wizarr
   labels:
-    app.kubernetes.io/name: wizarrr
+    app.kubernetes.io/name: wizarr
 spec:
-  serviceName: "wizarrr"
+  serviceName: "wizarr"
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: wizarrr
+      app.kubernetes.io/name: wizarr
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: wizarrr
+        app.kubernetes.io/name: wizarr
     spec:
       topologySpreadConstraints:
       - maxSkew: 1
@@ -22,10 +22,10 @@ spec:
         whenUnsatisfiable: ScheduleAnyway
         labelSelector:
           matchLabels:
-            app.kubernetes.io/name: wizarrr
+            app.kubernetes.io/name: wizarr
       containers:
-      - name: wizarrr
-        image: ghcr.io/wizarrrr/wizarr:dev
+      - name: wizarr
+        image: ghcr.io/wizarrr/wizarr:dev
         imagePullPolicy: Always
         # env:
         # - name: "HOST"
@@ -35,7 +35,7 @@ spec:
           containerPort: 5690
           protocol: TCP
         volumeMounts:
-        - name: wizarrr-config
+        - name: wizarr-config
           mountPath: /data
         resources:
           requests:
@@ -61,6 +61,6 @@ spec:
         - name: ndots
           value: "1"
       volumes:
-      - name: wizarrr-config
+      - name: wizarr-config
         persistentVolumeClaim:
-          claimName: wizarrr-config
+          claimName: wizarr-config

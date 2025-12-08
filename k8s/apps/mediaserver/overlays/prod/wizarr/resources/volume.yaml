@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: wizarrr-config
+  name: wizarr-config
   labels:
-    app.kubernetes.io/name: wizarrr
+    app.kubernetes.io/name: wizarr
 spec:
   storageClassName: freenas-iscsi-csi
   accessModes:
