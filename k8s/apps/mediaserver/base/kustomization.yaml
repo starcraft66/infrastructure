@@ -11,6 +11,7 @@ resources:
 - ./resources/tautulli.yaml
 - ./resources/overseerr.yaml
 - ./resources/jellyfin.yaml
+- ./resources/wizarr.yaml
 - ./resources/pvc.yaml
 - ./resources/rbac.yaml
 - ./resources/namespace.yaml
@@ -36,3 +37,7 @@ images:
   digest: sha256:e59ad4e5ad8ba315696b47944869b84989984e6c335e8df38e5f8bccce31fd18
 - name: ghcr.io/fallenbagel/jellyseer
   digest: sha256:499fbe958fa4a0c93172a231c14898986556bb28bd5cd569a0f41dbf887b04d7
+- name: ghcr.io/wizarrrr/wizarr
+  newTag: "v2025.11.3@sha256:f57b3a82c8074e0113a767fedc6e5ecf4138e25a4b942b0951c18d6e39c32181"
+- name: ghcr.io/jellyfin/jellyfin
+  newTag: "10.10.7@sha256:e4d1dc5374344446a3a78e43dd211247f22afba84ea2e5a13cbe1a94e1ff2141"
