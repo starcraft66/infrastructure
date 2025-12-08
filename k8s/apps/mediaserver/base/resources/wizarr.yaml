@@ -25,7 +25,7 @@ spec:
             app.kubernetes.io/name: wizarrr
       containers:
       - name: wizarrr
-        image: ghcr.io/fallenbagel/jellyseerr:latest
+        image: ghcr.io/wizarrrr/wizarr:dev
         imagePullPolicy: Always
         # env:
         # - name: "HOST"
