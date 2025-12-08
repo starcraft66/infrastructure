@@ -36,7 +36,7 @@ spec:
           protocol: TCP
         volumeMounts:
         - name: wizarrr-config
-          mountPath: /app/config
+          mountPath: /data
         resources:
           requests:
             cpu: "0.25"
