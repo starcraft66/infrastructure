@@ -10,7 +10,7 @@ helmCharts:
 - name: logging-operator
   includeCRDs: true
   releaseName: logging
-  version: 6.1.0
+  version: 6.2.2
   repo: oci://ghcr.io/kube-logging/helm-charts
   namespace: logging
   valuesInline:
