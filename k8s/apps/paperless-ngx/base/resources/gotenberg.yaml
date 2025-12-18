@@ -65,7 +65,7 @@ spec:
             readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 1001
-          image: "thecodingmachine/gotenberg:8"
+          image: "gotenberg/gotenberg:8"
           imagePullPolicy: IfNotPresent
           volumeMounts:
           - name: sec-ctx-vol
