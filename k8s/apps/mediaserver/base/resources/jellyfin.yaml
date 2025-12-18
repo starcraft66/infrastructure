@@ -39,7 +39,7 @@ spec:
           httpGet:
             path: /health
             port: http
-          initialDelaySeconds: 300
+          initialDelaySeconds: 30000
           timeoutSeconds: 10
         ports:
         - name: http
