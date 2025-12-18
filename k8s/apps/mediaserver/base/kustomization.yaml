@@ -22,22 +22,22 @@ images:
 - name: plexinc/pms-docker
   digest: sha256:9c03c26b9479ba9a09935f3367459bfdc8d21545f42ed2a13258983c5be1b252
 - name: ghcr.io/linuxserver/jackett
-  digest: sha256:d07b275ed34093fbafbcffb55d6ea0034be9966583988721324aa1955c6563bf
+  digest: sha256:e6bf780bfa61df33095dacb19ffa60f2074fdb3a68da4a64dea855d055deb882
 - name: ghcr.io/linuxserver/radarr
-  digest: sha256:19474a623b278f558c9696a19b84640ad4aff3b2959f08904a77ffbad73ed7bd
+  digest: sha256:6c0948b42c149e36bb3dbc0b64d36c77b2d3c9dccf1b424c4f72af1e57ba0c21
 - name: ghcr.io/linuxserver/sonarr
-  digest: sha256:bb50bac26881613af15deb4df891e4a7cb09e3333aec20a0522cb188fb22b11d
+  digest: sha256:60e5edcac39172294ad22d55d1b08c2c0a9fe658cad2f2c4d742ae017d7874de
 - name: ghcr.io/linuxserver/lidarr
-  digest: sha256:f8d8ea187c97c893175cf74d6f22ce7d32820e94136b466a16dd06fedd765e30
+  digest: sha256:ede2bb17350cc97a0d3f24389aa91803f655eac29aa022c77a71f4a61cc621e4
 - name: ghcr.io/linuxserver/prowlarr
-  newTag: develop@sha256:a056b1445638ffe7b670dce53492fff0c04865af9e61a149029a9a253bb9663e
+  newTag: develop@sha256:aeb303a86be70dfb3fa5508bbd9399f5123b74f73b00b91eb76eb34efe4c5650
 - name: ghcr.io/linuxserver/qbittorrent
-  newTag: 5.1.2@sha256:344512822c3325e2238cb46639e77759448ff556e0568fbedf168814690eea4d
+  newTag: 5.1.4@sha256:043498de39c3dd63eec94360c5ad966a51271d1581070f42cb73ab0cf4776f29
 - name: ghcr.io/linuxserver/tautulli
-  digest: sha256:e59ad4e5ad8ba315696b47944869b84989984e6c335e8df38e5f8bccce31fd18
+  digest: sha256:4d764be0f66532f6820a82aa365e530414f50f462410ce0949edd3fc22ccb9d5
 - name: ghcr.io/fallenbagel/jellyseer
   digest: sha256:499fbe958fa4a0c93172a231c14898986556bb28bd5cd569a0f41dbf887b04d7
 - name: ghcr.io/wizarrrr/wizarr
-  newTag: "v2025.11.3@sha256:f57b3a82c8074e0113a767fedc6e5ecf4138e25a4b942b0951c18d6e39c32181"
+  newTag: "v2025.12.0@sha256:c6eb584462c754e03a12eb619ad5960ba4e6c3fcb2fa0b8dec62023b053112f2"
 - name: ghcr.io/jellyfin/jellyfin
-  newTag: "10.10.7@sha256:e4d1dc5374344446a3a78e43dd211247f22afba84ea2e5a13cbe1a94e1ff2141"
+  newTag: "10.11.5@sha256:cd7e4cb71812dd76988a725da615e37c6d0d24c200be904ad5d183e51f1dc6ed"
