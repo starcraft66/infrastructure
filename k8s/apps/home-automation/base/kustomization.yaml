@@ -23,18 +23,18 @@ helmCharts:
 - name: mosquitto
   releaseName: mosquitto
   valuesFile: ./resources/mosquitto.yaml
-  version: 17.13.2
+  version: 17.13.3
   repo: oci://tccr.io/truecharts
   namespace: home-automation
 - name: zwavejs2mqtt
   releaseName: zwavejs2mqtt
   valuesFile: ./resources/zwavejs2mqtt.yaml
-  version: 24.17.3
+  version: 24.18.0
   repo: oci://tccr.io/truecharts
   namespace: home-automation
 - name: zigbee2mqtt
   releaseName: zigbee2mqtt
   valuesFile: ./resources/zigbee2mqtt.yaml
-  version: 15.15.2
+  version: 15.15.3
   repo: oci://tccr.io/truecharts
   namespace: home-automation
