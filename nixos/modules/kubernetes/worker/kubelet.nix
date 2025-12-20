@@ -48,20 +48,20 @@ in lib.mkIf cfg.enable {
     ];
   };
 
+  # virtualisation.containerd.settings.plugins."io.containerd.cri.v1.runtime".ignore_image_defined_volumes = true;
+
   virtualisation.containerd.settings.plugins."io.containerd.grpc.v1.cri".containerd = {
-    ignore_image_defined_volumes = true;
+    snapshotter = "overlayfs";
     runtimes.nvidia = lib.mkIf cfg.nvidia.enable {
       runtime_type = "io.containerd.runc.v2";
-      runtime_root = "";
-      runtime_engine = "";
       privileged_without_host_devices = false;
       options = {
-        BinaryName = "${pkgs.nvidia-container-toolkit}/bin/nvidia-container-runtime";
+        BinaryName = "${pkgs.nvidia-container-toolkit.tools}/bin/nvidia-container-runtime";
       };
     };
   };
 
-  systemd.services.containerd.path = lib.mkIf cfg.nvidia.enable [ pkgs.libnvidia-container ];
+  systemd.services.containerd.path = lib.mkIf cfg.nvidia.enable [ pkgs.libnvidia-container pkgs.nvidia-container-toolkit ];
   systemd.services.containerd.serviceConfig = {
     # Applies to all containers spawned
     # More sane than the default 1024 that causes issues with fluentd
