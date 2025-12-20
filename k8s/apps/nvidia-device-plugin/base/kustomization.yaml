@@ -14,4 +14,4 @@ helmCharts:
   releaseName: nvidia-device-plugin
   repo: https://nvidia.github.io/k8s-device-plugin
   valuesFile: ./resources/values.yaml
-  version: 0.18.0
+  version: 0.17.4
