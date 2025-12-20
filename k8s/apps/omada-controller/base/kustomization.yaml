@@ -9,6 +9,6 @@ helmCharts:
 - name: omada-controller
   releaseName: omada-controller
   valuesFile: ./resources/omada-controller.yaml
-  version: 18.2.5
+  version: 17.11.3
   repo: oci://tccr.io/truecharts
   namespace: omada
