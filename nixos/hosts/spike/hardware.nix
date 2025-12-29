@@ -25,6 +25,13 @@
   # Very important, needed to expose the GPU driver to containers
   hardware.graphics.enable = true;
 
+  virtualisation.containerd.settings.plugins."io.containerd.transfer.v1.local".unpack_config = [
+    {
+      platform = "linux/amd64";
+      snapshotter = "overlayfs";
+    }
+  ];
+
   fileSystems."/" =
     { device = "spike/root";
       fsType = "zfs";

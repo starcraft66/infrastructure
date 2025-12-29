@@ -36,6 +36,7 @@ in lib.mkIf cfg.enable {
 
       api_addr = "https://${cfg.hostname}"
       cluster_addr = "https://${config.networking.hostName}.${config.networking.domain}:8201"
+      disable_mlock = false
 
       # tls_client_ca_file = "/etc/ssl/certs/vault-ca.pem"
     '';

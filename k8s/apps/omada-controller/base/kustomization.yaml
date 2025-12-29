@@ -10,5 +10,5 @@ helmCharts:
   releaseName: omada-controller
   valuesFile: ./resources/omada-controller.yaml
   version: 18.2.5
-  repo: oci://tccr.io/truecharts
+  repo: oci://oci.trueforge.org/truecharts
   namespace: omada
