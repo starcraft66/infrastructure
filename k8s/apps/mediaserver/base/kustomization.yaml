@@ -22,7 +22,7 @@ images:
 - name: plexinc/pms-docker
   digest: sha256:9c03c26b9479ba9a09935f3367459bfdc8d21545f42ed2a13258983c5be1b252
 - name: ghcr.io/linuxserver/jackett
-  digest: sha256:c3ccbbe25b4406105e90b879fe0d11973eef9c5d0d422b96262186babf5d69f4
+  digest: sha256:05ccaa4f57b7736231263f619ab43e8f0b4193655a8b3dec0e3403838175fd01
 - name: ghcr.io/linuxserver/radarr
   digest: sha256:6c0948b42c149e36bb3dbc0b64d36c77b2d3c9dccf1b424c4f72af1e57ba0c21
 - name: ghcr.io/linuxserver/sonarr
@@ -32,7 +32,7 @@ images:
 - name: ghcr.io/linuxserver/prowlarr
   newTag: develop@sha256:aeb303a86be70dfb3fa5508bbd9399f5123b74f73b00b91eb76eb34efe4c5650
 - name: ghcr.io/linuxserver/qbittorrent
-  newTag: 5.1.4@sha256:043498de39c3dd63eec94360c5ad966a51271d1581070f42cb73ab0cf4776f29
+  newTag: 5.1.4@sha256:c4e1276d9eec06f2520b4cdffcff49aea4215e5ac2d51bf0de81cce9f8aa85d4
 - name: ghcr.io/linuxserver/tautulli
   digest: sha256:cb2226d9ab37f084d67a396e3c79059ca7d0fa7e1b2e6f1a473472af2afa7b12
 - name: ghcr.io/fallenbagel/jellyseer
@@ -40,4 +40,4 @@ images:
 - name: ghcr.io/wizarrrr/wizarr
   newTag: "v2025.12.0@sha256:c6eb584462c754e03a12eb619ad5960ba4e6c3fcb2fa0b8dec62023b053112f2"
 - name: ghcr.io/jellyfin/jellyfin
-  newTag: "10.10.7@sha256:e4d1dc5374344446a3a78e43dd211247f22afba84ea2e5a13cbe1a94e1ff2141"
+  newTag: "10.11.5@sha256:cd7e4cb71812dd76988a725da615e37c6d0d24c200be904ad5d183e51f1dc6ed"
