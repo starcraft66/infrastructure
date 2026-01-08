@@ -2,4 +2,4 @@
   path: /metadata/annotations
   value:
     external-dns.alpha.kubernetes.io/hostname: gtnh.k8s.305-1700.tdude.co
-    external-dns.alpha.kubernetes.io/target: 76.69.230.54,2a0c:9a46:637:88:3::22
+    external-dns.alpha.kubernetes.io/target: 70.26.192.40,2a0c:9a46:637:88:3::22
