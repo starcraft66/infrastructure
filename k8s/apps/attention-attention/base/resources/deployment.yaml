@@ -23,7 +23,7 @@ spec:
             app.kubernetes.io/name: attention-attention
       containers:
       - name: attention-attention
-        image: ghcr.io/starcraft66/attention-attention/attention-attention:v1.0.1-x86_64
+        image: ghcr.io/starcraft66/attention-attention/attention-attention:v1.0.2-x86_64
         imagePullPolicy: IfNotPresent
         env:
         - name: TZ
