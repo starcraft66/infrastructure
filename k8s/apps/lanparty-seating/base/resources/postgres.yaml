@@ -1,0 +1,26 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: lanparty-seating-postgres
+spec:
+  instances: 1
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        cnpg.io/cluster: lanparty-seating-postgres
+  bootstrap:
+    initdb:
+      database: lanparty-seating
+      owner: lanparty-seating
+      postInitSQL:
+        - CREATE EXTENSION citext;
+      secret:
+        name: postgres
+  storage:
+    storageClass: truenas-nfs-spitfire-fast
+    size: 5Gi
+  monitoring:
+    enablePodMonitor: true

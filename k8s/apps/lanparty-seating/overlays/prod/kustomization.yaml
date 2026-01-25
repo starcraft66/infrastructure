@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+- ./resources/ingress.yaml
+
+namespace: lanparty-seating
+
+generators:
+- ./generators/secrets-generator.yaml
+
+images:
+- name: ghcr.io/otakulan/lanparty-seating/lanparty-seating
+  newTag: "1.0.0"
+
+configMapGenerator:
+- name: lanparty-seating-config
+  literals:
+  - PHX_HOST=seating.tdude.co
+  - TZ=America/Toronto
+  - OTEL_EXPORTER_OTLP_ENDPOINT=https://api.honeycomb.io
+  - OTEL_SERVICE_NAME=lanparty-seating

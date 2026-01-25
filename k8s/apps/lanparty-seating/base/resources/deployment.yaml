@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lanparty-seating
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: lanparty-seating
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: lanparty-seating
+    spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: lanparty-seating
+      containers:
+      - name: lanparty-seating
+        image: ghcr.io/otakulan/lanparty-seating/lanparty-seating:latest
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        - secretRef:
+            name: lanparty-seating
+        - configMapRef:
+            name: lanparty-seating-config
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+        ports:
+        - name: http
+          containerPort: 4000
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+          periodSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 5

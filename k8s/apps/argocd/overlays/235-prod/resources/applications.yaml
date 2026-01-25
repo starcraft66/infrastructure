@@ -656,3 +656,21 @@ spec:
   syncPolicy:
     automated:
       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: lanparty-seating
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: lanparty-seating
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/lanparty-seating/overlays/prod
+  syncPolicy:
+    automated:
+      selfHeal: true
