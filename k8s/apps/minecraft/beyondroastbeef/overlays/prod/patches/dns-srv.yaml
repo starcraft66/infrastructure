@@ -3,4 +3,4 @@
   value: _minecraft._tcp.beyondroastbeef.tdude.co
 - op: replace
   path: /spec/endpoints/0/targets/0
-  value: "1 1 12348 beyondroastbeef.k8s.235.tdude.co"
+  value: "1 1 12348 beyondroastbeef.k8s.235.tdude.co."
