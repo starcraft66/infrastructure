@@ -9,7 +9,7 @@ images:
 - name: registry.k8s.io/external-dns/external-dns
   # My fork with SRV records fixed for cloudflare
   newName: docker.io/starcraft66/external-dns
-  newTag: 0f0f52d4-dirty 
+  newTag: srv-fix-v9
 
 patches:
 - path: ./patches/dns-ownership.yaml
