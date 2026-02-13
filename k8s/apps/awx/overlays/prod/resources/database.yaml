@@ -4,14 +4,13 @@ metadata:
   name: awx-postgres
 spec:
   instances: 1
-  postgresql:
-    topologySpreadConstraints:
-    - maxSkew: 1
-      topologyKey: kubernetes.io/hostname
-      whenUnsatisfiable: ScheduleAnyway
-      labelSelector:
-        matchLabels:
-          cnpg.io/cluster: awx-postgres
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        cnpg.io/cluster: awx-postgres
   bootstrap:
     initdb:
       database: awx

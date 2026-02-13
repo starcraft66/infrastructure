@@ -4,14 +4,13 @@ metadata:
   name: funkwhale-postgres
 spec:
   instances: 1
-  postgresql:
-    topologySpreadConstraints:
-    - maxSkew: 1
-      topologyKey: kubernetes.io/hostname
-      whenUnsatisfiable: ScheduleAnyway
-      labelSelector:
-        matchLabels:
-          cnpg.io/cluster: funkwhale-postgres
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        cnpg.io/cluster: funkwhale-postgres
   bootstrap:
     initdb:
       database: funkwhale
