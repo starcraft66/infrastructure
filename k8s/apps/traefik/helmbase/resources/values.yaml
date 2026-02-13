@@ -71,8 +71,6 @@ deployment:
         - key: authenticated-emails-list
           path: authenticated-emails-list
 
-certResolvers: {}
-
 ports:
   websecure:
     http3:
