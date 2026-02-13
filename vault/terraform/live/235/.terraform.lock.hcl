@@ -2,19 +2,18 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.opentofu.org/hashicorp/vault" {
-  version     = "4.6.0"
-  constraints = "4.6.0"
+  version     = "5.7.0"
+  constraints = "~> 5.0"
   hashes = [
-    "h1:byggLpJkjOJKzwojB0YR8ZjSO+kq3fIKCNC2QdlIkqw=",
-    "zh:05c3ba3b2e658d6b6d43e2e14291ca8d3b6423540c16828f7f16c27497410967",
-    "zh:3aec8d860bfa31fcf6bb8ec65d51f62ee6b478b747bc25caba9015e10f32d849",
-    "zh:4b7651f5759efe42aa95be447e6ab12c50ead01ce5a96a9be930d278bb6878be",
-    "zh:4bc2ceff195f173641e2611629d362848d73cfc14d4fff5a43b11ba19ef51583",
-    "zh:4f68f9ca133732d46dd8da66ad8910171f238d1e9a7c8a8680c44f5b2a550387",
-    "zh:53a0a43c352784474367c10d3836cab690aaff719af2aa4445cc7311cd9cb7db",
-    "zh:5b2727d7f023fd8f68e183bb944ab1bed9cf99e1f210c111263957a558283536",
-    "zh:7a991319f3a409f6eda7f2b433fb6e8cbc4cad24a9206ab486ad1f0b4f8f1635",
-    "zh:d42d9c27bc8c61ccf765d752c1eaad274b0cc3a9b8f08253657bd2cc1df08b3d",
-    "zh:ddcab8f69724e7513d2f089a8dd9052e3e3b5320cec37ae2a5fef93950cda0ca",
+    "h1:iLMzDsHFFlk13OMq+hx4IvabQqAJCP++fAnRHGDOu+w=",
+    "zh:29e77f756f33f56ef9641a23d020525380957e1faa104cea67e8872f842da17c",
+    "zh:709a950dd289a68da12ca7dfae03abe71e928af09562e8efaceea3079681ed3b",
+    "zh:74c2f266380d027fde6ad54969ddd3d1ab4d7cffcaecfa8d875f60ff04d11d7a",
+    "zh:9a548570535e756cc6696e31677f72146c6a48be945383a163bb401a4f275b03",
+    "zh:b3b746b85532441de93134683aeffff3027a88ebe836a294fecd6279477f33f5",
+    "zh:c031887da48097d9f5254f83213f4cedc4d6c64481d9d7f546a68f8a8b10f2ae",
+    "zh:d4a3fda5f8ff4ebd43975a0338acaa4052aedc054fbb0b696a684122f07c2806",
+    "zh:dcd3556f4c4e05450e886938d7e9184b86687d3df6b34a89a14d7380db41e2b3",
+    "zh:f4f3bb0a9ea7581a904ad9ec76f681fea35336afe5c0824ea186914d853e5e34",
   ]
 }
