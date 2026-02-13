@@ -3,6 +3,7 @@ kind: Elasticsearch
 metadata:
   name: elasticsearch
 spec:
+  # renovate: datasource=github-releases depName=elastic/elasticsearch
   version: "9.3.0"
   # DeleteOnScaledownOnly keeps the PersistentVolumeClaims when deleting the Elasticsearch cluster.
   # If you recreate a deleted cluster with the same name and node sets as before, the existing
@@ -31,6 +32,7 @@ kind: Kibana
 metadata:
   name: kibana
 spec:
+  # renovate: datasource=github-releases depName=elastic/kibana
   version: "9.3.0"
   count: 1
   elasticsearchRef:
