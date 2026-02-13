@@ -12,6 +12,6 @@ helmCharts:
   # not needed anyway
   # includeCRDs: true
   releaseName: crossplane
-  version: 1.20.4
+  version: 1.20.5
   repo: https://charts.crossplane.io/stable
   namespace: crossplane
