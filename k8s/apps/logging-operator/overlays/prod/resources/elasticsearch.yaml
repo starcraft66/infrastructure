@@ -3,7 +3,7 @@ kind: Elasticsearch
 metadata:
   name: elasticsearch
 spec:
-  version: "8.5.3"
+  version: "8.19.11"
   # DeleteOnScaledownOnly keeps the PersistentVolumeClaims when deleting the Elasticsearch cluster.
   # If you recreate a deleted cluster with the same name and node sets as before, the existing
   # PersistentVolumeClaims will be adopted by the new cluster.
@@ -31,7 +31,7 @@ kind: Kibana
 metadata:
   name: kibana
 spec:
-  version: "8.5.3"
+  version: "8.19.11"
   count: 1
   elasticsearchRef:
     name: elasticsearch
