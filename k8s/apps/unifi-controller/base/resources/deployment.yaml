@@ -99,13 +99,13 @@ spec:
             name: unifi-poller-secrets
         readinessProbe:
           httpGet:
-            path: /metrics
+            path: /
             port: metrics
           periodSeconds: 10
           failureThreshold: 3
         livenessProbe:
           httpGet:
-            path: /metrics
+            path: /
             port: metrics
           initialDelaySeconds: 10
           periodSeconds: 10
