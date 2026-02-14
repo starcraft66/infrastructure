@@ -16,6 +16,11 @@ spec:
       # xpack.security.enabled: true
       # xpack.security.autoconfiguration.enabled: true
       node.store.allow_mmap: false
+    podTemplate:
+      spec:
+        securityContext:
+          fsGroup: 1000
+          fsGroupChangePolicy: OnRootMismatch
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data # Do not change this name unless you set up a volume mount for the data path.
