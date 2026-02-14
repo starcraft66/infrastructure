@@ -19,7 +19,7 @@ configMapGenerator:
 - name: unifi-poller-config
   literals:
   - UP_INFLUXDB_DISABLE="true"
-  - UP_POLLER_DEBUG="true"
+  - UP_POLLER_DEBUG="false"
   - UP_UNIFI_DEFAULT_URL="https://unifi.tdude.co"
   - UP_UNIFI_DEFAULT_USER="unifipoller"
   - UP_PROMETHEUS_HTTP_LISTEN=:9130
