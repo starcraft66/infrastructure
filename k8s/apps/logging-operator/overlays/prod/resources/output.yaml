@@ -15,6 +15,8 @@ spec:
           name: elasticsearch-es-elastic-user
           key: elastic
     buffer:
-      timekey: 1m
-      timekey_wait: 30s
+      timekey: 10m
+      timekey_wait: 1m
       timekey_use_utc: true
+      total_limit_size: 5GB
+      overflow_action: drop_oldest_chunk
