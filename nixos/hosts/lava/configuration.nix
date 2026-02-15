@@ -14,6 +14,9 @@ let
     prefixLength = 64;
   };
 in {
+  # Disable on internet-facing hosts, leaks information about internal services
+  services.avahi.enable = lib.mkForce false;
+
   networking.hostName = hostName;
 
   # ZFS options from <https://nixos.wiki/wiki/NixOS_on_ZFS>

@@ -24,6 +24,9 @@
     openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
   };
 
+  # Disable on internet-facing hosts, leaks information about internal services
+  services.avahi.enable = lib.mkForce false;
+
   services.openssh.enable = true;
   services.prometheus.exporters.node.openFirewall = lib.mkForce false;
 
