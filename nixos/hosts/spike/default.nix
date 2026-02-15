@@ -15,7 +15,9 @@ rec {
     config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
       "vault-bin" "vault" "nvidia-x11" "nvidia-settings"
     ];
-    overlays = builtins.attrValues inputs.self.overlays;
+    overlays = (builtins.attrValues inputs.self.overlays) ++ [
+      (self: super: { runc = inputs.nixpkgs.legacyPackages.${system}.runc; })
+    ];
   };
   hostname = "spike.305-1700.tdude.co";
   tags = [ "k8s-305-1700" ];
