@@ -1,9 +1,13 @@
 #!/bin/bash
 # Import Kibana dashboards for the logging stack.
 #
-# This imports the "Kubernetes Pod Logs" dashboard and its 6 Lens
-# visualizations plus the fluentd* data view into the logging Kibana
-# instance. The import uses --overwrite so it is safe to re-run.
+# This imports two dashboards into the logging Kibana instance:
+#   1. "Kubernetes Pod Logs"  - overview with 6 Lens panels
+#   2. "Log Explorer"         - interactive log investigation with
+#      cascading namespace/pod/container/stream filters and a
+#      saved search log table
+# Both share the fluentd* data view. The import uses --overwrite
+# so it is safe to re-run.
 #
 # Prerequisites:
 #   - kubectl access to the k8s-235 cluster (context: oidc@k8s-235-1)
@@ -15,7 +19,7 @@
 #     "curl -sk -u elastic:\$ES_PASSWORD -X POST \
 #       'https://kibana-kb-http:5601/api/saved_objects/_export' \
 #       -H 'kbn-xsrf: true' -H 'Content-Type: application/json' \
-#       -d '{\"objects\":[{\"type\":\"dashboard\",\"id\":\"dashboard-k8s-pod-logs\"}],\"includeReferencesDeep\":true,\"excludeExportDetails\":true}'" \
+#       -d '{\"objects\":[{\"type\":\"dashboard\",\"id\":\"dashboard-k8s-pod-logs\"},{\"type\":\"dashboard\",\"id\":\"dashboard-log-explorer\"}],\"includeReferencesDeep\":true,\"excludeExportDetails\":true}'" \
 #     > kibana-dashboards.ndjson
 
 set -euo pipefail
@@ -48,5 +52,6 @@ cat "$NDJSON_FILE" | kubectl exec -i "$ES_POD" \
     rm /tmp/kibana-import.ndjson"
 
 echo ""
-echo "Done. Dashboard available at:"
+echo "Done. Dashboards available at:"
 echo "  https://logs.monitoring.235.tdude.co/app/dashboards#/view/dashboard-k8s-pod-logs"
+echo "  https://logs.monitoring.235.tdude.co/app/dashboards#/view/dashboard-log-explorer"
