@@ -1,0 +1,72 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fluentd-v3-index-template
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: apply-template
+          image: curlimages/curl:8.12.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-es-elastic-user
+                  key: elastic
+          command:
+            - sh
+            - -ceu
+            - |
+              cat <<'EOF' >/tmp/fluentd-v3-template.json
+              {
+                "index_patterns": ["fluentd-v3-*"] ,
+                "priority": 500,
+                "template": {
+                  "mappings": {
+                    "properties": {
+                      "kubernetes": {
+                        "properties": {
+                          "labels": {
+                            "type": "object",
+                            "enabled": false
+                          },
+                          "annotations": {
+                            "type": "object",
+                            "enabled": false
+                          }
+                        }
+                      },
+                      "kubernetes_labels_flat": {
+                        "type": "flattened"
+                      },
+                      "kubernetes_annotations_flat": {
+                        "type": "flattened"
+                      },
+                      "kubernetes_labels_raw": {
+                        "type": "text",
+                        "index": false
+                      },
+                      "kubernetes_annotations_raw": {
+                        "type": "text",
+                        "index": false
+                      }
+                    }
+                  }
+                }
+              }
+              EOF
+
+              until curl -sk -u "elastic:${ES_PASSWORD}" "https://elasticsearch-es-http:9200/_cluster/health" >/dev/null; do
+                sleep 2
+              done
+
+              curl -sk -u "elastic:${ES_PASSWORD}" \
+                -H 'Content-Type: application/json' \
+                -X PUT "https://elasticsearch-es-http:9200/_index_template/fluentd-v3-template" \
+                -d @/tmp/fluentd-v3-template.json

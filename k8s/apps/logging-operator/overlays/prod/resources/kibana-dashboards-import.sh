@@ -6,7 +6,7 @@
 #   2. "Log Explorer"         - interactive log investigation with
 #      cascading namespace/pod/container/stream filters and a
 #      saved search log table
-# Both share the fluentd*,fluentd-v2* data view. The import uses --overwrite
+# Both share the fluentd*,fluentd-v2*,fluentd-v3* data view. The import uses --overwrite
 # so it is safe to re-run.
 #
 # Prerequisites:

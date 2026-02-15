@@ -11,6 +11,15 @@ spec:
     - dedot:
         de_dot_nested: true
         de_dot_separator: "_"
+    - record_transformer:
+        enable_ruby: true
+        auto_typecast: true
+        records:
+          - kubernetes_labels_raw: '${record.dig("kubernetes", "labels").to_json rescue nil}'
+          - kubernetes_annotations_raw: '${record.dig("kubernetes", "annotations").to_json rescue nil}'
+          - kubernetes_labels_flat: '${((record.dig("kubernetes", "labels") || {}).each_with_object({}) { |(k, v), h| h[k.to_s.gsub(/[\.\/]/, "_")] = v.is_a?(Hash) || v.is_a?(Array) ? v.to_json : v })}'
+          - kubernetes_annotations_flat: '${((record.dig("kubernetes", "annotations") || {}).each_with_object({}) { |(k, v), h| h[k.to_s.gsub(/[\.\/]/, "_")] = v.is_a?(Hash) || v.is_a?(Array) ? v.to_json : v })}'
+        remove_keys: $.kubernetes.labels,$.kubernetes.annotations
     - tag_normaliser:
         format: ${namespace_name}
   globalOutputRefs:

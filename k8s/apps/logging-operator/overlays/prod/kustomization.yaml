@@ -6,6 +6,7 @@ resources:
 - ./resources/fluentbit.yaml
 - ./resources/fluentd.yaml
 - ./resources/elasticsearch.yaml
+- ./resources/elasticsearch-template-job.yaml
 - ./resources/ingress.yaml
 - ./resources/output.yaml
 - ./resources/logging.yaml

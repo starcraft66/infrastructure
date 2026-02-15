@@ -9,7 +9,7 @@ spec:
     scheme: https
     ssl_verify: false
     logstash_format: true
-    logstash_prefix: fluentd-v2
+    logstash_prefix: fluentd-v3
     log_es_400_reason: true
     user: elastic
     password:
