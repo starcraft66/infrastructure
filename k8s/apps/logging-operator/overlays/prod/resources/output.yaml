@@ -19,6 +19,7 @@ spec:
           key: elastic
     buffer:
       tags: tag,time
+      flush_mode: interval
       timekey: 10m
       timekey_wait: 1m
       timekey_use_utc: true
