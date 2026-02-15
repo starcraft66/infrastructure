@@ -67,5 +67,7 @@ in
     monitoring.alertAddress = "starcraft66@gmail.com";
 
     certificateScheme = "acme-nginx";
+    
+    stateVersion = 3;
   };
 }

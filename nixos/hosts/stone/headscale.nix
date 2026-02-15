@@ -12,6 +12,7 @@ in {
         server_url = "https://${vpnDomain}";
         dns = {
           base_domain = "d.${vpnDomain}";
+          override_local_dns = false;
         };
       };
       settings = { logtail.enabled = false; };
