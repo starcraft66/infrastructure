@@ -1,28 +1,81 @@
-apiVersion: "cilium.io/v2alpha1"
-kind: CiliumBGPPeeringPolicy
-metadata:
- name: 01-bgp-peering-policy
-spec: # CiliumBGPPeeringPolicySpec
-  nodeSelector:
-   matchLabels:
-     kubernetes.io/os: linux
-  virtualRouters: # []CiliumBGPVirtualRouter
-  - localASN: 64513
-    exportPodCIDR: true
-    serviceSelector:
-      matchExpressions:
-         - {key: somekey, operator: NotIn, values: ['never-used-value']}
-    neighbors: # []CiliumBGPNeighbor
-    - peerAddress: '172.16.29.1/32'
-      peerASN: 64512
-    - peerAddress: '2a10:4741:36:29::1/128'
-      peerASN: 64512
----
-apiVersion: "cilium.io/v2alpha1"
+apiVersion: cilium.io/v2
 kind: CiliumLoadBalancerIPPool
 metadata:
-  name: "pool"
+  name: pool
 spec:
   blocks:
   - cidr: "10.234.0.0/18"
   - cidr: "2a10:4741:36:32:3::/80"
+---
+apiVersion: cilium.io/v2
+kind: CiliumBGPClusterConfig
+metadata:
+  name: bgp-cluster
+spec:
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/os: linux
+  bgpInstances:
+  - name: instance-64513
+    localASN: 64513
+    peers:
+    - name: peer-64512-v4
+      peerASN: 64512
+      peerAddress: 172.16.29.1
+      peerConfigRef:
+        name: cilium-peer-v4
+    - name: peer-64512-v6
+      peerASN: 64512
+      peerAddress: 2a10:4741:36:29::1
+      peerConfigRef:
+        name: cilium-peer-v6
+---
+apiVersion: cilium.io/v2
+kind: CiliumBGPPeerConfig
+metadata:
+  name: cilium-peer-v4
+spec:
+  families:
+  - afi: ipv4
+    safi: unicast
+    advertisements:
+      matchLabels:
+        advertise: "bgp"
+  gracefulRestart:
+    enabled: true
+    restartTimeSeconds: 15
+---
+apiVersion: cilium.io/v2
+kind: CiliumBGPPeerConfig
+metadata:
+  name: cilium-peer-v6
+spec:
+  families:
+  - afi: ipv6
+    safi: unicast
+    advertisements:
+      matchLabels:
+        advertise: "bgp"
+  gracefulRestart:
+    enabled: true
+    restartTimeSeconds: 15
+---
+apiVersion: cilium.io/v2
+kind: CiliumBGPAdvertisement
+metadata:
+  name: bgp-advertisements
+  labels:
+    advertise: bgp
+spec:
+  advertisements:
+  - advertisementType: "PodCIDR"
+  - advertisementType: "Service"
+    service:
+      addresses:
+      - ClusterIP
+      - ExternalIP
+      - LoadBalancerIP
+    selector:
+      matchExpressions:
+      # All services
+      - {key: somekey, operator: NotIn, values: ['never-used-value']}

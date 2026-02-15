@@ -1,4 +1,4 @@
-apiVersion: "cilium.io/v2alpha1"
+apiVersion: "cilium.io/v2"
 kind: CiliumLoadBalancerIPPool
 metadata:
   name: pool
@@ -7,7 +7,7 @@ spec:
   - cidr: "10.235.0.0/18"
   - cidr: "2a0c:9a46:637:88:3::/80"
 ---
-apiVersion: cilium.io/v2alpha1
+apiVersion: cilium.io/v2
 kind: CiliumBGPClusterConfig
 metadata:
   name: bgp-spike
@@ -27,7 +27,7 @@ spec:
       peerConfigRef:
         name: cilium-peer-v6
 ---
-apiVersion: cilium.io/v2alpha1
+apiVersion: cilium.io/v2
 kind: CiliumBGPPeerConfig
 metadata:
   name: cilium-peer-v4
@@ -42,7 +42,7 @@ spec:
     enabled: true
     restartTimeSeconds: 15
 ---
-apiVersion: cilium.io/v2alpha1
+apiVersion: cilium.io/v2
 kind: CiliumBGPPeerConfig
 metadata:
   name: cilium-peer-v6
@@ -57,7 +57,7 @@ spec:
     enabled: true
     restartTimeSeconds: 15
 ---
-apiVersion: cilium.io/v2alpha1
+apiVersion: cilium.io/v2
 kind: CiliumBGPAdvertisement
 metadata:
   name: bgp-advertisements
