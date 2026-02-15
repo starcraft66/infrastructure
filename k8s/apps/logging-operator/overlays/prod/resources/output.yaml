@@ -8,6 +8,9 @@ spec:
     port: 9200
     scheme: https
     ssl_verify: false
+    logstash_format: true
+    logstash_prefix: fluentd-v2
+    log_es_400_reason: true
     user: elastic
     password:
       valueFrom:
@@ -15,8 +18,17 @@ spec:
           name: elasticsearch-es-elastic-user
           key: elastic
     buffer:
+      tags: time
       timekey: 10m
       timekey_wait: 1m
       timekey_use_utc: true
+      flush_interval: 5s
+      flush_thread_count: 8
+      chunk_limit_size: 8MB
+      queued_chunks_limit_size: 256
+      retry_forever: false
+      retry_timeout: 30m
+      retry_max_interval: 5m
+      disable_chunk_backup: true
       total_limit_size: 5GB
       overflow_action: drop_oldest_chunk

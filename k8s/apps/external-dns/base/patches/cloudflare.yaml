@@ -18,7 +18,7 @@
   value: --source=gateway-httproute
 - op: add
   path: /spec/template/spec/containers/0/args/-
-  value: --log-level=debug
+  value: --log-level=info
 - op: add
   path: /spec/template/spec/containers/0/args/-
   value: --events

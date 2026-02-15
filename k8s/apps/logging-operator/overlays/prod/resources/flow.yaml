@@ -8,7 +8,10 @@ spec:
     #     remove_key_name_field: true
     #     parse:
     #       type: nginx
+    - dedot:
+        de_dot_nested: true
+        de_dot_separator: "_"
     - tag_normaliser:
-        format: ${namespace_name}.${pod_name}.${container_name}
+        format: ${namespace_name}
   globalOutputRefs:
   - es-cluster-output
