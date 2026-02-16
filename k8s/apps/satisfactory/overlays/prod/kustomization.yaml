@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: satisfactory
 
 images:
-- name: "ghcr.io/wolveix/satisfactory-server/satisfactory-server"
+- name: "ghcr.io/wolveix/satisfactory-server"
   newTag: "v1.9.10"
 
 resources:

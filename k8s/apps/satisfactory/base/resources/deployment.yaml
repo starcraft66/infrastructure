@@ -28,7 +28,7 @@ spec:
         runAsNonRoot: true
       containers:
       - name: satisfactory
-        image: "ghcr.io/wolveix/satisfactory-server/satisfactory-server:dev"
+        image: "ghcr.io/wolveix/satisfactory-server:dev"
         imagePullPolicy: Always
         resources:
           limits:
