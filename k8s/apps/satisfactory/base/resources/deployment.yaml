@@ -42,7 +42,7 @@ spec:
             - "/bin/sh"
             - "-c"
             - "/home/steam/healthcheck.sh"
-          initialDelaySeconds: 300
+          initialDelaySeconds: 600
           failureThreshold: 4
           successThreshold: 1
           periodSeconds: 30
