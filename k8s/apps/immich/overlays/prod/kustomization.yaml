@@ -7,7 +7,7 @@ resources:
 
 images:
 - name: ghcr.io/immich-app/immich-server
-  newTag: v1.140.1
+  newTag: v1.144.1
 
 generators:
 - ./generators/secrets-generator.yaml
