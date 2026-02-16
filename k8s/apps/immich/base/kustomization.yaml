@@ -22,3 +22,11 @@ helmCharts:
     master:
       persistence:
         enabled: false
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+          ephemeral-storage: 50Mi
+        limits:
+          memory: 6Gi
+          ephemeral-storage: 2Gi
