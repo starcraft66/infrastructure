@@ -1,0 +1,38 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+- resources/ingress.yaml
+- resources/nfs-volume.yaml
+
+images:
+- name: ghcr.io/immich-app/immich-server
+  newTag: v1.140.1
+
+generators:
+- ./generators/secrets-generator.yaml
+
+namespace: immich
+
+configMapGenerator:
+- name: immich-config
+  literals:
+  - IMMICH_HOST="::"
+  - IMMICH_PORT=2283
+  - TZ=America/Toronto
+  - DB_HOSTNAME=immich-postgres-rw
+  - DB_PORT=5432
+  - DB_USERNAME=immich
+  - DB_DATABASE_NAME=immich
+  - REDIS_HOSTNAME=immich-redis-master
+  - REDIS_PORT=6379
+  - UPLOAD_LOCATION=/usr/src/app/upload
+  - IMMICH_LOG_LEVEL=log
+
+patches:
+- path: ./patches/persistence.yaml
+  target:
+    group: apps
+    kind: StatefulSet
+    name: immich
+    version: v1

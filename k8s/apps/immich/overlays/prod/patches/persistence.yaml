@@ -1,0 +1,13 @@
+---
+- op: add
+  path: /spec/template/spec/volumes/1
+  value:
+    name: library-extra
+    persistentVolumeClaim:
+      claimName: "immich-library-extra"
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/1
+  value:
+    name: library-extra
+    mountPath: /mnt/media/extra
+    readOnly: true

@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: immich
+  labels:
+    app.kubernetes.io/name: immich
+spec:
+  type: ClusterIP
+  publishNotReadyAddresses: true
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+  - IPv6
+  - IPv4
+  ports:
+    - port: 2283
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: immich

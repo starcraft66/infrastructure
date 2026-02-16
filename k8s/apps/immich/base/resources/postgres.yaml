@@ -1,0 +1,24 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: immich-postgres
+spec:
+  instances: 1
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        cnpg.io/cluster: immich-postgres
+  bootstrap:
+    initdb:
+      database: immich
+      owner: immich
+      secret:
+        name: immich-postgres
+  storage:
+    storageClass: truenas-iscsi-spitfire-fast
+    size: 20Gi
+  monitoring:
+    enablePodMonitor: true
