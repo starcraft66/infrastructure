@@ -61,6 +61,13 @@ driver:
         -----END OPENSSH PRIVATE KEY-----
       username: root
     zfs:
+      # the example below is useful for TrueNAS 12
+      cli:
+        paths:
+          zfs: /usr/sbin/zfs
+          zpool: /usr/sbin/zpool
+          sudo: /usr/bin/sudo
+          chroot: /usr/sbin/chroot
       datasetEnableQuotas: true
       datasetEnableReservation: false
       datasetParentName: spitfire/k8s-235/volumes
