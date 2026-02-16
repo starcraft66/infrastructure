@@ -60,11 +60,20 @@ resource "cloudflare_dns_record" "registry_tdude_co-CNAME" {
   proxied = false
 }
 
-resource "cloudflare_dns_record" "git_tdude_co-15e863f9cc46997d6dff0c6f6d9d6b8b" {
+resource "cloudflare_dns_record" "git_tdude_co-A" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "git.tdude.co"
-  content = "traefik.lava.tdude.co"
-  type    = "CNAME"
+  content = "65.109.116.164"
+  type    = "A"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_dns_record" "git_tdude_co-AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "git.tdude.co"
+  content = "2a01:4f9:3051:104f::3"
+  type    = "AAAA"
   ttl     = 1
   proxied = false
 }
