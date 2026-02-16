@@ -25,7 +25,7 @@ metadata:
     app.kubernetes.io/name: tika
     app.kubernetes.io/instance: tika
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: tika

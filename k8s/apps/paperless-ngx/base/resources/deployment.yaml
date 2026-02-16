@@ -44,6 +44,12 @@ spec:
               value: http://gotenberg
             - name: PAPERLESS_TIKA_ENDPOINT
               value: http://tika
+            - name: PAPERLESS_TASK_WORKERS
+              value: "8"
+            - name: PAPERLESS_THREADS_PER_WORKER
+              value: "2"
+            - name: PAPERLESS_CONVERT_TMPDIR
+              value: /tmp
             - name: S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES
               value: "1"
           envFrom:
@@ -61,10 +67,10 @@ spec:
               port: http
           resources:
             requests:
-              cpu: 200m
-              memory: 512Mi
+              cpu: 2000m
+              memory: 4Gi
             limits:
-              memory: 2Gi
+              memory: 8Gi
           volumeMounts:
           - name: paperless-ngx-data
             mountPath: /usr/src/paperless/data
