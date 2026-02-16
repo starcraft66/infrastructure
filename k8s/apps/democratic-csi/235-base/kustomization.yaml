@@ -30,3 +30,10 @@ helmCharts:
   repo: https://democratic-csi.github.io/charts/
   namespace: democratic-csi
   valuesFile: ./resources/values-iscsi.yaml
+- name: democratic-csi
+  # includeCRDs: true
+  releaseName: zfs-iscsi-spitfire-fast
+  version: 0.15.1
+  repo: https://democratic-csi.github.io/charts/
+  namespace: democratic-csi
+  valuesFile: ./resources/values-iscsi-spitfire-fast.yaml
