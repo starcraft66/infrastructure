@@ -65,6 +65,17 @@ spec:
             httpGet:
               path: /login/
               port: http
+            timeoutSeconds: 10
+            periodSeconds: 30
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /login/
+              port: http
+            timeoutSeconds: 10
+            periodSeconds: 30
+            failureThreshold: 12
+            initialDelaySeconds: 60
           resources:
             requests:
               cpu: 2000m
