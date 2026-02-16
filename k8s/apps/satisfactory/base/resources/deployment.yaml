@@ -36,23 +36,16 @@ spec:
           requests:
             cpu: "4"
             memory: 12Gi
-        # No readiness probe on udp rn
-        # readinessProbe:
-        #   tcpSocket:
-        #     port: 15777
-        #   initialDelaySeconds: 15
-        #   periodSeconds: 5
-        #   failureThreshold: 10
-        #   successThreshold: 1
-        #   timeoutSeconds: 1
-        # livenessProbe:
-        #   tcpSocket:
-        #     port: 15777
-        #   initialDelaySeconds: 15
-        #   periodSeconds: 5
-        #   failureThreshold: 10
-        #   successThreshold: 1
-        #   timeoutSeconds: 1
+        livenessProbe:
+          exec:
+            command:
+            - "/bin/sh"
+            - "-c"
+            - "/home/steam/healthcheck.sh"
+          initialDelaySeconds: 300
+          failureThreshold: 4
+          successThreshold: 1
+          periodSeconds: 30
         envFrom:
         - configMapRef:
             name: satisfactory-vars
@@ -65,6 +58,9 @@ spec:
           protocol: UDP
         - name: gametcp
           containerPort: 7777
+          protocol: TCP
+        - name: messaging
+          containerPort: 8888
           protocol: TCP
         volumeMounts:
         - name: savedata

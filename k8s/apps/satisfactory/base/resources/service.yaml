@@ -21,5 +21,9 @@ spec:
     protocol: TCP
     name: gametcp
     targetPort: gametcp
+  - name: messaging
+    port: 8888
+    protocol: TCP
+    targetPort: messaging
   selector:
     app.kubernetes.io/name: satisfactory
