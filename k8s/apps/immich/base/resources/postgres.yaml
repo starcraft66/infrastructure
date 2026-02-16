@@ -15,6 +15,10 @@ spec:
     initdb:
       database: immich
       owner: immich
+      postInitSQL:
+        - CREATE EXTENSION IF NOT EXISTS cube;
+        - CREATE EXTENSION IF NOT EXISTS earthdistance;
+        - CREATE EXTENSION IF NOT EXISTS vector;
       secret:
         name: immich-postgres
   storage:
