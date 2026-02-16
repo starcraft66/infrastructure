@@ -27,7 +27,7 @@ controller:
 
 driver:
   config:
-    driver: freenas-nfs
+    driver: freenas-api-nfs
     httpConnection:
       allowInsecure: true
       apiKey: redacted

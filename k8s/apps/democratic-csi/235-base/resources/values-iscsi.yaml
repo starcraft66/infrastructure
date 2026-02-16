@@ -30,7 +30,7 @@ controller:
 
 driver:
   config:
-    driver: freenas-iscsi
+    driver: freenas-api-iscsi
     httpConnection:
       allowInsecure: true
       apiKey: redacted
