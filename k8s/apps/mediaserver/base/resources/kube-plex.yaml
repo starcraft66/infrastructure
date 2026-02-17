@@ -30,7 +30,7 @@ spec:
       # initContainers:
       # - name: kube-plex-install
       #   image: "quay.io/munnerz/kube-plex:latest"
-      #   imagePullPolicy: Always
+      #   imagePullPolicy: IfNotPresent
       #   command:
       #   - cp
       #   - /kube-plex
@@ -41,7 +41,7 @@ spec:
       containers:
       - name: plex
         image: "plexinc/pms-docker:latest"
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         # We replace the PMS binary with a postStart hook to save having to
         # modify the default image entrypoint.
         # lifecycle:

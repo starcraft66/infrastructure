@@ -29,7 +29,7 @@ spec:
       containers:
       - name: satisfactory
         image: "ghcr.io/wolveix/satisfactory-server:dev"
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         resources:
           limits:
             memory: 16Gi

@@ -26,7 +26,7 @@ spec:
       containers:
       - name: wizarr
         image: ghcr.io/wizarrrr/wizarr:dev
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         # env:
         # - name: "HOST"
         #   value: "::"

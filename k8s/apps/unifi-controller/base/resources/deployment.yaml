@@ -23,7 +23,7 @@ spec:
       containers:
       - name: unifi-controller
         image: ghcr.io/linuxserver/unifi-controller:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         env:
         - name: TZ
           value: "America/Montreal"
@@ -91,7 +91,7 @@ spec:
       containers:
       - name: unpoller
         image: ghcr.io/unpoller/unpoller:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         envFrom:
         - configMapRef:
             name: unifi-poller-config
