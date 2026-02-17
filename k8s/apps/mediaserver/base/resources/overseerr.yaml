@@ -23,10 +23,22 @@ spec:
         labelSelector:
           matchLabels:
             app.kubernetes.io/name: overseerr
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+        runAsNonRoot: true
       containers:
       - name: overseerr
         image: ghcr.io/seerr-team/seerr:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: false
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
         # env:
         # - name: "HOST"
         #   value: "::"
