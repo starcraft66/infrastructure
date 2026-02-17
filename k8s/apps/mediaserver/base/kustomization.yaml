@@ -36,7 +36,7 @@ images:
 - name: ghcr.io/linuxserver/tautulli
   digest: sha256:31bce3c8457e74392c8c451eee315a759f8b96ec7cff6060596152d7e893b776
 - name: ghcr.io/seerr-team/seerr
-  digest: v3.0.1@sha256:1b5fc1ea825631d9d165364472663b817a4c58ef6aa1013f58d82c1570d7c866
+  newTag: v3.0.1@sha256:1b5fc1ea825631d9d165364472663b817a4c58ef6aa1013f58d82c1570d7c866
 - name: ghcr.io/wizarrrr/wizarr
   newTag: "v2025.12.0@sha256:c6eb584462c754e03a12eb619ad5960ba4e6c3fcb2fa0b8dec62023b053112f2"
 - name: ghcr.io/jellyfin/jellyfin
