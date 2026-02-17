@@ -18,7 +18,7 @@ spec:
       secret:
         name: paperless-ngx-postgres
   storage:
-    storageClass: truenas-nfs-spitfire-fast
+    storageClass: truenas-iscsi-spitfire-fast
     size: 10Gi
   monitoring:
     enablePodMonitor: true
