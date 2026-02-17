@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: paperless-ngx-postgres
 spec:
-  instances: 1
+  instances: 2
   topologySpreadConstraints:
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname
