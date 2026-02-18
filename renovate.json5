@@ -32,5 +32,10 @@
             "groupName": "home automation packages",
             "pinDigests": true,
         },
+        {
+            "description": "qbittorrent: ignore bogus ubuntu-versioned tags (20.x)",
+            "matchPackageNames": ["ghcr.io/linuxserver/qbittorrent"],
+            "allowedVersions": "<14",
+        },
     ]
 }
