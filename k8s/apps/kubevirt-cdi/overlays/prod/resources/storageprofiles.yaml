@@ -36,3 +36,15 @@ spec:
     - ReadOnlyMany
     volumeMode: Block
   cloneStrategy: csi-clone
+---
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: StorageProfile
+metadata:
+  name: truenas-iscsi-spitfire-fast
+spec:
+  claimPropertySets:
+  - accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
+    volumeMode: Block
+  cloneStrategy: csi-clone
