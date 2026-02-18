@@ -11,7 +11,7 @@ helmCharts:
 - name: gateway-helm
   releaseName: envoy-gateway
   valuesFile: ./resources/envoy-gateway-values.yaml
-  version: v1.3.0
+  version: 1.7.0
   repo: oci://registry-1.docker.io/envoyproxy
   namespace: envoy-gateway
   includeCRDs: true
