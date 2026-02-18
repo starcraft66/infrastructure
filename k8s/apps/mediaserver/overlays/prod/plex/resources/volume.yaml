@@ -8,7 +8,7 @@ metadata:
 spec:
   accessModes:
   - "ReadWriteOnce"
-  storageClassName: freenas-iscsi-csi
+  storageClassName: truenas-iscsi-spitfire-fast
   resources:
     requests:
       storage: "20Gi"
