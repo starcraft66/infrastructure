@@ -1,0 +1,12 @@
+---
+- op: add
+  path: /spec/template/spec/volumes/1
+  value:
+    name: photos
+    persistentVolumeClaim:
+      claimName: "photoview-photos"
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/1
+  value:
+    name: photos
+    mountPath: /photos

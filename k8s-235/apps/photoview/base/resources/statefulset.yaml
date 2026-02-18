@@ -1,0 +1,74 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: photoview
+spec:
+  serviceName: photoview
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: photoview
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: photoview
+    spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: photoview
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+      containers:
+      - name: photoview
+        image: "viktorstrate/photoview:latest"
+        imagePullPolicy: IfNotPresent
+        # resources:
+        #   limits:
+        #     memory: 8Gi
+        #   requests:
+        #     cpu: "4"
+        #     memory: 8Gi
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+            httpHeaders:
+            - name: Host
+              value: "photoview.tdude.co"
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+            httpHeaders:
+            - name: Host
+              value: "photoview.tdude.co"
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        envFrom:
+        - configMapRef:
+            name: photoview-config
+        - secretRef:
+            name: photoview-secrets
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - name: data
+          mountPath: /data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: photoview-data

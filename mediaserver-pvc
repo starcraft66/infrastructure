@@ -1,0 +1,19 @@
+NAME                      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS        VOLUMEATTRIBUTESCLASS   AGE
+jackett-config            Bound    pvc-ac0b93ad-59c9-4bb8-b92f-8dc718ff50ee   2Gi        RWO            freenas-nfs-csi     <unset>                 4y335d
+jellyfin-cache            Bound    pvc-74830d2c-4233-419a-a248-62268ad6fcf4   20Gi       RWO            freenas-nfs-csi     <unset>                 333d
+jellyfin-config           Bound    pvc-64eeb0b7de2e4a9d                       20Gi       RWO            freenas-iscsi-csi   <unset>                 333d
+jellyfin-media            Bound    jellyfin-media                             8Ti        ROX                                <unset>                 333d
+kube-plex-config          Bound    pvc-4562489f2f2c4fb4                       20Gi       RWO            freenas-iscsi-csi   <unset>                 4y335d
+kube-plex-data            Bound    plex-media                                 8Ti        RWX                                <unset>                 4y353d
+kube-plex-shared          Bound    pvc-6ad6d0d7-c45d-44d6-a2fa-3cc306d2256b   10Gi       RWX            freenas-nfs-csi     <unset>                 4y335d
+kube-plex-tmp             Bound    pvc-14c9075e-09cb-439e-a315-5f715b89bc48   10Gi       RWX            freenas-nfs-csi     <unset>                 4y332d
+kube-plex-transcode       Bound    pvc-6dac3709-72a9-4298-8621-e4669636306e   40Gi       RWX            freenas-nfs-csi     <unset>                 4y335d
+lidarr-config             Bound    pvc-f38b673dc4634de3                       2Gi        RWO            freenas-iscsi-csi   <unset>                 4y295d
+overseerr-config          Bound    pvc-abfbe6f18bc748ba                       2Gi        RWO            freenas-iscsi-csi   <unset>                 73d
+prowlarr-config           Bound    pvc-0d87ad71a6444e81                       2Gi        RWO            freenas-iscsi-csi   <unset>                 4y75d
+qbittorrent-config        Bound    pvc-2b7b9760-b9b4-43de-9469-075ec190154d   2Gi        RWO            freenas-nfs-csi     <unset>                 4y335d
+qbittorrent-config-hack   Bound    qbittorrent-config-hack                    2Gi        RWX                                <unset>                 2y84d
+radarr-config             Bound    pvc-203193515dbc4759                       2Gi        RWO            freenas-iscsi-csi   <unset>                 4y335d
+sonarr-config             Bound    pvc-bcb4379e6dc34137                       2Gi        RWO            freenas-iscsi-csi   <unset>                 4y335d
+tautulli-config           Bound    pvc-aa34af8dda1544b9                       10Gi       RWO            freenas-iscsi-csi   <unset>                 4y335d
+wizarr-config             Bound    pvc-2105ed2ed6bf41b3                       2Gi        RWO            freenas-iscsi-csi   <unset>                 72d

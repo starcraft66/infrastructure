@@ -1,0 +1,15 @@
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: netbindingpasst
+spec:
+  config: |
+    {
+      "cniVersion": "1.0.0",
+      "name": "netbindingpasst",
+      "plugins": [
+        {
+          "type": "kubevirt-passt-binding"
+        }
+      ]
+    }

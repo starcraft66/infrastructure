@@ -1,0 +1,17 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: oidc-security
+spec:
+  targetRefs:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: envoy-gateway
+  oidc:
+    provider:
+      issuer: "https://vault.235.tdude.co/v1/identity/oidc/provider/default"
+    clientID: "qgqHojdXxjdtAPUZKTjJFyy2qiyIQNvC"
+    clientSecret:
+      name: "vault-client-secret"
+    redirectURL: "https://dummy.235.tdude.co/oauth2/callback"

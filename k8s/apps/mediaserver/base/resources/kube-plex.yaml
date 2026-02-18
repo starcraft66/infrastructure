@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/name: kube-plex
 spec:
   serviceName: "plex"
-  replicas: 1
+  replicas: 0
   revisionHistoryLimit: 3
   selector:
     matchLabels:

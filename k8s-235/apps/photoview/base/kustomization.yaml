@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ./resources/namespace.yaml
+- ./resources/postgres.yaml
+- ./resources/statefulset.yaml
+- ./resources/service.yaml
+- ./resources/volume.yaml
+
+namespace: photoview
+
+configMapGenerator:
+- name: photoview-config
+  literals:
+  - "PHOTOVIEW_LISTEN_IP=::"
+  - PHOTOVIEW_DATABASE_DRIVER=postgres
+  - PHOTOVIEW_LISTEN_PORT=8080
+  - PHOTOVIEW_MEDIA_CACHE=/data
+  - PHOTOVIEW_DISABLE_FACE_RECOGNITION=1

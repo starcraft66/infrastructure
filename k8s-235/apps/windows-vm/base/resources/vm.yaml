@@ -1,0 +1,41 @@
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: windows-vm
+spec:
+  runStrategy: Always
+  template:
+    metadata:
+      annotations:
+        # Fix spammy alert
+        # https://github.com/kubevirt/kubevirt/issues/13835#issuecomment-2639332055
+        virtualmachineinstancepresets.admission.kubevirt.io/exclude: "true"
+    spec:
+      domain:
+        cpu:
+          cores: 4
+          sockets: 2
+          threads: 8
+        devices:
+          disks:
+          - name: rootfs
+            disk:
+              bus: sata
+          interfaces:
+          - name: default
+            masquerade: {}
+            ports:
+            - name: http
+              port: 80
+              protocol: TCP
+        resources:
+          requests:
+            memory: 8Gi
+      networks:
+      - name: default
+        pod: {}
+      volumes:
+      - name: rootfs
+        persistentVolumeClaim: 
+          claimName: vm-hdd

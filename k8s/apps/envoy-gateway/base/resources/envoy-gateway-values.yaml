@@ -1,0 +1,2 @@
+nameOverride: "envoy-gateway"
+fullnameOverride: "envoy-gateway"
