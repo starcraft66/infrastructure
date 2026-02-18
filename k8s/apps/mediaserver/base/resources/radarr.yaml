@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: radarr
 spec:
   serviceName: "radarr"
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: radarr

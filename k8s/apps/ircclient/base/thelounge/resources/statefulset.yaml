@@ -7,7 +7,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: thelounge
   serviceName: "thelounge"
-  replicas: 0
+  replicas: 1
   template:
     metadata:
       labels:

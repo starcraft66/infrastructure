@@ -6,7 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: thelounge
 spec:
-  storageClassName: freenas-iscsi-csi
+  storageClassName: truenas-iscsi-spitfire-fast
   accessModes:
   - ReadWriteOnce
   resources:

@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: tautulli
 spec:
-  storageClassName: freenas-iscsi-csi
+  storageClassName: truenas-iscsi-spitfire-fast
   accessModes:
   - ReadWriteOnce
   resources:
