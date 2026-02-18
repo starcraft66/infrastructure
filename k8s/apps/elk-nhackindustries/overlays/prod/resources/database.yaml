@@ -11,7 +11,7 @@ spec:
   # PersistentVolumeClaims will be adopted by the new cluster.
   volumeClaimDeletePolicy: DeleteOnScaledownOnly
   nodeSets:
-  - name: default
+  - name: iscsi
     count: 2
     config:
       # xpack.security.enabled: true
@@ -31,7 +31,7 @@ spec:
         resources:
           requests:
             storage: 10Gi
-        storageClassName: "freenas-nfs-csi"
+        storageClassName: "truenas-iscsi-spitfire-fast"
 ---
 apiVersion: kibana.k8s.elastic.co/v1
 kind: Kibana

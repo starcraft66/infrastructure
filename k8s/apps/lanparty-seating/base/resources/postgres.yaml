@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: lanparty-seating-postgres
 spec:
-  instances: 1
+  instances: 2
   topologySpreadConstraints:
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname
@@ -20,7 +20,7 @@ spec:
       secret:
         name: postgres
   storage:
-    storageClass: truenas-nfs-spitfire-fast
+    storageClass: truenas-iscsi-spitfire-fast
     size: 5Gi
   monitoring:
     enablePodMonitor: true

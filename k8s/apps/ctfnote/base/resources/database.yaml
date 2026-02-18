@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: postgres-ctfnote
 spec:
-  instances: 1
+  instances: 2
   topologySpreadConstraints:
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname
@@ -18,7 +18,7 @@ spec:
       secret:
         name: postgres-credentials
   storage:
-    storageClass: truenas-nfs-spitfire-fast
+    storageClass: truenas-iscsi-spitfire-fast
     size: 10Gi
   monitoring:
     enablePodMonitor: true

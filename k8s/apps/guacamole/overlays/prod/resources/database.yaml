@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: guacamole-postgres
 spec:
-  instances: 1
+  instances: 2
   topologySpreadConstraints:
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname
@@ -22,7 +22,7 @@ spec:
       secret:
         name: postgres-credentials
   storage:
-    storageClass: truenas-nfs-spitfire-fast
+    storageClass: truenas-iscsi-spitfire-fast
     size: 1Gi
   monitoring:
     enablePodMonitor: true
