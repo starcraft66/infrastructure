@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: unifi-controller
-  replicas: 1
+  replicas: 0
   template:
     metadata:
       labels:
