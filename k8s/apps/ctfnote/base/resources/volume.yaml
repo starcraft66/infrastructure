@@ -10,7 +10,7 @@ spec:
   resources:
     requests:
       storage: "10Gi"
-  storageClassName: "freenas-nfs-csi"
+  storageClassName: "truenas-nfs-spitfire-fast"
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -24,4 +24,4 @@ spec:
   resources:
     requests:
       storage: "10Gi"
-  storageClassName: "freenas-nfs-csi"
+  storageClassName: "truenas-nfs-spitfire-fast"
