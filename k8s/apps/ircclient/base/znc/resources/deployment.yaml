@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: znc
-  replicas: 0
+  replicas: 1
   strategy:
       # ZNC wants only one bouncer running off a same config
       type: Recreate
