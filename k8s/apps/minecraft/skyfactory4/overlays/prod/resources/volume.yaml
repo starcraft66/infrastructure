@@ -10,4 +10,4 @@ spec:
   resources:
     requests:
       storage: "50Gi"
-  storageClassName: "freenas-nfs-csi"
+  storageClassName: "truenas-nfs-spitfire-fast"
