@@ -1,0 +1,6 @@
+- op: add
+  path: /spec/storage/volumeClaimTemplate/spec/storageClassName
+  value: truenas-iscsi-spitfire-fast
+- op: replace
+  path: /spec/storage/volumeClaimTemplate/spec/resources/requests/storage
+  value: "300Gi"

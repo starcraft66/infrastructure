@@ -18,5 +18,12 @@ patches:
     kind: CustomResourceDefinition
     name: prometheuses.monitoring.coreos.com  
 
+- path: ./patches/prometheus-storage.yaml
+  target:
+    group: monitoring.coreos.com
+    version: v1
+    kind: Prometheus
+    name: k8s
+
 generators:
 - ./generators/secrets-generator.yaml
