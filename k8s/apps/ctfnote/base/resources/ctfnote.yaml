@@ -6,7 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: ctfnote-frontend
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: ctfnote-frontend
@@ -40,7 +40,7 @@ metadata:
   labels:
     app.kubernetes.io/name: ctfnote
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: ctfnote
@@ -94,7 +94,7 @@ metadata:
   labels:
     app.kubernetes.io/name: hedgedoc
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: hedgedoc
