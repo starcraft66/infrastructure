@@ -45,7 +45,7 @@ helmCharts:
     auth:
       existingSecret: "funkwhale"
     global:
-      storageClass: "freenas-nfs-csi"
+      storageClass: "truenas-nfs-spitfire-fast"
     master:
       resourcesPreset: medium
       topologySpreadConstraints:

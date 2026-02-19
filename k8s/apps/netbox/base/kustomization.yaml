@@ -28,7 +28,7 @@ helmCharts:
     auth:
       existingSecret: "netbox"
     global:
-      storageClass: "freenas-nfs-csi"
+      storageClass: "truenas-nfs-spitfire-fast"
     master:
       topologySpreadConstraints:
       - maxSkew: 1
