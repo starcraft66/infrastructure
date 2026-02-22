@@ -42,6 +42,7 @@ lib.mkIf cfg.enable {
 
     listen pocket-id
       mode http
+      option forwardfor
       bind ${cfg.lbIpv4Address}:443 ssl crt /var/lib/acme/pocket-id/full.pem
       bind ${cfg.lbIpv6Address}:443 ssl crt /var/lib/acme/pocket-id/full.pem
       option httpchk GET /healthcheck
