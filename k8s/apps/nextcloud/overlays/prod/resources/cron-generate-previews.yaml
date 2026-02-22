@@ -6,7 +6,7 @@ spec:
   schedule: '@hourly'
   concurrencyPolicy: Forbid
   # We don't care about these and they just create alert noise
-  failedJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       backoffLimit: 0
