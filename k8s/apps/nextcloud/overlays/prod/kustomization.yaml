@@ -45,6 +45,9 @@ configMapGenerator:
   - POSTGRES_HOST=nextcloud-postgres-rw
   - POSTGRES_DB=nextcloud
   - POSTGRES_USER=nextcloud
+  - NC_maintenance_window_start=1
+  - NC_default_phone_region=CA
+  - NC_mail_smtpmode=null
   # This stuff is probably required because the nextcloud image
   # only listens to X-Forwarded-For stuff if it comes from an
   # RFC1918 IPv4 address.

@@ -1,0 +1,67 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: nextcloud-cron
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid
+  # We don't care about these and they just create alert noise
+  failedJobsHistoryLimit: 0
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: nextcloud
+            image: "nextcloud:19.0.3-apache"
+            imagePullPolicy: IfNotPresent
+            command:
+            - php
+            - -f
+            - /var/www/html/cron.php
+            securityContext:
+              runAsUser: 33
+            envFrom:
+            - configMapRef:
+                name: nextcloud-env-vars
+            - secretRef:
+                name: nextcloud-secrets
+            resources:
+              {}
+            volumeMounts:
+            - name: nextcloud-data
+              mountPath: /var/www/
+              subPath: root
+            - name: nextcloud-data
+              mountPath: /var/www/html
+              subPath: html
+            - name: nextcloud-data
+              mountPath: /var/www/html/data
+              subPath: data
+            - mountPath: /var/www/html/data/tristan/files/extra
+              name: nextcloud-data-extra
+            - name: nextcloud-data
+              mountPath: /var/www/html/config
+              subPath: config
+            - name: nextcloud-data
+              mountPath: /var/www/html/custom_apps
+              subPath: custom_apps
+            - name: nextcloud-data
+              mountPath: /var/www/tmp
+              subPath: tmp
+            - name: nextcloud-data
+              mountPath: /var/www/html/themes
+              subPath: themes
+          volumes:
+          - name: nextcloud-data
+            persistentVolumeClaim:
+              claimName: nextcloud-data
+          - name: nextcloud-data-extra
+            persistentVolumeClaim:
+              claimName: nextcloud-data-extra
+          # Will mount configuration files as www-data (id: 33) for nextcloud
+          securityContext:
+            fsGroup: 33
+            fsGroupChangePolicy: "OnRootMismatch"
