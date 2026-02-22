@@ -36,6 +36,11 @@ spec:
       containers:
       - name: python-matter-server
         image: ghcr.io/home-assistant-libs/python-matter-server:6.6
+        args:
+        - "--storage-path"
+        - "/data"
+        - "--paa-root-cert-dir"
+        - "/data/credentials"
         env:
         - name: TZ
           value: "America/Montreal"

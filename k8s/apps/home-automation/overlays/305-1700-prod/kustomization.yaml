@@ -21,6 +21,13 @@ patches:
     name: zigbee2mqtt
     namespace: home-automation
     version: v1
+- path: ./patches/python-matter-server.yaml
+  target:
+    group: apps
+    kind: StatefulSet
+    name: matter-server
+    namespace: home-automation
+    version: v1
 
 generators:
 - ./generators/secrets-generator.yaml
