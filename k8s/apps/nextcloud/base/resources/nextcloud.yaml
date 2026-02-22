@@ -29,6 +29,8 @@ spec:
       - name: nextcloud
         image: "nextcloud:19.0.3-apache"
         imagePullPolicy: IfNotPresent
+        securityContext:
+          runAsUser: 33
         env:
         - name: SQLITE_DATABASE
           value: "nextcloud"
