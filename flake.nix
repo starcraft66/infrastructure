@@ -64,6 +64,8 @@
             local-packages = self: super: {
               cni-plugin-cilium = super.callPackage ./nixos/pkgs/cni-plugin-cilium.nix { };
               alertmanager-discord = super.callPackage ./nixos/pkgs/alertmanager-discord.nix { };
+              # pocket-id v2.x from unstable for PostgreSQL support (nixos-25.11 only has v1.15.0)
+              pocket-id = (import inputs.nixpkgs { inherit (super) system; }).pocket-id;
             };
           };
         }

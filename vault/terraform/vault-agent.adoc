@@ -27,6 +27,25 @@ systemctl restart vault-agent-{coredns,etcd,kubernetes-worker,kubernetes-control
 
 Once complete, make sure to `rm ~/.vault-token` to remove the root token from the system.
 
+== Patroni vault-agent provisioning
+
+Patroni uses vault-agent to obtain etcd client certificates for communicating with the etcd cluster. After running `terraform apply` for the `live/235` config, provision the Patroni vault-agent credentials on each node:
+
+[source,console]
+----
+CLUSTER_NAME=<name of cluster>
+patroni_id=$(vault read --field=role_id auth/approle/role/$CLUSTER_NAME-node-patroni/role-id)
+patroni_secret=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-patroni/secret-id)
+mkdir -p /var/lib/secrets/patroni
+chown patroni:patroni /var/lib/secrets/patroni
+echo $patroni_id > /var/lib/secrets/patroni/vault_agent_role_id
+echo $patroni_secret > /var/lib/secrets/patroni/vault_agent_secret_id
+chown patroni:patroni /var/lib/secrets/patroni/vault_agent_{role,secret}_id
+systemctl restart vault-agent-patroni
+----
+
+NOTE: Generate a separate `secret_id` for each node (run the `vault write -f` command once per node).
+
 == Build the admin kubeconfig
 
 To bootstrap OIDC authenticaiton, we first need to gain admin access to the cluster to create the proper `ClusterRoleBinding` for the OIDC account. We will get admin by building an admin kubeconfig file using the following script:

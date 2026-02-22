@@ -13,6 +13,14 @@ creation_rules:
   key_groups:
   - pgp:
     - *tristan
+- path_regex: secrets/patroni-.*\.yaml$
+  key_groups:
+  - pgp:
+    - *tristan
+- path_regex: secrets/pocket-id-.*\.yaml$
+  key_groups:
+  - pgp:
+    - *tristan
 - path_regex: secrets/nix-shell\.yaml$
   key_groups:
   - pgp:

@@ -1,0 +1,289 @@
+= Patroni PostgreSQL HA + Pocket ID Deployment Guide
+:toc:
+:toclevels: 2
+
+This document describes all manual steps required to deploy the Patroni PostgreSQL HA cluster and Pocket ID OIDC provider on the k8s-235-1 bare-metal cluster (sassaflash, stormfeather, soarin).
+
+== Prerequisites
+
+* Access to the Vault root token (or sufficient privileges)
+* YubiKey with the SOPS PGP key for encrypting secrets
+* Cloudflare API token available (already configured for ACME)
+* `nix develop` shell active (provides `vault`, `sops`, `tofu`, `colmena` CLIs)
+
+== Step 1: Apply DNS records
+
+The DNS records for `id.235.tdude.co` and `pg.235.tdude.co` are defined in `dns/dns_tdude.co.tf`.
+
+[source,console]
+----
+cd dns/
+tofu init   # only needed on first run
+tofu plan   # review changes -- should show 4 new records (A + AAAA for each)
+tofu apply
+----
+
+Verify:
+
+[source,console]
+----
+dig +short id.235.tdude.co A     # 172.16.29.11
+dig +short id.235.tdude.co AAAA  # 2a10:4741:36:29::11:1
+dig +short pg.235.tdude.co A     # 172.16.29.10
+dig +short pg.235.tdude.co AAAA  # 2a10:4741:36:29::10:1
+----
+
+== Step 2: Apply Vault Terraform (Patroni AppRole)
+
+The Patroni AppRole is defined in `vault/terraform/modules/vault_k8s/etcd.tf` as `vault_approle_auth_backend_role.patroni`. It grants the `etcd-client-issue` policy which allows issuing etcd client certificates.
+
+[source,console]
+----
+cd vault/terraform/live/235/
+tofu init
+tofu plan   # should show 1 new resource: vault_approle_auth_backend_role.patroni
+tofu apply
+----
+
+== Step 3: Create SOPS-encrypted secret files
+
+Generate the passwords and encryption keys, then create sops-encrypted YAML files.
+
+=== Patroni secrets
+
+[source,console]
+----
+# Generate strong passwords
+REPLICATION_PW=$(openssl rand -base64 32)
+SUPERUSER_PW=$(openssl rand -base64 32)
+REWIND_PW=$(openssl rand -base64 32)
+
+# Create the plaintext YAML
+cat > /tmp/patroni-235.yaml <<EOF
+replication_password: "${REPLICATION_PW}"
+superuser_password: "${SUPERUSER_PW}"
+rewind_password: "${REWIND_PW}"
+EOF
+
+# Encrypt with sops (must match .sops.yaml creation rule for secrets/patroni-*.yaml)
+sops -i -e secrets/patroni-235.yaml
+----
+
+=== Pocket ID secrets
+
+The environment file must contain:
+
+* `DB_CONNECTION_STRING` -- full PostgreSQL connection string including password
+* `ENCRYPTION_KEY` -- 32-byte hex key for encrypting OIDC private keys
+
+[source,console]
+----
+# Generate encryption key
+ENCRYPTION_KEY=$(openssl rand -hex 32)
+
+# Generate a password for the pocketid database user
+POCKETID_DB_PW=$(openssl rand -base64 32)
+
+# Create the plaintext YAML
+# The "environment" key contains the full env file content
+cat > secrets/pocket-id-235.yaml <<EOF
+environment: |
+  DB_CONNECTION_STRING=postgres://pocketid:${POCKETID_DB_PW}@pg.235.tdude.co:5432/pocketid
+  ENCRYPTION_KEY=${ENCRYPTION_KEY}
+EOF
+
+# Encrypt with sops
+sops -i -e secrets/pocket-id-235.yaml
+----
+
+IMPORTANT: Note down `POCKETID_DB_PW` -- you will need it in <<Step 8>> to create the database user.
+
+== Step 4: Provision Patroni vault-agent credentials
+
+First, obtain the role ID and generate secret IDs from your workstation:
+
+[source,console]
+----
+vault login  # with root token or sufficient privileges
+
+CLUSTER_NAME=k8s-235-1
+patroni_id=$(vault read --field=role_id auth/approle/role/$CLUSTER_NAME-node-patroni/role-id)
+
+# Generate one secret_id per node
+patroni_secret_1=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-patroni/secret-id)
+patroni_secret_2=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-patroni/secret-id)
+patroni_secret_3=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-patroni/secret-id)
+
+rm ~/.vault-token
+----
+
+Then provision each node via colmena:
+
+[source,console]
+----
+# Create directories on all nodes
+colmena exec --on=@k8s-235 -- mkdir -p /var/lib/secrets/patroni
+
+# Deploy role_id (same for all nodes)
+colmena exec --on=@k8s-235 -- bash -c "echo '${patroni_id}' > /var/lib/secrets/patroni/vault_agent_role_id"
+
+# Deploy secret_id (unique per node)
+colmena exec --on=sassaflash -- bash -c "echo '${patroni_secret_1}' > /var/lib/secrets/patroni/vault_agent_secret_id"
+colmena exec --on=stormfeather -- bash -c "echo '${patroni_secret_2}' > /var/lib/secrets/patroni/vault_agent_secret_id"
+colmena exec --on=soarin -- bash -c "echo '${patroni_secret_3}' > /var/lib/secrets/patroni/vault_agent_secret_id"
+----
+
+NOTE: The `role_id` is the same for all 3 nodes, but you *must* generate a separate `secret_id` for each node.
+
+== Step 5: Deploy secrets via Colmena
+
+Edit each host's `keys.nix` to set `deploy-keys = true`, then deploy:
+
+[source,console]
+----
+# In nixos/hosts/{sassaflash,stormfeather,soarin}/keys.nix, set:
+#   deploy-keys = true;
+
+colmena apply --on=@k8s-235
+
+# Revert deploy-keys back to false after deployment
+----
+
+This deploys the Patroni passwords and Pocket ID environment file to each node.
+
+Alternatively, deploy to a single node first to validate:
+
+[source,console]
+----
+colmena apply --on sassaflash
+----
+
+== Step 6: Deploy NixOS configuration
+
+Deploy the NixOS configuration which activates the Patroni, Pocket ID, HAProxy, and Keepalived services:
+
+[source,console]
+----
+# Deploy to all nodes
+colmena apply --on=@k8s-235
+
+# Wait for Patroni to initialize (~30 seconds), then check status
+colmena exec --on=sassaflash -- patronictl -c /etc/patroni-pg-235-1-sassaflash.yaml list
+# Should show: 3 members - 1 Leader + 1 Sync Standby + 1 Replica
+----
+
+== Step 7: Verify infrastructure services
+
+=== Keepalived VIPs
+
+[source,console]
+----
+# Check VIPs are assigned across the cluster
+colmena exec --on=@k8s-235 -- ip addr show | grep "172.16.29.1[01]"
+# Should see 172.16.29.10 (PostgreSQL) and 172.16.29.11 (Pocket ID) on one of the nodes
+----
+
+=== HAProxy health checks
+
+[source,console]
+----
+# Patroni REST API (returns 200 on leader only)
+curl -s http://sassaflash.235.tdude.co:8008/primary
+curl -s http://stormfeather.235.tdude.co:8008/primary
+curl -s http://soarin.235.tdude.co:8008/primary
+
+# PostgreSQL via VIP
+psql -h pg.235.tdude.co -U postgres -c "SELECT pg_is_in_recovery();"
+# Should return 'f' (false = leader)
+
+# Replicas via VIP port 5433
+psql -h pg.235.tdude.co -p 5433 -U postgres -c "SELECT pg_is_in_recovery();"
+# Should return 't' (true = replica)
+----
+
+=== ACME certificate
+
+[source,console]
+----
+# The Pocket ID ACME cert is issued via DNS-01 Cloudflare challenge
+# Check it was issued:
+colmena exec --on=sassaflash -- ls -la /var/lib/acme/pocket-id/
+----
+
+== Step 8: Bootstrap Pocket ID database
+
+Connect to the PostgreSQL leader via the local Unix socket and create the database:
+
+[source,console]
+----
+# Find which node is the Patroni leader
+colmena exec --on=sassaflash -- patronictl -c /etc/patroni-pg-235-1-sassaflash.yaml list
+
+# On the leader node, create the database and user (using trust auth via Unix socket)
+colmena exec --on=<leader-node> -- sudo -u patroni psql -h /run/postgresql -U postgres -c "CREATE USER pocketid WITH PASSWORD '<POCKETID_DB_PW from Step 3>';"
+colmena exec --on=<leader-node> -- sudo -u patroni psql -h /run/postgresql -U postgres -c "CREATE DATABASE pocketid OWNER pocketid;"
+----
+
+Then restart Pocket ID on all nodes so it can connect and run migrations:
+
+[source,console]
+----
+colmena exec --on=@k8s-235 -- systemctl restart pocket-id
+----
+
+== Step 9: Verify Pocket ID
+
+[source,console]
+----
+# Health check
+curl -sk https://id.235.tdude.co/healthcheck
+
+# OIDC discovery
+curl -sk https://id.235.tdude.co/.well-known/openid-configuration
+----
+
+Navigate to `https://id.235.tdude.co` in a browser to complete the initial admin setup.
+
+== Appendix: Architecture overview
+
+=== VIP assignments (VLAN 29: 172.16.29.0/24)
+
+[cols="20,20,20,20"]
+|===
+| Service | IPv4 VIP | IPv6 VIP | VRRP IDs
+
+| Kubernetes API | 172.16.29.8 | 2a10:4741:36:29::8:1 | 81-82
+| Vault | 172.16.29.9 | 2a10:4741:36:29::9:1 | 83-84
+| PostgreSQL (Patroni) | 172.16.29.10 | 2a10:4741:36:29::10:1 | 85-86
+| Pocket ID | 172.16.29.11 | 2a10:4741:36:29::11:1 | 87-88
+|===
+
+=== Port assignments
+
+[cols="15,15,~"]
+|===
+| Port | Protocol | Service
+
+| 5432 | TCP | PostgreSQL (leader, via HAProxy VIP)
+| 5433 | TCP | PostgreSQL (replicas, via HAProxy VIP)
+| 8008 | HTTP | Patroni REST API (health checks)
+| 443 | HTTPS | Pocket ID (via HAProxy VIP, SSL termination)
+| 1411 | HTTP | Pocket ID backend (per-node)
+|===
+
+=== Secrets locations on nodes
+
+[cols="~,~"]
+|===
+| Path | Contents
+
+| `/var/lib/secrets/patroni/vault_agent_role_id` | Vault AppRole role ID (manual)
+| `/var/lib/secrets/patroni/vault_agent_secret_id` | Vault AppRole secret ID (manual)
+| `/var/lib/secrets/patroni/etcd-ca.pem` | etcd CA cert (vault-agent)
+| `/var/lib/secrets/patroni/client.pem` | etcd client cert (vault-agent)
+| `/var/lib/secrets/patroni/client-key.pem` | etcd client key (vault-agent)
+| `/var/lib/secrets/patroni/replication-password` | PG replication password (Colmena keys)
+| `/var/lib/secrets/patroni/superuser-password` | PG superuser password (Colmena keys)
+| `/var/lib/secrets/patroni/rewind-password` | PG rewind password (Colmena keys)
+| `/var/lib/secrets/pocket-id/environment` | Pocket ID env (DB_CONNECTION_STRING, ENCRYPTION_KEY) (Colmena keys)
+|===

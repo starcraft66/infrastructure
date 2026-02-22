@@ -83,4 +83,12 @@ resource "vault_approle_auth_backend_role" "etcd" {
   token_policies = [vault_policy.etcd_issue.name]
 }
 
+# Patroni needs etcd client certificates to communicate with the etcd cluster
+# It reuses the same etcd PKI but has its own AppRole for separation of concerns
+resource "vault_approle_auth_backend_role" "patroni" {
+  backend        = vault_auth_backend.approle.path
+  role_name      = "${var.cluster_id}-node-patroni"
+  token_policies = [vault_policy.etcd_client_issue.name]
+}
+
 # Generate moved blocks for all of these resources to move them under module.vault_k8s

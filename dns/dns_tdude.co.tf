@@ -722,3 +722,41 @@ resource "cloudflare_dns_record" "ups_235" {
   ttl     = 1
   proxied = false
 }
+
+# Pocket ID OIDC provider VIP
+resource "cloudflare_dns_record" "id_235-A" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "id.235.tdude.co"
+  content = "172.16.29.11"
+  type    = "A"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_dns_record" "id_235-AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "id.235.tdude.co"
+  content = "2a10:4741:36:29::11:1"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
+# PostgreSQL HA cluster VIP (Patroni)
+resource "cloudflare_dns_record" "pg_235-A" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "pg.235.tdude.co"
+  content = "172.16.29.10"
+  type    = "A"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_dns_record" "pg_235-AAAA" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "pg.235.tdude.co"
+  content = "2a10:4741:36:29::10:1"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
