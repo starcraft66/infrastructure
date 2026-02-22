@@ -53,6 +53,9 @@ configMapGenerator:
   # RFC1918 IPv4 address.
   # Forum posts say I need this to fix sign-in via iOS app.
   - OVERWRITEPROTOCOL=https
+  # Trust Traefik reverse proxy pods to provide X-Forwarded-For headers.
+  # These are the cluster pod CIDRs (IPv4 + IPv6).
+  - TRUSTED_PROXIES=10.234.128.0/22 2a10:4741:36:32:2::/112
 
 commonLabels:
   app.kubernetes.io/name: nextcloud
