@@ -16,4 +16,4 @@ helmCharts:
   releaseName: traefik
   repo: https://helm.traefik.io/traefik
   valuesFile: ./resources/values.yaml
-  version: 39.0.1
+  version: 39.0.2
