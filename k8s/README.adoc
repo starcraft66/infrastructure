@@ -18,13 +18,167 @@ The physical servers providing compute for the kubernetes nodes are provisioned 
 .Procedure to install a new physical NixOS server
 [%collapsible]
 ====
-TODO: document
+. Create the host configuration directory `nixos/hosts/<hostname>/` with `default.nix`, `configuration.nix`, `hardware.nix`, `bootloader.nix`, `keys.nix` and any role-specific modules (e.g. `kubernetes.nix`). Register the host in `nixos/hosts/default.nix` in the `systems` attrset.
+
+. Build a customized install ISO for the host. The resulting ISO includes the host's network configuration, allowing remote SSH access to the installer.
++
+[source,console]
+----
+nix build .#packages.x86_64-linux.<hostname>
+----
+
+. Boot the target server from the ISO (via USB or IPMI/iLO virtual media). The live environment will come up with the host's static IP and SSH configuration active.
+
+. Partition the disks manually. The layout depends on the host's storage requirements. Refer to existing `hardware.nix` files for examples.
++
+.LUKS + Btrfs (used by the 235 cluster nodes)
+[source,console]
+----
+# Partition the disk (create EFI/boot and root partitions)
+cryptsetup luksFormat /dev/<root-partition>
+cryptsetup open /dev/<root-partition> cryptroot
+mkfs.btrfs /dev/mapper/cryptroot
+mount /dev/mapper/cryptroot /mnt
+btrfs subvolume create /mnt/root
+btrfs subvolume create /mnt/nix
+umount /mnt
+mount -o subvol=root /dev/mapper/cryptroot /mnt
+mkdir /mnt/nix
+mount -o subvol=nix /dev/mapper/cryptroot /mnt/nix
+mkfs.ext4 /dev/<boot-partition>
+mkdir /mnt/boot
+mount /dev/<boot-partition> /mnt/boot
+----
++
+.ZFS (used by spike, lava)
+[source,console]
+----
+zpool create -o ashift=12 -O mountpoint=none <poolname> /dev/<disk>
+zfs create -o mountpoint=legacy <poolname>/root
+zfs create -o mountpoint=legacy <poolname>/nix
+zfs create -o mountpoint=legacy <poolname>/var
+zfs create -o mountpoint=legacy <poolname>/home
+mount -t zfs <poolname>/root /mnt
+mkdir -p /mnt/{nix,var,home,boot}
+mount -t zfs <poolname>/nix /mnt/nix
+mount -t zfs <poolname>/var /mnt/var
+mount -t zfs <poolname>/home /mnt/home
+mount /dev/<efi-partition> /mnt/boot
+----
+
+. Generate initrd SSH host keys for FDE remote unlock.
++
+[source,console]
+----
+# For LUKS+Btrfs hosts (235 cluster pattern)
+mkdir -p /mnt/etc/secrets/initrd
+ssh-keygen -t rsa -N "" -f /mnt/etc/secrets/initrd/ssh_host_rsa_key
+ssh-keygen -t ed25519 -N "" -f /mnt/etc/secrets/initrd/ssh_host_ed25519_key
+
+# For ZFS hosts (spike, lava pattern)
+ssh-keygen -t ed25519 -N "" -f /mnt/boot/initrd-ssh-key
+----
+
+. Install NixOS to the target disk using the flake. You will need a copy of or access to the infrastructure repo from the installer environment.
++
+[source,console]
+----
+nixos-install --flake <path-to-repo>#<hostname>
+----
+
+. Reboot the server into the installed system. Unlock FDE remotely using the appropriate just recipe.
++
+[source,console]
+----
+just unlock-235    # or just unlock-305-1700
+----
+
+. Provision Vault agent credentials on the new host. Follow the procedure in `vault/terraform/vault-agent.adoc` to create role IDs and secret IDs for all vault-agent instances on the host (kubernetes, etcd, coredns, front-proxy).
+
+. Perform the first Colmena deployment with secrets. Set `deploy-keys = true` in the host's `keys.nix` to push Vault TLS certificates, Patroni credentials and other secrets, then deploy.
++
+[source,console]
+----
+colmena apply --on=<hostname>
+----
++
+After the initial deployment succeeds, revert `deploy-keys` to `false` to avoid excessive YubiKey interactions on routine deploys.
+
+. (If using sops-nix for on-host secret decryption) Convert the host's SSH key to a PGP key, add it to `.sops.yaml` and re-key the relevant secrets.
++
+[source,console]
+----
+ssh-to-pgp -i /etc/ssh/ssh_host_rsa_key -o secrets/keys/hosts/<hostname>.asc
+# Note the fingerprint, add it to .sops.yaml, then re-key
+----
 ====
 
 .Procedure to initialize, backup and restore the etcd database
 [%collapsible]
 ====
-TODO: document
+The etcd data directory is `/var/lib/etcd`. TLS certificates are managed by vault-agent and stored in `/var/lib/secrets/etcd/`. The etcd cluster is used by both the kubernetes API server and Patroni (on k8s-235), so operations on etcd affect both services.
+
+===== Initializing a new cluster
+
+Set `initialClusterState = "new"` in the cluster's NixOS module (e.g. `nixos/modules/k8s-235-1/default.nix`), then deploy with Colmena. Once the cluster is bootstrapped and healthy, revert to `initialClusterState = "existing"` and deploy again.
+
+===== Taking a snapshot
+
+Run on any etcd member node:
+
+[source,console]
+----
+etcdctl snapshot save /tmp/etcd-snapshot.db \
+  --endpoints=https://$(hostname -f):2379 \
+  --cacert=/var/lib/secrets/etcd/etcd-ca.pem \
+  --cert=/var/lib/secrets/etcd/server.pem \
+  --key=/var/lib/secrets/etcd/server-key.pem
+----
+
+===== Restoring from a snapshot
+
+IMPORTANT: This is a disruptive operation. Restoring etcd will affect both kubernetes state and Patroni's DCS state (leader election, cluster configuration). Coordinate accordingly.
+
+. Stop all dependent services on every node in the cluster.
++
+[source,console]
+----
+# On each node:
+systemctl stop kube-apiserver patroni etcd
+----
+
+. Remove the old data directory on each node.
++
+[source,console]
+----
+rm -rf /var/lib/etcd/member
+----
+
+. Restore the snapshot on each node, specifying the correct node name and peer URLs. Repeat for each member, adjusting `--name` and `--initial-advertise-peer-urls` accordingly.
++
+[source,console]
+----
+etcdctl snapshot restore /tmp/etcd-snapshot.db \
+  --name <hostname> \
+  --data-dir /var/lib/etcd \
+  --initial-cluster "soarin=https://soarin.235.tdude.co:2380,stormfeather=https://stormfeather.235.tdude.co:2380,sassaflash=https://sassaflash.235.tdude.co:2380" \
+  --initial-advertise-peer-urls https://<hostname>.235.tdude.co:2380
+----
+
+. Restart services on each node in order.
++
+[source,console]
+----
+systemctl start etcd
+# Verify cluster health:
+etcdctl endpoint health \
+  --endpoints=https://$(hostname -f):2379 \
+  --cacert=/var/lib/secrets/etcd/etcd-ca.pem \
+  --cert=/var/lib/secrets/etcd/server.pem \
+  --key=/var/lib/secrets/etcd/server-key.pem
+systemctl start kube-apiserver
+systemctl start patroni
+----
 ====
 
 == Components
@@ -58,7 +212,62 @@ ArgoCD is capable of decrypting secrets in this repo through the https://github.
 .Procedure to generate a GPG key for use with ArgoCD
 [%collapsible]
 ====
-TODO: document
+ArgoCD needs a passphrase-less GPG key to decrypt SOPS secrets non-interactively. The private key is stored as a SOPS-encrypted Kubernetes Secret (`deploy-pgp-key`) in each ArgoCD overlay, and the fingerprint must be listed in `.sops.yaml` so that all k8s secrets are encrypted with it.
+
+. Generate a new passphrase-less GPG key.
++
+[source,console]
+----
+gpg --batch --gen-key <<EOF
+%no-protection
+Key-Type: RSA
+Key-Length: 4096
+Name-Real: ArgoCD SOPS
+Name-Email: argocd@tdude.co
+Expire-Date: 0
+%commit
+EOF
+----
++
+Note the fingerprint from the output.
+
+. Export the private key in ASCII armor.
++
+[source,console]
+----
+gpg --armor --export-secret-keys <fingerprint> > argocd-key.asc
+----
+
+. Export the public key and import it into your keyring (needed to encrypt secrets for ArgoCD).
++
+[source,console]
+----
+gpg --armor --export <fingerprint> > argocd-key-pub.asc
+----
+
+. Update the `argocd-k8s-235` fingerprint in `.sops.yaml` with the new fingerprint.
+
+. Place the private key in the `deploy-pgp-key.yaml` secret in each ArgoCD overlay. Edit the secret with `sops` and paste the contents of `argocd-key.asc` into the `deploy-key.asc` field.
++
+[source,console]
+----
+sops k8s/apps/argocd/overlays/235-prod/secrets/deploy-pgp-key.yaml
+sops k8s/apps/argocd/overlays/305-1700-prod/secrets/deploy-pgp-key.yaml
+----
+
+. Re-key all existing k8s secrets so they are encrypted with the new key.
++
+[source,console]
+----
+find k8s/**/secrets/*.yaml -name '*.yaml' | xargs -i sops updatekeys -y {}
+----
+
+. Clean up the exported key files.
++
+[source,console]
+----
+rm argocd-key.asc argocd-key-pub.asc
+----
 ====
 
 === 🔥 Prometheus
@@ -111,11 +320,51 @@ To in order for democratic-csi to do its work, we need to supply it with a TrueN
 .Procedure to add an SSH key to TrueNAS root
 [%collapsible]
 ====
-TODO: document
+democratic-csi uses SSH to execute ZFS commands on TrueNAS as root. The private key is stored in the SOPS-encrypted driver-config secret files in each democratic-csi overlay.
+
+. Generate an SSH keypair.
++
+[source,console]
+----
+ssh-keygen -t ed25519 -N "" -f democratic-csi-truenas
+----
+
+. Add the public key to TrueNAS root. In the TrueNAS WebUI, navigate to Accounts > Users > root and paste the contents of `democratic-csi-truenas.pub` into the SSH Public Key field.
+
+. Update each of the 4 SOPS-encrypted driver-config secret files with the new private key. Edit each file with `sops` and replace the `sshConnection.privateKey` value with the contents of the private key file.
++
+[source,console]
+----
+sops k8s/apps/democratic-csi/overlays/235-prod/secrets/driver-config-nfs.yaml
+sops k8s/apps/democratic-csi/overlays/235-prod/secrets/driver-config-nfs-spitfire-fast.yaml
+sops k8s/apps/democratic-csi/overlays/235-prod/secrets/driver-config-iscsi.yaml
+sops k8s/apps/democratic-csi/overlays/235-prod/secrets/driver-config-iscsi-spitfire-fast.yaml
+----
+
+. Clean up the keypair from the local machine.
++
+[source,console]
+----
+rm democratic-csi-truenas democratic-csi-truenas.pub
+----
 ====
 
 .Procedure to generate and retrieve a TrueNAS API key
 [%collapsible]
 ====
-TODO: document
+democratic-csi uses the TrueNAS HTTP API to provision ZFS datasets and manage NFS/iSCSI shares. Authentication is done via a Bearer token API key.
+
+. Log into the TrueNAS WebUI at `https://spitfire.235.tdude.co`.
+
+. Navigate to the API Keys settings (gear icon in the top right > API Keys) and click Add to create a new API key. Copy the generated key.
+
+. Update each of the 4 SOPS-encrypted driver-config secret files with the new API key. Edit each file with `sops` and replace the `httpConnection.apiKey` value.
++
+[source,console]
+----
+sops k8s/apps/democratic-csi/overlays/235-prod/secrets/driver-config-nfs.yaml
+sops k8s/apps/democratic-csi/overlays/235-prod/secrets/driver-config-nfs-spitfire-fast.yaml
+sops k8s/apps/democratic-csi/overlays/235-prod/secrets/driver-config-iscsi.yaml
+sops k8s/apps/democratic-csi/overlays/235-prod/secrets/driver-config-iscsi-spitfire-fast.yaml
+----
 ====
