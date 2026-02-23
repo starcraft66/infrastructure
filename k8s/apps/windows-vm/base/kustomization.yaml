@@ -4,3 +4,4 @@ resources:
 - ./resources/namespace.yaml
 - ./resources/volume.yaml
 - ./resources/vm.yaml
+- ./resources/service.yaml

@@ -26,8 +26,8 @@ spec:
           - name: default
             masquerade: {}
             ports:
-            - name: http
-              port: 80
+            - name: rdp
+              port: 3389
               protocol: TCP
         resources:
           requests:
