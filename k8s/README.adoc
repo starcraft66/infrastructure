@@ -1,16 +1,19 @@
-= 235 Kubernetes cluster
+= Kubernetes
 // Only set imagesdir if the file hasn't been included by one with a different imagesdir
 ifndef::imagesdir[:imagesdir: ../.gitlab/images]
 
 == Overview
 
 [.text-justify]
-The 235 kubernetes cluster (referred to as `k8s-235`) is my only personal kubernetes cluster at the moment. It consists of 3 consolidated master, worker and etcd nodes. Etcd is the backing data store for kubernetes. The cluster is deployed on 3 physical (bare metal) servers running NixOS, these hosts are provisioned by the Nix expressions and modules located in the `nixos` folder at the root of the repo. The kubernetes cluster deployed using a combination of the kubernetes module included in upstream nixpkgs and a custom module that I wrote specific to my infrastructure. Most importantly, it handles end-to-end mutual TLS certification of all cluster components using Hashicorp Vault and vault-agent.
+I currently operate two personal kubernetes clusters, `k8s-235` and `k8s-305-1700`, each at a different physical site. Both clusters are deployed on bare metal servers running NixOS and are provisioned by the Nix expressions and modules located in the `nixos` folder at the root of the repo. The kubernetes cluster components are deployed using a custom NixOS module that I wrote specific to my infrastructure. Most importantly, it handles end-to-end mutual TLS certification of all cluster components using Hashicorp Vault and vault-agent.
+
+[.text-justify]
+The `k8s-235` cluster consists of 3 consolidated control-plane, worker and etcd nodes (`soarin`, `sassaflash`, `stormfeather`). These three nodes also run Hashicorp Vault (in HA mode with Raft storage), Patroni (HA PostgreSQL) and Pocket ID (OIDC identity provider), all behind keepalived VIPs. These services along with etcd are hosted directly on NixOS rather than inside the kubernetes cluster because the cluster itself depends on them for PKI, secrets, authentication and database access, and running them in-cluster would create chicken-and-egg dependency problems. The `k8s-305-1700` cluster is a single-node cluster running on `spike`, featuring an NVIDIA GPU for GPU-accelerated workloads and Multus CNI for host network bridging. Like the 235 cluster, Vault and etcd run directly on NixOS on `spike` for the same dependency reasons.
 
 == Provisioning
 
 [.text-justify]
-The physical servers providing compute for the kubernetes worker and master nodes are provisioned by Nix. The flake in this repo contains NixOS configurations for the pysical servers `soarin`, `sassaflash` and `stormfeather`.
+The physical servers providing compute for the kubernetes nodes are provisioned by Nix. The flake in this repo contains NixOS configurations for the physical servers `soarin`, `sassaflash` and `stormfeather` (k8s-235) as well as `spike` (k8s-305-1700). Deployments are performed remotely using https://colmena.cli.rs/[Colmena] (e.g. `colmena apply --on=@k8s-235`).
 
 .Procedure to install a new physical NixOS server
 [%collapsible]
@@ -27,20 +30,21 @@ TODO: document
 == Components
 
 [.text-justify]
-The core components of the kubernetes cluster include the control-plane itself, etcd, the Cilium CNI networking plugin and the democratic-csi CSI storage plugin. Cilium is installed at cluster provisioning time using a manual invocation and democratic-csi is later installed by ArgoCD. Cilium can then be further upgraded by ArgoCD.
+The core components of the kubernetes clusters include the control-plane itself, etcd, the Cilium CNI networking plugin and the democratic-csi CSI storage plugin. Cilium is installed at cluster provisioning time via the NixOS kubernetes module and democratic-csi is later installed by ArgoCD. Cilium can then be further upgraded by ArgoCD.
 
 === 🐝 Cilium
 
-I used to use the Calico CNI but recently migrated to Cilium. The semantics are mostly the same when it comes to the BGP peering architecture, I hope to post updated documentation soon.
+[.text-justify]
+Both clusters use https://cilium.io/[Cilium] as their CNI networking plugin, providing eBPF-based networking with native routing (no overlays or tunnels between nodes). Cilium replaces kube-proxy entirely and handles service load-balancing using DSR (Direct Server Return). It is configured for dual-stack (IPv4 + IPv6) operation on both clusters with BGP peering to advertise cluster pod and service subnets to the wider network. The k8s-235 cluster peers with the core Brocade switch and with AS208914 routers, while k8s-305-1700 peers with the 305-1700 site gateway. https://docs.cilium.io/en/stable/observability/hubble/[Hubble] is enabled for network observability on both clusters.
 
 === 🐙 ArgoCD
 
 [.text-justify]
-ArgoCD is an central part of my cluster. Once the initial control-plane for the cluster is deployed by ansible, the only application that must be installed manually into the cluster is ArgoCD. Once installed, it will take over the lifecycle of all of the applications in this repository to be deployed into the cluster.
-ArgoCD deploys everything in the `k8s/apps` folder including itself. A commit webhook in GitLab will cause ArgoCD to sync the repository on every commit. Authentication to ArgoCD is done through GitLab's SSO.
+ArgoCD is a central part of my clusters. Once the initial control-plane for a cluster is deployed by NixOS, the only application that must be installed manually into the cluster is ArgoCD. Once installed, it will take over the lifecycle of all of the applications in this repository to be deployed into the cluster.
+ArgoCD deploys everything in the `k8s/apps` folder including itself. A commit webhook in GitLab will cause ArgoCD to sync the repository on every commit. Authentication to ArgoCD is done through Hashicorp Vault's OIDC provider.
 
 [.text-justify]
-To deploy ArgoCD, go into the `k8s/apps/argocd` and run `kustomize build --enable-alpha-plugins overlays/prod | kubectl apply -f -`. ArgoCD will become available at https://gitops.tdude.co.
+To deploy ArgoCD on the k8s-235 cluster, go into `k8s/apps/argocd` and run `kustomize build --enable-alpha-plugins overlays/235-prod | kubectl apply -f -`. For k8s-305-1700, use `overlays/305-1700-prod` instead. ArgoCD will become available at https://gitops.tdude.co (k8s-235) or https://gitops.305-1700.tdude.co (k8s-305-1700).
 
 ==== Kustomize
 
@@ -49,18 +53,18 @@ Kustomize touts itself to be a template-free solution to manage application depl
 
 ==== SOPS
 
-ArgoCD is capable of decrypting secrets in this repo through the https://github.com/viaduct-ai/kustomize-sops[kustomize-sops] plugin for kustomize. To do this, an `initContainer` installs the plugin into ArgoCD's Pod and also imports a GPG private key ArgoCD uses to decrypt secrets. All sops-encrypted secrets you expect ArgoCD to be able to decrypt must be encrypted with ArgoCD's public key.
+ArgoCD is capable of decrypting secrets in this repo through the https://github.com/viaduct-ai/kustomize-sops[ksops] plugin for kustomize. To do this, an `initContainer` installs the `ksops` binary into ArgoCD's repo-server Pod and a second `initContainer` imports a GPG private key ArgoCD uses to decrypt secrets. Secret generators in this repo use the `ksops-exec` kind from `viaduct.ai/v1`. All sops-encrypted secrets you expect ArgoCD to be able to decrypt must be encrypted with ArgoCD's public key.
 
 .Procedure to generate a GPG key for use with ArgoCD
 [%collapsible]
 ====
-Procedure goes here...
+TODO: document
 ====
 
 === 🔥 Prometheus
 
 [.text-justify]
-Cluster-wide metrics monitoring in my cluster is performed by prometheus. More specifically, I use ArgoCD to deploy https://git.tdude.co/tristan/kube-prometheus-k8s-235/-/tree/master/[my personal configuration] of the https://github.com/prometheus-operator/kube-prometheus/[kube-prometheus] project. Like everything else, it is deployed by ArgoCD and configured to scrape ``ServiceMonitor``s and ``PodMonitor``s in all namespaces, along with cluster-wide internal metrics. The web interface for prometheus is reachable at https://prometheus.monitoring.tdude.co and the one for Grafana at https://monitoring.tdude.co. Grafana is configured for SSO authentication with GitLab.
+Cluster-wide metrics monitoring in my clusters is performed by prometheus. More specifically, I use ArgoCD to deploy https://git.tdude.co/tristan/kube-prometheus-k8s-235/-/tree/master/[my personal configuration] of the https://github.com/prometheus-operator/kube-prometheus/[kube-prometheus] project. Like everything else, it is deployed by ArgoCD and configured to scrape ``ServiceMonitor``s and ``PodMonitor``s in all namespaces, along with cluster-wide internal metrics. Each cluster has its own kube-prometheus deployment with cluster-specific manifests. The web interface for prometheus is reachable at https://prometheus.monitoring.tdude.co and the one for Grafana at https://monitoring.tdude.co. Grafana is configured for SSO authentication with Hashicorp Vault's OIDC provider.
 
 [.text-justify]
 Additionally, `kube-prometheus` also deploys alertmanager and a handful of useful alerting rules. I have configured it to notify me on Discord and on Matrix when alerts are firing using https://github.com/benjojo/alertmanager-discord/[alert-manager-discord] and https://github.com/jaywink/matrix-alertmanager/[matrix-alertmanager]. The web interface for alertmanager is available at https://alertmanager.tdude.co.
@@ -73,7 +77,7 @@ The idiomatic way to expose http services in kubernetes is via an ingress contro
 ==== Single Sign-On
 
 [.text-justify]
-Traefik supports a host of interesting features like its extensive middleware system. I make extensive use of the "Forward Auth" middleware to protect services I don't want exposed to the public behind an OpenID Connect SSO login via https://github.com/oauth2-proxy/oauth2-proxy/[oauth2-proxy]. SSO protection can be added to any ingress by setting the `traefik.ingress.kubernetes.io/router.middlewares` label on it to `traefik-forward-auth@kubernetescrd`.
+Traefik supports a host of interesting features like its extensive middleware system. I make extensive use of the "Forward Auth" middleware to protect services I don't want exposed to the public behind an OpenID Connect SSO login via https://github.com/oauth2-proxy/oauth2-proxy/[oauth2-proxy]. The OIDC provider backing oauth2-proxy is Hashicorp Vault's identity OIDC provider. SSO protection can be added to any ingress by setting the `traefik.ingress.kubernetes.io/router.middlewares` label on it to `traefik-forward-auth@kubernetescrd`.
 
 ==== TLS
 
@@ -83,14 +87,21 @@ Traefik is configured to accept TLS 1.2 and 1.3 connections only and sets strict
 === 💾 Democratic-csi
 
 [.text-justify]
-No kubernetes cluster is complete without persistent storage for stateful applications. My hypervisors aren't particularly interesting in terms of storage, but I do have a NAS with plenty of storage so let's use that! I use the https://github.com/democratic-csi/democratic-csi/[democratic-csi] CSI storage driver in my cluster to provide network programmatic access to network storage on my NAS to my kubernetes nodes. This works by making calls to the TrueNAS http api to provision new ZFS datasets or ZVOLs and exporting it over NFS or iSCSI depending on the type of share. The configuration in `k8s/apps/democratic-csi` defines 3 distinct ``StorageClass``es for different purposes:
+No kubernetes cluster is complete without persistent storage for stateful applications. My hypervisors aren't particularly interesting in terms of storage, but I do have a NAS with plenty of storage so let's use that! I use the https://github.com/democratic-csi/democratic-csi/[democratic-csi] CSI storage driver in my clusters to provide programmatic access to storage for my kubernetes nodes.
+
+[.text-justify]
+On the k8s-235 cluster, democratic-csi makes calls to the TrueNAS HTTP API on `spitfire` to provision new ZFS datasets or ZVOLs and exports them over NFS or iSCSI depending on the type of share. The configuration in `k8s/apps/democratic-csi` defines 4 distinct ``StorageClass``es for k8s-235:
 
 - `freenas-nfs-csi`
 - `freenas-iscsi-csi`
 - `truenas-nfs-spitfire-fast`
+- `truenas-iscsi-spitfire-fast`
 
 [.text-justify]
-`freenas-nfs-csi` provisions HDD-backed ZFS datasets to be shared over NFS. `freenas-iscsi-csi` provisions HDD-backed ZFS datasets to be shared over iSCSI, this is usually required for anything that uses an SQLite database with the WAL enabled since locking does not work over NFS. `truenas-nfs-spitfire-fast` provisions an NVMe SSD-backed ZFS dataset to be shared over NFS.
+The non-fast storage classes use HDD-backed ZFS pools while the fast ones use NVMe SSD-backed pools. `freenas-nfs-csi` is used for large file collections like media and documents where bulk capacity matters more than latency. `truenas-nfs-spitfire-fast` provisions SSD-backed ZFS datasets over NFS for smaller files that benefit from faster storage. `truenas-iscsi-spitfire-fast` provisions SSD-backed ZFS datasets over iSCSI and is the go-to choice for database workloads that require block-level semantics and proper file locking. `freenas-iscsi-csi` is a legacy HDD-backed iSCSI storage class.
+
+[.text-justify]
+On the k8s-305-1700 cluster, democratic-csi provisions ZFS datasets from local storage on `spike` itself rather than from a remote NAS.
 
 ==== Configuration
 
@@ -100,11 +111,11 @@ To in order for democratic-csi to do its work, we need to supply it with a TrueN
 .Procedure to add an SSH key to TrueNAS root
 [%collapsible]
 ====
-Procedure goes here...
+TODO: document
 ====
 
 .Procedure to generate and retrieve a TrueNAS API key
 [%collapsible]
 ====
-Procedure goes here...
+TODO: document
 ====
