@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: esphome
+  namespace: homeassistant
+  labels:
+    app.kubernetes.io/name: esphome
+    app.kubernetes.io/component: esphome
+    app.kubernetes.io/part-of: home-automation
+spec:
+  serviceName: esphome
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: esphome
+      app.kubernetes.io/component: esphome
+      app.kubernetes.io/part-of: home-automation
+  template:
+    metadata:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: host-bridge
+      labels:
+        app.kubernetes.io/name: esphome
+        app.kubernetes.io/component: esphome
+        app.kubernetes.io/part-of: home-automation
+    spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: esphome
+            app.kubernetes.io/component: esphome
+            app.kubernetes.io/part-of: home-automation
+      containers:
+      - name: esphome
+        image: ghcr.io/esphome/esphome:2026.2.1
+        env:
+        - name: TZ
+          value: "America/Montreal"
+        - name: ESPHOME_DASHBOARD_USE_PING
+          value: "true"
+        ports:
+        - name: web
+          containerPort: 6052
+          protocol: TCP
+        volumeMounts:
+        - name: esphome-config
+          mountPath: /config
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            memory: 2Gi
+        livenessProbe:
+          httpGet:
+            path: /
+            port: web
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /
+            port: web
+          initialDelaySeconds: 10
+          periodSeconds: 10
+      volumes:
+      - name: esphome-config
+        persistentVolumeClaim:
+          claimName: esphome-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: esphome
+  namespace: homeassistant
+  labels:
+    app.kubernetes.io/name: esphome
+    app.kubernetes.io/component: esphome
+    app.kubernetes.io/part-of: home-automation
+spec:
+  ports:
+  - name: web
+    port: 6052
+    targetPort: web
+  selector:
+    app.kubernetes.io/name: esphome
+    app.kubernetes.io/component: esphome
+    app.kubernetes.io/part-of: home-automation
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: esphome-config
+  namespace: homeassistant
+  labels:
+    app.kubernetes.io/name: esphome
+    app.kubernetes.io/component: esphome
+    app.kubernetes.io/part-of: home-automation
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: zfs-local-dataset
+  resources:
+    requests:
+      storage: 5Gi

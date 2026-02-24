@@ -5,6 +5,7 @@ resources:
 - ./resources/host-bridge.yaml
 - ./resources/postgres.yaml
 - ./resources/python-matter-server.yaml
+- ./resources/esphome.yaml
 
 namespace: home-automation
 
@@ -12,6 +13,9 @@ images:
 - name: ghcr.io/home-assistant-libs/python-matter-server
   newName: ghcr.io/home-assistant-libs/python-matter-server
   newTag: "8.1.0@sha256:170aa093ce91c76cde4cc390918307590f0f5558fcec93f913af3cb019e6562a"
+- name: ghcr.io/esphome/esphome
+  newName: ghcr.io/esphome/esphome
+  newTag: "2026.2.1@sha256:2a69bd3a869261bb49b28141358035ffa1ed4e6996f02d3628b124ef34e99115"
 
 helmCharts:
 - name: home-assistant
