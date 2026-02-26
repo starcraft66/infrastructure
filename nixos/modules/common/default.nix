@@ -28,6 +28,18 @@ in {
     programs.zsh.enable = true;
     users.defaultUserShell = pkgs.zsh;
 
+    # Disable resolving from the hosts file because of this *STUPIDITY*
+    # added in https://github.com/NixOS/nixpkgs/commit/234d95a6fc75208266049fa2f57641d6f4e5bd2a
+    # which makes localhost resolve to an IPv4 address most services won't
+    # bind on with "localhost" in mind. This breaks IPv4 access to services
+    # running on the node that are accessed via the FQDN but listening on 127.0.0.1.
+    # This has the downside of needing a working dns resolver to resolve localhost,
+    # but that isn't a huge deal.
+    services.resolved.extraConfig = ''
+      [Resolve]
+      ReadEtcHosts=no
+    ''; 
+
     environment.systemPackages = with pkgs; [
       # for dig
       bind
