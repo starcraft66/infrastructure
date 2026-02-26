@@ -16,6 +16,14 @@ let
 
   # Parse etcd hosts from URLs: "https://host:2379" -> "host:2379"
   etcdHosts = map (url: lib.removePrefix "https://" url) cfg.etcdUrls;
+
+  # Build pg_hba rules from the configured network ranges
+  pgHbaNetworkRules = lib.concatMap (net: [
+    "host replication replicator ${net.ipv4} md5"
+    "host all all ${net.ipv4} scram-sha-256"
+    "host replication replicator ${net.ipv6} md5"
+    "host all all ${net.ipv6} scram-sha-256"
+  ]) cfg.pgHbaNetworks;
 in
 lib.mkIf cfg.enable {
   services.patroni = {
@@ -36,7 +44,7 @@ lib.mkIf cfg.enable {
           loop_wait = 10;
           retry_timeout = 10;
           maximum_lag_on_failover = 1048576;
-          synchronous_mode = true;
+          synchronous_mode = cfg.synchronousMode;
         };
         initdb = [
           { encoding = "UTF8"; }
@@ -73,17 +81,12 @@ lib.mkIf cfg.enable {
         };
         pg_hba = [
           "local all all trust"
-          # IPv4
-          "host replication replicator 172.16.29.0/24 md5"
           "host replication replicator 127.0.0.1/32 md5"
-          "host all all 172.16.29.0/24 scram-sha-256"
           "host all all 127.0.0.1/32 scram-sha-256"
-          # IPv6
-          "host replication replicator 2a10:4741:36:29::/64 md5"
           "host replication replicator ::1/128 md5"
-          "host all all 2a10:4741:36:29::/64 scram-sha-256"
           "host all all ::1/128 scram-sha-256"
-        ];
+        ]
+        ++ pgHbaNetworkRules;
       };
 
       etcd3 = {
@@ -101,11 +104,8 @@ lib.mkIf cfg.enable {
       failsafe_mode = true;
     };
 
-    environmentFiles = {
-      PATRONI_REPLICATION_PASSWORD = "/var/lib/secrets/patroni/replication-password";
-      PATRONI_SUPERUSER_PASSWORD = "/var/lib/secrets/patroni/superuser-password";
-      PATRONI_REWIND_PASSWORD = "/var/lib/secrets/patroni/rewind-password";
-    };
+    # Clear upstream environmentFiles — we use a single systemd EnvironmentFile instead
+    environmentFiles = { };
   };
 
   # Ensure /run/postgresql exists for PostgreSQL's Unix socket and lock files
@@ -117,5 +117,6 @@ lib.mkIf cfg.enable {
   systemd.services.patroni = {
     after = [ "vault-agent-patroni.service" ];
     wants = [ "vault-agent-patroni.service" ];
+    serviceConfig.EnvironmentFile = cfg.environmentFile;
   };
 }

@@ -1,9 +1,12 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   imports = [
     ../../modules/kubernetes/controlplane
     ../../modules/kubernetes/etcd
     ../../modules/kubernetes/worker
     ../../modules/k8s-305-1700-1
+    ../../modules/patroni
+    ../../modules/pocket-id
   ];
 
   services.tdude.k8s-305-1700-1 = {

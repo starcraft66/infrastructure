@@ -11,46 +11,16 @@ in
 lib.mkIf deploy-keys {
 
   # Patroni secrets
-  deployment.keys."patroni-replication-password" = {
+  deployment.keys."patroni-environment" = {
     keyCommand = [
       "sops"
       "-d"
       "--extract"
-      "[\"replication_password\"]"
+      "[\"environment\"]"
       patroniSecretsFile
     ];
     destDir = "/var/lib/secrets/patroni";
-    name = "replication-password";
-    user = "patroni";
-    group = "patroni";
-    permissions = "0400";
-    uploadAt = "pre-activation";
-  };
-  deployment.keys."patroni-superuser-password" = {
-    keyCommand = [
-      "sops"
-      "-d"
-      "--extract"
-      "[\"superuser_password\"]"
-      patroniSecretsFile
-    ];
-    destDir = "/var/lib/secrets/patroni";
-    name = "superuser-password";
-    user = "patroni";
-    group = "patroni";
-    permissions = "0400";
-    uploadAt = "pre-activation";
-  };
-  deployment.keys."patroni-rewind-password" = {
-    keyCommand = [
-      "sops"
-      "-d"
-      "--extract"
-      "[\"rewind_password\"]"
-      patroniSecretsFile
-    ];
-    destDir = "/var/lib/secrets/patroni";
-    name = "rewind-password";
+    name = "environment";
     user = "patroni";
     group = "patroni";
     permissions = "0400";

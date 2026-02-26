@@ -44,6 +44,35 @@ with lib;
       description = "List of etcd endpoint URLs (https://host:2379)";
     };
 
+    environmentFile = mkOption {
+      type = types.path;
+      description = "Path to environment file containing PATRONI_REPLICATION_PASSWORD, PATRONI_SUPERUSER_PASSWORD, and PATRONI_REWIND_PASSWORD";
+    };
+
+    synchronousMode = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Enable synchronous replication. Set to false for single-node clusters.";
+    };
+
+    pgHbaNetworks = mkOption {
+      type = types.listOf (
+        types.submodule {
+          options = {
+            ipv4 = mkOption {
+              type = types.str;
+              description = "IPv4 CIDR range for pg_hba rules (e.g. 172.16.29.0/24)";
+            };
+            ipv6 = mkOption {
+              type = types.str;
+              description = "IPv6 CIDR range for pg_hba rules (e.g. 2a10:4741:36:29::/64)";
+            };
+          };
+        }
+      );
+      description = "Network CIDR ranges allowed to connect to PostgreSQL";
+    };
+
     interface = mkOption {
       type = types.str;
       description = "Network interface for Keepalived VRRP and node IP resolution";

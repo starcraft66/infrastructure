@@ -5,9 +5,52 @@ let
   # This is disabled otherwise because it requires a lot of yubikey-confirming
   # due to the sops operations
   deploy-keys = false;
-in lib.mkIf deploy-keys {
+  patroniSecretsFile = toString ../../../secrets/patroni-305-1700.yaml;
+  pocketIdSecretsFile = toString ../../../secrets/pocket-id-305-1700.yaml;
+in
+lib.mkIf deploy-keys {
+
+  # Patroni secrets
+  deployment.keys."patroni-environment" = {
+    keyCommand = [
+      "sops"
+      "-d"
+      "--extract"
+      "[\"environment\"]"
+      patroniSecretsFile
+    ];
+    destDir = "/var/lib/secrets/patroni";
+    name = "environment";
+    user = "patroni";
+    group = "patroni";
+    permissions = "0400";
+    uploadAt = "pre-activation";
+  };
+
+  # Pocket ID secrets
+  deployment.keys."pocket-id-environment" = {
+    keyCommand = [
+      "sops"
+      "-d"
+      "--extract"
+      "[\"environment\"]"
+      pocketIdSecretsFile
+    ];
+    destDir = "/var/lib/secrets/pocket-id";
+    name = "environment";
+    user = "pocket-id";
+    group = "pocket-id";
+    permissions = "0400";
+    uploadAt = "pre-activation";
+  };
   deployment.keys."vault-ca.pem" = {
-    keyCommand = [ "sops" "-d" "--extract" "[\"ca\"][\"cert\"]" (toString ../../../vault/pki/305-1700/vault-mtls.yaml) ];
+    keyCommand = [
+      "sops"
+      "-d"
+      "--extract"
+      "[\"ca\"][\"cert\"]"
+      (toString ../../../vault/pki/305-1700/vault-mtls.yaml)
+    ];
 
     destDir = "/etc/ssl/certs";
     name = "vault-ca.pem";
@@ -18,7 +61,13 @@ in lib.mkIf deploy-keys {
     uploadAt = "pre-activation";
   };
   deployment.keys."vault-cert.pem" = {
-    keyCommand = [ "sops" "-d" "--extract" "[\"vault\"][\"cert\"]" (toString ../../../vault/pki/305-1700/vault-mtls.yaml) ];
+    keyCommand = [
+      "sops"
+      "-d"
+      "--extract"
+      "[\"vault\"][\"cert\"]"
+      (toString ../../../vault/pki/305-1700/vault-mtls.yaml)
+    ];
 
     destDir = "/var/lib/vault";
     name = "vault-cert.pem";
@@ -29,7 +78,13 @@ in lib.mkIf deploy-keys {
     uploadAt = "pre-activation";
   };
   deployment.keys."vault-key.pem" = {
-    keyCommand = [ "sops" "-d" "--extract" "[\"vault\"][\"key\"]" (toString ../../../vault/pki/305-1700/vault-mtls.yaml) ];
+    keyCommand = [
+      "sops"
+      "-d"
+      "--extract"
+      "[\"vault\"][\"key\"]"
+      (toString ../../../vault/pki/305-1700/vault-mtls.yaml)
+    ];
 
     destDir = "/var/lib/vault";
     name = "vault-key.pem";
@@ -40,7 +95,13 @@ in lib.mkIf deploy-keys {
     uploadAt = "pre-activation";
   };
   deployment.keys."service-account.pem" = {
-    keyCommand = [ "sops" "-d" "--extract" "[\"serviceaccount\"][\"pubkey\"]" (toString ../../../vault/pki/305-1700/serviceaccount.yaml) ];
+    keyCommand = [
+      "sops"
+      "-d"
+      "--extract"
+      "[\"serviceaccount\"][\"pubkey\"]"
+      (toString ../../../vault/pki/305-1700/serviceaccount.yaml)
+    ];
 
     destDir = "/var/lib/secrets/kubernetes";
     name = "service-account.pem";
@@ -51,7 +112,13 @@ in lib.mkIf deploy-keys {
     uploadAt = "pre-activation";
   };
   deployment.keys."service-account-key.pem" = {
-    keyCommand = [ "sops" "-d" "--extract" "[\"serviceaccount\"][\"privkey\"]" (toString ../../../vault/pki/305-1700/serviceaccount.yaml) ];
+    keyCommand = [
+      "sops"
+      "-d"
+      "--extract"
+      "[\"serviceaccount\"][\"privkey\"]"
+      (toString ../../../vault/pki/305-1700/serviceaccount.yaml)
+    ];
 
     destDir = "/var/lib/secrets/kubernetes";
     name = "service-account-key.pem";
@@ -62,7 +129,13 @@ in lib.mkIf deploy-keys {
     uploadAt = "pre-activation";
   };
   deployment.keys."cloudflare-api-token" = {
-    keyCommand = [ "sops" "-d" "--extract" "[\"cloudflare\"][\"token\"]" (toString ../../../vault/pki/cloudflare.yaml) ];
+    keyCommand = [
+      "sops"
+      "-d"
+      "--extract"
+      "[\"cloudflare\"][\"token\"]"
+      (toString ../../../vault/pki/cloudflare.yaml)
+    ];
 
     destDir = "/var/lib/secrets/acme";
     name = "cloudflare-api-token";
@@ -73,4 +146,3 @@ in lib.mkIf deploy-keys {
     uploadAt = "pre-activation";
   };
 }
-

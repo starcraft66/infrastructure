@@ -128,6 +128,13 @@ in
       name: hostname: "https://${hostname}:2379"
     ) clusterMembers;
     services.tdude.patroni.interface = cfg.primaryNetworkInterface;
+    services.tdude.patroni.environmentFile = "/var/lib/secrets/patroni/environment";
+    services.tdude.patroni.pgHbaNetworks = [
+      {
+        ipv4 = "172.16.29.0/24";
+        ipv6 = "2a10:4741:36:29::/64";
+      }
+    ];
     services.tdude.patroni.lbIpv4Address = lbPgIpv4Address;
     services.tdude.patroni.lbIpv6Address = lbPgIpv6Address;
     services.tdude.patroni.pki.vaultURL = vaultAgentVaultURL;
