@@ -15,8 +15,8 @@ let
     "10.235.64.1"
     "2a0c:9a46:637:88:1::1"
   ];
-  oidcIssuerUrl = "https://vault.305-1700.tdude.co/v1/identity/oidc/provider/default";
-  oidcClientId = "hJ6PJMNvxsEzL7UMHQUev1bziLbxFdPO";
+  oidcIssuerUrl = "https://id.305-1700.tdude.co";
+  oidcClientId = "648c3180-0c65-4b72-ac17-1da6abf53b9c";
   clusterMembers = {
     spike = "spike.305-1700.tdude.co";
   };

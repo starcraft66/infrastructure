@@ -10,19 +10,21 @@ data:
   repository.credentials: |
     - url: https://git.tdude.co/tristan/infrastructure.git
   oidc.config: |
-    name: Vault
-    issuer: https://vault.305-1700.tdude.co/v1/identity/oidc/provider/default
-    clientID: $oidc.vault.clientId
-    clientSecret: $oidc.vault.clientSecret
+    name: Pocket ID
+    issuer: https://id.305-1700.tdude.co
+    clientID: $oidc.pocket-id.clientId
+    clientSecret: $oidc.pocket-id.clientSecret
     requestedScopes:
     - openid
     - profile
     - email
     - groups
+    - offline_access
+    refreshTokenThreshold: 2m
     requestedIDTokenClaims:
       email:
         essential: true
         values:
-        - starcraft66@gmail.com
+        - tristan@tdude.co
       groups:
         essential: true

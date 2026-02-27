@@ -18,4 +18,4 @@
   value: --provider-display-name="Vault"
 - path: /spec/template/spec/containers/1/args/-
   op: add
-  value: --oidc-issuer-url=https://vault.305-1700.tdude.co/v1/identity/oidc/provider/default
+  value: --oidc-issuer-url=https://id.305-1700.tdude.co
