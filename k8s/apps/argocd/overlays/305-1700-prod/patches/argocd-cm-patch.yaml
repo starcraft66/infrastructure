@@ -21,6 +21,7 @@ data:
     - groups
     - offline_access
     refreshTokenThreshold: 2m
+    enablePKCEAuthentication: true
     requestedIDTokenClaims:
       email:
         essential: true
