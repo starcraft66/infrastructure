@@ -22,7 +22,7 @@ images:
 - name: plexinc/pms-docker
   digest: sha256:1131c4cd21fa22f8196f749f1dbb69af306776c3c83c7f5b061e51dc49bcff7f
 - name: ghcr.io/linuxserver/jackett
-  digest: sha256:e227ec8e5e7943b741ab8c4eec89b7e819e2835ea15c69fe9199af7a699eabfa
+  digest: sha256:27e33919aecd213ef983cf85e4fda64138bc757cbec3816246576c44cbe3a6f6
 - name: ghcr.io/linuxserver/radarr
   digest: sha256:6d3e68474ea146f995af98d3fb2cb1a14e2e4457ddaf035aa5426889e2f9249c
 - name: ghcr.io/linuxserver/sonarr
@@ -36,7 +36,7 @@ images:
 - name: ghcr.io/linuxserver/tautulli
   digest: sha256:9d4cd2f0342d4a2e31f4bcf22d9acad1b2e13fc5997a55ceec11344d699c0976
 - name: ghcr.io/seerr-team/seerr
-  newTag: v3.0.1@sha256:1b5fc1ea825631d9d165364472663b817a4c58ef6aa1013f58d82c1570d7c866
+  newTag: v3.1.0@sha256:b35ba0461c4a1033d117ac1e5968fd4cbe777899e4cbfbdeaf3d10a42a0eb7e9
 - name: ghcr.io/wizarrrr/wizarr
   newTag: "v2025.12.0@sha256:c6eb584462c754e03a12eb619ad5960ba4e6c3fcb2fa0b8dec62023b053112f2"
 - name: ghcr.io/jellyfin/jellyfin
