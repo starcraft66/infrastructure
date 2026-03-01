@@ -4,7 +4,7 @@ resource "pocketid_group" "sysadmin" {
 }
 
 resource "pocketid_client" "grafana-k8s" {
-  name      = "grafana-${var.cluster_id}"
+  name      = "Grafana"
   is_public = false
 
   callback_urls = [
@@ -17,7 +17,7 @@ resource "pocketid_client" "grafana-k8s" {
 }
 
 resource "pocketid_client" "argocd-k8s" {
-  name      = "argocd-${var.cluster_id}"
+  name      = "Argo CD"
   is_public = false
 
   callback_urls = [
@@ -30,7 +30,7 @@ resource "pocketid_client" "argocd-k8s" {
 }
 
 resource "pocketid_client" "oauth2-proxy-k8s" {
-  name      = "oauth2-proxy-${var.cluster_id}"
+  name      = "OAuth2 Proxy"
   is_public = false
 
   callback_urls = [
@@ -43,7 +43,7 @@ resource "pocketid_client" "oauth2-proxy-k8s" {
 }
 
 resource "pocketid_client" "envoy-gateway-k8s" {
-  name      = "envoy-gateway-${var.cluster_id}"
+  name      = "Envoy Gateway"
   is_public = false
 
   callback_urls = [
@@ -56,7 +56,7 @@ resource "pocketid_client" "envoy-gateway-k8s" {
 }
 
 resource "pocketid_client" "kubernetes" {
-  name      = "kubernetes-${var.cluster_id}"
+  name      = "Kubernetes"
   is_public = true
 
   callback_urls = [

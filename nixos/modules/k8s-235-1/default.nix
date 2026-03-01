@@ -10,8 +10,8 @@ let
     "10.234.64.1"
     "2a10:4741:36:32:1::1"
   ];
-  oidcIssuerUrl = "https://vault.235.tdude.co/v1/identity/oidc/provider/default";
-  oidcClientId = "2Fxqqt0TCnkjcIO2Q7YUI3da8HJVCkik";
+  oidcIssuerUrl = "https://id.235.tdude.co";
+  oidcClientId = "3520afd0-0fa5-495f-a5d8-525d5bb913b5";
   clusterMembers = {
     soarin = "soarin.235.tdude.co";
     stormfeather = "stormfeather.235.tdude.co";

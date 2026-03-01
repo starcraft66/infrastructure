@@ -4,7 +4,7 @@ resource "pocketid_group" "family" {
 }
 
 resource "pocketid_client" "home-assistant" {
-  name      = "home-assistant"
+  name      = "Home Assistant"
   is_public = true
 
   callback_urls = [

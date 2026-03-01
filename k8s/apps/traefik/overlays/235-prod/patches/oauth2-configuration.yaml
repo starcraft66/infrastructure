@@ -15,7 +15,7 @@
   value: --provider=oidc
 - path: /spec/template/spec/containers/1/args/-
   op: add
-  value: --provider-display-name="Vault"
+  value: --provider-display-name="Pocket ID"
 - path: /spec/template/spec/containers/1/args/-
   op: add
-  value: --oidc-issuer-url=https://vault.235.tdude.co/v1/identity/oidc/provider/default
+  value: --oidc-issuer-url=https://id.235.tdude.co

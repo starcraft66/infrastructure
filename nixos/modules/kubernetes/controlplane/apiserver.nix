@@ -80,6 +80,8 @@ in
     extraOpts = ''
       ${lib.optionalString (cfg.oidcIssuerUrl != null) "--oidc-issuer-url=${cfg.oidcIssuerUrl}"} \
       ${lib.optionalString (cfg.oidcClientId != null) "--oidc-client-id=${cfg.oidcClientId}"} \
+      --oidc-groups-claim=groups \
+      --oidc-groups-prefix=oidc: \
       --requestheader-client-ca-file=/var/lib/secrets/kubernetes/front-proxy-ca.pem \
       --requestheader-allowed-names="" \
       --requestheader-extra-headers-prefix=X-Remote-Extra- \
