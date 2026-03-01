@@ -4,14 +4,21 @@ resource "oci_containerengine_cluster" "k8s_cluster" {
   name               = "k8s-cluster"
   vcn_id             = module.vcn.vcn_id
   type               = "BASIC_CLUSTER"
+
+  cluster_pod_network_options {
+    cni_type = "OCI_VCN_IP_NATIVE"
+  }
+
   endpoint_config {
     is_public_ip_enabled = true
     subnet_id            = oci_core_subnet.vcn_public_subnet.id
   }
+
   options {
     ip_families = ["IPv4", "IPv6"]
     kubernetes_network_config {
-      # OKE auto-appends IPv6 ULA CIDRs for dual-stack clusters
+      # OKE auto-appends IPv6 ULA CIDRs for dual-stack clusters.
+      # These must match state to avoid destructive cluster recreation.
       pods_cidr     = "10.244.0.0/16,fd00:eeee:eeee:0000::/96"
       services_cidr = "10.96.0.0/16,fd00:eeee:eeee:0001::/108"
     }
@@ -50,10 +57,6 @@ resource "oci_containerengine_node_pool" "k8s_node_pool" {
   kubernetes_version = var.kubernetes_version
   name               = "k8s-node-pool"
 
-  # node_metadata = {
-  #   user_data = base64encode(file("files/node-pool-init.sh"))
-  # }
-
   node_config_details {
     dynamic "placement_configs" {
       for_each = data.oci_identity_availability_domains.ads.availability_domains
@@ -64,6 +67,11 @@ resource "oci_containerengine_node_pool" "k8s_node_pool" {
     }
 
     size = var.kubernetes_worker_nodes
+
+    node_pool_pod_network_option_details {
+      cni_type       = "OCI_VCN_IP_NATIVE"
+      pod_subnet_ids = [oci_core_subnet.vcn_pod_subnet.id]
+    }
   }
 
   node_shape = "VM.Standard.A1.Flex"
