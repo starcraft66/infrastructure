@@ -198,7 +198,7 @@ ArgoCD is a central part of my clusters. Once the initial control-plane for a cl
 ArgoCD deploys everything in the `k8s/apps` folder including itself. A commit webhook in GitLab will cause ArgoCD to sync the repository on every commit. Authentication to ArgoCD is done through Hashicorp Vault's OIDC provider.
 
 [.text-justify]
-To deploy ArgoCD on the k8s-235 cluster, go into `k8s/apps/argocd` and run `kustomize build --enable-alpha-plugins overlays/235-prod | kubectl apply -f -`. For k8s-305-1700, use `overlays/305-1700-prod` instead. ArgoCD will become available at https://gitops.tdude.co (k8s-235) or https://gitops.305-1700.tdude.co (k8s-305-1700).
+To deploy ArgoCD on the k8s-235 cluster, go into `k8s/apps/argocd` and run `kustomize build --enable-alpha-plugins overlays/235-prod | kubectl apply -f -`. For k8s-305-1700, use `overlays/305-1700-prod` instead. ArgoCD will become available at https://gitops.235.tdude.co (k8s-235) or https://gitops.305-1700.tdude.co (k8s-305-1700).
 
 ==== Kustomize
 

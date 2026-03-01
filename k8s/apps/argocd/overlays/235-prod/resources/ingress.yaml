@@ -12,10 +12,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - gitops.tdude.co
+    - gitops.235.tdude.co
     secretName: argocd-tdude-co-tls
   rules:
-  - host: gitops.tdude.co
+  - host: gitops.235.tdude.co
     http:
       paths:
       - path: /
