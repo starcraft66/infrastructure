@@ -10,8 +10,8 @@ spec:
     name: envoy-gateway
   oidc:
     provider:
-      issuer: "https://vault.235.tdude.co/v1/identity/oidc/provider/default"
-    clientID: "qgqHojdXxjdtAPUZKTjJFyy2qiyIQNvC"
+      issuer: "https://id.235.tdude.co"
+    clientID: "a9803139-afb5-4e0b-a6e7-63b8d5934b71"
     clientSecret:
-      name: "vault-client-secret"
+      name: "pocket-id-client-secret"
     redirectURL: "https://dummy.235.tdude.co/oauth2/callback"
