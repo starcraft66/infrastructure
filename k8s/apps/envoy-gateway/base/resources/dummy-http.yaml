@@ -67,3 +67,31 @@ spec:
     - name: http-200-svc
       namespace: envoy-gateway
       port: 80 # Match the "https" port specified in your service
+---
+apiVersion: gateway.networking.x-k8s.io/v1alpha1
+kind: XListenerSet
+metadata:
+  name: dummy-listeners
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  # Reference the central Gateway
+  parentRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: envoy-gateway
+  listeners:
+    - name: dummy-https
+      hostname: dummy.235.tdude.co
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        # The secret where cert-manager will store the cert
+        certificateRefs:
+          - name: app-tls-secret
+            group: ""
+            kind: Secret

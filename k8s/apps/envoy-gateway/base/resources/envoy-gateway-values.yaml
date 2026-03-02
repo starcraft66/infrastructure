@@ -1,2 +1,8 @@
 nameOverride: "envoy-gateway"
 fullnameOverride: "envoy-gateway"
+
+config:
+  envoyGateway:
+    gatewayAPI:
+      enabled:
+      - XListenerSet

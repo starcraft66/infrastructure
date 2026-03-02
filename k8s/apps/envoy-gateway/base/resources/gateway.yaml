@@ -20,6 +20,13 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   gatewayClassName: envoy-gateway
+  # Allow all namespaces to attach (X)ListenerSets to this Gateway
+  # We do this so individual namespaces can provision their own
+  # TLS certificates and not require a wildcard cert on the
+  # Gateway
+  allowedListeners:
+    namespaces:
+      from: All
   listeners:
   - name: http
     protocol: HTTP
@@ -27,14 +34,14 @@ spec:
     allowedRoutes:
       namespaces:
         from: All
-  - name: https
-    protocol: HTTPS
-    port: 443
-    tls:
-      mode: Terminate
-    allowedRoutes:
-      namespaces:
-        from: All
+  # - name: https
+  #   protocol: HTTPS
+  #   port: 443
+  #   tls:
+  #     mode: Terminate
+  #   allowedRoutes:
+  #     namespaces:
+  #       from: All
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyProxy
