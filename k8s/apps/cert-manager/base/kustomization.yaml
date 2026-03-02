@@ -22,10 +22,10 @@ helmCharts:
       apiVersion: controller.config.cert-manager.io/v1alpha1
       kind: ControllerConfiguration
       enableGatewayAPI: true
-      featureGates:
-        # We stay on v1.20.0-alpha.1 to retain XListenerSet support since
-        # envoy-gateway does not yet support Gateway API v1.5.0-0.rc1
-        # which moves ListernerSets out of experimental, gotta wait that out.
-        EnableGatewayAPIXListenerSet: true
-        # becomes EnableGatewayAPIListenerSet as of cert-manager v1.20.0-beta.0
-        # EnableGatewayAPIListenerSet: true
+      # We stay on v1.20.0-alpha.1 to retain XListenerSet support since
+      # envoy-gateway does not yet support Gateway API v1.5.0-0.rc1
+      # which moves ListernerSets out of experimental, gotta wait that out.
+      enableGatewayAPIXListenerSet: true
+      # becomes EnableGatewayAPIListenerSet as of cert-manager v1.20.0-beta.0
+      # enableGatewayAPIListenerSet: true
+        
