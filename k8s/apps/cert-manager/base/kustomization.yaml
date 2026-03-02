@@ -28,7 +28,7 @@ helmCharts:
       enableGatewayAPIXListenerSet: true
       # becomes EnableGatewayAPIListenerSet as of cert-manager v1.20.0-beta.0
       # enableGatewayAPIListenerSet: true
-    featureGates: "XListenerSets"
+    featureGates: "XListenerSets=true"
     # becomes ListenerSets as of cert-manager v1.20.0-beta.0
     # featureGates: "ListenerSets"
       
