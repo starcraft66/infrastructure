@@ -1,4 +1,5 @@
 import requests
+import os
 
 def update_nfs_hosts(base_url, api_key, new_hosts, path_starts_with):
     headers = {'Authorization': f'Bearer {api_key}'}
@@ -21,7 +22,9 @@ def update_nfs_hosts(base_url, api_key, new_hosts, path_starts_with):
 
 # Example usage
 base_url = 'https://spitfire.235.tdude.co/api/v2.0'
-api_key = '3-EQkuBHti9j66ZIK2aR4Zv6TdZTlOMbEHVTdRomnz2JSiARy2vHt8XgaciLmeYMjT'
+api_key = os.getenv('TRUENAS_API_KEY')
+if not api_key:
+    raise ValueError('TRUENAS_API_KEY not set')
 new_hosts = [
     "2a10:4741:36:28::5",
     "2a10:4741:36:28::6",
