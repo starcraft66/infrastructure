@@ -2,14 +2,38 @@
 - op: replace
   path: /spec/template/spec/volumes
   value:
+    - name: nextcloud-app
+      persistentVolumeClaim:
+        claimName: "nextcloud-app"
     - name: nextcloud-data
       persistentVolumeClaim:
         claimName: "nextcloud-data"
     - name: nextcloud-data-extra
       persistentVolumeClaim:
         claimName: "nextcloud-data-extra"
-- op: add
-  path: /spec/template/spec/containers/0/volumeMounts/3
+- op: replace
+  path: /spec/template/spec/containers/0/volumeMounts
   value:
-    name: nextcloud-data-extra
-    mountPath: /var/www/html/data/tristan/files/extra
+    - name: nextcloud-app
+      mountPath: /var/www/
+      subPath: root
+    - name: nextcloud-app
+      mountPath: /var/www/html
+      subPath: html
+    - name: nextcloud-data
+      mountPath: /var/www/html/data
+      subPath: data
+    - name: nextcloud-app
+      mountPath: /var/www/html/config
+      subPath: config
+    - name: nextcloud-app
+      mountPath: /var/www/html/custom_apps
+      subPath: custom_apps
+    - name: nextcloud-app
+      mountPath: /var/www/tmp
+      subPath: tmp
+    - name: nextcloud-app
+      mountPath: /var/www/html/themes
+      subPath: themes
+    - name: nextcloud-data-extra
+      mountPath: /var/www/html/data/tristan/files/extra
