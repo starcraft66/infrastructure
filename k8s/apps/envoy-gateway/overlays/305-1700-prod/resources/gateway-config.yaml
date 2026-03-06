@@ -1,0 +1,24 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: proxy-config
+spec:
+  provider:
+    type: Kubernetes
+    kubernetes:
+      envoyDeployment:
+        replicas: 3
+      envoyService:
+        patch:
+          value:
+            metadata:
+              annotations:
+                external-dns.alpha.kubernetes.io/hostname: envoy.k8s.305-1700.tdude.co
+                external-dns.alpha.kubernetes.io/target: "10.234.0.10,2a10:4741:36:32:3::a"
+            spec:
+              ipFamilies:
+                - IPv6
+                - IPv4
+              ipFamilyPolicy: RequireDualStack
+  ipFamily: DualStack

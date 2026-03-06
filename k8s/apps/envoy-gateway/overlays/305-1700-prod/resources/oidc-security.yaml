@@ -1,0 +1,17 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: oidc-security
+spec:
+  targetRefs:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: envoy-gateway
+  oidc:
+    provider:
+      issuer: "https://id.305-1700.tdude.co"
+    clientID: "5702e1f9-3c05-4e4d-a7d1-91abcf452fe0"
+    clientSecret:
+      name: "pocket-id-client-secret"
+    redirectURL: "https://dummy.305-1700.tdude.co/oauth2/callback"

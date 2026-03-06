@@ -386,3 +386,23 @@ spec:
   syncPolicy:
     automated:
       selfHeal: false
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: envoy-gateway
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: envoy-gateway
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/envoy-gateway/overlays/305-1700-prod
+  syncPolicy:
+    automated:
+      selfHeal: false
+    syncOptions:
+    - ServerSideApply=true
