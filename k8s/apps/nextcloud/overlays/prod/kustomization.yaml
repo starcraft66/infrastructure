@@ -18,7 +18,14 @@ resources:
 - ./resources/cron-generate-previews.yaml
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/nextcloud-secrets.yaml
+  - ./secrets/postgres-credentials.yaml
 
 patchesStrategicMerge:
 - ./patches/probe-hostnames.yaml

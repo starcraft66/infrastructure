@@ -13,7 +13,14 @@ resources:
 - ./resources/ingress.yaml
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/minecraft-secrets.yaml
+  - ./secrets/discordsrv-secrets.yaml
 
 patches:
 - path: ./patches/resources.yaml

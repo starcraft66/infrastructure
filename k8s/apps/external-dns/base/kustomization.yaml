@@ -22,7 +22,13 @@ patches:
     version: v1
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/external-dns-cf-token.yaml
 
 labels:
 - pairs:

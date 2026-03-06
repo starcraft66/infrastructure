@@ -5,7 +5,15 @@ resources:
 - ./resources/ingress.yaml
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/paperless-ngx.yaml
+  - ./secrets/postgres.yaml
+  - ./secrets/redis.yaml
 
 configMapGenerator:
 - name: paperless-ngx

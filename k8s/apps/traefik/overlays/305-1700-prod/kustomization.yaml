@@ -22,4 +22,10 @@ patches:
     namespace: traefik
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/oauth2-proxy-secrets.yaml

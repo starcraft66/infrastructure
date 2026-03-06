@@ -6,6 +6,12 @@ resources:
 - ./resources/volume.yaml
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/funkwhale-secrets.yaml
 
 namespace: funkwhale

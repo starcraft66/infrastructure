@@ -14,7 +14,14 @@ images:
   newTag: "1.10.7-alpine"
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/postgres-credentials.yaml
+  - ./secrets/ctfnote-secrets.yaml
 
 configMapGenerator:
 - name: ctfnote-api-config

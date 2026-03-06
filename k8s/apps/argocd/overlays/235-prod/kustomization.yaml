@@ -10,6 +10,13 @@ resources:
 namespace: argocd
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/deploy-pgp-key.yaml
+  - ./secrets/argocd-secret-patch.yaml
 patches:
 - path: ./patches/argocd-cm-patch.yaml

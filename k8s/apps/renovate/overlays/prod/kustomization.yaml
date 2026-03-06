@@ -10,7 +10,13 @@ images:
   newTag: "43.46.3"
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/renovate-secrets.yaml
 
 configMapGenerator:
 - name: renovate-config

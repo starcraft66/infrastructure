@@ -7,7 +7,13 @@ resources:
 namespace: lanparty-seating
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/lanparty-seating-secrets.yaml
 
 images:
 - name: ghcr.io/otakulan/lanparty-seating/lanparty-seating

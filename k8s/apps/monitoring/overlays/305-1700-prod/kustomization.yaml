@@ -19,4 +19,12 @@ patches:
     name: prometheuses.monitoring.coreos.com  
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/discord-webhook.yaml
+  - ./secrets/matrix-token.yaml
+  - ./secrets/grafana-admin-credentials.yaml

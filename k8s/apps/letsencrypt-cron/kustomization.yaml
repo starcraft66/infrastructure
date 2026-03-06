@@ -6,7 +6,19 @@ resources:
 - ./resources/volume.yaml
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/cloudflare-token.yaml
+  - ./secrets/soarin-secrets.yaml
+  - ./secrets/fleetfoot-secrets.yaml
+  - ./secrets/stormfeather-secrets.yaml
+  - ./secrets/sassaflash-secrets.yaml
+  - ./secrets/firestreak-secrets.yaml
+  - ./secrets/spitfire-secrets.yaml
 
 images:
 - name: starcraft66/hpilo-letsencrypt

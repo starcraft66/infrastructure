@@ -18,7 +18,13 @@ resources:
 namespace: mediaserver
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/plex-claim.yaml
 
 patchesStrategicMerge:
 - ./patches/pvc-plex-data.yaml

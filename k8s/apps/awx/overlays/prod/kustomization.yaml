@@ -9,4 +9,12 @@ resources:
 namespace: awx
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/awx-credentials.yaml
+  - ./secrets/postgres-credentials.yaml
+  - ./secrets/awx-admin-password.yaml

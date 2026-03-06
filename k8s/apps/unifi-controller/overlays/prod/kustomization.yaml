@@ -13,7 +13,13 @@ resources:
 namespace: unifi
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/unifi-poller-secrets.yaml
 
 configMapGenerator:
 - name: unifi-poller-config

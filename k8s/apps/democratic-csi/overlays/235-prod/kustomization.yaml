@@ -6,7 +6,16 @@ resources:
 namespace: democratic-csi
 
 generators:
-- ./generators/secrets-generator.yaml
+- |-
+  apiVersion: viaduct.ai/v1
+  kind: ksops-exec
+  metadata:
+    name: secret-generator
+  files:
+  - ./secrets/driver-config-nfs.yaml
+  - ./secrets/driver-config-nfs-spitfire-fast.yaml
+  - ./secrets/driver-config-iscsi.yaml
+  - ./secrets/driver-config-iscsi-spitfire-fast.yaml
 
 # Let the Helm chart pin image versions
 images:
