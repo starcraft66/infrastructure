@@ -14,7 +14,7 @@ spec:
           dmPolicy: "pairing"
           groups:
             "*":
-              equireMention: true
+              requireMention: true
       agents:
         defaults:
           model:
