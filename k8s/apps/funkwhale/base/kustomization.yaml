@@ -13,7 +13,7 @@ images:
 - name: funkwhale/api
   newTag: 2.0.0
 - name: funkwhale/front
-  newTag: 1.4.1
+  newTag: 2.0.0
 
 configMapGenerator:
 - name: funkwhale
