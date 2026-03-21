@@ -70,6 +70,23 @@ spec:
       allowedIngressNamespaces:
         - traefik
   networking:
+    service:
+      ports:
+        - name: gateway
+          port: 18789
+          targetPort: 18790
+        - name: canvas
+          port: 18793
+          targetPort: 18794
+        - name: chromium
+          port: 9222
+          targetPort: 9222
+        - name: metrics
+          port: 9090
+          targetPort: 9090
+        - name: public-html
+          port: 8080
+          targetPort: 8080
     ingress:
       enabled: true
       className: traefik

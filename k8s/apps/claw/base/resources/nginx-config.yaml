@@ -9,7 +9,7 @@ data:
         server_name _;
 
         location /public/ {
-            alias /data/public_html/;
+            alias /data/workspace/public_html/;
             autoindex on;
             try_files $uri $uri/ =404;
         }
