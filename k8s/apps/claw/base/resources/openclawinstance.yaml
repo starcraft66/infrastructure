@@ -1,0 +1,17 @@
+apiVersion: openclaw.rocks/v1alpha1
+kind: OpenClawInstance
+metadata:
+  name: openclaw
+spec:
+  envFrom:
+    - secretRef:
+        name: openclaw-api-keys
+  storage:
+    persistence:
+      enabled: true
+      size: 10Gi
+  observability:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true

@@ -406,3 +406,45 @@ spec:
       selfHeal: false
     syncOptions:
     - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openclaw-operator
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: openclaw-operator
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/openclaw-operator/overlays/305-1700-prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+    - SkipDryRunOnMissingResource=true
+    - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: claw
+  namespace: argocd
+spec:
+  project: production
+  destination:
+    namespace: claw
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://git.tdude.co/tristan/infrastructure.git
+    targetRevision: master
+    path: k8s/apps/claw/overlays/305-1700-prod
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+    - SkipDryRunOnMissingResource=true
+    - ServerSideApply=true

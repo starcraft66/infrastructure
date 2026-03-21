@@ -1,0 +1,10 @@
+crds:
+  install: true
+  keep: true
+
+webhook:
+  enabled: false
+
+metrics:
+  serviceMonitor:
+    enabled: true
