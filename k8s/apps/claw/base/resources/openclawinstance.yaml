@@ -10,6 +10,10 @@ spec:
     persistence:
       enabled: true
       size: 10Gi
+  security:
+    networkPolicy:
+      allowedIngressNamespaces:
+        - traefik
   networking:
     ingress:
       enabled: true
