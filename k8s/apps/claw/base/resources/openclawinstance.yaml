@@ -42,6 +42,10 @@ spec:
         - name: nginx-config
           mountPath: /etc/nginx/conf.d
           readOnly: true
+        - name: nginx-cache
+          mountPath: /var/cache/nginx
+        - name: nginx-run
+          mountPath: /var/run
       resources:
         requests:
           cpu: "50m"
@@ -53,6 +57,10 @@ spec:
     - name: nginx-config
       configMap:
         name: openclaw-nginx-config
+    - name: nginx-cache
+      emptyDir: {}
+    - name: nginx-run
+      emptyDir: {}
   storage:
     persistence:
       enabled: true
