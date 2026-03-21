@@ -8,6 +8,13 @@ spec:
         name: openclaw-api-keys
   config:
     raw:
+      channels:
+        telegram:
+          enabled: true
+          dmPolicy: "pairing"
+          groups:
+            "*":
+              equireMention: true
       agents:
         defaults:
           model:
