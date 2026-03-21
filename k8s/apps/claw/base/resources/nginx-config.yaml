@@ -8,10 +8,13 @@ data:
         listen 8080;
         server_name _;
 
+        location = /public {
+            return 301 /public/;
+        }
+
         location /public/ {
             alias /data/workspace/public_html/;
             autoindex on;
-            try_files $uri $uri/ =404;
         }
 
         location = /healthz {
