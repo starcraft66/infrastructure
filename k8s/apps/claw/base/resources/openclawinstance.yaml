@@ -6,6 +6,12 @@ spec:
   envFrom:
     - secretRef:
         name: openclaw-api-keys
+  config:
+    raw:
+      agents:
+        defaults:
+          model:
+            primary: "opencode/glm-5"
   storage:
     persistence:
       enabled: true
