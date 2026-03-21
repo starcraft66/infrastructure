@@ -12,6 +12,47 @@ spec:
         defaults:
           model:
             primary: "opencode/glm-5"
+  runtimeDeps:
+    pnpm: true
+    python: true
+  chromium:
+    enabled: true
+    persistence:
+      enabled: true
+      size: "1Gi"
+  selfConfigure:
+    enabled: true
+    allowedActions:
+      - skills
+      - config
+      - envVars
+      - workspaceFiles
+  workspace:
+    initialDirectories:
+      - public_html
+  sidecars:
+    - name: public-html
+      image: nginx:1.29.6
+      ports:
+        - containerPort: 8080
+      volumeMounts:
+        - name: data
+          mountPath: /data
+          readOnly: true
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d
+          readOnly: true
+      resources:
+        requests:
+          cpu: "50m"
+          memory: "32Mi"
+        limits:
+          cpu: "200m"
+          memory: "128Mi"
+  sidecarVolumes:
+    - name: nginx-config
+      configMap:
+        name: openclaw-nginx-config
   storage:
     persistence:
       enabled: true
@@ -31,6 +72,11 @@ spec:
         external-dns.alpha.kubernetes.io/target: "traefik.k8s.305-1700.tdude.co"
       hosts:
         - host: claw.tdude.co
+          paths:
+            - path: /
+            - path: /public
+              pathType: Prefix
+              port: 8080
       tls:
         - hosts:
             - claw.tdude.co

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openclaw-nginx-config
+data:
+  public.conf: |
+    server {
+        listen 8080;
+        server_name _;
+
+        location /public/ {
+            alias /data/public_html/;
+            autoindex on;
+            try_files $uri $uri/ =404;
+        }
+
+        location = /healthz {
+            access_log off;
+            return 200 "ok\n";
+        }
+    }

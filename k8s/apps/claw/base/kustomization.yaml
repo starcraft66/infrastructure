@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
 - ./resources/namespace.yaml
 - ./resources/openclawinstance.yaml
+- ./resources/nginx-config.yaml
 
 namespace: claw
