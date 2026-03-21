@@ -5,7 +5,7 @@ metadata:
 data:
   public.conf: |
     server {
-        listen 8080;
+        listen 12345;
         server_name _;
 
         location = /public {

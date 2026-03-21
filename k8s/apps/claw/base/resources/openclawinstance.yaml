@@ -41,7 +41,7 @@ spec:
     - name: public-html
       image: nginx:1.29.6
       ports:
-        - containerPort: 8080
+        - containerPort: 12345
       volumeMounts:
         - name: data
           mountPath: /data
@@ -92,8 +92,8 @@ spec:
           port: 9090
           targetPort: 9090
         - name: public-html
-          port: 8080
-          targetPort: 8080
+          port: 12345
+          targetPort: 12345
     ingress:
       enabled: true
       className: traefik
@@ -108,7 +108,7 @@ spec:
             - path: /
             - path: /public
               pathType: Prefix
-              port: 8080
+              port: 12345
       tls:
         - hosts:
             - claw.tdude.co
