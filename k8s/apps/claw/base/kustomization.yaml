@@ -5,5 +5,7 @@ resources:
 - ./resources/namespace.yaml
 - ./resources/openclawinstance.yaml
 - ./resources/nginx-config.yaml
+- ./resources/public-basic-auth-middleware.yaml
+- ./resources/public-ingress.yaml
 
 namespace: claw

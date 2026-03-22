@@ -106,9 +106,6 @@ spec:
         - host: claw.tdude.co
           paths:
             - path: /
-            - path: /public
-              pathType: Prefix
-              port: 12345
       tls:
         - hosts:
             - claw.tdude.co

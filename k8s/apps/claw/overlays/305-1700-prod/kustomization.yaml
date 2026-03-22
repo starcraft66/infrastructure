@@ -9,6 +9,7 @@ generators:
     name: secret-generator
   files:
   - ./secrets/api-keys-secret.yaml
+  - ./secrets/public-basic-auth-secret.yaml
 
 resources:
 - ../../base
