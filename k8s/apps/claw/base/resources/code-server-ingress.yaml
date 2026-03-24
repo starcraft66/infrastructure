@@ -3,16 +3,17 @@ kind: Ingress
 metadata:
   name: openclaw-code-server
   annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     traefik.ingress.kubernetes.io/router.middlewares: traefik-forward-auth@kubernetescrd
     traefik.ingress.kubernetes.io/router.tls: "true"
     external-dns.alpha.kubernetes.io/target: "traefik.k8s.305-1700.tdude.co"
 spec:
   ingressClassName: traefik
   rules:
-    - host: claw.tdude.co
+    - host: files.claw.tdude.co
       http:
         paths:
-          - path: /files
+          - path: /
             pathType: Prefix
             backend:
               service:
@@ -21,5 +22,5 @@ spec:
                   number: 8443
   tls:
     - hosts:
-        - claw.tdude.co
-      secretName: claw-ingress-tls
+        - files.claw.tdude.co
+      secretName: code-server-ingress-tls
