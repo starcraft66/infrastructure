@@ -7,5 +7,6 @@ resources:
 - ./resources/nginx-config.yaml
 - ./resources/public-basic-auth-middleware.yaml
 - ./resources/public-ingress.yaml
+- ./resources/code-server-ingress.yaml
 
 namespace: claw

@@ -86,6 +86,30 @@ spec:
     initialDirectories:
       - public_html
   sidecars:
+    - name: code-server
+      image: codercom/code-server:4.112.0
+      args:
+        - --bind-addr=0.0.0.0:8443
+        - --base-path=/files
+        - --auth=none
+        - /home/openclaw/.openclaw
+      ports:
+        - containerPort: 8443
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumeMounts:
+        - name: data
+          mountPath: /home/openclaw/.openclaw
+        - name: code-server-data
+          mountPath: /home/coder
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "1"
+          memory: "1Gi"
     - name: public-html
       image: nginx:1.29.6
       ports:
@@ -109,6 +133,8 @@ spec:
           cpu: "200m"
           memory: "128Mi"
   sidecarVolumes:
+    - name: code-server-data
+      emptyDir: {}
     - name: nginx-config
       configMap:
         name: openclaw-nginx-config
@@ -139,6 +165,9 @@ spec:
         - name: metrics
           port: 9090
           targetPort: 9090
+        - name: code-server
+          port: 8443
+          targetPort: 8443
         - name: public-html
           port: 12345
           targetPort: 12345
