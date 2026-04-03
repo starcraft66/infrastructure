@@ -144,7 +144,7 @@ spec:
   storage:
     persistence:
       enabled: true
-      size: 10Gi
+      size: 20Gi
   security:
     networkPolicy:
       allowedIngressNamespaces:
