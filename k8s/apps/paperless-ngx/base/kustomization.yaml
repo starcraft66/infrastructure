@@ -16,7 +16,7 @@ images:
   # https://github.com/just-containers/s6-overlay/issues/600
   newTag: "2.20.12"
 - name: "gotenberg/gotenberg"
-  newTag: "8.28.0"
+  newTag: "8.30.1"
 - name: "apache/tika"
   newTag: "3.2.3.0"
 
