@@ -9,7 +9,7 @@ namespace: openclaw-operator
 helmCharts:
 - name: openclaw-operator
   releaseName: openclaw-operator
-  version: 0.22.2
+  version: 0.28.1
   repo: oci://ghcr.io/openclaw-rocks/charts
   namespace: openclaw-operator
   includeCRDs: true
