@@ -15,30 +15,30 @@ images:
   newTag: "8.1.0@sha256:170aa093ce91c76cde4cc390918307590f0f5558fcec93f913af3cb019e6562a"
 - name: ghcr.io/esphome/esphome
   newName: ghcr.io/esphome/esphome
-  newTag: "2026.4.1@sha256:8786a898d9f2e8aec76f70af3dd53383a63e8ee9b0d2882aa04b2baa58a84db8"
+  newTag: "2026.4.5@sha256:7419641c7fd8e37d6362f71c458bb17570f1f471cfea3b022b30dfd8117a2361"
 
 helmCharts:
 - name: home-assistant
   releaseName: home-assistant
   valuesFile: ./resources/home-assistant.yaml
-  version: 0.3.55
+  version: 0.3.56
   repo: http://pajikos.github.io/home-assistant-helm-chart/
   namespace: home-automation
 - name: mosquitto
   releaseName: mosquitto
   valuesFile: ./resources/mosquitto.yaml
-  version: 18.1.0
+  version: 18.2.0
   repo: oci://oci.trueforge.org/truecharts
   namespace: home-automation
 - name: zwavejs2mqtt
   releaseName: zwavejs2mqtt
   valuesFile: ./resources/zwavejs2mqtt.yaml
-  version: 25.3.0
+  version: 25.5.0
   repo: oci://oci.trueforge.org/truecharts
   namespace: home-automation
 - name: zigbee2mqtt
   releaseName: zigbee2mqtt
   valuesFile: ./resources/zigbee2mqtt.yaml
-  version: 16.1.0
+  version: 16.2.0
   repo: oci://oci.trueforge.org/truecharts
   namespace: home-automation
