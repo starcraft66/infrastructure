@@ -22,19 +22,19 @@ images:
 - name: plexinc/pms-docker
   digest: sha256:8b5bcdf7b506fe051aa1a0a0d464efdb3ad8c0fb1f8a4dfb27a8c489b609920c
 - name: ghcr.io/linuxserver/jackett
-  digest: sha256:7bd0d28952317ac112971908f5ef1596ba76b6cb34fab51e23acda1fc989662a
+  digest: sha256:b64b3afc2d4d8a3e4a4007132700ca7af17571f2aac512d0d05837efe19a40f8
 - name: ghcr.io/linuxserver/radarr
-  digest: sha256:b01097ad2d948c9f5eca39eb60bb529e2e55b0738c4bf7db09383bef0abab59d
+  digest: sha256:659e5f20500948b1491f31dd85c6f99a43508ce3e46595793e1e15aa955bf6d7
 - name: ghcr.io/linuxserver/sonarr
-  digest: sha256:e6c9a091735fede0c2a205c69e7d4c2f0188eaf2bec7e42d8a26c017e5f2a910
+  digest: sha256:bed3afb5d46fde809290997760f2e19d41e57d1eb34f507c485d5a8979c7cd8d
 - name: ghcr.io/linuxserver/lidarr
-  digest: sha256:a11272d4ff510a3665e37e11573c7f4ed134ba8089e54baf4c4f916d2e87febc
+  digest: sha256:d2f944115de2ca6754ad142ee92f9db481b1574c7bc030974d624584106b78d7
 - name: ghcr.io/linuxserver/prowlarr
-  newTag: develop@sha256:91aaee1137f2b0c6df689a7b067da1dc828b315b20e65c0195e7e33f51c6347e
+  newTag: develop@sha256:1776ab8b030fdb198e7e2dae407a01b06c14360e9fb95f459c7e38914026da79
 - name: ghcr.io/linuxserver/qbittorrent
-  newTag: 5.1.4@sha256:8f7a1da9644340c737e3211ecc910a416d4295076e6b2824a4afcd1f4e3576e2
+  newTag: 5.1.4@sha256:c9990949e968e99333f47f49da7d16e81ba6e1469c8c46807a65b984c9e8b6ff
 - name: ghcr.io/linuxserver/tautulli
-  digest: sha256:f8a0c2069bf4393f13731e9f98835f32b0a21659686f88223836c1693036f2be
+  digest: sha256:7077fd6654547c225ca5a740c4c954379129589f875c84cbe138641d4dd8a9d9
 - name: ghcr.io/seerr-team/seerr
   newTag: v3.2.0@sha256:c4cbd5121236ac2f70a843a0b920b68a27976be57917555f1c45b08a1e6b2aad
 - name: ghcr.io/wizarrrr/wizarr
