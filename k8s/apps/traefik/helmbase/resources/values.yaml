@@ -78,9 +78,6 @@ ports:
       enabled: true
       advertisedPort: 443
 
-hub:
-  enabled: false
-
 metrics:
   prometheus:
     service:
