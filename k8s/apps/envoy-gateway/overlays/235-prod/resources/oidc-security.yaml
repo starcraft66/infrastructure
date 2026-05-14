@@ -4,10 +4,17 @@ kind: SecurityPolicy
 metadata:
   name: oidc-security
 spec:
-  targetRefs:
+  targetSelectors:
   - group: gateway.networking.k8s.io
-    kind: Gateway
-    name: envoy-gateway
+    kind: HTTPRoute
+    namespaces:
+      from: Selector
+      selector:
+        matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: Exists
+    matchLabels:
+      k8s.tdude.co/oidc-security: "true"
   oidc:
     provider:
       issuer: "https://id.235.tdude.co"
