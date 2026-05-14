@@ -11,6 +11,9 @@ spec:
   parentRefs:
   - name: envoy-gateway # Reference your Gateway resource
     namespace: envoy-gateway  # Replace with the namespace of your Gateway
+  - group: gateway.networking.k8s.io
+    kind: ListenerSet
+    name: dummy-listeners
   hostnames:
   - dummy.235.tdude.co
   rules:
