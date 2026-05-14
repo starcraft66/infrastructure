@@ -32,7 +32,7 @@ spec:
           httpGet:
             path: /api/server/ping
             port: http
-          initialDelaySeconds: 120
+          initialDelaySeconds: 3600
           periodSeconds: 10
           timeoutSeconds: 5
           successThreshold: 1
@@ -41,7 +41,7 @@ spec:
           httpGet:
             path: /api/server/ping
             port: http
-          initialDelaySeconds: 30
+          initialDelaySeconds: 3600
           periodSeconds: 10
           timeoutSeconds: 5
           successThreshold: 1
