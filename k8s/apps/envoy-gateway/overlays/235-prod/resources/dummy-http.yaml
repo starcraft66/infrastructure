@@ -31,7 +31,6 @@ spec:
   from:
   - group: gateway.envoyproxy.io
     kind: SecurityPolicy
-    name: oidc-security
     namespace: envoy-gateway
   to:
   - group: gateway.networking.k8s.io
