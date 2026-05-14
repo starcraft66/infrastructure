@@ -21,7 +21,7 @@ spec:
       namespace: envoy-gateway
       port: 80 # Match the "https" port specified in your service
 ---
-apiVersion: gateway.networking.x-k8s.io/v1alpha1
+apiVersion: gateway.networking.k8s.io/v1
 kind: ListenerSet
 metadata:
   name: dummy-listeners
