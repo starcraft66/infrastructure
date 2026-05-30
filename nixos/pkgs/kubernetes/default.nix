@@ -15,6 +15,7 @@ let
     { version = "1.34.1"; hash = "sha256-18AMfS2OnInTmdr5fLwtuKaeyGQSiAtk29BjuHl6qQA="; }
     { version = "1.34.2"; hash = "sha256-3rQyoGt9zTeF8+PIhA5p+hHY1V5O8CawvKWscf/r9RM="; }
     { version = "1.35.1"; hash = "sha256-Y5ixQgAdtMBUs/nfPOOdu4pp9uOh/Cr57HO/Owf7PwI="; }
+    { version = "1.36.1"; hash = "sha256-QG2zFaFtGXoWIlyp3hVBRU+OHre/6vWcvijUe1DdjIo="; }
     # ... add other versions with their hashes
   ];
 

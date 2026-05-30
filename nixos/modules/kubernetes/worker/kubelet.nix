@@ -78,8 +78,10 @@ in lib.mkIf cfg.enable {
 
     nodeIp = lib.mkIf (cfg.nodeIps != []) (lib.concatStringsSep "," cfg.nodeIps);
 
+    clusterDns = cfg.dnsResolvers;
+
     extraOpts =
-      ''--cluster-dns=${lib.concatStringsSep "," cfg.dnsResolvers} \
+      ''
         ${lib.optionalString config.services.resolved.enable "--resolv-conf=/run/systemd/resolve/resolv.conf"}
       '';
 
