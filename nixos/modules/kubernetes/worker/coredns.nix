@@ -29,7 +29,7 @@ lib.mkIf cfg.enable {
 
   # Configure resolv.conf to point to local CoreDNS
   # networking.resolvconf.useLocalResolver = lib.mkIf cfg.enable true;
-  services.resolved.dnssec = "false";
+  services.resolved.settings.Resolve.DNSSEC = "false";
 
   # Don't use resolved, use coredns instead
   # services.resolved.enable = lib.mkIf cfg.enable (lib.mkForce false);

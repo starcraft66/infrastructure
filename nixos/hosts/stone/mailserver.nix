@@ -22,23 +22,31 @@ in
     '';
   };
 
+  services.nginx = {
+    enable = true;
+    virtualHosts.${config.mailserver.fqdn}.enableACME = true;
+  };
+
+  security.acme.certs.${config.mailserver.fqdn}.extraDomainNames = [
+    config.networking.domain
+    "smtp.${config.networking.domain}"
+    "imap.${config.networking.domain}"
+  ];
+
   mailserver = {
     enable = true;
     fqdn = "${config.networking.hostName}.${config.networking.domain}";
     domains = [ config.networking.domain "as208914.net" ];
-    certificateDomains = [
-      config.networking.domain
-      "${config.networking.hostName}.${config.networking.domain}"
-      "smtp.${config.networking.domain}"
-      "imap.${config.networking.domain}"
-    ];
+
+    # Reference the existing ACME configuration created by nginx
+    x509.useACMEHost = config.mailserver.fqdn;
 
     enableImap = true;
     enableImapSsl = true;
     enableSubmission = true;
     enableSubmissionSsl = true;
 
-    loginAccounts = {
+    accounts = {
       "tristan@tdude.co" = {
         hashedPasswordFile = config.sops.secrets."mailserver-hashedpw-tristan@tdude.co".path;
       };
@@ -52,22 +60,20 @@ in
         hashedPasswordFile = config.sops.secrets."mailserver-hashedpw-paperless@tdude.co".path;
       };
     };
-    extraVirtualAliases = {
+    aliases = {
       # ...
     } // mkTdudeAliases [ "webmaster" "minecraft1" "minecraft2" "minecraft3" "minecraft4" "steam1" "discord1" ]
       // mkAS208914Aliases [ "noc" "abuse" ];
 
-    useFsLayout = true;
+    storage.directoryLayout = "fs";
     hierarchySeparator = "/";
-    lmtpSaveToDetailMailbox = "no";
+    lmtpSaveToDetailMailbox = false;
 
-    dkimKeyBits = 2048;
+    dkim.defaults.keyLength = 2048;
 
     monitoring.enable = true;
     monitoring.alertAddress = "starcraft66@gmail.com";
 
-    certificateScheme = "acme-nginx";
-    
     stateVersion = 3;
   };
 }

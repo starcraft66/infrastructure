@@ -13,7 +13,7 @@ rec {
   pkgs = import nixosInput {
     inherit system;
     config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-      "vault-bin" "vault" "nvidia-x11" "nvidia-settings"
+      "vault-bin" "vault" "nvidia-x11" "nvidia-settings" "nvidia-kernel-modules"
     ];
     overlays = (builtins.attrValues inputs.self.overlays) ++ [
       (self: super: { runc = inputs.nixpkgs.legacyPackages.${system}.runc; })

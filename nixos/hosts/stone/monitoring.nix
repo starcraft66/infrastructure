@@ -154,10 +154,15 @@ in {
         name = "Prometheus";
       }
     ];
-    settings.server = {
-      domain = "monitoring.tdude.co";
-      http_port = 3000;
-      http_addr = "::1";
+    settings = {
+      security = {
+        secret_key = config.sops.secrets.grafana-secret-key.path;
+      };
+      server = {
+        domain = "monitoring.tdude.co";
+        http_port = 3000;
+        http_addr = "::1";
+      };
     };
   };
 
@@ -274,6 +279,7 @@ in {
 
   services.prometheus.rules = [ alertRules ];
   sops.secrets.monitoring-webhook = { };
+  sops.secrets.grafana-secret-key = { };
   services.alertmanager-discord.enable = true;
   services.alertmanager-discord.webhookFile = config.sops.secrets.monitoring-webhook.path;
 }

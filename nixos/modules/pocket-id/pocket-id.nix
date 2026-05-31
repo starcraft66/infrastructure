@@ -25,7 +25,7 @@ lib.mkIf cfg.enable {
   # Pocket ID uses a PostgreSQL advisory lock — only one instance runs at a time.
   # Other nodes retry every 2 minutes until they acquire the lock (e.g. after failover).
   systemd.services.pocket-id = {
-    serviceConfig.RestartSec = "120";
+    serviceConfig.RestartSec = lib.mkForce "120";
     startLimitBurst = 0;
   };
 

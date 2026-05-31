@@ -35,10 +35,7 @@ in {
     # running on the node that are accessed via the FQDN but listening on 127.0.0.1.
     # This has the downside of needing a working dns resolver to resolve localhost,
     # but that isn't a huge deal.
-    services.resolved.extraConfig = ''
-      [Resolve]
-      ReadEtcHosts=no
-    ''; 
+    services.resolved.settings.Resolve.ReadEtcHosts = "no";
 
     environment.systemPackages = with pkgs; [
       # for dig
