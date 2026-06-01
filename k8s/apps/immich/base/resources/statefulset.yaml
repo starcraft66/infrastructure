@@ -28,11 +28,21 @@ spec:
       - name: immich-server
         image: ghcr.io/immich-app/immich-server:release
         imagePullPolicy: IfNotPresent
+        # startupProbe guards the potentially long first-boot DB migration window
+        # without blocking readiness once the server is actually serving.
+        # 60 * 60s = up to 60 min for startup before liveness/readiness take over.
+        startupProbe:
+          httpGet:
+            path: /api/server/ping
+            port: http
+          periodSeconds: 60
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 60
         livenessProbe:
           httpGet:
             path: /api/server/ping
             port: http
-          initialDelaySeconds: 3600
           periodSeconds: 10
           timeoutSeconds: 5
           successThreshold: 1
@@ -41,7 +51,6 @@ spec:
           httpGet:
             path: /api/server/ping
             port: http
-          initialDelaySeconds: 3600
           periodSeconds: 10
           timeoutSeconds: 5
           successThreshold: 1
