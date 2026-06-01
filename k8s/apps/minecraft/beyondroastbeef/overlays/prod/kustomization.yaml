@@ -4,7 +4,7 @@ namespace: beyondroastbeef
 
 images:
 - name: itzg/minecraft-server
-  newTag: "java21"
+  newTag: "java25"
 
 resources:
 - ../../../base
