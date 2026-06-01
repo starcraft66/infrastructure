@@ -22,7 +22,7 @@ helmCharts:
     metrics:
       enabled: true
     global:
-      storageClass: truenas-nfs-spitfire-fast
+      storageClass: truenas-iscsi-spitfire-fast
     primary:
       resources:
         limits:
