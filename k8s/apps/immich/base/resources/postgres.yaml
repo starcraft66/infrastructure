@@ -23,6 +23,6 @@ spec:
         name: immich-postgres
   storage:
     storageClass: truenas-iscsi-spitfire-fast
-    size: 30Gi
+    size: 60Gi
   monitoring:
     enablePodMonitor: true
