@@ -19,8 +19,31 @@ spec:
         - CREATE EXTENSION IF NOT EXISTS cube;
         - CREATE EXTENSION IF NOT EXISTS earthdistance;
         - CREATE EXTENSION IF NOT EXISTS vector;
+      postInitApplicationSQL:
+        - ALTER TABLE asset SET (autovacuum_vacuum_scale_factor=0.01, autovacuum_analyze_scale_factor=0.005, autovacuum_vacuum_cost_delay=0);
+        - ALTER TABLE album_asset SET (autovacuum_vacuum_scale_factor=0.01, autovacuum_analyze_scale_factor=0.005, autovacuum_vacuum_cost_delay=0);
+        - ALTER TABLE asset_exif SET (autovacuum_vacuum_scale_factor=0.01, autovacuum_analyze_scale_factor=0.005, autovacuum_vacuum_cost_delay=0);
       secret:
         name: immich-postgres
+  postgresql:
+    parameters:
+      # Memory
+      shared_buffers: "4GB"
+      effective_cache_size: "12GB"
+      work_mem: "64MB"
+      maintenance_work_mem: "512MB"
+      wal_buffers: "32MB"
+      # Autovacuum - aggressive thresholds for large tables
+      autovacuum_vacuum_scale_factor: "0.02"
+      autovacuum_analyze_scale_factor: "0.01"
+      autovacuum_vacuum_cost_delay: "0"
+      autovacuum_max_workers: "5"
+      # Planner - iSCSI SSD
+      random_page_cost: "1.1"
+      effective_io_concurrency: "200"
+      # Statistics & parallelism
+      default_statistics_target: "200"
+      max_parallel_workers_per_gather: "4"
   storage:
     storageClass: truenas-iscsi-spitfire-fast
     size: 60Gi
