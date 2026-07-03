@@ -20,7 +20,7 @@ helmCharts:
     auth:
       existingSecret: mariadb-secrets
     metrics:
-      enabled: true
+      enabled: false
     global:
       storageClass: truenas-iscsi-spitfire-fast
     primary:
