@@ -22,22 +22,22 @@ images:
 - name: plexinc/pms-docker
   digest: sha256:c37106c57fed7a6624f5dee5a3ce460ff011f09a2aa7f4ee9e8dbbd08ae1b87e
 - name: ghcr.io/linuxserver/jackett
-  digest: sha256:fd44a98b90b04f9cccf86b7196d63b830bf23bae5fb5289db3c0ab615d4a5a6b
+  digest: sha256:5dd2f2241d4a5032ef03c034233367b7b8297c57f47eb75d023f1e36a4d8b9fb
 - name: ghcr.io/linuxserver/radarr
-  digest: sha256:079e48870584baf2a3e7e43e7ba6d3c834555931851a59c82c51cc792d285caf
+  digest: sha256:39da107b5a9371fdaa651bd188049b863716a815385eb3a30d41071b7e1aeb33
 - name: ghcr.io/linuxserver/sonarr
-  digest: sha256:60f3b6b5c7647ba2bafd81163acfe34b11117b9b834ebd7fbcc3e5f1b309c7ef
+  digest: sha256:fbb15bb4fb14d1ffe017f6be0e3fed8f1b300e4687e329767da0b61f36ba1eed
 - name: ghcr.io/linuxserver/lidarr
-  digest: sha256:ca2f95634d422fdeccfbff2a42cbe3a4fed1170f7e3546d99d5d5f2c9c9aa03b
+  digest: sha256:ba7d43fd5d7de790c38c2dc8f2b2b54c1ac00a452784891c37385a43a039907a
 - name: ghcr.io/linuxserver/prowlarr
-  newTag: develop@sha256:f54c31267f17a0d504c069950e3052d610633a95f4970e704d87de79cea68409
+  newTag: develop@sha256:a78e6850440c4a89b63a26ecdfc01d6ce2b0a268573fb577781abbbbbd445529
 - name: ghcr.io/linuxserver/qbittorrent
-  newTag: 5.2.0@sha256:eeea9f8a8cdde23555186843d26e8ded1222421f31f98a5cc1b50c2882ebcf4e
+  newTag: 5.2.2@sha256:163f3384db6cba9f68eaa83ca5f4209298b6029ba2d07b5e67562d0715baf5b9
 - name: ghcr.io/linuxserver/tautulli
-  digest: sha256:97a8127cfd3be10f653cea347cef64098243e315c2d81385813b7d8fc6fc384b
+  digest: sha256:fb1a686e4b676af3bd8f6e1a5a0097ee1540015768e9bbd4445e130d703a68cd
 - name: ghcr.io/seerr-team/seerr
-  newTag: v3.2.0@sha256:c4cbd5121236ac2f70a843a0b920b68a27976be57917555f1c45b08a1e6b2aad
+  newTag: v3.3.0@sha256:c92d2dc117f62185e7bcb88cd56efd374ea79210eaf433275449e8d5988eb5a8
 - name: ghcr.io/wizarrrr/wizarr
   newTag: "v2026.4.0@sha256:c33702499ffec51b264b5b825c4c148d7e5b9474971422a976ca3a99b4117625"
 - name: ghcr.io/jellyfin/jellyfin
-  newTag: "10.11.9@sha256:ef4d95143a5475d1ba4d9a6983342cac300044d676a30648b7d0e0688961712a"
+  newTag: "10.11.11@sha256:45f648c382a0c8b552582fcea40e95cb17c5d475473a891cba0eb7523fb92112"
