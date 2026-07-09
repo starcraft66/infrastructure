@@ -61,9 +61,10 @@ configMapGenerator:
 - name: minecraft-env-vars
   literals:
   - EULA=TRUE
-  - TYPE=CURSEFORGE
-  - CF_SERVER_MOD=GT_New_Horizons_2.7.3_Server_Java_17-21.zip
-  - CF_BASE_DIR=/data
+  - TYPE=GTNH
+  - GTNH_PACK_VERSION=2.8.4
+  - SKIP_GTNH_UPDATE_CHECK=true
+  - DUMP_SERVER_PROPERTIES=TRUE
   - DIFFICULTY=hard
   - ICON=""
   - MAX_PLAYERS=20
