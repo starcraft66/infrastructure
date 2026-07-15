@@ -12,7 +12,7 @@ resources:
 
 images:
 - name: netboxcommunity/netbox
-  newTag: v4.6.4
+  newTag: v4.6.5
 - name: busybox
   newTag: 1.38.0
 
