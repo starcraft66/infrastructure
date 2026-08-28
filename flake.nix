@@ -18,17 +18,18 @@
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
     tdude-website.url = "git+https://git.tdude.co/tristan/www.tdude.co.git";
     tdude-website.inputs.nixpkgs.follows = "nixos";
+    nix-libnet.url = "github:petohorvath/nix-libnet";
+    nix-libnet.flake = false;
   };
 
   outputs =
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } (
-      toplevel@{
-        inputs,
-        inputs',
-        self,
-        withSystem,
-        ...
+      toplevel@{ inputs
+      , inputs'
+      , self
+      , withSystem
+      , ...
       }:
       {
         systems = [
@@ -43,6 +44,10 @@
         ];
 
         flake = {
+          lib.kubernetesClusters = import ./nixos/lib/kubernetes-clusters.nix {
+            libnet = import inputs.nix-libnet;
+          };
+
           overlays = {
             inputs = final: prev: { inherit inputs; };
             colmena = inputs.colmena.overlays.default;
@@ -51,14 +56,15 @@
             lib = final: prev: {
               lib = prev.lib.extend (
                 libfinal: libprev:
-                import ./nixos/lib {
-                  inherit
-                    final
-                    prev
-                    libfinal
-                    libprev
-                    ;
-                }
+                  import ./nixos/lib {
+                    inherit
+                      final
+                      inputs
+                      prev
+                      libfinal
+                      libprev
+                      ;
+                  }
               );
             };
             local-packages = self: super: {
@@ -84,12 +90,11 @@
         );
 
         perSystem =
-          moduleArgs@{
-            config,
-            system,
-            lib,
-            pkgs,
-            ...
+          moduleArgs@{ config
+          , system
+          , lib
+          , pkgs
+          , ...
           }:
           {
             _module.args.pkgs = import inputs.nixpkgs {
@@ -107,6 +112,40 @@
                 program =
                   toString (import ./scripts/minecraft-console.nix { inherit pkgs; }).minecraft-console
                   + "/bin/minecraft-console";
+              };
+              update-coredns-service-addresses = {
+                type = "app";
+                program = "${pkgs.writeShellApplication {
+                  name = "update-coredns-service-addresses";
+                  runtimeInputs = with pkgs; [
+                    coreutils
+                    git
+                    kustomize
+                    nix
+                    yq-go
+                  ];
+                  text = ''
+                    repo_root="$(git rev-parse --show-toplevel)"
+                    addresses="$(mktemp)"
+                    trap 'rm -f "$addresses"' EXIT
+                    nix eval --json "$repo_root#lib.kubernetesClusters" > "$addresses"
+
+                    update_service() {
+                      cluster="$1"
+                      service="$2"
+                      ipv4="$(yq -p=json -r ".\"$cluster\".corednsServiceIps.ipv4" "$addresses")"
+                      ipv6="$(yq -p=json -r ".\"$cluster\".corednsServiceIps.ipv6" "$addresses")"
+                      IPV4="$ipv4" IPV6="$ipv6" yq -i \
+                        '.spec.clusterIP = strenv(IPV4) | .spec.clusterIPs = [strenv(IPV4), strenv(IPV6)]' \
+                        "$repo_root/$service"
+                    }
+
+                    update_service k8s-235-1 k8s/apps/coredns/overlays/235-prod/resources/service.yaml
+                    update_service k8s-305-1700-1 k8s/apps/coredns/overlays/305-1700-prod/resources/service.yaml
+                    kustomize build "$repo_root/k8s/apps/coredns/overlays/235-prod" >/dev/null
+                    kustomize build "$repo_root/k8s/apps/coredns/overlays/305-1700-prod" >/dev/null
+                  '';
+                }}/bin/update-coredns-service-addresses";
               };
             };
 

@@ -1,6 +1,9 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
+let
+  netTypes = pkgs.lib.tdude.net.types;
+in
 {
   imports = [ ./pocket-id.nix ];
 
@@ -8,7 +11,7 @@ with lib;
     enable = mkEnableOption "Enable Pocket ID OIDC provider";
 
     domain = mkOption {
-      type = types.str;
+      type = netTypes.domain;
       description = "Public domain for Pocket ID";
       example = "id.tdude.co";
     };
@@ -25,17 +28,17 @@ with lib;
     };
 
     lbIpv4Address = mkOption {
-      type = types.str;
+      type = netTypes.ipv4;
       description = "Keepalived VIP IPv4 for Pocket ID";
     };
 
     lbIpv6Address = mkOption {
-      type = types.str;
+      type = netTypes.ipv6;
       description = "Keepalived VIP IPv6 for Pocket ID";
     };
 
     interface = mkOption {
-      type = types.str;
+      type = netTypes.interfaceName;
       description = "Network interface for Keepalived VRRP";
     };
   };

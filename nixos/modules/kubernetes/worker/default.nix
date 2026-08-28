@@ -2,7 +2,9 @@
 with lib;
 let
   cfg = config.services.tdude.kubernetes.worker;
-in {
+  netTypes = pkgs.lib.tdude.net.types;
+in
+{
   imports = [ ./coredns.nix ./cilium.nix ./pki.nix ./proxy.nix ./kubelet.nix ];
 
   options.services.tdude.kubernetes.worker = {
@@ -16,40 +18,40 @@ in {
       default = true;
     };
     nodeIps = mkOption {
-      type = types.listOf types.str;
-      default = [];
+      type = types.listOf netTypes.ip;
+      default = [ ];
       description = "List of IP addresses to publish in the host's Node object as InternalIPs";
     };
     ipSans = mkOption {
-      type = types.listOf types.str;
-      default = [];
+      type = types.listOf netTypes.ip;
+      default = [ ];
       description = "List of SANs to add to the node's certificate";
     };
     clusterCidrIpv4 = mkOption {
-      type = types.str;
+      type = netTypes.ipv4Cidr;
       description = "The IPv4 pod CIDR range for the kubernetes cluster";
     };
     clusterCidrIpv6 = mkOption {
-      type = types.str;
+      type = netTypes.ipv6Cidr;
       description = "The IPv6 pod CIDR range for the kubernetes cluster";
     };
     apiserverAddress = mkOption {
-      type = types.str;
+      type = netTypes.url;
       description = "The address of the kubernetes apiserver";
     };
     dnsResolvers = mkOption {
-      type = types.listOf types.str;
+      type = types.listOf netTypes.ip;
       description = "List of DNS resolvers to use for pod DNS resolution";
     };
     pki = mkOption {
       type = types.submodule {
         options = {
           vaultURL = mkOption {
-            type = types.str;
+            type = netTypes.url;
             description = "The URL of the vault server";
           };
           vaultSNI = mkOption {
-            type = types.str;
+            type = netTypes.host;
             description = "The SNI host to use to connect to the vault server";
           };
           clusterName = mkOption {
