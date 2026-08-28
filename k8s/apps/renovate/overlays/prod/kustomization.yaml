@@ -7,7 +7,7 @@ namespace: renovate
 
 images:
 - name: renovate/renovate
-  newTag: "43.257.7"
+  newTag: "44.50.3"
 
 generators:
 - |-
