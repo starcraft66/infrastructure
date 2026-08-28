@@ -127,7 +127,7 @@ in
       ipv4 = "172.17.51.0/24";
       ipv6 = "2a0c:9a46:637:51::/64";
     };
-    oidcClientId = "648c3180-0fa5-495f-a5d8-525d5bb913b5";
+    oidcClientId = "648c3180-0c65-4b72-ac17-1da6abf53b9c";
     initialClusterState = "new";
     patroniSynchronousMode = false;
   };
