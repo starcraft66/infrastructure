@@ -23,6 +23,12 @@
   # Not supported on this GPU
   hardware.nvidia.open = false;
   hardware.nvidia-container-toolkit.enable = true;
+  # The device plugin discovers GPUs via NVML and requests them by UUID;
+  # the CDI spec must name devices accordingly for them to resolve.
+  hardware.nvidia-container-toolkit.device-name-strategy = "uuid";
+  # Poor old GTX 970 support ends here
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+
   # Very important, needed to expose the GPU driver to containers
   hardware.graphics.enable = true;
 

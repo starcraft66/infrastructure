@@ -61,7 +61,14 @@ in lib.mkIf cfg.enable {
     };
   };
 
-  systemd.services.containerd.path = lib.mkIf cfg.nvidia.enable [ pkgs.libnvidia-container pkgs.nvidia-container-toolkit ];
+  # The upstream NixOS module only writes the toolkit's config.toml for
+  # Docker. Toggling this (without enabling Docker) materializes the same
+  # file for containerd workers, giving nvidia-container-runtime an explicit
+  # CDI-mode config with store paths instead of toolkit defaults, which fail
+  # silently with nvidia-container-toolkit 1.18.x.
+  virtualisation.docker.enableNvidia = lib.mkIf cfg.nvidia.enable true;
+
+  systemd.services.containerd.path = lib.mkIf cfg.nvidia.enable [ pkgs.libnvidia-container pkgs.nvidia-container-toolkit pkgs.runc ];
   systemd.services.containerd.serviceConfig = {
     # Applies to all containers spawned
     # More sane than the default 1024 that causes issues with fluentd
