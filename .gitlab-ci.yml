@@ -11,6 +11,8 @@ check:
     - flake.lock
     - shell.nix
     - nixos/**/*
+    - k8s/apps/coredns/**/*
+    - k8s/apps/argocd/overlays/*/resources/applications.yaml
   before_script:
   - 'mkdir -p /etc/nix'
   - 'echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf'
@@ -18,3 +20,5 @@ check:
   - 'nix --version'
   - 'nix flake show --all-systems'
   - 'nix flake check --all-systems --no-build --show-trace'
+  - 'nix run .#update-coredns-service-addresses'
+  - 'git diff --exit-code -- k8s/apps/coredns/overlays/235-prod/resources/service.yaml k8s/apps/coredns/overlays/305-1700-prod/resources/service.yaml'

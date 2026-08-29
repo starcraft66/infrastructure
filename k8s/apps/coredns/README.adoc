@@ -1,0 +1,38 @@
+= CoreDNS
+
+CoreDNS is managed by Argo CD from the cluster-specific overlays in this
+directory. The workload, RBAC, and Service manifests remain handwritten YAML.
+Nix owns the cluster network model, and the update app changes only the
+`clusterIP` and `clusterIPs` fields in each Service:
+
+[source,console]
+----
+nix run .#update-coredns-service-addresses
+----
+
+CI runs the same command and fails if it changes either checked-in Service.
+The command also builds both Kustomize overlays as a syntax check.
+
+The Argo CD applications intentionally start without automated synchronization.
+Adopt and verify the 305-1700 deployment first, then enable self-healing only
+after both clusters are healthy.
+
+== 235 Service migration
+
+The 235 cluster currently has an immutable IPv6 ClusterIP ending in `::2558`.
+Its NixOS configurations now point kubelets at the normalized `::2` address.
+Deploy those configurations to sassaflash, soarin, and stormfeather before
+recreating the Service.
+
+During the maintenance window:
+
+[source,console]
+----
+kubectl --context oidc@k8s-235-1 -n kube-system get service kube-dns -o yaml > /tmp/kube-dns-before-nix-libnet.yaml
+kubectl --context oidc@k8s-235-1 -n kube-system delete service kube-dns
+kubectl --context oidc@k8s-235-1 apply -k k8s/apps/coredns/overlays/235-prod
+----
+
+The recreated Service must contain `10.234.64.2` and
+`2a10:4741:36:32:1::2`. Verify resolution from a newly created pod before
+enabling automated synchronization in Argo CD.

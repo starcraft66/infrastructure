@@ -278,6 +278,22 @@
         "type": "github"
       }
     },
+    "nix-libnet": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784837487,
+        "narHash": "sha256-il0P4BUf/1Oj85pitdvqrIuv3GL6v48SEUcI1toXxL0=",
+        "owner": "petohorvath",
+        "repo": "nix-libnet",
+        "rev": "480ab28ebc67dc6fab299b9d2380176e27130da5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "petohorvath",
+        "repo": "nix-libnet",
+        "type": "github"
+      }
+    },
     "nixlib": {
       "locked": {
         "lastModified": 1736643958,
@@ -383,6 +399,7 @@
         "flake-compat": "flake-compat_3",
         "flake-parts": "flake-parts",
         "just-flake": "just-flake",
+        "nix-libnet": "nix-libnet",
         "nixos": "nixos",
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs",

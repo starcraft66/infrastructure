@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 
 with lib;
+let
+  netTypes = pkgs.lib.tdude.net.types;
+in
 {
   imports = [
     ./pki.nix
@@ -13,13 +16,13 @@ with lib;
       type = types.attrsOf (types.submodule {
         options = {
           hostname = mkOption {
-            type = types.str;
+            type = netTypes.host;
             description = "Hostname of the etcd peer";
           };
         };
       });
       description = "List of initial etcd cluster peers";
-      default = {};
+      default = { };
     };
     # The initial cluster state of the etcd cluster, must be either 'new' or 'existing'. Validate this
     initialClusterState = mkOption {
@@ -29,11 +32,11 @@ with lib;
     };
     pki = {
       vaultURL = mkOption {
-        type = types.str;
+        type = netTypes.url;
         description = "The URL of the vault server";
       };
       vaultSNI = mkOption {
-        type = types.str;
+        type = netTypes.host;
         description = "The SNI host to use to connect to the vault server";
       };
       clusterName = mkOption {
