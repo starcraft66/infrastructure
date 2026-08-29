@@ -29,3 +29,7 @@ configMapGenerator:
 
 generatorOptions:
   disableNameSuffixHash: true
+
+images:
+- name: viaductoss/ksops
+  newTag: v4.5.1
