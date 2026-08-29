@@ -13,7 +13,7 @@ spec:
       initContainers:
         - name: install-ksops
           image: viaductoss/ksops:v4.5.1
-          command: ["/usr/local/bin/ksops", "install", "--with-kustomize", "/custom-tools"]
+          command: ["/usr/local/bin/ksops", "install", "/custom-tools"]
           volumeMounts:
             - mountPath: /custom-tools
               name: custom-tools
@@ -25,13 +25,6 @@ spec:
               name: custom-tools
               subPath: kustomize
             - mountPath: /usr/local/bin/ksops
-              name: custom-tools
-              subPath: ksops
-              # Verify this matches a XDG_CONFIG_HOME=/.config env variable
-            - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
-              name: custom-tools
-              subPath: ksops
-            - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops-exec/ksops-exec
               name: custom-tools
               subPath: ksops
           # 4. Set the XDG_CONFIG_HOME env variable to allow kustomize to detect the plugin
