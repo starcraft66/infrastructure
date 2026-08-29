@@ -9,7 +9,7 @@ namespace: openclaw-operator
 helmCharts:
 - name: openclaw-operator
   releaseName: openclaw-operator
-  version: 0.34.4
+  version: 0.39.0
   repo: oci://ghcr.io/paperclipinc/charts
   namespace: openclaw-operator
   includeCRDs: true
