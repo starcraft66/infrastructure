@@ -37,6 +37,9 @@ in {
     # but that isn't a huge deal.
     services.resolved.settings.Resolve.ReadEtcHosts = "no";
 
+    # Install modern terminfo to avoid annoyances with modern terminals
+    environment.enableAllTerminfo = true;
+
     environment.systemPackages = with pkgs; [
       # for dig
       bind
