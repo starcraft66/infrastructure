@@ -12,9 +12,13 @@ namespace: argocd
 generators:
 - |-
   apiVersion: viaduct.ai/v1
-  kind: ksops-exec
+  kind: ksops
   metadata:
     name: secret-generator
+    annotations:
+      config.kubernetes.io/function: |
+        exec:
+          path: ksops
   files:
   - ./secrets/deploy-pgp-key.yaml
   - ./secrets/argocd-secret-patch.yaml

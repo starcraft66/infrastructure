@@ -11,9 +11,13 @@ namespace: guacamole
 generators:
 - |-
   apiVersion: viaduct.ai/v1
-  kind: ksops-exec
+  kind: ksops
   metadata:
     name: secret-generator
+    annotations:
+      config.kubernetes.io/function: |
+        exec:
+          path: ksops
   files:
   - ./secrets/guacamole-database.yaml
 

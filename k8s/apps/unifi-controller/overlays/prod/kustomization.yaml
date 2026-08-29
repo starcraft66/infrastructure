@@ -15,9 +15,13 @@ namespace: unifi
 generators:
 - |-
   apiVersion: viaduct.ai/v1
-  kind: ksops-exec
+  kind: ksops
   metadata:
     name: secret-generator
+    annotations:
+      config.kubernetes.io/function: |
+        exec:
+          path: ksops
   files:
   - ./secrets/unifi-poller-secrets.yaml
 

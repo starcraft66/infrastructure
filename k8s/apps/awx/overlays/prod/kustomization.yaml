@@ -11,9 +11,13 @@ namespace: awx
 generators:
 - |-
   apiVersion: viaduct.ai/v1
-  kind: ksops-exec
+  kind: ksops
   metadata:
     name: secret-generator
+    annotations:
+      config.kubernetes.io/function: |
+        exec:
+          path: ksops
   files:
   - ./secrets/awx-credentials.yaml
   - ./secrets/postgres-credentials.yaml

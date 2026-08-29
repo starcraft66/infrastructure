@@ -15,9 +15,13 @@ resources:
 generators:
 - |-
   apiVersion: viaduct.ai/v1
-  kind: ksops-exec
+  kind: ksops
   metadata:
     name: secret-generator
+    annotations:
+      config.kubernetes.io/function: |
+        exec:
+          path: ksops
   files:
   - ./secrets/minecraft-secrets.yaml
   - ./secrets/discordsrv-secrets.yaml
@@ -83,7 +87,7 @@ configMapGenerator:
   literals:
   - EULA=TRUE
   - TYPE=PAPER
-  - VERSION=1.21.10
+  - VERSION=26.2
   - DIFFICULTY=hard
   - ICON=""
   - MAX_PLAYERS=20
