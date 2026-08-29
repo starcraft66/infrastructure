@@ -8,7 +8,7 @@
 - op: add
   path: /spec/ports/3
   value:
-    name: dynmap
-    port: 8123
-    targetPort: dynmap
+    name: bluemap
+    port: 8100
+    targetPort: bluemap
     protocol: TCP
