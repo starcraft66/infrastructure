@@ -10,7 +10,7 @@ helmCharts:
 - name: openclaw-operator
   releaseName: openclaw-operator
   version: 0.34.4
-  repo: oci://ghcr.io/openclaw-rocks/charts
+  repo: oci://ghcr.io/paperclipinc/charts
   namespace: openclaw-operator
   includeCRDs: true
   valuesFile: ./resources/values.yaml
