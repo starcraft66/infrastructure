@@ -23,11 +23,33 @@ spec:
             - sh
             - -ceu
             - |
+              cat <<'EOF' >/tmp/fluentd-v3-retention.json
+              {
+                "phases": {
+                  "hot": {
+                    "min_age": "0ms",
+                    "actions": {}
+                  },
+                  "delete": {
+                    "min_age": "14d",
+                    "actions": {
+                      "delete": {
+                        "delete_searchable_snapshot": true
+                      }
+                    }
+                  }
+                }
+              }
+              EOF
+
               cat <<'EOF' >/tmp/fluentd-v3-template.json
               {
                 "index_patterns": ["fluentd-v3-*"] ,
                 "priority": 500,
                 "template": {
+                  "settings": {
+                    "index.lifecycle.name": "fluentd-v3-retention"
+                  },
                   "mappings": {
                     "properties": {
                       "kubernetes": {
@@ -65,6 +87,11 @@ spec:
               until curl -sk -u "elastic:${ES_PASSWORD}" "https://elasticsearch-es-http:9200/_cluster/health" >/dev/null; do
                 sleep 2
               done
+
+              curl -sk --fail-with-body -u "elastic:${ES_PASSWORD}" \
+                -H 'Content-Type: application/json' \
+                -X PUT "https://elasticsearch-es-http:9200/_ilm/policy/fluentd-v3-retention" \
+                -d @/tmp/fluentd-v3-retention.json
 
               curl -sk -u "elastic:${ES_PASSWORD}" \
                 -H 'Content-Type: application/json' \
