@@ -3,6 +3,9 @@ kind: FluentdConfig
 metadata:
   name: default
 spec:
+  security:
+    podSecurityContext:
+      fsGroupChangePolicy: OnRootMismatch
   resources:
     limits:
       memory: 3Gi
