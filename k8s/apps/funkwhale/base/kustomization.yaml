@@ -59,6 +59,14 @@ helmCharts:
             app.kubernetes.io/component: master
     replica:
       resourcesPreset: medium
+      livenessProbe:
+        timeoutSeconds: 10
+        periodSeconds: 10
+        failureThreshold: 6
+      readinessProbe:
+        timeoutSeconds: 10
+        periodSeconds: 10
+        failureThreshold: 6
       topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname

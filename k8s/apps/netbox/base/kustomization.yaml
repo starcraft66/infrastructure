@@ -40,6 +40,14 @@ helmCharts:
             app.kubernetes.io/instance: netbox-redis
             app.kubernetes.io/component: master
     replica:
+      livenessProbe:
+        timeoutSeconds: 10
+        periodSeconds: 10
+        failureThreshold: 6
+      readinessProbe:
+        timeoutSeconds: 10
+        periodSeconds: 10
+        failureThreshold: 6
       topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
