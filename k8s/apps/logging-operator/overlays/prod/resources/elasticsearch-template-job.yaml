@@ -25,16 +25,18 @@ spec:
             - |
               cat <<'EOF' >/tmp/fluentd-v3-retention.json
               {
-                "phases": {
-                  "hot": {
-                    "min_age": "0ms",
-                    "actions": {}
-                  },
-                  "delete": {
-                    "min_age": "14d",
-                    "actions": {
-                      "delete": {
-                        "delete_searchable_snapshot": true
+                "policy": {
+                  "phases": {
+                    "hot": {
+                      "min_age": "0ms",
+                      "actions": {}
+                    },
+                    "delete": {
+                      "min_age": "14d",
+                      "actions": {
+                        "delete": {
+                          "delete_searchable_snapshot": true
+                        }
                       }
                     }
                   }
