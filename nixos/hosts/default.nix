@@ -26,16 +26,17 @@ let
       specialArgs = { inherit inputs; };
     });
 
-  generateVmImages = systems:
+  generateImageConfigurations = builtins.mapAttrs (name: system:
+    system.nixosInput.lib.nixosSystem {
+      inherit (system) system pkgs;
+      # Installer images cannot include the installed system's bootloader configuration.
+      modules = lib.remove ./${name}/bootloader.nix (system.modules ++ (import ../modules));
+      specialArgs = { inherit inputs; };
+    });
+
+  generateVmImages = systems: imageConfigurations:
     lib.mapAttrsToList (name: system: {
-      ${system.system}.${name} = (inputs.nixos-generators.nixosGenerate {
-        inherit (system) pkgs format;
-        # https://github.com/nix-community/nixos-generators/blob/bf351a252ace47ad8f49b9da7fb23960d2016cbc/flake.nix#L67
-        inherit (system.nixosInput.lib) nixosSystem;
-        # Avoid conflicts between system and live media
-        modules = lib.remove ./${name}/bootloader.nix (system.modules ++ (import ../modules));
-        specialArgs = { inherit inputs; };
-      });
+      ${system.system}.${name} = imageConfigurations.${name}.config.system.build.images.${system.format};
     }) systems;
 
   generateDeployRsProfiles = systems:
@@ -81,12 +82,15 @@ let
   generateColmenaNixpkgs = systems:
     lib.mapAttrs (name: system: system.pkgs) systems;
 
-  mergeVmImages = systems: merge (generateVmImages systems);
+  mergeVmImages = systems: imageConfigurations: merge (generateVmImages systems imageConfigurations);
 
   mergeDeployRsProfiles = systems: merge (generateDeployRsProfiles systems);
-in {
+in let
   nixosConfigurations = generateNixosSystems systems;
-  packages = mergeVmImages systems;
+  imageConfigurations = generateImageConfigurations systems;
+in {
+  inherit nixosConfigurations;
+  packages = mergeVmImages systems imageConfigurations;
   deploy = mergeDeployRsProfiles systems;
   colmenaHive = inputs.colmena.lib.makeHive ((generateColmenaNodes systems) // {
     meta = {

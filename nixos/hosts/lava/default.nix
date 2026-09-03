@@ -17,5 +17,5 @@ rec {
   };
   hostname = "lava.tdude.co";
   magicRollback = false; # set to false when changing net config
-  format = "kexec-bundle";
+  format = "kexec";
 }

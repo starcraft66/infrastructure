@@ -14,8 +14,6 @@
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
     colmena.url = "github:zhaofengli/colmena";
     colmena.inputs.nixpkgs.follows = "nixpkgs";
-    nixos-generators.url = "github:nix-community/nixos-generators";
-    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
     tdude-website.url = "git+https://git.tdude.co/tristan/www.tdude.co.git";
     tdude-website.inputs.nixpkgs.follows = "nixos";
     nix-libnet.url = "github:petohorvath/nix-libnet";
@@ -70,8 +68,6 @@
             local-packages = self: super: {
               cni-plugin-cilium = super.callPackage ./nixos/pkgs/cni-plugin-cilium.nix { };
               alertmanager-discord = super.callPackage ./nixos/pkgs/alertmanager-discord.nix { };
-              # pocket-id v2.x from unstable for PostgreSQL support (nixos-25.11 only has v1.15.0)
-              pocket-id = (import inputs.nixpkgs { inherit (super) system; }).pocket-id;
             };
           };
         }

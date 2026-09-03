@@ -22,5 +22,5 @@ rec {
   };
   hostname = "stone.tdude.co";
   magicRollback = false; # set to false when changing net config
-  format = "install-iso";
+  format = "iso";
 }

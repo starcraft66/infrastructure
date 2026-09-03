@@ -22,5 +22,5 @@ rec {
   hostname = "spike.305-1700.tdude.co";
   tags = [ "k8s-305-1700" ];
   magicRollback = false; # set to false when changing net config
-  format = "install-iso";
+  format = "iso";
 }

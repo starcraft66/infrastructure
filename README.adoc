@@ -101,7 +101,7 @@ To be complete, this repo needs to be as self-contained as possible. What I mean
 To enter the development shell, either have https://direnv.net/[`direnv`] configured for your shell and run `direnv allow` in the root of the project or else run `nix develop`. You may need to enter your PIN and touch your Yubikey to decrypt secrets during the shell hook execution.
 
 [.text-justify]
-The flake also defines NixOS configurations for all of the physical and virtual servers in the fleet. These configurations can be deployed remotely using https://colmena.cli.rs/[Colmena] (e.g. `colmena apply --on=@k8s-235`) or https://github.com/serokell/deploy-rs[deploy-rs]. VM images can also be produced for all hosts via https://github.com/nix-community/nixos-generators[nixos-generators]. A handful of https://github.com/juspay/just-flake[`just`] recipes are available for common operational tasks such as unlocking full-disk encryption on servers after a reboot (`just unlock-235`) and unsealing Hashicorp Vault (`just unseal-235`).
+The flake also defines NixOS configurations for all of the physical and virtual servers in the fleet. These configurations can be deployed remotely using https://colmena.cli.rs/[Colmena] (e.g. `colmena apply --on=@k8s-235`) or https://github.com/serokell/deploy-rs[deploy-rs]. Installer ISO images can also be produced for all hosts using the upstream NixOS image support. A handful of https://github.com/juspay/just-flake[`just`] recipes are available for common operational tasks such as unlocking full-disk encryption on servers after a reboot (`just unlock-235`) and unsealing Hashicorp Vault (`just unseal-235`).
 
 == The Repository itself
 
