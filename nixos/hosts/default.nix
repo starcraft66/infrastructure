@@ -12,12 +12,19 @@ let
 
   inherit (inputs.nixpkgs) lib;
 
-  combine = a: b: a // b;
-  combineAll = list: builtins.foldl' combine { } list;
-  allAttrNames = list: builtins.attrNames (combineAll list);
   merge = list:
-    combineAll (map (key: { ${key} = combineAll (builtins.catAttrs key list); })
-      (allAttrNames list));
+    lib.zipAttrsWith
+      (
+        _: values:
+        let
+          nestedNames = builtins.concatLists (map builtins.attrNames values);
+        in
+        assert
+          builtins.length (lib.unique nestedNames)
+          == builtins.length nestedNames;
+        lib.foldl' lib.recursiveUpdate { } values
+      )
+      list;
 
   generateNixosSystems = builtins.mapAttrs (name: system:
     system.nixosInput.lib.nixosSystem {
