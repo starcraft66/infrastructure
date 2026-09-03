@@ -207,7 +207,7 @@ Kustomize touts itself to be a template-free solution to manage application depl
 
 ==== SOPS
 
-ArgoCD is capable of decrypting secrets in this repo through the https://github.com/viaduct-ai/kustomize-sops[ksops] plugin for kustomize. To do this, an `initContainer` installs the `ksops` binary into ArgoCD's repo-server Pod and a second `initContainer` imports a GPG private key ArgoCD uses to decrypt secrets. Secret generators in this repo use the `ksops-exec` kind from `viaduct.ai/v1`. All sops-encrypted secrets you expect ArgoCD to be able to decrypt must be encrypted with ArgoCD's public key.
+ArgoCD is capable of decrypting secrets in this repo through the https://github.com/viaduct-ai/kustomize-sops[ksops] plugin for kustomize. To do this, an `initContainer` installs the `ksops` binary into ArgoCD's repo-server Pod and a second `initContainer` imports a GPG private key ArgoCD uses to decrypt secrets. Secret generators in this repo use the `ksops` kind from `viaduct.ai/v1` with the `config.kubernetes.io/function` exec annotation. All sops-encrypted secrets you expect ArgoCD to be able to decrypt must be encrypted with ArgoCD's public key.
 
 .Procedure to generate a GPG key for use with ArgoCD
 [%collapsible]
