@@ -26,6 +26,11 @@
     IOWeight = 25;
   };
 
+  systemd.services.gitlab-runner = {
+    after = [ "gitlab-ci-docker-network.service" ];
+    requires = [ "gitlab-ci-docker-network.service" ];
+  };
+
   services.gitlab-runner = {
     enable = true;
     gracefulTermination = true;
@@ -38,6 +43,7 @@
       executor = "docker";
       limit = 1;
       requestConcurrency = 1;
+      registrationFlags = [ "--docker-network-mode gitlab-ci" ];
       dockerImage = "nixpkgs/nix";
       dockerPullPolicy = "if-not-present";
       dockerPrivileged = false;
