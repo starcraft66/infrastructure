@@ -30,7 +30,16 @@ let
     name = "kubernetes_" + (builtins.replaceStrings [ "." ] [ "_" ] attr.version);
     value = mkKubernetesPackage attr.version attr.hash;
   }) supportedVersions;
-  
+
+  # Keep versioned packages available for historical use, while exposing the
+  # last entry as the package used by current configurations and CI.
+  latestPackage = builtins.elemAt packageList ((builtins.length packageList) - 1);
+
 in {
-  mkKubernetesPackages = builtins.listToAttrs packageList;
+  mkKubernetesPackages = builtins.listToAttrs (packageList ++ [
+    {
+      name = "kubernetes_latest";
+      value = latestPackage.value;
+    }
+  ]);
 }

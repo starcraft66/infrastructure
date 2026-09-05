@@ -1,8 +1,11 @@
 stages:
 - check
+- publish
 
 check:
   stage: check
+  tags:
+  - nix
   image: nixpkgs/nix
   rules:
   - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -22,3 +25,33 @@ check:
   - 'nix flake check --all-systems --no-build --show-trace'
   - 'nix run .#update-coredns-service-addresses'
   - 'git diff --exit-code -- k8s/apps/coredns/overlays/235-prod/resources/service.yaml k8s/apps/coredns/overlays/305-1700-prod/resources/service.yaml'
+
+publish-cache:
+  stage: publish
+  tags:
+  - nix
+  image: nixpkgs/nix
+  rules:
+  - if: '$CI_PIPELINE_SOURCE == "web"'
+    when: manual
+  - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    changes:
+    - flake.nix
+    - flake.lock
+    - shell.nix
+    - nixos/**/*
+    - k8s/apps/coredns/**/*
+    - k8s/apps/argocd/overlays/*/resources/applications.yaml
+  before_script:
+  - 'mkdir -p /etc/nix'
+  - 'echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf'
+  - 'attic login ci https://nixcache.tdude.co "$(cat /run/secrets/attic-ci-token)"'
+  - 'attic use ci'
+  script:
+  - 'nix flake check --all-systems --show-trace'
+  - >-
+    nix eval --impure --raw --expr '
+    let f = builtins.getFlake (toString ./.) ; systems = builtins.attrNames f.nixosConfigurations; systemOutputs = map (name: ".#nixosConfigurations.${name}.config.system.build.toplevel") systems; packageOutputs = [ ".#packages.x86_64-linux.kubernetes_latest" ]; in builtins.concatStringsSep "\\n" (systemOutputs ++ packageOutputs)
+    ' > installables
+  - 'xargs -r nix build --no-link --print-out-paths < installables > outputs'
+  - 'attic push ci --stdin < outputs'
