@@ -21,6 +21,8 @@
 
     settings = {
       listen = "[::1]:58345";
+      api-endpoint = "https://nixcache.tdude.co/";
+      substituter-endpoint = "https://nixcache.tdude.co/";
       
       storage = {
         type = "s3";
