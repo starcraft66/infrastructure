@@ -79,8 +79,12 @@ in {
       ip6tables -A FORWARD -i br-matrix -o ${networkInterface} -j ACCEPT
       ip6tables -A FORWARD -i br-kerio -o ${networkInterface} -j ACCEPT
       ip6tables -A FORWARD -i br-traefik -o ${networkInterface} -j ACCEPT
+      ip6tables -A FORWARD -i gitlab-ci0 -o ${networkInterface} -j ACCEPT
       ip6tables -A FORWARD -i ${networkInterface} -o br-traefik -d 2a01:4f9:3051:104f:8::2 -p tcp -m multiport --dports 80,443 -j ACCEPT
       ip6tables -A FORWARD -i ${networkInterface} -o br-traefik -d 2a01:4f9:3051:104f:8::2 -p udp --dport 443 -j ACCEPT
+    '';
+    extraStopCommands = ''
+      ip6tables -D FORWARD -i gitlab-ci0 -o ${networkInterface} -j ACCEPT || true
     '';
   };
 
