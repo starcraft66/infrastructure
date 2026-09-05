@@ -51,7 +51,7 @@ publish-cache:
   - 'nix flake check --all-systems --show-trace'
   - >-
     nix eval --impure --raw --expr '
-    let f = builtins.getFlake (toString ./.) ; systems = builtins.attrNames f.nixosConfigurations; systemOutputs = map (name: ".#nixosConfigurations.${name}.config.system.build.toplevel") systems; packageNames = builtins.filter (name: !(builtins.elem name systems)) (builtins.attrNames f.packages.x86_64-linux); packageOutputs = map (name: ".#packages.x86_64-linux.${name}") packageNames; in builtins.concatStringsSep "\\n" (systemOutputs ++ packageOutputs)
+    let f = builtins.getFlake (toString ./.) ; systems = builtins.attrNames f.nixosConfigurations; systemOutputs = map (name: ".#nixosConfigurations.${name}.config.system.build.toplevel") systems; packageOutputs = [ ".#packages.x86_64-linux.kubernetes_latest" ]; in builtins.concatStringsSep "\\n" (systemOutputs ++ packageOutputs)
     ' > installables
   - 'xargs -r nix build --no-link --print-out-paths < installables > outputs'
   - 'attic push ci --stdin < outputs'
