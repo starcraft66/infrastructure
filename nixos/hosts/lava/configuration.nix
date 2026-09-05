@@ -82,9 +82,11 @@ in {
       ip6tables -A FORWARD -i gitlab-ci0 -o ${networkInterface} -j ACCEPT
       ip6tables -A FORWARD -i ${networkInterface} -o br-traefik -d 2a01:4f9:3051:104f:8::2 -p tcp -m multiport --dports 80,443 -j ACCEPT
       ip6tables -A FORWARD -i ${networkInterface} -o br-traefik -d 2a01:4f9:3051:104f:8::2 -p udp --dport 443 -j ACCEPT
+      ip6tables -A INPUT -i gitlab-ci0 -d 2a01:4f9:3051:104f::2 -p tcp --dport 443 -j ACCEPT
     '';
     extraStopCommands = ''
       ip6tables -D FORWARD -i gitlab-ci0 -o ${networkInterface} -j ACCEPT || true
+      ip6tables -D INPUT -i gitlab-ci0 -d 2a01:4f9:3051:104f::2 -p tcp --dport 443 -j ACCEPT || true
     '';
   };
 
