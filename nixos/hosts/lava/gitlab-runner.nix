@@ -1,3 +1,4 @@
+# Keep this host configuration covered by the Nix CI evaluation job.
 { config, lib, pkgs, ... }:
 
 {

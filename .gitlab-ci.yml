@@ -3,6 +3,8 @@ stages:
 
 check:
   stage: check
+  tags:
+  - nix
   image: nixpkgs/nix
   rules:
   - if: $CI_PIPELINE_SOURCE == "merge_request_event"
