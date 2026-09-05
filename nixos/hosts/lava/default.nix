@@ -6,6 +6,7 @@ rec {
     ./configuration.nix
     ./hardware.nix
     ./containers.nix
+    ./gitlab-runner.nix
     ./turn.nix
     ./attic.nix
     inputs.sops-nix.nixosModules.sops
