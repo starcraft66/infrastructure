@@ -1,5 +1,7 @@
 { ... }:
 {
+  sops.secrets.attic-ci-token.mode = "0400";
+
   services.nginx = {
     enable = true;
     virtualHosts."nixcache.tdude.co" = {

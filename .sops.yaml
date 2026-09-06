@@ -2,7 +2,12 @@ keys:
 - &tristan 85974506EC695392044308059D98CDACFF04FD78
 - &argocd-k8s-235 2DADB88EC6EA687971F53F10E9936473C592AEDF
 - &stone 876BE5D8B88B57724CE7DCB184C0FF4EC256ACA1
-- &lava age1q872u26jvf3nem0lzykcwfjp72x2p436dt43an50jdyp96gllsxqf7lz65
+- &lava-host age1q872u26jvf3nem0lzykcwfjp72x2p436dt43an50jdyp96gllsxqf7lz65
+- &sassaflash-host age1vpqhanknkf6n2r2zd77cdktdmhkvxuwavtdsfevs4m0r5ygl4ucs6dvfje
+- &stormfeather-host age1q5vunjrktv9a92knghg5tvwwh4cn8cngewc69fkecx5s3u62s46srrh7l2
+- &soarin-host age1rgwygsfs6k3pcjwm6v6w9eygzj8a9zl2srzq6un4t5tr0m440y5qn655ec
+- &spike-host age1apevcupf77msa7vwg69jkkk5k7p82mh6s408tx3uprzvwujjuc9qlxz0lx
+- &stone-host age1hfn2na3mw8f5kvhkmx5mvg2lsfx6876c7hcllps77kpykjj32fwqhusryn
 creation_rules:
 - path_regex: k8s/apps/.*/secrets/.*\.yaml$
   encrypted_regex: '^(data|stringData)$'
@@ -36,4 +41,15 @@ creation_rules:
   - pgp:
     - *tristan
     age:
-    - *lava
+    - *lava-host
+- path_regex: secrets/nix-cache\.yaml$
+  key_groups:
+  - pgp:
+    - *tristan
+    age:
+    - *lava-host
+    - *sassaflash-host
+    - *stormfeather-host
+    - *soarin-host
+    - *spike-host
+    - *stone-host

@@ -2,14 +2,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  sops = {
-    defaultSopsFile = ../../../secrets/lava.yaml;
-    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    secrets = {
-      gitlab-runner-registration.mode = "0400";
-      attic-ci-token.mode = "0400";
-    };
-  };
+  sops.secrets.gitlab-runner-registration.mode = "0400";
 
   # Reserve eight of the 5950X's 32 logical CPUs for the rest of the host.
   # `cores` is passed to each derivation; CPUQuota is the aggregate ceiling.

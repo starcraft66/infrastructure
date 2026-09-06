@@ -7,9 +7,16 @@ let
   deploy-keys = false;
   patroniSecretsFile = toString ../../../secrets/patroni-235.yaml;
   pocketIdSecretsFile = toString ../../../secrets/pocket-id-235.yaml;
-in
-lib.mkIf deploy-keys {
-
+in lib.optionalAttrs deploy-keys {
+  deployment.keys."nix-cache" = {
+    keyCommand = [ "sops" "-d" "--extract" "[\"nix-cache\"]" (toString ../../../secrets/nix-cache.yaml) ];
+    destDir = "/run/secrets";
+    name = "nix-cache";
+    user = "root";
+    group = "root";
+    permissions = "0400";
+    uploadAt = "pre-activation";
+  };
   # Patroni secrets
   deployment.keys."patroni-environment" = {
     keyCommand = [

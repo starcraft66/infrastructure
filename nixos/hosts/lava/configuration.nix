@@ -14,6 +14,17 @@ let
     prefixLength = 64;
   };
 in {
+  sops = {
+    defaultSopsFile = ../../../secrets/lava.yaml;
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    secrets = {
+      nix-cache = {
+        sopsFile = ../../../secrets/nix-cache.yaml;
+        mode = "0400";
+      };
+    };
+  };
+
   # Disable on internet-facing hosts, leaks information about internal services
   services.avahi.enable = lib.mkForce false;
 
