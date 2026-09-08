@@ -8,7 +8,7 @@ spec:
     apiGroup: postgresql.cnpg.io
     kind: ClusterImageCatalog
     name: postgresql-system-bullseye
-    major: 15
+    major: 18
   topologySpreadConstraints:
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname
