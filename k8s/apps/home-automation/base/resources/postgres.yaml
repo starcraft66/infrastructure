@@ -4,6 +4,11 @@ metadata:
   name: home-assistant
 spec:
   instances: 1
+  imageCatalogRef:
+    apiGroup: postgresql.cnpg.io
+    kind: ClusterImageCatalog
+    name: postgresql-system-bullseye
+    major: 16
   topologySpreadConstraints:
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname

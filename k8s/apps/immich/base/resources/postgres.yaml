@@ -4,6 +4,11 @@ metadata:
   name: immich-postgres
 spec:
   instances: 1
+  imageCatalogRef:
+    apiGroup: postgresql.cnpg.io
+    kind: ClusterImageCatalog
+    name: postgresql-system-bullseye
+    major: 17
   topologySpreadConstraints:
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname
