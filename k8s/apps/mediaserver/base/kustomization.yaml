@@ -40,4 +40,4 @@ images:
 - name: ghcr.io/wizarrrr/wizarr
   newTag: "v2026.9.0@sha256:b3816420caa8d0be6ce3888396b47b3afd12ec0fa681529359e2591408ba8c0d"
 - name: ghcr.io/jellyfin/jellyfin
-  newTag: "10.11.11@sha256:45f648c382a0c8b552582fcea40e95cb17c5d475473a891cba0eb7523fb92112"
+  newTag: "12.0@sha256:74f4d87d9cf262c52d62be6be265c0355c6a7e21d0477ab6c654a49a4f8b1fd4"
