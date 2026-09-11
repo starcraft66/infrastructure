@@ -7,7 +7,7 @@ resources:
 
 images:
 - name: ghcr.io/immich-app/immich-server
-  newTag: v3.1.0
+  newTag: v3.2.0
 
 generators:
 - |-
