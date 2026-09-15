@@ -82,8 +82,7 @@ extraVolumes:
           path: napalm_password
 extraVolumeMounts:
   - name: netbox-napalm
-    mountPath: /run/secrets/netbox/napalm_password
-    subPath: napalm_password
+    mountPath: /run/secrets/netbox-napalm
     readOnly: true
 
 housekeeping:
@@ -98,8 +97,7 @@ housekeeping:
             path: napalm_password
   extraVolumeMounts:
     - name: netbox-napalm
-      mountPath: /run/secrets/netbox/napalm_password
-      subPath: napalm_password
+      mountPath: /run/secrets/netbox-napalm
       readOnly: true
 worker:
   enabled: true
@@ -121,6 +119,5 @@ worker:
             path: napalm_password
   extraVolumeMounts:
     - name: netbox-napalm
-      mountPath: /run/secrets/netbox/napalm_password
-      subPath: napalm_password
+      mountPath: /run/secrets/netbox-napalm
       readOnly: true

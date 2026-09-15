@@ -46,7 +46,7 @@ DATABASES["default"]["PASSWORD"] = _read_secret(provided_secret_name, "db_passwo
 EMAIL["PASSWORD"] = _read_secret(provided_secret_name, "email_password")
 REDIS["tasks"]["PASSWORD"] = _read_secret(provided_secret_name, "tasks_password")
 REDIS["caching"]["PASSWORD"] = _read_secret(provided_secret_name, "cache_password")
-NAPALM_PASSWORD = _read_secret(provided_secret_name, "napalm_password")
+NAPALM_PASSWORD = _read_secret("netbox-napalm", "napalm_password")
 SECRET_KEY = _read_secret(provided_secret_name, "secret_key")
 
 _peppers_raw = _read_secret(provided_secret_name, "api_token_peppers")
