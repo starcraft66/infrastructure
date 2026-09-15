@@ -1,0 +1,83 @@
+fullnameOverride: nextcloud
+
+image:
+  registry: docker.io
+  repository: library/nextcloud
+  flavor: apache
+  tag: 34.0-apache
+
+nextcloud:
+  host: cloud.tdude.co
+  containerPort: 80
+  datadir: /var/www/html/data
+  trustedDomains:
+    - cloud.tdude.co
+    - cloud4.tdude.co
+  existingSecret:
+    enabled: true
+    secretName: nextcloud-secrets
+    usernameKey: NEXTCLOUD_ADMIN_USER
+    passwordKey: NEXTCLOUD_ADMIN_PASSWORD
+  extraEnv:
+    - name: NC_maintenance_window_start
+      value: "1"
+    - name: NC_default_phone_region
+      value: CA
+    - name: NC_mail_smtpmode
+      value: "null"
+    - name: OVERWRITEPROTOCOL
+      value: https
+    - name: TRUSTED_PROXIES
+      value: 10.234.128.0/22 2a10:4741:36:32:2::/112
+  strategy:
+    type: Recreate
+  podSecurityContext:
+    fsGroup: 33
+    fsGroupChangePolicy: OnRootMismatch
+  extraVolumes:
+    - name: nextcloud-data-extra
+      persistentVolumeClaim:
+        claimName: nextcloud-data-extra
+  extraVolumeMounts:
+    - name: nextcloud-data-extra
+      mountPath: /var/www/html/data/tristan/files/extra
+
+internalDatabase:
+  enabled: false
+externalDatabase:
+  enabled: true
+  type: postgresql
+  host: nextcloud-postgres-rw
+  database: nextcloud
+  existingSecret:
+    enabled: true
+    secretName: postgres-credentials
+    usernameKey: username
+    passwordKey: password
+
+postgresql:
+  enabled: false
+redis:
+  enabled: false
+  auth:
+    enabled: false
+    password: ""
+externalRedis:
+  enabled: false
+
+cronjob:
+  enabled: false
+
+service:
+  port: 80
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+    - IPv6
+    - IPv4
+
+persistence:
+  enabled: true
+  existingClaim: nextcloud-app
+  nextcloudData:
+    enabled: true
+    existingClaim: nextcloud-data

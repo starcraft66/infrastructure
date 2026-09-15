@@ -1,5 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ./resources/nextcloud.yaml
 - ./resources/cron.yaml
+
+namespace: nextcloud
+
+helmCharts:
+- name: nextcloud
+  releaseName: nextcloud
+  version: 9.2.6
+  repo: https://nextcloud.github.io/helm
+  namespace: nextcloud
+  valuesFile: ./resources/values.yaml
