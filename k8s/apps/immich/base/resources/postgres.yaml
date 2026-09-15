@@ -24,12 +24,19 @@ spec:
         - CREATE EXTENSION IF NOT EXISTS cube;
         - CREATE EXTENSION IF NOT EXISTS earthdistance;
         - CREATE EXTENSION IF NOT EXISTS vector;
+        - ALTER EXTENSION vector UPDATE;
       postInitApplicationSQL:
         - ALTER TABLE asset SET (autovacuum_vacuum_scale_factor=0.01, autovacuum_analyze_scale_factor=0.005, autovacuum_vacuum_cost_delay=0);
         - ALTER TABLE album_asset SET (autovacuum_vacuum_scale_factor=0.01, autovacuum_analyze_scale_factor=0.005, autovacuum_vacuum_cost_delay=0);
         - ALTER TABLE asset_exif SET (autovacuum_vacuum_scale_factor=0.01, autovacuum_analyze_scale_factor=0.005, autovacuum_vacuum_cost_delay=0);
       secret:
         name: immich-postgres
+  managed:
+    roles:
+    - name: immich
+      ensure: present
+      login: true
+      superuser: true
   postgresql:
     parameters:
       # Memory
