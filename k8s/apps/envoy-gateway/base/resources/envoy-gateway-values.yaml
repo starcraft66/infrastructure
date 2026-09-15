@@ -2,11 +2,7 @@ nameOverride: "envoy-gateway"
 fullnameOverride: "envoy-gateway"
 
 crds:
-  envoyGateway:
-    enabled: true
-  gatewayAPI:
-    enabled: true
-    channel: "experimental"
+  enabled: false
 
 config:
   envoyGateway:
