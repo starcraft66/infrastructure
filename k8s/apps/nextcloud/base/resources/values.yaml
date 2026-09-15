@@ -68,6 +68,9 @@ externalRedis:
 cronjob:
   enabled: false
 
+livenessProbe:
+  initialDelaySeconds: 604800
+
 service:
   port: 80
   ipFamilyPolicy: RequireDualStack
