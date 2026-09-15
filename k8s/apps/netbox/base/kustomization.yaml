@@ -2,23 +2,19 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ./resources/namespace.yaml
-- ./resources/cronjob.yaml
-- ./resources/deployment.yaml
 - ./resources/postgres.yaml
-- ./resources/service.yaml
-- ./resources/serviceaccount.yaml
-- ./resources/servicemonitor.yaml
 - ./resources/volume.yaml
-
-images:
-- name: netboxcommunity/netbox
-  newTag: v4.7.0
-- name: busybox
-  newTag: 1.38.0
 
 namespace: netbox
 
 helmCharts:
+- name: netbox
+  releaseName: netbox
+  version: 8.3.74
+  repo: oci://ghcr.io/netbox-community/netbox-chart
+  namespace: netbox
+  skipTests: true
+  valuesFile: ./resources/values.yaml
 - name: redis
   releaseName: netbox-redis
   version: 20.x

@@ -1,0 +1,126 @@
+fullnameOverride: netbox
+commonLabels:
+  app.kubernetes.io/name: netbox
+
+image:
+  registry: ghcr.io
+  repository: netbox-community/netbox
+  tag: v4.7.0
+
+allowedHosts:
+  - "*"
+allowedHostsIncludesPodIP: false
+enforceGlobalUnique: false
+metrics:
+  enabled: true
+  granian:
+    enabled: true
+  serviceMonitor:
+    enabled: true
+
+service:
+  port: 80
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+    - IPv4
+
+serviceAccount:
+  create: true
+  name: netbox
+  automountServiceAccountToken: false
+
+existingSecret: netbox
+superuser:
+  name: admin
+  email: admin@example.com
+
+persistence:
+  enabled: true
+  existingClaim: netbox-media
+  storageClass: truenas-nfs-spitfire-fast
+
+postgresql:
+  enabled: false
+externalDatabase:
+  host: netbox-postgres-rw
+  port: 5432
+  database: netbox
+  username: netbox
+  existingSecretName: postgres
+  existingSecretKey: password
+  connMaxAge: 300
+  options:
+    sslmode: prefer
+
+valkey:
+  enabled: false
+tasksDatabase:
+  host: netbox-redis-master
+  port: 6379
+  database: 0
+  existingSecretName: netbox
+  existingSecretKey: redis-password
+cachingDatabase:
+  host: netbox-redis-master
+  port: 6379
+  database: 1
+  existingSecretName: netbox
+  existingSecretKey: redis-password
+
+extraConfig:
+  - values:
+      NAPALM_USERNAME: ""
+      NAPALM_TIMEOUT: 30
+      NAPALM_ARGS: {}
+
+extraVolumes:
+  - name: netbox-napalm
+    secret:
+      secretName: netbox
+      items:
+        - key: napalm_password
+          path: napalm_password
+extraVolumeMounts:
+  - name: netbox-napalm
+    mountPath: /run/secrets/netbox/napalm_password
+    subPath: napalm_password
+    readOnly: true
+
+housekeeping:
+  enabled: true
+  schedule: "0 0 * * *"
+  extraVolumes:
+    - name: netbox-napalm
+      secret:
+        secretName: netbox
+        items:
+          - key: napalm_password
+            path: napalm_password
+  extraVolumeMounts:
+    - name: netbox-napalm
+      mountPath: /run/secrets/netbox/napalm_password
+      subPath: napalm_password
+      readOnly: true
+worker:
+  enabled: true
+  replicaCount: 1
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: netbox
+          app.kubernetes.io/component: worker
+  extraVolumes:
+    - name: netbox-napalm
+      secret:
+        secretName: netbox
+        items:
+          - key: napalm_password
+            path: napalm_password
+  extraVolumeMounts:
+    - name: netbox-napalm
+      mountPath: /run/secrets/netbox/napalm_password
+      subPath: napalm_password
+      readOnly: true

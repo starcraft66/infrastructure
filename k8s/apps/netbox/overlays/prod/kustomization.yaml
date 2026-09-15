@@ -19,8 +19,9 @@ generators:
 
 configMapGenerator:
 - name: netbox
+  namespace: netbox
+  behavior: merge
   files:
-  - ./config/configuration.py
-  - ./config/netbox.yaml
+  - configuration.py=./config/configuration.py
 
 namespace: netbox
