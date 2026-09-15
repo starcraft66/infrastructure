@@ -149,6 +149,7 @@ spec:
     networkPolicy:
       allowedIngressNamespaces:
         - traefik
+        - monitoring
   networking:
     service:
       ports:
