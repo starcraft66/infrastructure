@@ -37,5 +37,49 @@
             "matchPackageNames": ["ghcr.io/linuxserver/qbittorrent"],
             "allowedVersions": "<14",
         },
+    ],
+    "customManagers": [
+        {
+            "description": "Track CloudNativePG release manifests by GitHub release tag",
+            "customType": "regex",
+            "managerFilePatterns": [
+                "^k8s/apps/cloudnative-pg/base/kustomization\\.yaml$"
+            ],
+            "matchStrings": [
+                "https://raw\\.githubusercontent\\.com/cloudnative-pg/cloudnative-pg/v(?<currentValue>\\d+\\.\\d+\\.\\d+)/releases/cnpg-\\d+\\.\\d+\\.\\d+\\.yaml"
+            ],
+            "datasourceTemplate": "github-releases",
+            "depNameTemplate": "cloudnative-pg/cloudnative-pg",
+            "versioningTemplate": "semver",
+            "autoReplaceStringTemplate": "https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/v{{{newValue}}}/releases/cnpg-{{{newValue}}}.yaml"
+        },
+        {
+            "description": "Track KubeVirt operator release manifests by GitHub release tag",
+            "customType": "regex",
+            "managerFilePatterns": [
+                "^k8s/apps/kubevirt/base/kustomization\\.yaml$"
+            ],
+            "matchStrings": [
+                "https://github\\.com/kubevirt/kubevirt/releases/download/v(?<currentValue>\\d+\\.\\d+\\.\\d+)/kubevirt-operator\\.yaml"
+            ],
+            "datasourceTemplate": "github-releases",
+            "depNameTemplate": "kubevirt/kubevirt",
+            "versioningTemplate": "semver",
+            "autoReplaceStringTemplate": "https://github.com/kubevirt/kubevirt/releases/download/v{{{newValue}}}/kubevirt-operator.yaml"
+        },
+        {
+            "description": "Track KubeVirt CDI operator release manifests by GitHub release tag",
+            "customType": "regex",
+            "managerFilePatterns": [
+                "^k8s/apps/kubevirt-cdi/base/kustomization\\.yaml$"
+            ],
+            "matchStrings": [
+                "https://github\\.com/kubevirt/containerized-data-importer/releases/download/v(?<currentValue>\\d+\\.\\d+\\.\\d+)/cdi-operator\\.yaml"
+            ],
+            "datasourceTemplate": "github-releases",
+            "depNameTemplate": "kubevirt/containerized-data-importer",
+            "versioningTemplate": "semver",
+            "autoReplaceStringTemplate": "https://github.com/kubevirt/containerized-data-importer/releases/download/v{{{newValue}}}/cdi-operator.yaml"
+        }
     ]
 }
