@@ -52,6 +52,9 @@ externalDatabase:
   options:
     sslmode: prefer
 
+housekeeping:
+  enabled: false
+
 valkey:
   enabled: false
 tasksDatabase:
@@ -85,20 +88,6 @@ extraVolumeMounts:
     mountPath: /run/secrets/netbox-napalm
     readOnly: true
 
-housekeeping:
-  enabled: true
-  schedule: "0 0 * * *"
-  extraVolumes:
-    - name: netbox-napalm
-      secret:
-        secretName: netbox
-        items:
-          - key: napalm_password
-            path: napalm_password
-  extraVolumeMounts:
-    - name: netbox-napalm
-      mountPath: /run/secrets/netbox-napalm
-      readOnly: true
 worker:
   enabled: true
   replicaCount: 1
