@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmCharts:
+- name: gateway-crds-helm
+  releaseName: gateway-api
+  valuesFile: ./resources/values.yaml
+  version: 1.9.1
+  repo: oci://registry-1.docker.io/envoyproxy
+  namespace: kube-system
+  includeCRDs: true
+
+patches:
+- target:
+    group: admissionregistration.k8s.io
+    version: v1
+    kind: ValidatingAdmissionPolicy
+    name: safe-upgrades.gateway.networking.k8s.io
+  patch: |-
+    - op: add
+      path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+      value: "10"
+- target:
+    group: admissionregistration.k8s.io
+    version: v1
+    kind: ValidatingAdmissionPolicyBinding
+    name: safe-upgrades.gateway.networking.k8s.io
+  patch: |-
+    - op: add
+      path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+      value: "10"
