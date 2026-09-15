@@ -31,10 +31,12 @@ spec:
           image: "funkwhale/api:1.4.0"
           imagePullPolicy: IfNotPresent
           command:
-            - sh
-            - -c
-            - |
-              celery -A funkwhale_api.taskapp beat -l INFO
+            - celery
+            - -A
+            - funkwhale_api.taskapp
+            - beat
+            - -l
+            - INFO
           env:
             - name: POSTGRES_ENV_POSTGRES_PASSWORD
               valueFrom:
@@ -90,10 +92,12 @@ spec:
           image: "funkwhale/api:1.4.0"
           imagePullPolicy: IfNotPresent
           command:
-            - sh
-            - -c
-            - |
-              celery -A funkwhale_api.taskapp worker -l INFO
+            - celery
+            - -A
+            - funkwhale_api.taskapp
+            - worker
+            - -l
+            - INFO
           env:
             - name: C_FORCE_ROOT
               value: "true"
@@ -174,6 +178,10 @@ spec:
             tcpSocket:
               port: api
           env:
+            - name: FUNKWHALE_API_HOST
+              value: localhost
+            - name: FUNKWHALE_API_PORT
+              value: '5000'
             - name: POSTGRES_ENV_POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
