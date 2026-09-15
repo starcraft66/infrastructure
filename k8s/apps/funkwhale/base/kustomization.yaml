@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
 - ./resources/namespace.yaml
 - ./resources/deployment.yaml
+- ./resources/migrate-job.yaml
 - ./resources/service.yaml
 - ./resources/postgres.yaml
 - ./resources/volume.yaml

@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: funkwhale-migrate
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: migrate
+          image: funkwhale/api:2.0.11-legacycpu
+          imagePullPolicy: IfNotPresent
+          command:
+            - funkwhale-manage
+            - migrate
+          env:
+            - name: POSTGRES_ENV_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: password
+            - name: POSTGRES_ENV_POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: username
+          envFrom:
+            - configMapRef:
+                name: funkwhale
+            - secretRef:
+                name: funkwhale

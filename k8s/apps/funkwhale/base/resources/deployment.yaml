@@ -161,6 +161,8 @@ spec:
         - name: funkwhale
           image: "funkwhale/api:1.4.0"
           imagePullPolicy: IfNotPresent
+          args:
+          - gunicorn
           readinessProbe:
 
             httpGet:
