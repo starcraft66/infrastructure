@@ -14,3 +14,29 @@ helmCharts:
   namespace: openclaw-operator
   includeCRDs: true
   valuesFile: ./resources/values.yaml
+
+patches:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: ClusterRole
+    name: openclaw-operator-manager-role
+  patch: |-
+    - op: add
+      path: /rules/-
+      value:
+        apiGroups:
+        - authentication.k8s.io
+        resources:
+        - tokenreviews
+        verbs:
+        - create
+    - op: add
+      path: /rules/-
+      value:
+        apiGroups:
+        - authorization.k8s.io
+        resources:
+        - subjectaccessreviews
+        verbs:
+        - create
