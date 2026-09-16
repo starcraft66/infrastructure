@@ -4,7 +4,7 @@ image:
   registry: docker.io
   repository: library/nextcloud
   flavor: apache
-  tag: 34.0-apache
+  tag: 35.0-apache
 
 nextcloud:
   host: cloud.tdude.co
