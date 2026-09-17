@@ -2,11 +2,6 @@ fullnameOverride: netbox
 commonLabels:
   app.kubernetes.io/name: netbox
 
-image:
-  registry: ghcr.io
-  repository: netbox-community/netbox
-  tag: v4.7.1
-
 allowedHosts:
   - "*"
 allowedHostsIncludesPodIP: false

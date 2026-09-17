@@ -13,7 +13,7 @@ resource "cloudflare_zone" "as208914_net" {
 resource "cloudflare_dns_record" "lg_as208914_net-AAAA" {
   zone_id = cloudflare_zone.as208914_net.id
   name    = "lg.as208914.net"
-  content = "2a10:4741:32::1"
+  content = "2a0c:9a46:632::1"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -22,7 +22,7 @@ resource "cloudflare_dns_record" "lg_as208914_net-AAAA" {
 resource "cloudflare_dns_record" "yyz-r1_as208914_net-AAAA" {
   zone_id = cloudflare_zone.as208914_net.id
   name    = "yyz-r1.as208914.net"
-  content = "2a10:4741:33::1"
+  content = "2a0c:9a46:633::1"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -41,33 +41,6 @@ resource "cloudflare_dns_record" "yyz-r1_backdoor_as208914_net-A" {
   zone_id = cloudflare_zone.as208914_net.id
   name    = "yyz-r1.backdoor.as208914.net"
   content = "137.220.55.38"
-  type    = "A"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_dns_record" "ams-r1_as208914_net-AAAA" {
-  zone_id = cloudflare_zone.as208914_net.id
-  name    = "ams-r1.as208914.net"
-  content = "2a10:4741:38::1"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_dns_record" "ams-r1_backdoor_as208914_net-AAAA" {
-  zone_id = cloudflare_zone.as208914_net.id
-  name    = "ams-r1.backdoor.as208914.net"
-  content = "2a0c:9a40:1072::706"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_dns_record" "ams-r1_backdoor_as208914_net-A" {
-  zone_id = cloudflare_zone.as208914_net.id
-  name    = "ams-r1.backdoor.as208914.net"
-  content = "193.148.248.216"
   type    = "A"
   ttl     = 1
   proxied = false
