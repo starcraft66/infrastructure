@@ -217,18 +217,6 @@
 
               VAULT_ADDR = "https://vault.235.tdude.co";
 
-              KUSTOMIZE_PLUGIN_HOME = pkgs.buildEnv {
-                name = "kustomize-plugins";
-                paths = with pkgs; [
-                  kustomize-sops
-                ];
-                postBuild = ''
-                  mv $out/lib/* $out
-                  rm -r $out/lib
-                '';
-                pathsToLink = [ "/lib" ];
-              };
-
               sopsPGPKeyDirs = [
                 "./secrets/keys/hosts"
                 "./secrets/keys/users"
@@ -245,6 +233,7 @@
                 opentofu
                 sops
                 kustomize
+                kustomize-sops
                 kubetail
                 yamllint
                 gnupg
