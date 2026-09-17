@@ -43,7 +43,7 @@
             "description": "Track CloudNativePG release manifests by GitHub release tag",
             "customType": "regex",
             "managerFilePatterns": [
-                "^k8s/apps/cloudnative-pg/base/kustomization\\.yaml$"
+                "/^k8s\/apps\/cloudnative-pg\/base\/kustomization\\.yaml$/"
             ],
             "matchStrings": [
                 "https://raw\\.githubusercontent\\.com/cloudnative-pg/cloudnative-pg/v(?<currentValue>\\d+\\.\\d+\\.\\d+)/releases/cnpg-\\d+\\.\\d+\\.\\d+\\.yaml"
@@ -57,7 +57,7 @@
             "description": "Track KubeVirt operator release manifests by GitHub release tag",
             "customType": "regex",
             "managerFilePatterns": [
-                "^k8s/apps/kubevirt/base/kustomization\\.yaml$"
+                "/^k8s\/apps\/kubevirt\/base\/kustomization\\.yaml$/"
             ],
             "matchStrings": [
                 "https://github\\.com/kubevirt/kubevirt/releases/download/v(?<currentValue>\\d+\\.\\d+\\.\\d+)/kubevirt-operator\\.yaml"
@@ -71,7 +71,7 @@
             "description": "Track KubeVirt CDI operator release manifests by GitHub release tag",
             "customType": "regex",
             "managerFilePatterns": [
-                "^k8s/apps/kubevirt-cdi/base/kustomization\\.yaml$"
+                "/^k8s\/apps\/kubevirt-cdi\/base\/kustomization\\.yaml$/"
             ],
             "matchStrings": [
                 "https://github\\.com/kubevirt/containerized-data-importer/releases/download/v(?<currentValue>\\d+\\.\\d+\\.\\d+)/cdi-operator\\.yaml"
