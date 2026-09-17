@@ -18,7 +18,7 @@ resource "cloudflare_dns_record" "cadvisor_bedrock_tdude_co" {
 resource "cloudflare_dns_record" "fleetfoot-ilo_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "fleetfoot-ilo.235.tdude.co"
-  content = "2a10:4741:36:24:29c:2ff:fea5:346c"
+  content = "2a0c:9a46:636:24:29c:2ff:fea5:346c"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -27,7 +27,7 @@ resource "cloudflare_dns_record" "fleetfoot-ilo_tdude_co" {
 resource "cloudflare_dns_record" "stormfeather-ilo_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stormfeather-ilo.235.tdude.co"
-  content = "2a10:4741:36:24:b6b5:2fff:feef:9766"
+  content = "2a0c:9a46:636:24:b6b5:2fff:feef:9766"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -36,7 +36,7 @@ resource "cloudflare_dns_record" "stormfeather-ilo_tdude_co" {
 resource "cloudflare_dns_record" "sassaflash-ilo_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "sassaflash-ilo.235.tdude.co"
-  content = "2a10:4741:36:24:b6b5:2fff:fee9:cd36"
+  content = "2a0c:9a46:636:24:b6b5:2fff:fee9:cd36"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -90,7 +90,7 @@ resource "cloudflare_dns_record" "lolisafe_tdude_co-9452bcc45958fa18bd91f1e3c4c5
 resource "cloudflare_dns_record" "soarin-ilo_tdude_co" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "soarin-ilo.235.tdude.co"
-  content = "2a10:4741:36:24:29c:2ff:fe9b:abf2"
+  content = "2a0c:9a46:636:24:29c:2ff:fe9b:abf2"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -177,10 +177,19 @@ resource "cloudflare_dns_record" "auth_lava_tdude_co" {
   proxied = false
 }
 
+resource "cloudflare_dns_record" "soarin_tdude_co-68d3dc90cd44a475929631c7a74f3e3f" {
+  zone_id = cloudflare_zone.tdude_co.id
+  name    = "soarin.235.tdude.co"
+  content = "2a0c:9a46:636:29::7"
+  type    = "AAAA"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_dns_record" "stormfeather_235_tdude_co_AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "stormfeather.235.tdude.co"
-  content = "2a10:4741:36:29::6"
+  content = "2a0c:9a46:636:29::6"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -189,16 +198,7 @@ resource "cloudflare_dns_record" "stormfeather_235_tdude_co_AAAA" {
 resource "cloudflare_dns_record" "sassaflash_235_tdude_co_AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "sassaflash.235.tdude.co"
-  content = "2a10:4741:36:29::5"
-  type    = "AAAA"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_dns_record" "fleetfoot_235_tdude_co-0682464601437aabb4960f25ecb9b1b4" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "fleetfoot.235.tdude.co"
-  content = "2a10:4741:36:29:7c53:9eff:fe70:7df3"
+  content = "2a0c:9a46:636:29::5"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -252,7 +252,7 @@ resource "cloudflare_dns_record" "tdude_co-c65f52f200afd91efed739ab5122adf1" {
 resource "cloudflare_dns_record" "spitfire_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "spitfire.235.tdude.co"
-  content = "2a10:4741:36:29:225:90ff:fe86:9cd6"
+  content = "2a0c:9a46:636:29:225:90ff:fe86:9cd6"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -261,7 +261,7 @@ resource "cloudflare_dns_record" "spitfire_235_tdude_co-AAAA" {
 resource "cloudflare_dns_record" "spitfire-bmc_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "spitfire-bmc.235.tdude.co"
-  content = "2a10:4741:36:24:225:90ff:fe86:fb4c"
+  content = "2a0c:9a46:636:24:225:90ff:fe86:fb4c"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -270,7 +270,7 @@ resource "cloudflare_dns_record" "spitfire-bmc_235_tdude_co-AAAA" {
 resource "cloudflare_dns_record" "spitfire_storage_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "spitfire.storage.235.tdude.co"
-  content = "2a10:4741:36:28:e61d:2dff:fe90:80fe"
+  content = "2a0c:9a46:636:28:e61d:2dff:fe90:80fe"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -279,7 +279,7 @@ resource "cloudflare_dns_record" "spitfire_storage_235_tdude_co-AAAA" {
 resource "cloudflare_dns_record" "firestreak_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "firestreak.235.tdude.co"
-  content = "2a10:4741:36:29:225:90ff:fe86:9cd2"
+  content = "2a0c:9a46:636:29:225:90ff:fe86:9cd2"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -288,7 +288,7 @@ resource "cloudflare_dns_record" "firestreak_235_tdude_co-AAAA" {
 resource "cloudflare_dns_record" "firestreak-bmc_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "firestreak-bmc.235.tdude.co"
-  content = "2a10:4741:36:24:225:90ff:fe86:fb4a"
+  content = "2a0c:9a46:636:24:225:90ff:fe86:fb4a"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -297,7 +297,7 @@ resource "cloudflare_dns_record" "firestreak-bmc_235_tdude_co-AAAA" {
 resource "cloudflare_dns_record" "firestreak_storage_235_tdude_co-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "firestreak.storage.235.tdude.co"
-  content = "2a10:4741:36:28:f652:14ff:fea2:89ec"
+  content = "2a0c:9a46:636:28:f652:14ff:fea2:89ec"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -424,15 +424,6 @@ resource "cloudflare_dns_record" "smtp_tdude_co-8831319c8ac7c5fe14007b106ec64abf
   name    = "smtp.tdude.co"
   content = "tdude.co"
   type    = "CNAME"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_dns_record" "soarin_tdude_co-68d3dc90cd44a475929631c7a74f3e3f" {
-  zone_id = cloudflare_zone.tdude_co.id
-  name    = "soarin.235.tdude.co"
-  content = "2a10:4741:36:29::7"
-  type    = "AAAA"
   ttl     = 1
   proxied = false
 }
@@ -636,7 +627,7 @@ resource "cloudflare_dns_record" "soyberry" {
 resource "cloudflare_dns_record" "borgbackup_235" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "borgbackup.235.tdude.co"
-  content = "2a10:4741:36:29:25:90ff:fe69:277d"
+  content = "2a0c:9a46:636:29:25:90ff:fe69:277d"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -717,7 +708,7 @@ resource "cloudflare_dns_record" "k8s-305-1700" {
 resource "cloudflare_dns_record" "ups_235" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "ups.235.tdude.co"
-  content = "2a10:4741:36:24:2c0:b7ff:fe59:bb6d"
+  content = "2a0c:9a46:636:24:2c0:b7ff:fe59:bb6d"
   type    = "AAAA"
   ttl     = 1
   proxied = false

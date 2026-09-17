@@ -40,12 +40,9 @@ driver:
     nfs:
       shareAlldirs: false
       shareAllowedHosts:
-      - 2a10:4741:36:28:26be:5ff:fe84:d8b0
-      - 2a10:4741:36:28:26be:5ff:fe84:f750
-      - 2a10:4741:36:28:202:c9ff:fe9d:c36a
-      - 2607:fa48:6ed8:8a55:26be:5ff:fe84:d8b0
-      - 2607:fa48:6ed8:8a55:26be:5ff:fe84:f750
-      - 2607:fa48:6ed8:8a55:202:c9ff:fe9d:c36a
+      - 2a0c:9a46:636:28:26be:5ff:fe84:d8b0
+      - 2a0c:9a46:636:28:26be:5ff:fe84:f750
+      - 2a0c:9a46:636:28:202:c9ff:fe9d:c36a
       shareAllowedNetworks: []
       shareHost: spitfire.storage.235.tdude.co
       shareMapallGroup: ""

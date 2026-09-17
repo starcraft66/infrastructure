@@ -107,14 +107,14 @@
 
   networking.interfaces."eno1.28" = {
     tempAddress = "disabled";
-    ipv6.addresses = [ { address = "2a10:4741:36:28::5"; prefixLength = 64; } ];
+    ipv6.addresses = [ { address = "2a0c:9a46:636:28::5"; prefixLength = 64; } ];
     # we only care about the implicit /64 for the storage vlan, no default route
     # v6 assigned via slaac
   };
 
   # further configuration of networking.interfaces.enp10s0 will be needed  
 
-  networking.nameservers = [ "2a10:4741:36:25::1" "172.32.25.1" ];
+  networking.nameservers = [ "2a0c:9a46:636:25::1" "172.32.25.1" ];
 
   services.tdude.ups-235.enable = true;
 

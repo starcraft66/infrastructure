@@ -77,8 +77,8 @@
   networking.interfaces."enp10s0.29" = let
     ip4 = "172.16.29.21";
     gateway4 = "172.16.29.1";
-    ip6 = "2a10:4741:36:29::6";
-    gateway6 = "2a10:4741:36:29::1";
+    ip6 = "2a0c:9a46:636:29::6";
+    gateway6 = "2a0c:9a46:636:29::1";
   in {
     tempAddress = "disabled";
     ipv4.addresses = [ { address = ip4; prefixLength = 24; } ];
@@ -107,12 +107,12 @@
 
   networking.interfaces."enp10s0.28" = {
     tempAddress = "disabled";
-    ipv6.addresses = [ { address = "2a10:4741:36:28::6"; prefixLength = 64; } ];
+    ipv6.addresses = [ { address = "2a0c:9a46:636:28::6"; prefixLength = 64; } ];
     # we only care about the implicit /64 for the storage vlan, no default route
     # v6 assigned via slaac
   };
 
-  networking.nameservers = [ "2a10:4741:36:25::1" "172.32.25.1" ];
+  networking.nameservers = [ "2a0c:9a46:636:25::1" "172.32.25.1" ];
 
   services.tdude.ups-235.enable = true;
 

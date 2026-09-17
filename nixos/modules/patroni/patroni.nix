@@ -85,6 +85,10 @@ lib.mkIf cfg.enable {
           "host all all 127.0.0.1/32 scram-sha-256"
           "host replication replicator ::1/128 md5"
           "host all all ::1/128 scram-sha-256"
+
+          # temp shit
+          "host replication replicator 2a0c:9a46:636:29::/64 md5"
+          "host all all 2a0c:9a46:636:29::/64 scram-sha-256"
         ]
         ++ pgHbaNetworkRules;
       };
