@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: nextcloud
 
 images:
-- name: library/nextcloud
+- name: docker.io/library/nextcloud
   newTag: "35.0-apache"
 
 resources:
