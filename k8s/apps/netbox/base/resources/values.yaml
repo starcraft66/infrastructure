@@ -5,7 +5,7 @@ commonLabels:
 image:
   registry: ghcr.io
   repository: netbox-community/netbox
-  tag: v4.7.0
+  tag: v4.7.1
 
 allowedHosts:
   - "*"
