@@ -10,8 +10,8 @@ let
 in lib.optionalAttrs deploy-keys {
   deployment.keys."nix-cache" = {
     keyCommand = [ "sops" "-d" "--extract" "[\"nix-cache\"]" (toString ../../../secrets/nix-cache.yaml) ];
-    destDir = "/run/secrets";
-    name = "nix-cache";
+    destDir = "/etc/nix";
+    name = "netrc";
     user = "root";
     group = "root";
     permissions = "0400";

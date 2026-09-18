@@ -1,9 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   networking.hostName = "spike";
   networking.domain = "305-1700.tdude.co";
   time.timeZone = "America/Toronto";
+
+  nix.settings.netrc-file = lib.mkForce "/etc/nix/netrc";
 
   environment.systemPackages = with pkgs; [
     vim

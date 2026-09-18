@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 
 {
   nix.settings = {
@@ -12,4 +12,8 @@
     ];
     netrc-file = "/run/secrets/nix-cache";
   };
+  systemd.services.nix-daemon.serviceConfig.BindPaths =
+    lib.mkIf (config.nix.settings.netrc-file == "/run/secrets/nix-cache") [
+      "/run/secrets/nix-cache"
+    ];
 }
