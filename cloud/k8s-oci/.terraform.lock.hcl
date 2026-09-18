@@ -1,7 +1,7 @@
-# This file is maintained automatically by "terraform init".
+# This file is maintained automatically by "tofu init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/oracle/oci" {
+provider "registry.opentofu.org/oracle/oci" {
   version     = "8.29.0"
   constraints = ">= 4.67.3, >= 6.32.0, 8.29.0"
   hashes = [
