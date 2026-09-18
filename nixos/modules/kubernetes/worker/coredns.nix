@@ -60,7 +60,7 @@ lib.mkIf cfg.enable {
   # but access to the ipv6 loopback works fine
   # services.kubernetes.kubelet.clusterDns = [ "fd00:ec2::254" ];
 
-  # services.kubernetes.kubelet.clusterDns = [ "2a10:4741:36:32:1::2558", "10.234.64.2" ];
+  # services.kubernetes.kubelet.clusterDns = [ "2a0c:9a46:636:32:1::2", "10.234.64.2" ];
 
   networking.firewall.allowedTCPPorts = [ 53 ];
   networking.firewall.allowedUDPPorts = [ 53 ];

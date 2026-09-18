@@ -12,10 +12,6 @@ in
       type = pkgs.lib.tdude.net.types.interfaceName;
       description = "The primary network interface for the node";
     };
-    slaacAddress = lib.mkOption {
-      type = pkgs.lib.tdude.net.types.ipv6;
-      description = "The SLAAC address for the node";
-    };
   };
 
   config = lib.mkIf cfg.enable (

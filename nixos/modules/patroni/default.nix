@@ -68,7 +68,7 @@ in
             };
             ipv6 = mkOption {
               type = netTypes.ipv6Cidr;
-              description = "IPv6 CIDR range for pg_hba rules (e.g. 2a10:4741:36:29::/64)";
+              description = "IPv6 CIDR range for pg_hba rules (e.g. 2a0c:9a46:636:29::/64)";
             };
           };
         }

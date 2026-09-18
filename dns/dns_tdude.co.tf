@@ -45,7 +45,7 @@ resource "cloudflare_dns_record" "sassaflash-ilo_tdude_co" {
 resource "cloudflare_dns_record" "k8s-235" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "k8s.235.tdude.co"
-  content = "2a10:4741:36:29::8:1"
+  content = "2a0c:9a46:636:29::8:1"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -636,7 +636,7 @@ resource "cloudflare_dns_record" "borgbackup_235" {
 resource "cloudflare_dns_record" "vault-235" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "vault.235.tdude.co"
-  content = "2a10:4741:36:29::9:1"
+  content = "2a0c:9a46:636:29::9:1"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -727,7 +727,7 @@ resource "cloudflare_dns_record" "id_235-A" {
 resource "cloudflare_dns_record" "id_235-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "id.235.tdude.co"
-  content = "2a10:4741:36:29::11:1"
+  content = "2a0c:9a46:636:29::11:1"
   type    = "AAAA"
   ttl     = 1
   proxied = false
@@ -746,7 +746,7 @@ resource "cloudflare_dns_record" "pg_235-A" {
 resource "cloudflare_dns_record" "pg_235-AAAA" {
   zone_id = cloudflare_zone.tdude_co.id
   name    = "pg.235.tdude.co"
-  content = "2a10:4741:36:29::10:1"
+  content = "2a0c:9a46:636:29::10:1"
   type    = "AAAA"
   ttl     = 1
   proxied = false

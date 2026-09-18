@@ -52,7 +52,7 @@ in
 
   services.tdude.kubernetes.worker = {
     enable = true;
-    ipSans = [ nodeIpv4 nodeIpv6 cfg.slaacAddress ];
+    ipSans = [ nodeIpv4 nodeIpv6 ];
     clusterCidrIpv4 = profile.podCidrs.ipv4;
     clusterCidrIpv6 = profile.podCidrs.ipv6;
     nodeIps = [ nodeIpv4 nodeIpv6 ];

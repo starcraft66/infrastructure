@@ -104,7 +104,7 @@ in
     };
     lanCidrs = {
       ipv4 = "172.16.29.0/24";
-      ipv6 = "2a10:4741:36:29::/64";
+      ipv6 = "2a0c:9a46:636:29::/64";
     };
     oidcClientId = "3520afd0-0fa5-495f-a5d8-525d5bb913b5";
     initialClusterState = "existing";
