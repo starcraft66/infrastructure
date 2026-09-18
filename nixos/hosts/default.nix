@@ -74,6 +74,11 @@ let
             # error: Passing a path to Nixpkgs as meta.nodeNixpkgs.spike is no longer accepted with Flakes.
             ({ config, pkgs, lib, ... }: {
               config.nixpkgs.flake.source = system.nixosInput.outPath;
+              # Colmena imports eval-config.nix directly without nixpkgs' flake `lib`,
+              # so supply the flake revision/version metadata manually to match
+              # `nixosConfigurations` (and thus the closures CI pushes to the cache).
+              config.system.nixos.versionSuffix = system.nixosInput.lib.trivial.versionSuffix;
+              config.system.nixos.revision = system.nixosInput.lib.trivial.revisionWithDefault null;
             })
           ];
           deployment = {
