@@ -15,7 +15,7 @@ spec:
           restartPolicy: Never
           containers:
           - name: nextcloud
-            image: "nextcloud:19.0.3-apache"
+            image: "docker.io/library/nextcloud:19.0.3-apache"
             imagePullPolicy: IfNotPresent
             command:
             - php
