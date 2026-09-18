@@ -41,7 +41,7 @@ configMapGenerator:
   - NC_default_phone_region=CA
   - NC_mail_smtpmode=null
   - OVERWRITEPROTOCOL=https
-  - TRUSTED_PROXIES=10.234.128.0/22 2a10:4741:36:32:2::/112
+  - TRUSTED_PROXIES=10.234.128.0/22 2a0c:9a46:636:32:2::/112
 
 patchesStrategicMerge:
 - ./patches/remove-redis-env.yaml
