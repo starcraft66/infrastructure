@@ -81,7 +81,11 @@ metadata:
     advertise: bgp
 spec:
   advertisements:
-  - advertisementType: "PodCIDR"
+  - advertisementType: "CiliumPodIPPool"
+    selector:
+      matchExpressions:
+      # All pod IP pools
+      - {key: somekey, operator: NotIn, values: ['never-used-value']}
   - advertisementType: "Service"
     service:
       addresses:
