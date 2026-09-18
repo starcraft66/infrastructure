@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, inputs, pkgs, ... }:
 
 let
   vpnDomain = "vpn.tdude.co";
@@ -6,6 +6,8 @@ in {
   services = {
     headscale = {
       enable = true;
+      # Always track the latest headscale release from nixpkgs-unstable.
+      package = inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.headscale;
       address = "[::1]";
       port = 48372;
       settings = {
