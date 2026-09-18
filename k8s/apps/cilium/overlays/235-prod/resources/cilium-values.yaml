@@ -6,10 +6,10 @@ cni:
 bgpControlPlane:
   enabled: true
 
-# Pod CIDRs are owned by Cilium's multi-pool IPAM so ranges can be migrated
-# by editing CiliumPodIPPool CIDRs instead of the kube-controller-manager.
+# Use the pod subnet slices distributed by kube-apiserver to each kubelet
+# rather than reinventing the wheel with Cilium's native IPAM
 ipam:
-  mode: multi-pool
+  mode: kubernetes
 
 # Dual-stack
 ipv4:
