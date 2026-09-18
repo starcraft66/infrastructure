@@ -20,7 +20,7 @@ spec:
             command:
             - php
             - /var/www/html/occ
-            - preview:pre-generate
+            - preview:generate
             securityContext:
               runAsUser: 33
             envFrom:
