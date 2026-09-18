@@ -6,7 +6,10 @@ in {
   services.kubernetes.controllerManager = {
     enable = lib.mkIf cfg.enable true;
     bindAddress = "::";
-    allocateNodeCIDRs = true;
+    # PodCIDRs are allocated by Cilium's multi-pool IPAM (CiliumPodIPPool),
+    # so kube-controller-manager must not allocate node CIDRs.
+    # https://docs.cilium.io/en/stable/network/concepts/ipam/multi-pool/
+    allocateNodeCIDRs = false;
 
     extraOpts =
       ''--node-cidr-mask-size-ipv4 24 \

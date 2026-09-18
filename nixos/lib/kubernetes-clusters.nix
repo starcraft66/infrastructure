@@ -96,7 +96,7 @@ in
     memberNames = [ "soarin" "stormfeather" "sassaflash" ];
     podCidrs = {
       ipv4 = "10.234.128.0/18";
-      ipv6 = "2a10:4741:36:32:2::/104";
+      ipv6 = "2a0c:9a46:636:32:2::/104";
     };
     serviceCidrs = {
       ipv4 = "10.234.64.0/18";
