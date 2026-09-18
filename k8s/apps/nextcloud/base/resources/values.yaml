@@ -22,7 +22,7 @@ nextcloud:
     - name: OVERWRITEPROTOCOL
       value: https
     - name: TRUSTED_PROXIES
-      value: 10.234.128.0/22 2a10:4741:36:32:2::/112
+      value: 10.234.128.0/22 2a0c:9a46:636:32:2::/112
   strategy:
     type: Recreate
   podSecurityContext:
