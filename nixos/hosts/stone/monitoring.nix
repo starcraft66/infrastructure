@@ -2,7 +2,7 @@
 
 let
   # Address of 235-gw on the other side of wg0 to hit its blackbox_exporter
-  tunnel235Address = "2a0c:9a46:636:f0::1";
+  tunnel235Address = "2a0c:9a46:636:8a5f::32:1";
   # The actual shit to monitor
   icmpTargets = [
     "235.tdude.co" # 235
