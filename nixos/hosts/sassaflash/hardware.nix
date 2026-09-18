@@ -77,8 +77,8 @@
   networking.interfaces."eno1.29" = let 
     ip4 = "172.16.29.20";
     gateway4 = "172.16.29.1";
-    ip6 = "2a10:4741:36:29::5";
-    gateway6 = "2a10:4741:36:29::1";
+    ip6 = "2a0c:9a46:636:29::5";
+    gateway6 = "2a0c:9a46:636:29::1";
   in {
     tempAddress = "disabled";
     ipv4.addresses = [ { address = ip4; prefixLength = 24; } ];
