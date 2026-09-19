@@ -1,0 +1,39 @@
+apiVersion: descheduler/v1alpha2
+kind: DeschedulerPolicy
+profiles:
+- name: default
+  pluginConfig:
+  - name: DefaultEvictor
+    args:
+      # Only evict a pod if the scheduler can actually place it elsewhere.
+      nodeFit: true
+      # Never evict pods owned by a controller with fewer than 2 replicas, so
+      # singleton workloads are never disrupted.
+      minReplicas: 2
+      podProtections:
+        # Keep the default protections (local storage, system-critical,
+        # DaemonSet, failed bare pods). In particular do NOT disable
+        # PodsWithLocalStorage: those pods cannot be rescheduled anyway.
+        defaultDisabled: []
+        # PodsWithPVC protection is intentionally left disabled so PVC-backed
+        # HA sets (immich, *-redis-replicas) can be rebalanced; democratic-csi
+        # detaches and reattaches the volume on the target node.
+        extraEnabled: []
+  - name: RemoveDuplicates
+  - name: RemovePodsViolatingTopologySpreadConstraint
+    args:
+      # Opt into soft constraints so ScheduleAnyway spreads are rebalanced.
+      constraints:
+      - DoNotSchedule
+      - ScheduleAnyway
+  - name: RemovePodsViolatingNodeTaints
+  - name: RemovePodsViolatingInterPodAntiAffinity
+  plugins:
+    balance:
+      enabled:
+      - RemoveDuplicates
+      - RemovePodsViolatingTopologySpreadConstraint
+    deschedule:
+      enabled:
+      - RemovePodsViolatingNodeTaints
+      - RemovePodsViolatingInterPodAntiAffinity

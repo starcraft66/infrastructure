@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ./resources/namespace.yaml
+- ./resources/pdb.yaml
+
+namespace: descheduler
+
+helmCharts:
+- name: descheduler
+  releaseName: descheduler
+  repo: https://kubernetes-sigs.github.io/descheduler/
+  version: 0.36.0
+  namespace: descheduler
+  valuesFile: ./resources/values.yaml
+
+configMapGenerator:
+- name: descheduler
+  namespace: descheduler
+  files:
+  - policy.yaml=./resources/policy.yaml

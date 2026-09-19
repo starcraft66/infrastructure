@@ -1,0 +1,38 @@
+# Runs as a Deployment (chart default is a CronJob) so it rebalances
+# continuously instead of only on a cron schedule.
+kind: Deployment
+
+# HA: two replicas with leader election. Only the leader runs descheduling
+# cycles and the standby takes over if the leader is evicted. The lease lives in
+# this namespace instead of the kube-system default.
+replicas: 2
+leaderElection:
+  enabled: true
+  resourceNamespace: descheduler
+
+# Spread the two replicas so a node drain can evict one without the
+# PodDisruptionBudget (minAvailable: 1) blocking on both.
+topologySpreadConstraints:
+- maxSkew: 1
+  topologyKey: kubernetes.io/hostname
+  whenUnsatisfiable: ScheduleAnyway
+  labelSelector:
+    matchLabels:
+      app.kubernetes.io/name: descheduler
+      app.kubernetes.io/instance: descheduler
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+service:
+  enabled: true
+serviceMonitor:
+  enabled: true
+
+# The DeschedulerPolicy lives in ./policy.yaml and is provided as a ConfigMap by
+# a configMapGenerator in kustomization.yaml. Setting deschedulerPolicy to an
+# empty string overrides the chart's built-in default policy and stops the chart
+# from creating its own ConfigMap.
+deschedulerPolicy: ""
