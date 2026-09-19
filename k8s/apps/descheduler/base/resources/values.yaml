@@ -5,10 +5,16 @@ kind: Deployment
 # HA: two replicas with leader election. Only the leader runs descheduling
 # cycles and the standby takes over if the leader is evicted. The lease lives in
 # this namespace instead of the kube-system default.
+#
+# resourceName must differ from the ConfigMap generated in kustomization.yaml
+# (named "descheduler"): kustomize's name-reference transformer would otherwise
+# rewrite the ClusterRole's lease resourceNames to the hashed ConfigMap name and
+# break leader election.
 replicas: 2
 leaderElection:
   enabled: true
   resourceNamespace: descheduler
+  resourceName: descheduler-leader
 
 # Spread the two replicas so a node drain can evict one without the
 # PodDisruptionBudget (minAvailable: 1) blocking on both.
