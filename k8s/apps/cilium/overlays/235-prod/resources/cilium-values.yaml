@@ -55,6 +55,13 @@ routingMode: native
 # of calico's cluster mesh
 autoDirectNodeRoutes: true
 
+# Multi-pool IPAM: Cilium cannot infer the whole pod space from a node's own
+# slice, so the full pool ranges must be declared explicitly. Without this,
+# Cilium only treats the local node's slice as internal and marks remote pod
+# ranges as "world", and auto-direct-node-routes installs bogus /24 routes.
+ipv4NativeRoutingCIDR: "10.234.128.0/18"
+ipv6NativeRoutingCIDR: "2a0c:9a46:636:32:2::/104"
+
 # Enable direct server return to preserve the client's source IP
 # when externalTrafficPolicy is set to Cluster (required to share
 # a single IP between multiple LoadBalancer services targeting
