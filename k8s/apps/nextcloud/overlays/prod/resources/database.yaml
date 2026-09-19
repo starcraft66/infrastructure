@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: nextcloud-postgres
 spec:
-  instances: 2
+  instances: 1
   imageCatalogRef:
     apiGroup: postgresql.cnpg.io
     kind: ClusterImageCatalog
