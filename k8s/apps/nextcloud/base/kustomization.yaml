@@ -8,7 +8,7 @@ namespace: nextcloud
 helmCharts:
 - name: nextcloud
   releaseName: nextcloud
-  version: 9.2.6
+  version: 9.3.0
   repo: https://nextcloud.github.io/helm
   namespace: nextcloud
   valuesFile: ./resources/values.yaml
