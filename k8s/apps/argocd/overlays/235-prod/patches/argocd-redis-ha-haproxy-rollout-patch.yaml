@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-redis-ha-haproxy
+  namespace: argocd
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      # The upstream HA manifest relies on the default maxSurge (25% -> 1) plus a
+      # hard hostname pod anti-affinity with 3 replicas. On a 3-node cluster every
+      # node already hosts a haproxy pod, so the surge pod is unschedulable and the
+      # rollout deadlocks. Terminate before creating instead.
+      maxSurge: 0
+      maxUnavailable: 1
+  template:
+    spec:
+      # Replace the upstream hard hostname pod anti-affinity with a soft topology
+      # spread constraint. Soft spreading still spreads the pods under normal
+      # conditions but lets them be evicted and rescheduled during node drains,
+      # and lets the descheduler rebalance them afterwards.
+      affinity: null
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: argocd-redis-ha-haproxy

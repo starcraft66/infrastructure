@@ -24,3 +24,5 @@ generators:
   - ./secrets/argocd-secret-patch.yaml
 patches:
 - path: ./patches/argocd-cm-patch.yaml
+- path: ./patches/argocd-redis-ha-haproxy-rollout-patch.yaml
+- path: ./patches/argocd-redis-ha-server-affinity-patch.yaml
