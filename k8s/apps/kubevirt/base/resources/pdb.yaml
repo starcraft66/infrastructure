@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: virt-operator
+  namespace: kubevirt
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      kubevirt.io: virt-operator

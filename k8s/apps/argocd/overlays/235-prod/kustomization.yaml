@@ -26,3 +26,6 @@ patches:
 - path: ./patches/argocd-cm-patch.yaml
 - path: ./patches/argocd-redis-ha-haproxy-rollout-patch.yaml
 - path: ./patches/argocd-redis-ha-server-affinity-patch.yaml
+- path: ./patches/argocd-server-tsc-patch.yaml
+- path: ./patches/argocd-repo-server-tsc-patch.yaml
+- path: ./patches/argocd-application-controller-ha-patch.yaml

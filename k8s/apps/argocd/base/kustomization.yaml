@@ -10,6 +10,7 @@ resources:
 - ./metrics/argocd-server-serviceMonitor.yaml
 - ./metrics/argocd-repo-server-serviceMonitor.yaml
 - ./namespace.yaml
+- ./resources/pdbs.yaml
 
 namespace: argocd
 patches:

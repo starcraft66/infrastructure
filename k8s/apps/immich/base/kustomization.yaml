@@ -6,6 +6,7 @@ resources:
 - ./resources/statefulset.yaml
 - ./resources/service.yaml
 - ./resources/volume.yaml
+- ./resources/pdb.yaml
 
 namespace: immich
 

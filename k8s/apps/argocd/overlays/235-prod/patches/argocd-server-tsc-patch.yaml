@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-server
+  namespace: argocd
+spec:
+  template:
+    spec:
+      # Replace the upstream hard hostname pod anti-affinity with a soft topology
+      # spread constraint so pods can be evicted and rescheduled during node
+      # drains and rebalanced by the descheduler afterwards.
+      affinity: null
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: argocd-server

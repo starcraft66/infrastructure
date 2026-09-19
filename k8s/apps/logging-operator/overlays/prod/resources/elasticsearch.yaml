@@ -21,6 +21,13 @@ spec:
         securityContext:
           fsGroup: 1000
           fsGroupChangePolicy: OnRootMismatch
+        topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              elasticsearch.k8s.elastic.co/cluster-name: elasticsearch
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data # Do not change this name unless you set up a volume mount for the data path.

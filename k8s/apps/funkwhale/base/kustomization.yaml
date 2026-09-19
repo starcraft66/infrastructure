@@ -7,6 +7,7 @@ resources:
 - ./resources/service.yaml
 - ./resources/postgres.yaml
 - ./resources/volume.yaml
+- ./resources/pdb.yaml
 
 namespace: redis-operator
 

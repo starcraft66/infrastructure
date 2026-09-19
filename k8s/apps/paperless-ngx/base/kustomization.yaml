@@ -9,6 +9,7 @@ resources:
 - ./resources/service.yaml
 # - ./resources/servicemonitor.yaml
 - ./resources/volume.yaml
+- ./resources/pdb.yaml
 
 images:
 - name: ghcr.io/paperless-ngx/paperless-ngx

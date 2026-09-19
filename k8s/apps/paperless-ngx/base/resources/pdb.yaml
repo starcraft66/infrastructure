@@ -1,0 +1,22 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: gotenberg
+  namespace: paperless-ngx
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: gotenberg
+      app.kubernetes.io/name: gotenberg
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: tika
+  namespace: paperless-ngx
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tika

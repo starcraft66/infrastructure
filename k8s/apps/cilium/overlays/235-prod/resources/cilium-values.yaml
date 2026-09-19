@@ -85,3 +85,18 @@ loadBalancer:
 # with my own sit tunnel to AS208914's router.
 # -Tristan 08/12/2023
 MTU: 1400
+
+# Keep the two operator replicas spread across nodes and protected during
+# voluntary disruptions (node drains).
+operator:
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        io.cilium/app: operator
+        name: cilium-operator
+  podDisruptionBudget:
+    enabled: true
+    maxUnavailable: 1

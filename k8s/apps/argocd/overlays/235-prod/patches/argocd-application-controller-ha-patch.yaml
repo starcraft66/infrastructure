@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: argocd-application-controller
+  namespace: argocd
+spec:
+  # HA: run two controller replicas sharding clusters between them. The
+  # ARGOCD_CONTROLLER_REPLICAS env var must match this value.
+  replicas: 2
+  template:
+    spec:
+      # Replace the upstream preferred pod anti-affinity with a soft topology
+      # spread constraint so pods can be evicted and rescheduled during node
+      # drains and rebalanced by the descheduler afterwards.
+      affinity: null
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: argocd-application-controller
+      containers:
+      - name: argocd-application-controller
+        env:
+        - name: ARGOCD_CONTROLLER_REPLICAS
+          value: "2"

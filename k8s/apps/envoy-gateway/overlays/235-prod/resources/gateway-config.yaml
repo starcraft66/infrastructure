@@ -9,6 +9,18 @@ spec:
     kubernetes:
       envoyDeployment:
         replicas: 3
+        pod:
+          topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: ScheduleAnyway
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: envoy
+                app.kubernetes.io/component: proxy
+                app.kubernetes.io/managed-by: envoy-gateway
+      envoyPDB:
+        maxUnavailable: 1
       envoyService:
         patch:
           value:

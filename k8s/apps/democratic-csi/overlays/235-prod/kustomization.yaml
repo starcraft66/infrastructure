@@ -61,3 +61,9 @@ patches:
     kind: Deployment
     name: zfs-iscsi-spitfire-fast-democratic-csi-controller
     version: v1
+- path: ./patches/snapshot-controller-tsc.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: snapshot-controller
+    version: v1
