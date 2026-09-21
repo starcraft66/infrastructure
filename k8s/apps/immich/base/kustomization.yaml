@@ -38,10 +38,16 @@ helmCharts:
     metrics:
       enabled: true
       # The chart's default bitnami/redis-exporter tag is no longer published.
-      # Use the upstream exporter it wraps (same binary and env var names).
+      # Use the upstream exporter it wraps. It has no bash, so invoke the
+      # binary directly and point it at the Redis container on localhost.
       image:
         registry: docker.io
         repository: oliver006/redis_exporter
         tag: v1.91.1
+      command:
+      - /redis_exporter
+      extraEnvVars:
+      - name: REDIS_ADDR
+        value: redis://localhost:6379
       serviceMonitor:
         enabled: true

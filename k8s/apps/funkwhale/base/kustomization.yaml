@@ -46,6 +46,9 @@ helmCharts:
   valuesInline:
     auth:
       existingSecret: "funkwhale"
+      # The upstream exporter image has no bash to read the password file;
+      # pass the password via REDIS_PASSWORD env instead.
+      usePasswordFiles: false
     global:
       storageClass: "truenas-nfs-spitfire-fast"
       security:
@@ -83,10 +86,17 @@ helmCharts:
             app.kubernetes.io/component: replica
     metrics:
       enabled: true
-      # Pin the upstream exporter instead of the chart's floating :latest.
+      # Pin the upstream exporter instead of the chart's floating :latest. It
+      # has no bash, so invoke the binary directly and point it at the Redis
+      # container on localhost.
       image:
         registry: docker.io
         repository: oliver006/redis_exporter
         tag: v1.91.1
+      command:
+      - /redis_exporter
+      extraEnvVars:
+      - name: REDIS_ADDR
+        value: redis://localhost:6379
       serviceMonitor:
         enabled: true
