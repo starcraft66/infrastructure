@@ -33,9 +33,30 @@
             "pinDigests": true,
         },
         {
+            "description": "home-automation: Helm chart version fields cannot carry a digest (Renovate forces pinDigests=false for OCI charts and Flux helmCharts take semver only)",
+            "matchFileNames": [
+                "k8s/apps/home-automation/**"
+            ],
+            "matchManagers": [
+                "kustomize",
+            ],
+            "matchDepTypes": [
+                "HelmChart",
+            ],
+            "pinDigests": false,
+        },
+        {
             "description": "qbittorrent: ignore bogus ubuntu-versioned tags (20.x)",
             "matchPackageNames": ["ghcr.io/linuxserver/qbittorrent"],
             "allowedVersions": "<14",
+        },
+        {
+            "description": "Skip changelog fetching for huge monorepos; recursive git-tree walks take minutes and stall the run",
+            "matchSourceUrls": [
+                "https://github.com/bitnami/charts",
+                "https://github.com/renovatebot/renovate",
+            ],
+            "fetchChangeLogs": "off",
         },
     ],
     "customManagers": [
