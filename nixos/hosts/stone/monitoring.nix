@@ -264,9 +264,9 @@ in {
       receivers = [
         {
           name = "discord_webhook";
-          webhook_configs = [
+          discord_configs = [
             {
-              url = "http://localhost:9095";
+              webhook_url_file = "$CREDENTIALS_DIRECTORY/discord-webhook";
             }
           ];
         }
@@ -277,9 +277,11 @@ in {
     };
   };
 
+  systemd.services.alertmanager.serviceConfig.LoadCredential = [
+    "discord-webhook:${config.sops.secrets.monitoring-webhook.path}"
+  ];
+
   services.prometheus.rules = [ alertRules ];
   sops.secrets.monitoring-webhook = { };
   sops.secrets.grafana-secret-key = { };
-  services.alertmanager-discord.enable = true;
-  services.alertmanager-discord.webhookFile = config.sops.secrets.monitoring-webhook.path;
 }
