@@ -26,7 +26,7 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
       containers:
       - name: immich-server
-        image: ghcr.io/immich-app/immich-server:release
+        image: ghcr.io/immich-app/immich-server:v3.2.2
         imagePullPolicy: IfNotPresent
         # startupProbe guards the potentially long first-boot DB migration window
         # without blocking readiness once the server is actually serving.
