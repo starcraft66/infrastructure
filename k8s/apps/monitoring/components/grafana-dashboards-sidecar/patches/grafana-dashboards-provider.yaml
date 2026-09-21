@@ -21,8 +21,6 @@ data:
             {
                 "allowUiUpdates": false,
                 "disableDeletion": false,
-                "folder": "Sidecar",
-                "folderUid": "da55f982393fc9ef26f75a21dc638062",
                 "name": "sidecar",
                 "options": {
                     "foldersFromFilesStructure": true,

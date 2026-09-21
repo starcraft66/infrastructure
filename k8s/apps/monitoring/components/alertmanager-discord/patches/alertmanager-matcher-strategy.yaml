@@ -1,0 +1,11 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Alertmanager
+metadata:
+  name: main
+  namespace: monitoring
+spec:
+  # Without this, routes from AlertmanagerConfig objects are scoped to the
+  # namespace of the CR (monitoring), so alerts from other namespaces would
+  # never reach the Discord receiver. None disables the namespace enforcement.
+  alertmanagerConfigMatcherStrategy:
+    type: None

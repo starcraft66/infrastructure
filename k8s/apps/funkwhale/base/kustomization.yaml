@@ -48,6 +48,9 @@ helmCharts:
       existingSecret: "funkwhale"
     global:
       storageClass: "truenas-nfs-spitfire-fast"
+      security:
+        # Allow the upstream oliver006/redis_exporter image below.
+        allowInsecureImages: true
     master:
       resourcesPreset: medium
       topologySpreadConstraints:
@@ -80,5 +83,10 @@ helmCharts:
             app.kubernetes.io/component: replica
     metrics:
       enabled: true
+      # Pin the upstream exporter instead of the chart's floating :latest.
+      image:
+        registry: docker.io
+        repository: oliver006/redis_exporter
+        tag: v1.91.1
       serviceMonitor:
         enabled: true

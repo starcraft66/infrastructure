@@ -1,0 +1,41 @@
+---
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: discord
+  namespace: monitoring
+  labels:
+    # Selected by the Alertmanager's `alertmanagerConfigSelector: {}`.
+    app.kubernetes.io/name: alertmanager
+    app.kubernetes.io/part-of: kube-prometheus
+spec:
+  route:
+    # Routes from AlertmanagerConfig objects are prepended to the base routes
+    # and always continue, so an alert matching this route is sent to Discord
+    # and then still falls through to the base routes (which send everything
+    # else to the "null" receiver).
+    #
+    # Exclude the alerts the base config deliberately routes to "null". Without
+    # these matchers the prepended route would catch them first.
+    receiver: discord-notifications
+    groupBy: ['job']
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 4h
+    matchers:
+    - name: severity
+      matchType: '!='
+      value: info
+    - name: alertname
+      matchType: '!~'
+      value: Watchdog|InfoInhibitor
+  receivers:
+  - name: discord-notifications
+    discordConfigs:
+    - # The operator resolves this Secret reference into a literal webhook_url
+    # in the generated Alertmanager config; webhook_url_file is not part of the
+    # operator's alertmanager config schema.
+      apiURL:
+        name: discord-webhook
+        key: DISCORD_WEBHOOK
+      sendResolved: true

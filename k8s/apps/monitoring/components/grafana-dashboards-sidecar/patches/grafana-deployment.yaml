@@ -25,7 +25,7 @@ spec:
         - name: FOLDER
           value: /tmp/dashboards
         - name: RESOURCE
-          value: both
+          value: configmap
         - name: NAMESPACE
           value: ALL
         - name: REQ_URI
@@ -46,6 +46,9 @@ spec:
         - name: grafana-sc-dashboard
           mountPath: /tmp/dashboards
           readOnly: false
+        # The pod (and its SA) disable token automounting, so the sidecar gets
+        # its own projected token. The audience maps it back to SA `grafana`,
+        # which is bound to the grafana-dashboards-sidecar ClusterRole.
         - name: grafana-sc-dashboard-token
           mountPath: /var/run/secrets/kubernetes.io/serviceaccount
           readOnly: true

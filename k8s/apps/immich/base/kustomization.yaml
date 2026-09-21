@@ -20,6 +20,10 @@ helmCharts:
     architecture: standalone
     auth:
       enabled: false
+    global:
+      security:
+        # Allow the upstream oliver006/redis_exporter image below.
+        allowInsecureImages: true
     master:
       persistence:
         enabled: false
@@ -33,5 +37,11 @@ helmCharts:
           ephemeral-storage: 2Gi
     metrics:
       enabled: true
+      # The chart's default bitnami/redis-exporter tag is no longer published.
+      # Use the upstream exporter it wraps (same binary and env var names).
+      image:
+        registry: docker.io
+        repository: oliver006/redis_exporter
+        tag: v1.91.1
       serviceMonitor:
         enabled: true

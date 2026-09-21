@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+# Delivers Alertmanager notifications to Discord via an AlertmanagerConfig CR.
+# The CR references the (ksops-generated) discord-webhook Secret instead of
+# embedding the webhook URL, because the prometheus-operator's alertmanager
+# config schema does not support webhook_url_file.
+resources:
+- ./resources/alertmanagerconfig.yaml
+
+patches:
+# Allow AlertmanagerConfig routes to match alerts from any namespace.
+- path: ./patches/alertmanager-matcher-strategy.yaml
+  target:
+    group: monitoring.coreos.com
+    version: v1
+    kind: Alertmanager
+    name: main
+    namespace: monitoring
