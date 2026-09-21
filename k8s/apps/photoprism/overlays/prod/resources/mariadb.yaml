@@ -14,11 +14,13 @@ spec:
   rootPasswordSecretKeyRef:
     name: mariadb-secrets
     key: mariadb-root-password
+    generate: false
   # PhotoPrism's recommended dedicated database user (ALL PRIVILEGES on its schema).
   username: photoprism
   passwordSecretKeyRef:
     name: mariadb-secrets
     key: mariadb-password
+    generate: false
   database: photoprism
   myCnf: |
     innodb_buffer_pool_size=2G
