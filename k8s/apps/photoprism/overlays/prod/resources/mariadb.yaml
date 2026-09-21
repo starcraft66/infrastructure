@@ -5,6 +5,9 @@ metadata:
   name: photoprism-db
   labels:
     app.kubernetes.io/name: photoprism
+  annotations:
+    # mariadb-operator defaults many spec fields; ignore them in ArgoCD diffs
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   # Official MariaDB image, required by mariadb-operator.
   # Tracking the release candidate to match the version the Bitnami chart was
@@ -42,6 +45,8 @@ metadata:
   name: photoprism-db
   labels:
     app.kubernetes.io/name: photoprism
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   mariaDbRef:
     name: photoprism-db
