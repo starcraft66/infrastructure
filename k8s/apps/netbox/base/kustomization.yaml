@@ -10,7 +10,7 @@ namespace: netbox
 helmCharts:
 - name: netbox
   releaseName: netbox
-  version: 8.3.83
+  version: 8.3.84
   repo: oci://ghcr.io/netbox-community/netbox-chart
   namespace: netbox
   skipTests: true
