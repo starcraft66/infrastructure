@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  template:
+    spec:
+      containers:
+      - name: grafana
+        volumeMounts:
+        - name: grafana-sc-dashboard
+          mountPath: /tmp/dashboards
+          readOnly: false
+      - name: grafana-sc-dashboard
+        image: quay.io/kiwigrid/k8s-sidecar:2.11.2
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: METHOD
+          value: WATCH
+        - name: LABEL
+          value: grafana_dashboard
+        - name: LABEL_VALUE
+          value: ""
+        - name: FOLDER
+          value: /tmp/dashboards
+        - name: RESOURCE
+          value: both
+        - name: NAMESPACE
+          value: ALL
+        - name: REQ_URI
+          value: http://localhost:3000/api/admin/provisioning/dashboards/reload
+        - name: REQ_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: grafana-admin-credentials
+              key: GF_SECURITY_ADMIN_USER
+              optional: true
+        - name: REQ_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: grafana-admin-credentials
+              key: GF_SECURITY_ADMIN_PASSWORD
+              optional: true
+        volumeMounts:
+        - name: grafana-sc-dashboard
+          mountPath: /tmp/dashboards
+          readOnly: false
+        - name: grafana-sc-dashboard-token
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          readOnly: true
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          seccompProfile:
+            type: RuntimeDefault
+      volumes:
+      - name: grafana-sc-dashboard
+        emptyDir: {}
+      - name: grafana-sc-dashboard-token
+        projected:
+          sources:
+          - serviceAccountToken:
+              audience: https://kubernetes.default.svc
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+              - key: ca.crt
+                path: ca.crt
+          - downwardAPI:
+              items:
+              - path: namespace
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace

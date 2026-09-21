@@ -78,3 +78,7 @@ helmCharts:
             app.kubernetes.io/name: redis
             app.kubernetes.io/instance: funkwhale-redis
             app.kubernetes.io/component: replica
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true

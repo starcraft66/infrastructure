@@ -5,3 +5,14 @@ resources:
 - https://github.com/cloudnative-pg/artifacts//image-catalogs-extensions?ref=main
 
 namespace: cnpg
+
+helmCharts:
+# Grafana dashboard for CloudNativePG clusters. Rendered as a ConfigMap labelled
+# `grafana_dashboard` that the monitoring stack's Grafana sidecar discovers
+# automatically (see kube-prometheus-kubespray kube-prometheus.jsonnet).
+- name: cluster
+  releaseName: cnpg-grafana
+  version: 0.0.5
+  repo: https://cloudnative-pg.github.io/grafana-dashboards
+  namespace: cnpg
+

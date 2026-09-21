@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+# Adds the standard Grafana dashboards sidecar (the same k8s-sidecar the upstream
+# grafana Helm chart runs via `sidecar.dashboards.enabled: true`). It discovers
+# ConfigMaps labelled `grafana_dashboard` in any namespace and drops them into a
+# Grafana provider, so upstream Helm charts (e.g. the CloudNativePG cnpg-grafana
+# chart) can ship their own dashboards without hard-coding their JSON in the
+# kube-prometheus jsonnet repo.
+resources:
+- ./resources/rbac.yaml
+
+patches:
+- path: ./patches/grafana-deployment.yaml
+  target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: grafana
+    namespace: monitoring
+- path: ./patches/grafana-dashboards-provider.yaml
+  target:
+    version: v1
+    kind: ConfigMap
+    name: grafana-dashboards
+    namespace: monitoring

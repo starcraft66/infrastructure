@@ -53,3 +53,7 @@ helmCharts:
             app.kubernetes.io/name: redis
             app.kubernetes.io/instance: netbox-redis
             app.kubernetes.io/component: replica
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true

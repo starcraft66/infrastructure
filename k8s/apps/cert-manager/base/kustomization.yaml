@@ -24,4 +24,8 @@ helmCharts:
       enableGatewayAPI: true
       enableGatewayAPIListenerSet: true
     featureGates: "ListenerSets=true"
-      
+    prometheus:
+      enabled: true
+      servicemonitor:
+        enabled: true
+        prometheusInstance: k8s

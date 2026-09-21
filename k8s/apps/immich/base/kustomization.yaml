@@ -31,3 +31,7 @@ helmCharts:
         limits:
           memory: 6Gi
           ephemeral-storage: 2Gi
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
