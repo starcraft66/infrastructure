@@ -451,6 +451,11 @@ spec:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
     path: k8s/apps/photoprism/overlays/prod
+  ignoreDifferences:
+  - group: k8s.mariadb.com
+    kind: MariaDB
+    managedFieldsManagers:
+    - mariadb-operator
   syncPolicy:
     automated:
       selfHeal: true

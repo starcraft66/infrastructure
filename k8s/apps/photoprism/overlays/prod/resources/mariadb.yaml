@@ -5,9 +5,6 @@ metadata:
   name: photoprism-db
   labels:
     app.kubernetes.io/name: photoprism
-  annotations:
-    # mariadb-operator defaults many spec fields; ignore them in ArgoCD diffs
-    argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   # Official MariaDB image, required by mariadb-operator.
   # Tracking the release candidate to match the version the Bitnami chart was
@@ -34,34 +31,8 @@ spec:
     enabled: true
   # One-time logical restore of the dump in `photoprism-db-bootstrap` (file must be
   # named backup.<RFC3339>.sql). Used on initial creation / disaster recovery.
+  # Backups themselves are handled by TrueNAS ZFS snapshots, so no Backup CR here.
   bootstrapFrom:
     volume:
       persistentVolumeClaim:
         claimName: photoprism-db-bootstrap
----
-apiVersion: k8s.mariadb.com/v1alpha1
-kind: Backup
-metadata:
-  name: photoprism-db
-  labels:
-    app.kubernetes.io/name: photoprism
-  annotations:
-    argocd.argoproj.io/compare-options: IgnoreExtraneous
-spec:
-  mariaDbRef:
-    name: photoprism-db
-  databases:
-  - photoprism
-  compression: gzip
-  maxRetention: 720h
-  schedule:
-    cron: "30 3 * * *"
-    suspend: false
-  storage:
-    persistentVolumeClaim:
-      storageClassName: truenas-nfs-spitfire-fast
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 15Gi
