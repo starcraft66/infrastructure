@@ -13,7 +13,7 @@ helmCharts:
   namespace: mariadb-operator
 - name: mariadb-operator
   repo: oci://ghcr.io/mariadb-operator/charts
-  version: 26.6.0
+  version: 26.10.1
   releaseName: mariadb-operator
   namespace: mariadb-operator
   valuesFile: ./resources/values.yaml
