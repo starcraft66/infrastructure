@@ -4,6 +4,8 @@ resources:
 - ../../base
 - resources/ingress.yaml
 - resources/nfs-volume.yaml
+- resources/mariadb-bootstrap.yaml
+- resources/mariadb.yaml
 
 images:
 - name: photoprism/photoprism
@@ -44,8 +46,7 @@ configMapGenerator:
   - PHOTOPRISM_UPLOAD_NSFW="true"
   # PHOTOPRISM_DATABASE_DRIVER="sqlite"         # SQLite is an embedded database that doesn't require a server
   - PHOTOPRISM_DATABASE_DRIVER="mysql"
-  - PHOTOPRISM_DATABASE_SERVER="photoprism-mariadb:3306"
-  - PHOTOPRISM_DATABASE_PASSWORD="insecure"
+  - PHOTOPRISM_DATABASE_SERVER="photoprism-db:3306"
   - PHOTOPRISM_SITE_TITLE="PhotoPrism"
   - PHOTOPRISM_SITE_CAPTION="Browse Your Life"
   - PHOTOPRISM_SITE_DESCRIPTION=""

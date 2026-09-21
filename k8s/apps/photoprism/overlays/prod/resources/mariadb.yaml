@@ -1,0 +1,62 @@
+---
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: MariaDB
+metadata:
+  name: photoprism-db
+  labels:
+    app.kubernetes.io/name: photoprism
+spec:
+  # Official MariaDB image, required by mariadb-operator.
+  # Tracking the release candidate to match the version the Bitnami chart was
+  # running (upstream has no stable 13.1 yet). Move to a stable 13.x once GA.
+  image: mariadb:13.1.1-rc
+  replicas: 1
+  rootPasswordSecretKeyRef:
+    name: mariadb-secrets
+    key: mariadb-root-password
+  # PhotoPrism's recommended dedicated database user (ALL PRIVILEGES on its schema).
+  username: photoprism
+  passwordSecretKeyRef:
+    name: mariadb-secrets
+    key: mariadb-password
+  database: photoprism
+  myCnf: |
+    innodb_buffer_pool_size=2G
+    character-set-server=utf8
+    collation-server=utf8_general_ci
+  storage:
+    size: 15Gi
+    storageClassName: truenas-iscsi-spitfire-fast
+  metrics:
+    enabled: true
+  # One-time logical restore of the dump in `photoprism-db-bootstrap` (file must be
+  # named backup.<RFC3339>.sql). Used on initial creation / disaster recovery.
+  bootstrapFrom:
+    volume:
+      persistentVolumeClaim:
+        claimName: photoprism-db-bootstrap
+---
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Backup
+metadata:
+  name: photoprism-db
+  labels:
+    app.kubernetes.io/name: photoprism
+spec:
+  mariaDbRef:
+    name: photoprism-db
+  databases:
+  - photoprism
+  compression: gzip
+  maxRetention: 720h
+  schedule:
+    cron: "30 3 * * *"
+    suspend: false
+  storage:
+    persistentVolumeClaim:
+      storageClassName: truenas-nfs-spitfire-fast
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 15Gi

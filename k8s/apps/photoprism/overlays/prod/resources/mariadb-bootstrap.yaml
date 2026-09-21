@@ -1,0 +1,18 @@
+---
+# Transient PVC used only to carry the logical dump during the migration from the
+# Bitnami chart to the operator-managed MariaDB. The dump must be written here as
+# backup.<RFC3339>.sql before the MariaDB CR is first reconciled. Safe to delete
+# once the migration is verified.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: photoprism-db-bootstrap
+  labels:
+    app.kubernetes.io/name: photoprism
+spec:
+  storageClassName: truenas-nfs-spitfire-fast
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
