@@ -8,7 +8,7 @@ namespace: mariadb-operator
 helmCharts:
 - name: mariadb-operator-crds
   repo: oci://ghcr.io/mariadb-operator/charts
-  version: 26.6.0
+  version: 26.10.1
   releaseName: mariadb-operator-crds
   namespace: mariadb-operator
 - name: mariadb-operator
