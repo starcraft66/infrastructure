@@ -1,7 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
 resources:
-- ../../base
+- ../../235-base
 - ./resources/monitoring-rbac.yaml
 - ./resources/project.yaml
 - ./resources/applications.yaml
@@ -22,10 +23,6 @@ generators:
   files:
   - ./secrets/deploy-pgp-key.yaml
   - ./secrets/argocd-secret-patch.yaml
+
 patches:
 - path: ./patches/argocd-cm-patch.yaml
-- path: ./patches/argocd-redis-ha-haproxy-rollout-patch.yaml
-- path: ./patches/argocd-redis-ha-server-affinity-patch.yaml
-- path: ./patches/argocd-server-tsc-patch.yaml
-- path: ./patches/argocd-repo-server-tsc-patch.yaml
-- path: ./patches/argocd-application-controller-ha-patch.yaml

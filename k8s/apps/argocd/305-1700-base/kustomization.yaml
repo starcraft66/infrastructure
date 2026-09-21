@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+# Single-node cluster: use the non-HA upstream manifest. The HA manifest would
+# schedule 3 redis sentinels + 3 haproxy replicas which cannot be spread across
+# a single node because of the upstream hard pod anti-affinity.
+- https://github.com/argoproj/argo-cd/manifests/cluster-install?ref=v3.5.3
+
+components:
+- ../components/common
+
+# The namespace transformer has to live here (and not in the overlay) so that
+# the overlay's ksops secret generator can merge into the already-namespaced
+# upstream secrets.
+namespace: argocd

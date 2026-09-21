@@ -1,0 +1,23 @@
+# Redis HA only exists in the multi-node (HA) manifest, so these PDBs are
+# provided by the ha component instead of the common one.
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: argocd-redis-ha-haproxy
+  namespace: argocd
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-redis-ha-haproxy
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: argocd-redis-ha-server
+  namespace: argocd
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-redis-ha

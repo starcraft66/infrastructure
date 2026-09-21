@@ -1,8 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: argocd-server
-  namespace: argocd
+  name: argocd-repo-server
 spec:
   template:
     spec:
@@ -16,4 +15,4 @@ spec:
         whenUnsatisfiable: ScheduleAnyway
         labelSelector:
           matchLabels:
-            app.kubernetes.io/name: argocd-server
+            app.kubernetes.io/name: argocd-repo-server

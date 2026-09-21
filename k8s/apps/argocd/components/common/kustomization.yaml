@@ -1,8 +1,10 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+# Shared by every cluster overlay. The upstream ArgoCD manifest (HA or
+# single-node) is supplied by the overlay itself, so this component only carries
+# the patches and resources that are common to all variants.
 resources:
-- https://github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v3.5.3
-# - https://github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v2.8.2
 # I don't use Dex at the moment and it doesn't seem to produce metrics
 # when unconfigured.
 # - ./metrics/argocd-dex-server-serviceMonitor.yaml
@@ -12,7 +14,6 @@ resources:
 - ./namespace.yaml
 - ./resources/pdbs.yaml
 
-namespace: argocd
 patches:
 - path: ./patches/argocd-cm-patch.yaml
 - path: ./patches/argocd-gpg-keys-cm-patch.yaml

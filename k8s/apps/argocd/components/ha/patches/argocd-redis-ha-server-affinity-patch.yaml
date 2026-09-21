@@ -1,14 +1,13 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: argocd-repo-server
-  namespace: argocd
+  name: argocd-redis-ha-server
 spec:
   template:
     spec:
       # Replace the upstream hard hostname pod anti-affinity with a soft topology
-      # spread constraint so pods can be evicted and rescheduled during node
-      # drains and rebalanced by the descheduler afterwards.
+      # spread constraint so redis/sentinel pods can be evicted and rescheduled
+      # during node drains, and rebalanced by the descheduler afterwards.
       affinity: null
       topologySpreadConstraints:
       - maxSkew: 1
@@ -16,4 +15,4 @@ spec:
         whenUnsatisfiable: ScheduleAnyway
         labelSelector:
           matchLabels:
-            app.kubernetes.io/name: argocd-repo-server
+            app.kubernetes.io/name: argocd-redis-ha

@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+# Multi-node (HA) specific tweaks. Only include this component in overlays whose
+# upstream manifest is the HA install, since the patches below target resources
+# (redis-ha, extra controller replicas, ...) that the single-node manifest does
+# not provide.
+resources:
+- ./resources/pdbs.yaml
+
+patches:
+# Run two controller replicas sharding clusters between them.
+- path: ./patches/argocd-application-controller-ha-patch.yaml
+# Replace the upstream hard hostname pod anti-affinity with soft topology spread
+# constraints so pods can be evicted/rescheduled during node drains and
+# rebalanced by the descheduler afterwards.
+- path: ./patches/argocd-redis-ha-haproxy-rollout-patch.yaml
+- path: ./patches/argocd-redis-ha-server-affinity-patch.yaml
+- path: ./patches/argocd-server-tsc-patch.yaml
+- path: ./patches/argocd-repo-server-tsc-patch.yaml
