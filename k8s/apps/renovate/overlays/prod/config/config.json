@@ -3,7 +3,7 @@
         "tristan/infrastructure",
         "tristan/kube-prometheus-k8s-235"
     ],
-    "dryRun": false,
     "prConcurrentLimit": 100,
-    "prHourlyLimit": 0
+    "prHourlyLimit": 0,
+    "detectHostRulesFromEnv": true
 }
