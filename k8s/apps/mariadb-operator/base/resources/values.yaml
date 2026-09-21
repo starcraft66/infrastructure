@@ -1,0 +1,49 @@
+ha:
+  enabled: true
+  replicas: 3
+
+topologySpreadConstraints:
+- maxSkew: 1
+  topologyKey: kubernetes.io/hostname
+  whenUnsatisfiable: ScheduleAnyway
+  labelSelector:
+    matchLabels:
+      app.kubernetes.io/name: mariadb-operator
+      app.kubernetes.io/instance: mariadb-operator
+
+pdb:
+  enabled: true
+  maxUnavailable: 1
+
+metrics:
+  enabled: true
+
+webhook:
+  ha:
+    enabled: true
+    replicas: 2
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: mariadb-operator-webhook
+        app.kubernetes.io/instance: mariadb-operator
+  pdb:
+    enabled: true
+    maxUnavailable: 1
+  cert:
+    certManager:
+      enabled: true
+
+# cert-manager provisions and rotates the webhook certificate
+certController:
+  enabled: false
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    memory: 256Mi
