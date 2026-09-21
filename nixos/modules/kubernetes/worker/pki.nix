@@ -4,7 +4,8 @@ with pkgs.lib.tdude.vault;
 let
   pki = config.services.tdude.kubernetes.worker.pki;
   cfg = config.services.tdude.kubernetes.worker;
-in {
+in
+{
   systemd.tmpfiles.rules = lib.mkIf cfg.enable [
     "d /var/lib/secrets/kubernetes 0700 kubernetes kubernetes -"
     "d /var/lib/secrets/coredns 0700 coredns coredns -"
@@ -16,7 +17,7 @@ in {
   ];
 
   services.vault-agent.instances.kubernetes-worker = lib.mkIf cfg.enable
-    (mkVaultAgentInstance "kubernetes" "control-plane" pki.vaultURL pki.vaultSNI [
+    (mkVaultAgentInstance "kubernetes" "worker" pki.vaultURL pki.vaultSNI [
       (lib.mkIf cfg.kube-proxy.enable (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/kube-proxy-complete.pem" [ "kube-proxy" ]
         (mkKubernetesCertificateTemplate pki.clusterName "kube-proxy" {
           pkiRole = "client-system:node-proxier";

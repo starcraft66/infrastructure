@@ -5,7 +5,8 @@ let
   vaultBackend = (hostname: "server ${builtins.head (lib.splitString "." hostname)} ${hostname}:8200 ssl verify required ca-file /etc/ssl/certs/vault-ca.pem check inter 10s fall 3 rise 2 sni str(${cfg.vaultSNI})");
   k8sBackend = (hostname: "server ${builtins.head (lib.splitString "." hostname)} ${hostname}:6443 check inter 10s fall 3 rise 2");
   backends = backend: map backend cfg.k8sBackendHostnames;
-in {
+in
+{
   services.haproxy = lib.mkIf cfg.enable {
     enable = true;
     config = ''

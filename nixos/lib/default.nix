@@ -30,59 +30,67 @@
           command = "/run/wrappers/bin/sudo ${prev.systemd}/bin/systemctl restart ${libprev.concatStringsSep " " servicesToRestart}";
         })
       ];
-      # component: string, role: string, templates: [{ destination: string, source: string }]
-      mkVaultAgentInstance = component: role: vaultURL: vaultSNI: templates: {
-        enable = true;
-        user = component;
-        group = component;
-        settings = {
-          auto_auth = [
-            {
-              method = [
-                {
-                  config = [
-                    {
-                      remove_secret_id_file_after_reading = false;
-                      role_id_file_path = "/var/lib/secrets/${component}/vault_agent_role_id";
-                      secret_id_file_path = "/var/lib/secrets/${component}/vault_agent_secret_id";
-                    }
-                  ];
-                  type = "approle";
-                }
-              ];
-              sink = [
-                {
-                  config = [
-                    {
-                      path = "/var/lib/secrets/${component}/vault_agent_token";
-                    }
-                  ];
-                  type = "file";
-                }
-              ];
-            }
-          ];
-          # cache = [
-          #   {
-          # https://github.com/hashicorp/vault/issues/19436
-          # use_auto_auth_token = true;
-          #   }
-          # ];
-          template = templates;
-          template_config = {
-            # Re-render the template (issue certificates) at 2/3 of the lease duration (their lifetime)
-            lease_renewal_threshold = 0.66;
+      # component: service user and secrets directory
+      # credential: optional AppRole credential suffix used when multiple agents
+      # share the same service user and secrets directory
+      mkVaultAgentInstance = component: credential: vaultURL: vaultSNI: templates:
+        let
+          credentialSuffix = libprev.optionalString (credential != null) "_${credential}";
+          instanceSuffix = libprev.optionalString (credential != null) "-${credential}";
+        in
+        {
+          enable = true;
+          package = prev.openbao;
+          user = component;
+          group = component;
+          settings = {
+            auto_auth = [
+              {
+                method = [
+                  {
+                    config = [
+                      {
+                        remove_secret_id_file_after_reading = false;
+                        role_id_file_path = "/var/lib/secrets/${component}/vault_agent${credentialSuffix}_role_id";
+                        secret_id_file_path = "/var/lib/secrets/${component}/vault_agent${credentialSuffix}_secret_id";
+                      }
+                    ];
+                    type = "approle";
+                  }
+                ];
+                sink = [
+                  {
+                    config = [
+                      {
+                        path = "/var/lib/secrets/${component}/vault_agent${credentialSuffix}_token";
+                      }
+                    ];
+                    type = "file";
+                  }
+                ];
+              }
+            ];
+            # cache = [
+            #   {
+            # https://github.com/hashicorp/vault/issues/19436
+            # use_auto_auth_token = true;
+            #   }
+            # ];
+            template = templates;
+            template_config = {
+              # Re-render the template (issue certificates) at 2/3 of the lease duration (their lifetime)
+              lease_renewal_threshold = 0.66;
+            };
+            pid_file = "/var/lib/secrets/${component}/vault-agent-${component}${instanceSuffix}.pid";
+            vault = [
+              {
+                address = vaultURL;
+                tls_server_name = vaultSNI;
+                ca_cert = "/etc/ssl/certs/vault-ca.pem";
+              }
+            ];
           };
-          pid_file = if role != null then "/var/lib/secrets/${component}/vault-agent-${component}-${role}.pid" else "/var/lib/secrets/${component}/vault-agent-${component}.pid";
-          vault = [
-            {
-              address = vaultURL;
-              tls_server_name = vaultSNI;
-              ca_cert = "/etc/ssl/certs/vault-ca.pem";
-            }
-          ];
         };
-      };
       mkCertificateTemplate = clusterName: component: pkiRole: name: commonName: altNames: ipSans: writeDir: prev.writeTextFile {
         name = "${component}-${name}-cert.ctmpl";
         text = ''

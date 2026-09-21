@@ -159,12 +159,12 @@
                       send "$password\n"
                       interact
                     '';
-                    expectVaultUnseal = pkgs.writeScript "expect" ''
+                    expectOpenBaoUnseal = pkgs.writeScript "expect" ''
                       #!${pkgs.expect}/bin/expect -f
                       set timeout 10
                       set server [lindex $argv 0]
                       set password [lindex $argv 1]
-                      spawn ssh -t -lroot $server -- vault operator unseal
+                      spawn ssh -t -lroot $server -- bao operator unseal
                       expect "Unseal Key (will be hidden):"
                       send "$password\n"
                       interact
@@ -182,7 +182,7 @@
                       set -e
                       read -s -p "Enter password: " password
                       for host in $@; do
-                        ${expectVaultUnseal} $host $password
+                        ${expectOpenBaoUnseal} $host $password
                       done
                     '';
                   in
@@ -237,7 +237,7 @@
                 gnupg
                 ssh-to-pgp
                 asciidoctor
-                vault
+                openbao
                 colmena
                 deploy-rs.deploy-rs
                 cilium-cli

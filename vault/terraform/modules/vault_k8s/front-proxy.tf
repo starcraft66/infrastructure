@@ -2,7 +2,7 @@ resource "vault_mount" "pki_front-proxy" {
   path                      = "${var.cluster_id}/pki/front-proxy"
   type                      = "pki"
   default_lease_ttl_seconds = 3600
-  max_lease_ttl_seconds     = 315360000 # 32 Days
+  max_lease_ttl_seconds     = 315360000 # 10 years; retained for the existing root CA
 }
 
 resource "vault_pki_secret_backend_root_cert" "front-proxy" {
@@ -47,7 +47,7 @@ resource "vault_pki_secret_backend_role" "role_front-proxy_client" {
 resource "vault_policy" "front-proxy_issue" {
   name   = "front-proxy-issue"
   policy = <<EOT
-path "${vault_mount.pki_front-proxy.path}/issue/*" {
+path "${vault_mount.pki_front-proxy.path}/issue/client" {
   capabilities = [ "read", "create", "update" ]
 }
 EOT

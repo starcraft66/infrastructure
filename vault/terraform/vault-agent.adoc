@@ -1,83 +1,122 @@
-== Kubernetes PKI management using Hashicorp Vault
+= OpenBao agent AppRole provisioning
 
-Once Vault is up and running and provisioned with the terraform config in this folder, the following script can be used to create the necessary environment and authentication tokens for `vault-agent` to start issuing and rotating certificates for the Kubernetes cluster.
+The NixOS `vault-agent-*` units run the OpenBao binary in agent mode. The unit
+names retain the NixOS module's Vault-compatible naming, but no HashiCorp Vault
+binary is used.
 
-Make sure to first `vault login` with the root token and then run the following script:
+Apply the OpenTofu configuration before provisioning credentials. It creates
+separate AppRoles for the control plane, workers, CoreDNS, etcd, and Patroni.
 
-[source,console]
-----
-CLUSTER_NAME=<name of cluster>
-kubernetes_id=$(vault read --field=role_id auth/approle/role/$CLUSTER_NAME-node-kubernetes/role-id)
-kubernetes_secret=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-kubernetes/secret-id)
-etcd_id=$(vault read --field=role_id auth/approle/role/$CLUSTER_NAME-node-etcd/role-id)
-etcd_secret=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-etcd/secret-id)
-frontproxy_id=$(vault read --field=role_id auth/approle/role/$CLUSTER_NAME-node-front-proxy/role-id)
-frontproxy_secret=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-front-proxy/secret-id)
-mkdir -p /var/lib/secrets/{kubernetes,etcd,coredns,front-proxy}
-echo $kubernetes_id > /var/lib/secrets/kubernetes/vault_agent_role_id
-echo $kubernetes_secret > /var/lib/secrets/kubernetes/vault_agent_secret_id
-echo $frontproxy_id > /var/lib/secrets/front-proxy/vault_agent_role_id
-echo $frontproxy_secret > /var/lib/secrets/front-proxy/vault_agent_secret_id
-echo $kubernetes_id > /var/lib/secrets/coredns/vault_agent_role_id
-echo $kubernetes_secret > /var/lib/secrets/coredns/vault_agent_secret_id
-echo $etcd_id > /var/lib/secrets/etcd/vault_agent_role_id
-echo $etcd_secret > /var/lib/secrets/etcd/vault_agent_secret_id
-systemctl restart vault-agent-{coredns,etcd,kubernetes-worker,kubernetes-control-plane}
-----
+Generate a distinct SecretID for every AppRole on every node. Role IDs may be
+shared between nodes assigned the same AppRole. Do not store RoleIDs, SecretIDs,
+or tokens in this repository or pass SecretIDs as command-line arguments.
 
-Once complete, make sure to `rm ~/.vault-token` to remove the root token from the system.
+The expected credential files are:
 
-== Patroni vault-agent provisioning
+[cols="2,2,2"]
+|===
+|Agent |AppRole suffix |Credential prefix
 
-Patroni uses vault-agent to obtain etcd client certificates for communicating with the etcd cluster. After running `terraform apply` for the `live/235` config, provision the Patroni vault-agent credentials on each node:
+|Kubernetes control plane
+|`node-kubernetes-control-plane`
+|`/var/lib/secrets/kubernetes/vault_agent_control-plane`
 
-[source,console]
-----
-CLUSTER_NAME=<name of cluster>
-patroni_id=$(vault read --field=role_id auth/approle/role/$CLUSTER_NAME-node-patroni/role-id)
-patroni_secret=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-patroni/secret-id)
-mkdir -p /var/lib/secrets/patroni
-chown patroni:patroni /var/lib/secrets/patroni
-echo $patroni_id > /var/lib/secrets/patroni/vault_agent_role_id
-echo $patroni_secret > /var/lib/secrets/patroni/vault_agent_secret_id
-chown patroni:patroni /var/lib/secrets/patroni/vault_agent_{role,secret}_id
-systemctl restart vault-agent-patroni
-----
+|Kubernetes worker
+|`node-kubernetes-worker`
+|`/var/lib/secrets/kubernetes/vault_agent_worker`
 
-NOTE: Generate a separate `secret_id` for each node (run the `vault write -f` command once per node).
+|CoreDNS
+|`node-coredns`
+|`/var/lib/secrets/coredns/vault_agent`
 
-== Build the admin kubeconfig
+|etcd
+|`node-etcd`
+|`/var/lib/secrets/etcd/vault_agent`
 
-To bootstrap OIDC authenticaiton, we first need to gain admin access to the cluster to create the proper `ClusterRoleBinding` for the OIDC account. We will get admin by building an admin kubeconfig file using the following script:
+|Patroni
+|`node-patroni`
+|`/var/lib/secrets/patroni/vault_agent`
+|===
+
+For each target host, transfer the RoleID and a freshly generated SecretID over
+standard input and install them with mode `0400` and the service's user/group.
+For example, while authenticated to the current Vault or OpenBao leader:
 
 [source,bash]
 ----
-#!/usr/bin/env bash
+cluster_name="k8s-235-1"
+target="stormfeather.235.tdude.co"
 
-CLUSTER_NAME="k8s-305-1700-1"
-ADMIN_USER="admin"
-CONTEXT_NAME="admin@$CLUSTER_NAME"
-SERVER="https://k8s.305-1700.tdude.co"
-CERT_DIR="/var/lib/secrets/kubernetes"
+install_credential() {
+  role="$1"
+  owner="$2"
+  prefix="$3"
 
-kubectl config set-cluster $CLUSTER_NAME \
-    --certificate-authority=${CERT_DIR}/kubernetes-ca.pem \
-    --embed-certs=true \
-    --server=$SERVER \
-    --kubeconfig=admin.kubeconfig
+  bao read -field=role_id "auth/approle/role/${cluster_name}-${role}/role-id" |
+    ssh "root@${target}" "install -D -m 0400 -o ${owner} -g ${owner} /dev/stdin ${prefix}_role_id"
+  bao write -field=secret_id -f "auth/approle/role/${cluster_name}-${role}/secret-id" |
+    ssh "root@${target}" "install -D -m 0400 -o ${owner} -g ${owner} /dev/stdin ${prefix}_secret_id"
+}
 
-kubectl config set-credentials $ADMIN_USER \
-    --client-certificate=${CERT_DIR}/admin.pem \
-    --client-key=${CERT_DIR}/admin-key.pem \
-    --embed-certs=true \
-    --kubeconfig=admin.kubeconfig
+install_credential node-kubernetes-control-plane kubernetes \
+  /var/lib/secrets/kubernetes/vault_agent_control-plane
+install_credential node-kubernetes-worker kubernetes \
+  /var/lib/secrets/kubernetes/vault_agent_worker
+install_credential node-coredns coredns \
+  /var/lib/secrets/coredns/vault_agent
+install_credential node-etcd etcd \
+  /var/lib/secrets/etcd/vault_agent
+install_credential node-patroni patroni \
+  /var/lib/secrets/patroni/vault_agent
+----
 
-kubectl config set-context $CONTEXT_NAME \
-    --cluster=$CLUSTER_NAME \
-    --user=$ADMIN_USER \
-    --kubeconfig=admin.kubeconfig
+Omit Patroni on clusters or nodes where it is not enabled. Provision all files
+before deploying the NixOS configuration: the deployment switches agents to
+the new paths atomically.
 
-kubectl config use-context $CONTEXT_NAME --kubeconfig=admin.kubeconfig
+After deployment, confirm every unit can authenticate and render a certificate:
 
-echo "Admin kubeconfig created as admin.kubeconfig"
+[source,console]
+----
+systemctl --failed
+systemctl status vault-agent-{kubernetes-control-plane,kubernetes-worker,coredns,etcd,patroni}
+journalctl -u 'vault-agent-*' --since=-10m
+----
+
+The legacy `${CLUSTER_NAME}-node-kubernetes` AppRole and broad
+`kubernetes-issue` policy were removed after every node was verified on the
+scoped credentials.
+
+== Build the admin kubeconfig
+
+Pocket ID is the Kubernetes OIDC provider. The Vault identity OIDC provider is
+not required. To bootstrap authorization, use the PKI-issued administrator
+certificate already rendered on a control-plane node:
+
+[source,bash]
+----
+cluster_name="k8s-305-1700-1"
+admin_user="admin"
+context_name="admin@${cluster_name}"
+server="https://k8s.305-1700.tdude.co"
+cert_dir="/var/lib/secrets/kubernetes"
+
+kubectl config set-cluster "$cluster_name" \
+  --certificate-authority="${cert_dir}/kubernetes-ca.pem" \
+  --embed-certs=true \
+  --server="$server" \
+  --kubeconfig=admin.kubeconfig
+
+kubectl config set-credentials "$admin_user" \
+  --client-certificate="${cert_dir}/admin.pem" \
+  --client-key="${cert_dir}/admin-key.pem" \
+  --embed-certs=true \
+  --kubeconfig=admin.kubeconfig
+
+kubectl config set-context "$context_name" \
+  --cluster="$cluster_name" \
+  --user="$admin_user" \
+  --kubeconfig=admin.kubeconfig
+
+kubectl config use-context "$context_name" --kubeconfig=admin.kubeconfig
 ----

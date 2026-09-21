@@ -2,7 +2,7 @@ resource "vault_mount" "pki_kubernetes" {
   path                      = "${var.cluster_id}/pki/kubernetes"
   type                      = "pki"
   default_lease_ttl_seconds = 3600
-  max_lease_ttl_seconds     = 315360000 # 32 Days
+  max_lease_ttl_seconds     = 315360000 # 10 years; retained for the existing root CA
 }
 
 resource "vault_pki_secret_backend_root_cert" "kubernetes" {
@@ -116,15 +116,6 @@ resource "vault_pki_secret_backend_role" "role_kubernetes_client" {
   allow_subdomains  = true
 }
 
-resource "vault_policy" "kubernetes_issue" {
-  name   = "kubernetes-issue"
-  policy = <<EOT
-path "${vault_mount.pki_kubernetes.path}/issue/*" {
-  capabilities = [ "read", "create", "update" ]
-}
-EOT
-}
-
 resource "vault_policy" "etcd_client_issue" {
   name   = "etcd-client-issue"
   policy = <<EOT
@@ -134,11 +125,61 @@ path "${vault_mount.pki_etcd.path}/issue/client" {
 EOT
 }
 
-resource "vault_approle_auth_backend_role" "kubernetes" {
+resource "vault_policy" "kubernetes_control_plane_issue" {
+  name = "kubernetes-control-plane-issue"
+  policy = join("\n", [
+    for role in [
+      "server",
+      "client-system_masters",
+      "client-system_kube-controller-manager",
+      "client-system_kube-scheduler",
+    ] : <<-EOT
+      path "${vault_mount.pki_kubernetes.path}/issue/${role}" {
+        capabilities = ["create", "update"]
+      }
+    EOT
+  ])
+}
+
+resource "vault_policy" "kubernetes_worker_issue" {
+  name = "kubernetes-worker-issue"
+  policy = join("\n", [
+    for role in [
+      "peer-system_nodes",
+      "client-system_node-proxier",
+    ] : <<-EOT
+      path "${vault_mount.pki_kubernetes.path}/issue/${role}" {
+        capabilities = ["create", "update"]
+      }
+    EOT
+  ])
+}
+
+resource "vault_policy" "coredns_issue" {
+  name   = "coredns-issue"
+  policy = <<-EOT
+    path "${vault_mount.pki_kubernetes.path}/issue/client" {
+      capabilities = ["create", "update"]
+    }
+  EOT
+}
+
+resource "vault_approle_auth_backend_role" "kubernetes_control_plane" {
   backend        = vault_auth_backend.approle.path
-  role_name      = "${var.cluster_id}-node-kubernetes"
-  token_policies = [vault_policy.kubernetes_issue.name, vault_policy.etcd_client_issue.name, vault_policy.front-proxy_issue.name]
+  role_name      = "${var.cluster_id}-node-kubernetes-control-plane"
+  token_policies = [vault_policy.kubernetes_control_plane_issue.name, vault_policy.etcd_client_issue.name, vault_policy.front-proxy_issue.name]
+}
+
+resource "vault_approle_auth_backend_role" "kubernetes_worker" {
+  backend        = vault_auth_backend.approle.path
+  role_name      = "${var.cluster_id}-node-kubernetes-worker"
+  token_policies = [vault_policy.kubernetes_worker_issue.name]
+}
+
+resource "vault_approle_auth_backend_role" "coredns" {
+  backend        = vault_auth_backend.approle.path
+  role_name      = "${var.cluster_id}-node-coredns"
+  token_policies = [vault_policy.coredns_issue.name]
 }
 
 # Generate moved blocks for all of these resources to move them under module.vault_k8s
-

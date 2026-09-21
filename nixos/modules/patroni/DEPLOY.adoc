@@ -141,12 +141,12 @@ First, obtain the role ID and generate secret IDs from your workstation.
 vault login  # with root token or sufficient privileges
 
 CLUSTER_NAME=k8s-235-1
-patroni_id=$(vault read --field=role_id auth/approle/role/$CLUSTER_NAME-node-patroni/role-id)
+patroni_id=$(bao read --field=role_id auth/approle/role/$CLUSTER_NAME-node-patroni/role-id)
 
 # Generate one secret_id per node
-patroni_secret_1=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-patroni/secret-id)
-patroni_secret_2=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-patroni/secret-id)
-patroni_secret_3=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-patroni/secret-id)
+patroni_secret_1=$(bao write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-patroni/secret-id)
+patroni_secret_2=$(bao write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-patroni/secret-id)
+patroni_secret_3=$(bao write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-patroni/secret-id)
 
 rm ~/.vault-token
 
@@ -171,8 +171,8 @@ NOTE: The `role_id` is the same for all 3 nodes, but you *must* generate a separ
 vault login
 
 CLUSTER_NAME=k8s-305-1700-1
-patroni_id=$(vault read --field=role_id auth/approle/role/$CLUSTER_NAME-node-patroni/role-id)
-patroni_secret=$(vault write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-patroni/secret-id)
+patroni_id=$(bao read --field=role_id auth/approle/role/$CLUSTER_NAME-node-patroni/role-id)
+patroni_secret=$(bao write --field=secret_id -f auth/approle/role/$CLUSTER_NAME-node-patroni/secret-id)
 
 rm ~/.vault-token
 

@@ -77,7 +77,7 @@ in
     vaultSNI = profile.domains.vault;
   };
 
-  services.tdude.vault = {
+  services.tdude.openbao = {
     enable = true;
     raftPeers = lib.remove currentFqdn memberHostnames;
     hostname = profile.domains.vault;

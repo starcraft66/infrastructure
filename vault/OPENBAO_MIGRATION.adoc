@@ -1,0 +1,168 @@
+= Vault to OpenBao migration runbook
+
+This runbook migrates Vault 2.0.x integrated Raft storage to OpenBao 2.6.2.
+The migration remains unsupported upstream, so do not skip the inventory,
+snapshot, or per-node verification gates.
+
+The repository intentionally keeps the `vault/` directory and the HashiCorp
+Vault OpenTofu provider names: OpenBao implements the relevant API and the
+provider is still used for the shared PKI/AppRole resource surface.
+
+== 1. Inventory and backup
+
+Authenticate an operator session against each site and save command output in
+an encrypted location outside this repository:
+
+[source,console]
+----
+bao status
+bao secrets list -detailed
+bao auth list -detailed
+bao plugin list
+bao audit list -detailed
+bao operator raft list-peers
+----
+
+Take the snapshot directly from the active node on port 8200, with the site's
+private CA and `BAO_TLS_SERVER_NAME` set to the certificate name. Do not take it
+through the HAProxy VIP: that path produced a truncated archive during the 235
+preflight. For example:
+
+[source,console]
+----
+BAO_ADDR=https://<leader-fqdn>:8200 \
+BAO_CACERT=/path/to/vault-ca.pem \
+BAO_TLS_SERVER_NAME=vault.<site>.tdude.co \
+  bao operator raft snapshot save openbao-pre-migration.snap
+bao operator raft snapshot inspect openbao-pre-migration.snap
+sha256sum openbao-pre-migration.snap
+----
+
+Every persisted secrets/auth mount must be an OpenBao built-in or an explicitly
+installed compatible plugin. The repository expects only `pki`, `approle`, and
+the standard system/token/identity mounts. Vault 2.x's automatic
+`agent-registry/` mount is expected to be unsupported and unused.
+
+Verify that the snapshot exists, is non-empty, and has been copied off the
+Vault nodes before continuing.
+
+== 2. Stage logical configuration
+
+Run `tofu plan` in both live directories. The expected changes are:
+
+* creation of control-plane, worker, and CoreDNS policies/AppRoles;
+* removal of the obsolete Vault OIDC provider, clients, identities, aliases,
+  groups, scopes, assignment, and userpass mount;
+* narrowing the front-proxy issuance policy to its `client` role;
+* no replacement of a PKI mount, issuer, root key, or existing PKI role.
+
+Apply and repeat the plan until it is empty. Then provision the new AppRole
+credentials following `terraform/vault-agent.adoc`. Do not remove the legacy
+shared Kubernetes AppRole yet.
+
+OpenBao protects the built-in OIDC provider named `default`; its DELETE endpoint
+returns `deletion ... not allowed`. When retiring Vault's OIDC provider, first
+remove all clients, assignments, aliases, entities, groups, and userpass auth.
+Then clear the protected provider's custom-scope references, delete the custom
+scopes, and forget only the built-in provider's stale OpenTofu state entry:
+
+[source,console]
+----
+bao write identity/oidc/provider/default allowed_client_ids="*" scopes_supported=""
+tofu state rm module.vault_oidc.vault_identity_oidc_provider.vault
+----
+
+The empty built-in provider remains in OpenBao, but without clients,
+assignments, custom scopes, identities, or a userpass auth mount it is inert.
+
+== 3. Migrate the three-node site
+
+Use `bao operator raft list-peers` to identify the current leader. Migrate one
+follower at a time and the leader last. For each follower:
+
+. Deploy only that host with
+  `colmena apply --verbose --build-on-target --on=<host>`.
+. Unseal it with `bao operator unseal`.
+. Inspect `journalctl -u openbao` for skipped plugin mounts. Only the known,
+  unused `agent-registry/` mount is expected.
+. Wait for the node to reappear as a voter in `bao operator raft list-peers`.
+. Verify `/v1/sys/health`, a test AppRole login, PKI issuance, all local agent
+  units, and the dependent Kubernetes/etcd/Patroni services.
+
+After both followers pass, step down the Vault leader, verify another node is
+leader, then deploy and verify the former leader in the same way.
+
+Do not deploy the next node while the previous node is sealed, absent from the
+Raft peer list, or reporting an unexpected skipped plugin.
+
+During a mixed Vault/OpenBao rollout, OpenBao standbys cannot forward requests
+to a Vault leader because their internal forwarding RPCs differ. Agents must
+use the HAProxy VIP, and HAProxy health checks must admit only the active,
+unsealed node (HTTP 200 from `/v1/sys/health`, without `standbyok=true`).
+After the last Vault node is replaced, restore agents to their local OpenBao
+endpoint and restore the normal HAProxy TCP checks so standbys can serve and
+forward requests again.
+
+== 4. Migrate the single-node site
+
+There is no rolling path for `spike`. Schedule downtime and take an additional
+snapshot immediately before the cutover. A single-node Raft configuration must
+omit `retry_join` entirely; OpenBao 2.6 rejects an explicitly empty
+`retry_join = []`.
+
+Pre-build the new closure before starting the outage:
+
+[source,console]
+----
+colmena build --verbose --build-on-target --on=spike
+----
+
+Stop Vault, preserve `/var/lib/vault` unchanged, and copy only the integrated
+storage files into the private backing directory used by systemd's dynamic
+`openbao` user:
+
+[source,console]
+----
+systemctl stop vault.service
+test "$(systemctl is-active vault.service)" = inactive
+install -d -o nobody -g nogroup -m 0700 /var/lib/private/openbao
+cp -a --reflink=auto /var/lib/vault/raft /var/lib/vault/vault.db \
+  /var/lib/private/openbao/
+chown -R nobody:nogroup /var/lib/private/openbao
+ln -s private/openbao /var/lib/openbao
+sync
+----
+
+The destination paths must not exist before these commands. Deploy only after
+the offline copy completes:
+
+[source,console]
+----
+colmena apply --verbose --build-on-target --on=spike
+----
+
+Unseal OpenBao and run the same mount, AppRole, PKI, agent, and dependent-service
+checks as for the three-node site.
+
+== 5. Rollback
+
+The rolling migration uses a separate `/var/lib/openbao` directory, leaving the
+old `/var/lib/vault` data untouched. Before the final leader conversion, a
+failed follower can be rolled back by deploying the pre-migration revision,
+unsealing Vault, and waiting for it to rejoin.
+
+After OpenBao accepts writes, the untouched Vault directories are no longer a
+current cluster copy. A full-cluster rollback must restore the verified
+pre-migration snapshot and will discard subsequent writes. Keep the migration
+window short and avoid unrelated configuration changes during it.
+
+== 6. Post-migration cleanup
+
+After both sites have passed restart and snapshot-restore tests:
+
+* remove the `agent-registry/` stub after confirming it contains no required
+  data;
+* delete old `/var/lib/vault` data only after the rollback window closes;
+* configure two audit devices, periodic off-host Raft snapshots, and telemetry;
+* consider replacing the remaining `vault-*` compatibility names in paths and
+  unit names as a separate cosmetic change.

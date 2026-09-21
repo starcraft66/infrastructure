@@ -2,7 +2,7 @@ resource "vault_mount" "pki_etcd" {
   path                      = "${var.cluster_id}/pki/etcd"
   type                      = "pki"
   default_lease_ttl_seconds = 3600
-  max_lease_ttl_seconds     = 315360000 # 32 Days
+  max_lease_ttl_seconds     = 315360000 # 10 years; retained for the existing root CA
 }
 
 resource "vault_pki_secret_backend_root_cert" "etcd" {

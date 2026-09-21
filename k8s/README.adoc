@@ -5,10 +5,10 @@ ifndef::imagesdir[:imagesdir: ../.gitlab/images]
 == Overview
 
 [.text-justify]
-I currently operate two personal kubernetes clusters, `k8s-235` and `k8s-305-1700`, each at a different physical site. Both clusters are deployed on bare metal servers running NixOS and are provisioned by the Nix expressions and modules located in the `nixos` folder at the root of the repo. The kubernetes cluster components are deployed using a custom NixOS module that I wrote specific to my infrastructure. Most importantly, it handles end-to-end mutual TLS certification of all cluster components using Hashicorp Vault and vault-agent.
+I currently operate two personal kubernetes clusters, `k8s-235` and `k8s-305-1700`, each at a different physical site. Both clusters are deployed on bare metal servers running NixOS and are provisioned by the Nix expressions and modules located in the `nixos` folder at the root of the repo. The kubernetes cluster components are deployed using a custom NixOS module that I wrote specific to my infrastructure. Most importantly, it handles end-to-end mutual TLS certification of all cluster components using OpenBao and its agent.
 
 [.text-justify]
-The `k8s-235` cluster consists of 3 consolidated control-plane, worker and etcd nodes (`soarin`, `sassaflash`, `stormfeather`). These three nodes also run Hashicorp Vault (in HA mode with Raft storage), Patroni (HA PostgreSQL) and Pocket ID (OIDC identity provider), all behind keepalived VIPs. These services along with etcd are hosted directly on NixOS rather than inside the kubernetes cluster because the cluster itself depends on them for PKI, secrets, authentication and database access, and running them in-cluster would create chicken-and-egg dependency problems. The `k8s-305-1700` cluster is a single-node cluster running on `spike`, featuring an NVIDIA GPU for GPU-accelerated workloads and Multus CNI for host network bridging. Like the 235 cluster, Vault and etcd run directly on NixOS on `spike` for the same dependency reasons.
+The `k8s-235` cluster consists of 3 consolidated control-plane, worker and etcd nodes (`soarin`, `sassaflash`, `stormfeather`). These three nodes also run OpenBao (in HA mode with Raft storage), Patroni (HA PostgreSQL) and Pocket ID (OIDC identity provider), all behind keepalived VIPs. These services along with etcd are hosted directly on NixOS rather than inside the kubernetes cluster because the cluster itself depends on them for PKI, secrets, authentication and database access, and running them in-cluster would create chicken-and-egg dependency problems. The `k8s-305-1700` cluster is a single-node cluster running on `spike`, featuring an NVIDIA GPU for GPU-accelerated workloads and Multus CNI for host network bridging. Like the 235 cluster, OpenBao and etcd run directly on NixOS on `spike` for the same dependency reasons.
 
 == Provisioning
 
@@ -195,7 +195,7 @@ Both clusters use https://cilium.io/[Cilium] as their CNI networking plugin, pro
 
 [.text-justify]
 ArgoCD is a central part of my clusters. Once the initial control-plane for a cluster is deployed by NixOS, the only application that must be installed manually into the cluster is ArgoCD. Once installed, it will take over the lifecycle of all of the applications in this repository to be deployed into the cluster.
-ArgoCD deploys everything in the `k8s/apps` folder including itself. A commit webhook in GitLab will cause ArgoCD to sync the repository on every commit. Authentication to ArgoCD is done through Hashicorp Vault's OIDC provider.
+ArgoCD deploys everything in the `k8s/apps` folder including itself. A commit webhook in GitLab will cause ArgoCD to sync the repository on every commit. Authentication to ArgoCD is done through Pocket ID.
 
 [.text-justify]
 To deploy ArgoCD on the k8s-235 cluster, go into `k8s/apps/argocd` and run `kustomize build --enable-alpha-plugins --enable-exec overlays/235-prod | kubectl apply -f -`. For k8s-305-1700, use `overlays/305-1700-prod` instead. ArgoCD will become available at https://gitops.235.tdude.co (k8s-235) or https://gitops.305-1700.tdude.co (k8s-305-1700).
@@ -276,7 +276,7 @@ rm argocd-key.asc argocd-key-pub.asc
 === 🔥 Prometheus
 
 [.text-justify]
-Cluster-wide metrics monitoring in my clusters is performed by prometheus. More specifically, I use ArgoCD to deploy https://git.tdude.co/tristan/kube-prometheus-k8s-235/-/tree/master/[my personal configuration] of the https://github.com/prometheus-operator/kube-prometheus/[kube-prometheus] project. Like everything else, it is deployed by ArgoCD and configured to scrape ``ServiceMonitor``s and ``PodMonitor``s in all namespaces, along with cluster-wide internal metrics. Each cluster has its own kube-prometheus deployment with cluster-specific manifests. The web interface for prometheus is reachable at https://prometheus.monitoring.tdude.co and the one for Grafana at https://monitoring.tdude.co. Grafana is configured for SSO authentication with Hashicorp Vault's OIDC provider.
+Cluster-wide metrics monitoring in my clusters is performed by prometheus. More specifically, I use ArgoCD to deploy https://git.tdude.co/tristan/kube-prometheus-k8s-235/-/tree/master/[my personal configuration] of the https://github.com/prometheus-operator/kube-prometheus/[kube-prometheus] project. Like everything else, it is deployed by ArgoCD and configured to scrape ``ServiceMonitor``s and ``PodMonitor``s in all namespaces, along with cluster-wide internal metrics. Each cluster has its own kube-prometheus deployment with cluster-specific manifests. The web interface for prometheus is reachable at https://prometheus.monitoring.tdude.co and the one for Grafana at https://monitoring.tdude.co. Grafana is configured for SSO authentication with Pocket ID.
 
 [.text-justify]
 Additionally, `kube-prometheus` also deploys alertmanager and a handful of useful alerting rules. I have configured it to notify me on Discord and on Matrix when alerts are firing using https://github.com/benjojo/alertmanager-discord/[alert-manager-discord] and https://github.com/jaywink/matrix-alertmanager/[matrix-alertmanager]. The web interface for alertmanager is available at https://alertmanager.tdude.co.
@@ -289,7 +289,7 @@ The idiomatic way to expose http services in kubernetes is via an ingress contro
 ==== Single Sign-On
 
 [.text-justify]
-Traefik supports a host of interesting features like its extensive middleware system. I make extensive use of the "Forward Auth" middleware to protect services I don't want exposed to the public behind an OpenID Connect SSO login via https://github.com/oauth2-proxy/oauth2-proxy/[oauth2-proxy]. The OIDC provider backing oauth2-proxy is Hashicorp Vault's identity OIDC provider. SSO protection can be added to any ingress by setting the `traefik.ingress.kubernetes.io/router.middlewares` label on it to `traefik-forward-auth@kubernetescrd`.
+Traefik supports a host of interesting features like its extensive middleware system. I make extensive use of the "Forward Auth" middleware to protect services I don't want exposed to the public behind an OpenID Connect SSO login via https://github.com/oauth2-proxy/oauth2-proxy/[oauth2-proxy]. The OIDC provider backing oauth2-proxy is Pocket ID. SSO protection can be added to any ingress by setting the `traefik.ingress.kubernetes.io/router.middlewares` label on it to `traefik-forward-auth@kubernetescrd`.
 
 ==== TLS
 

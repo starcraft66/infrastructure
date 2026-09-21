@@ -5,12 +5,13 @@ let
   pki = config.services.tdude.kubernetes.control-plane.pki;
   cfg = config.services.tdude.kubernetes.control-plane;
   lbCfg = config.services.tdude.kubernetes.loadbalancer;
-in {
+in
+{
   systemd.tmpfiles.rules = lib.mkIf cfg.enable [
     "d /var/lib/secrets/kubernetes 0700 kubernetes kubernetes -"
   ];
 
-  security.sudo.extraRules = lib.mkIf cfg.enable 
+  security.sudo.extraRules = lib.mkIf cfg.enable
     [ (mkRestartServiceSudoersRule "kubernetes" [ "kube-apiserver" "kube-controller-manager" "kube-scheduler" ]) ];
 
   services.vault-agent.instances.kubernetes-control-plane = lib.mkIf cfg.enable
@@ -24,7 +25,7 @@ in {
         }))
       (mkVaultAgentTemplate "/var/lib/secrets/kubernetes/kubelet-client-complete.pem" [ "kube-apiserver" ]
         (mkKubernetesCertificateTemplate pki.clusterName "kubelet-client" {
-          pkiRole = "server-system:masters";
+          pkiRole = "client-system:masters";
           commonName = "kube-api-server";
           altNames = [ ];
           ipSans = [ ];

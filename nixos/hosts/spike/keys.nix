@@ -7,7 +7,8 @@ let
   deploy-keys = false;
   patroniSecretsFile = toString ../../../secrets/patroni-305-1700.yaml;
   pocketIdSecretsFile = toString ../../../secrets/pocket-id-305-1700.yaml;
-in lib.optionalAttrs deploy-keys {
+in
+lib.optionalAttrs deploy-keys {
   deployment.keys."nix-cache" = {
     keyCommand = [ "sops" "-d" "--extract" "[\"nix-cache\"]" (toString ../../../secrets/nix-cache.yaml) ];
     destDir = "/etc/nix";
@@ -78,8 +79,8 @@ in lib.optionalAttrs deploy-keys {
 
     destDir = "/var/lib/vault";
     name = "vault-cert.pem";
-    user = "vault";
-    group = "vault";
+    user = "root";
+    group = "root";
     permissions = "0400";
 
     uploadAt = "pre-activation";
@@ -95,8 +96,8 @@ in lib.optionalAttrs deploy-keys {
 
     destDir = "/var/lib/vault";
     name = "vault-key.pem";
-    user = "vault";
-    group = "vault";
+    user = "root";
+    group = "root";
     permissions = "0400";
 
     uploadAt = "pre-activation";
