@@ -94,6 +94,7 @@ spec:
         - /home/openclaw/.openclaw
       ports:
         - containerPort: 8443
+          protocol: TCP
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
@@ -113,6 +114,7 @@ spec:
       image: nginx:1.29.6
       ports:
         - containerPort: 12345
+          protocol: TCP
       volumeMounts:
         - name: data
           mountPath: /data
@@ -156,21 +158,27 @@ spec:
         - name: gateway
           port: 18789
           targetPort: 18790
+          protocol: TCP
         - name: canvas
           port: 18793
           targetPort: 18794
+          protocol: TCP
         - name: chromium
           port: 9222
           targetPort: 9222
+          protocol: TCP
         - name: metrics
           port: 9090
           targetPort: 9090
+          protocol: TCP
         - name: code-server
           port: 8443
           targetPort: 8443
+          protocol: TCP
         - name: public-html
           port: 12345
           targetPort: 12345
+          protocol: TCP
     ingress:
       enabled: true
       className: traefik
@@ -183,6 +191,7 @@ spec:
         - host: claw.tdude.co
           paths:
             - path: /
+              pathType: Prefix
       tls:
         - hosts:
             - claw.tdude.co
