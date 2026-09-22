@@ -9,6 +9,10 @@ bgpControlPlane:
 operator:
   # We only have one node
   replicas: 1
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
 
 # Pod CIDRs are owned by Cilium's multi-pool IPAM so ranges can be managed
 # by editing CiliumPodIPPool CIDRs instead of the kube-controller-manager.
@@ -39,10 +43,30 @@ hubble:
     enabled: true
   ui:
     enabled: true
+  metrics:
+    enabled:
+    - dns:query
+    - drop
+    - tcp
+    - flow
+    - icmp
+    - http
+    serviceMonitor:
+      enabled: true
 
 # Enable Prometheus metrics
 prometheus:
   enabled: true
+  serviceMonitor:
+    enabled: true
+
+# Envoy runs as its own DaemonSet, so the agent ServiceMonitor does not
+# cover its metrics endpoint.
+envoy:
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
 
 kubeProxyReplacement: "true"
 # k8s.235.tdude.co
