@@ -51,6 +51,10 @@ prometheus:
   enabled: true
   serviceMonitor:
     enabled: true
+    # kustomize runs `helm template` without cluster access, so the chart's
+    # monitoring.coreos.com/v1 capability check cannot pass. The CRDs are
+    # installed by the monitoring stack.
+    trustCRDsExist: true
 
 # Envoy runs as its own DaemonSet, so the agent ServiceMonitor does not
 # cover its metrics endpoint.
