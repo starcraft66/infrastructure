@@ -4,4 +4,17 @@ resources:
 - ../../base
 - ./resources/storageprofiles.yaml
 
+patches:
+- target:
+    group: apiextensions.k8s.io
+    version: v1
+    kind: CustomResourceDefinition
+    name: cdis.cdi.kubevirt.io
+  patch: |-
+    - op: test
+      path: /spec/versions/0/name
+      value: v1alpha1
+    - op: remove
+      path: /spec/versions/0
+
 namespace: cdi
