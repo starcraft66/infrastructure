@@ -481,6 +481,15 @@ spec:
     repoURL: https://git.tdude.co/tristan/infrastructure.git
     targetRevision: master
     path: k8s/apps/claw/overlays/305-1700-prod
+  ignoreDifferences:
+  - group: openclaw.rocks
+    kind: OpenClawInstance
+    managedFieldsManagers:
+    - manager
+    - openclaw-selfconfig
+    jsonPointers:
+    - /metadata/finalizers
+    - /spec/restoreFrom
   syncPolicy:
     automated:
       selfHeal: true
