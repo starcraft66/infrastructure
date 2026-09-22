@@ -7,7 +7,9 @@ metadata:
     external-dns.alpha.kubernetes.io/target: "envoy.k8s.305-1700.tdude.co"
 spec:
   parentRefs:
-  - name: envoy-gateway # Reference your Gateway resource
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: envoy-gateway # Reference your Gateway resource
     namespace: envoy-gateway  # Replace with the namespace of your Gateway
   hostnames:
   - dummy.305-1700.tdude.co
@@ -17,9 +19,12 @@ spec:
         type: PathPrefix
         value: /
     backendRefs:
-    - name: http-200-svc
+    - group: ""
+      kind: Service
+      name: http-200-svc
       namespace: envoy-gateway
       port: 80 # Match the "https" port specified in your service
+      weight: 1
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: ListenerSet
