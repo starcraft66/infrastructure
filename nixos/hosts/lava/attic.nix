@@ -4,6 +4,7 @@
 
   services.nginx = {
     enable = true;
+    clientMaxBodySize = "0";
     virtualHosts."nixcache.tdude.co" = {
       listenAddresses = [ "[2a01:4f9:3051:104f::2]" ];
       enableACME = true;
