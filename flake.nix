@@ -64,9 +64,24 @@
                   }
               );
             };
-            local-packages = self: super: {
-              cni-plugin-cilium = super.callPackage ./nixos/pkgs/cni-plugin-cilium.nix { };
-            };
+            local-packages = self: super:
+              let
+                openbaoTemplate = super.fetchFromGitHub {
+                  owner = "starcraft66";
+                  repo = "openbao-template";
+                  rev = "533f60d7b826a14a3c53a2ad099d72f3766b5ef7";
+                  hash = "sha256-kl0ghKa4abnIwH/e0i+dsi4AOeblbaq8SGHVLHfEyI8=";
+                };
+              in
+              {
+                cni-plugin-cilium = super.callPackage ./nixos/pkgs/cni-plugin-cilium.nix { };
+                openbao-agent-pki-threshold = super.openbao.overrideAttrs (old: {
+                  patches = (old.patches or [ ]) ++ [ ./nixos/pkgs/openbao-agent-pki-threshold.patch ];
+                  postPatch = (old.postPatch or "") + ''
+                    go mod edit -replace=github.com/openbao/openbao-template=${openbaoTemplate}
+                  '';
+                });
+              };
           };
         }
         // (
