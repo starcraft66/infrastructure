@@ -1,0 +1,24 @@
+diff --git a/command/agent/config/config.go b/command/agent/config/config.go
+--- a/command/agent/config/config.go
++++ b/command/agent/config/config.go
+@@ -161,6 +161,7 @@ type TemplateConfig struct {
+ 	ExitOnRetryFailure       bool          `hcl:"exit_on_retry_failure"`
+ 	StaticSecretRenderIntRaw interface{}   `hcl:"static_secret_render_interval"`
+ 	StaticSecretRenderInt    time.Duration `hcl:"-"`
++	LeaseRenewalThreshold    *float64      `hcl:"lease_renewal_threshold"`
+ }
+ 
+ type ExecConfig struct {
+diff --git a/command/agent/internal/ctmanager/runner_config.go b/command/agent/internal/ctmanager/runner_config.go
+--- a/command/agent/internal/ctmanager/runner_config.go
++++ b/command/agent/internal/ctmanager/runner_config.go
+@@ -39,3 +39,6 @@
+-	if mc.AgentConfig.TemplateConfig != nil && mc.AgentConfig.TemplateConfig.StaticSecretRenderInt != 0 {
+-		conf.Vault.DefaultLeaseDuration = &mc.AgentConfig.TemplateConfig.StaticSecretRenderInt
+-	}
++	if mc.AgentConfig.TemplateConfig != nil {
++		conf.Vault.LeaseRenewalThreshold = mc.AgentConfig.TemplateConfig.LeaseRenewalThreshold
++		if mc.AgentConfig.TemplateConfig.StaticSecretRenderInt != 0 {
++			conf.Vault.DefaultLeaseDuration = &mc.AgentConfig.TemplateConfig.StaticSecretRenderInt
++		}
++	}

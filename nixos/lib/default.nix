@@ -40,7 +40,7 @@
         in
         {
           enable = true;
-          package = prev.openbao;
+          package = final.openbao-agent-pki-threshold;
           user = component;
           group = component;
           settings = {
