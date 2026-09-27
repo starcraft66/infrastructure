@@ -46,6 +46,13 @@ in {
       inetutils
       vim
       tcpdump
+      htop
+      bmon
+      iotop
+      ncdu
+      jq
+      coreutils
+      ripgrep
     ];
 
     # Service Discovery
