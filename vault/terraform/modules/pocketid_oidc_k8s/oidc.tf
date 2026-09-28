@@ -29,6 +29,27 @@ resource "pocketid_client" "argocd-k8s" {
   ]
 }
 
+resource "pocketid_client" "argocd-cli" {
+  name      = "Argo CD CLI"
+  is_public = true
+
+  callback_urls = [
+    # ArgoCD CLI
+    "http://localhost:8085/auth/callback",
+    # ArgoCD Mobile App
+    "argocd://auth/callback",
+  ]
+
+  logout_callback_urls = [
+    "http://localhost:8085"
+  ]
+
+  allowed_user_groups = [
+    pocketid_group.sysadmin.id,
+  ]
+}
+
+
 resource "pocketid_client" "oauth2-proxy-k8s" {
   name      = "OAuth2 Proxy"
   is_public = false

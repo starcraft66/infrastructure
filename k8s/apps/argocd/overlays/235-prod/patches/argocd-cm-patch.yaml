@@ -12,6 +12,7 @@ data:
   oidc.config: |
     name: Pocket ID
     issuer: https://id.235.tdude.co
+    cliClientID: $oidc.pocket-id.cliClientId
     clientID: $oidc.pocket-id.clientId
     clientSecret: $oidc.pocket-id.clientSecret
     requestedScopes:
