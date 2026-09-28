@@ -19,3 +19,9 @@
 - path: /spec/template/spec/containers/1/args/-
   op: add
   value: --oidc-issuer-url=https://id.305-1700.tdude.co
+- path: /spec/template/spec/containers/1/args/-
+  op: add
+  value: --skip-jwt-bearer-tokens=true
+- path: /spec/template/spec/containers/1/args/-
+  op: add
+  value: --extra-jwt-issuers=https://id.305-1700.tdude.co=https://auth.k8s.305-1700.tdude.co
