@@ -7,11 +7,12 @@ module "vault_k8s" {
 module "pocketid_oidc_k8s" {
   source = "../../modules/pocketid_oidc_k8s"
 
-  cluster_id                 = "k8s-305-1700-1"
-  grafana_redirect_uri       = "https://monitoring.305-1700.tdude.co/login/generic_oauth"
-  argocd_redirect_uri        = "https://gitops.305-1700.tdude.co/auth/callback"
-  oauth2_proxy_redirect_uri  = "https://auth.k8s.305-1700.tdude.co/oauth2/callback"
-  envoy_gateway_redirect_uri = "https://dummy.305-1700.tdude.co/oauth2/callback"
+  cluster_id                    = "k8s-305-1700-1"
+  blackbox_monitoring_client_id = "blackbox-monitoring-305-1700"
+  grafana_redirect_uri          = "https://monitoring.305-1700.tdude.co/login/generic_oauth"
+  argocd_redirect_uri           = "https://gitops.305-1700.tdude.co/auth/callback"
+  oauth2_proxy_redirect_uri     = "https://auth.k8s.305-1700.tdude.co/oauth2/callback"
+  envoy_gateway_redirect_uri    = "https://dummy.305-1700.tdude.co/oauth2/callback"
 }
 
 module "pocketid_oidc_family" {

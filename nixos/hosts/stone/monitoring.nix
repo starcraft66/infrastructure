@@ -9,7 +9,16 @@ let
     "305-1700.tdude.co" # 305-1700
   ];
 
-  httpTargets = [
+  httpTargets235 = [
+    "https://id.235.tdude.co/healthcheck"
+  ];
+
+  # Populate after the gateway accepts Pocket ID machine tokens for these sites.
+  httpAuthenticatedTargets235 = [
+    "https://sonarr.tdude.co/ping"
+    "https://radarr.tdude.co/ping"
+    "https://prowlarr.tdude.co/ping"
+    "https://lidarr.tdude.co/ping"
   ];
 
   sshTargets235 = [
@@ -49,7 +58,7 @@ let
           {
             alert = "HttpProbeDown";
             expr = ''
-              probe_success{job="http_probe"} == 0
+              probe_success{job=~"http_probe_235-gw|http_probe_235-gw_authenticated"} == 0
             '';
             for = "1m";
             labels = {
@@ -81,7 +90,7 @@ let
           {
             alert = "HttpProbeSlowResponse";
             expr = ''
-              probe_duration_seconds{job="http_probe"} > 0.5
+              probe_duration_seconds{job="http_probe_235-gw"} > 0.5
             '';
             for = "5m";
             labels = {
@@ -90,6 +99,18 @@ let
             annotations = {
               summary = "Slow HTTP response detected for target {{ $labels.instance }}";
               description = "The HTTP probe response time for target {{ $labels.instance }} has exceeded 500ms for 5 minutes.";
+            };
+          }
+          {
+            alert = "HttpAuthenticatedProbeSlowResponse";
+            expr = ''
+              probe_duration_seconds{job="http_probe_235-gw_authenticated"} > 2
+            '';
+            for = "5m";
+            labels.severity = "warning";
+            annotations = {
+              summary = "Slow authenticated HTTP response for {{ $labels.instance }}";
+              description = "The authenticated 235-gw HTTP probe has taken over 2 seconds for 5 minutes.";
             };
           }
 
@@ -122,6 +143,31 @@ let
             annotations = {
               summary = "SSH probe failed for target {{ $labels.instance }}";
               description = "The SSH probe for target {{ $labels.instance }} has failed for over 1 minute.";
+            };
+          }
+          {
+            alert = "BlackboxExporter235GwDown";
+            expr = ''
+              up{job="blackbox_exporter_235-gw"} == 0
+              or absent(up{job="blackbox_exporter_235-gw"})
+            '';
+            for = "1m";
+            labels.severity = "critical";
+            annotations = {
+              summary = "235-gw blackbox exporter is unreachable";
+              description = "Stone cannot scrape the 235-gw blackbox exporter's /metrics endpoint.";
+            };
+          }
+          {
+            alert = "BlackboxProbe235GwScrapeFailed";
+            expr = ''
+              up{job=~"ssh_probe_235-gw|http_probe_235-gw|http_probe_235-gw_authenticated"} == 0
+            '';
+            for = "1m";
+            labels.severity = "critical";
+            annotations = {
+              summary = "235-gw blackbox probe scrape failed for {{ $labels.instance }}";
+              description = "Prometheus could not scrape the 235-gw blackbox probe for {{ $labels.instance }}.";
             };
           }
         ];
@@ -214,14 +260,32 @@ in {
         }];
       }
       {
-        job_name = "http_probe";
+        job_name = "http_probe_235-gw";
         metrics_path = "/probe";
         scrape_interval = "15s";
         params.module = [ "http_2xx" ];
         static_configs = [{
-          targets = httpTargets;
+          targets = httpTargets235;
         }];
-        relabel_configs = mkRelabelConfigs "localhost" 9115;
+        relabel_configs = mkRelabelConfigs "[${tunnel235Address}]" 9115;
+      }
+      {
+        job_name = "http_probe_235-gw_authenticated";
+        metrics_path = "/probe";
+        scrape_interval = "30s";
+        scrape_timeout = "15s";
+        params.module = [ "http_2xx_pocket_id" ];
+        static_configs = [{
+          targets = httpAuthenticatedTargets235;
+        }];
+        relabel_configs = mkRelabelConfigs "[${tunnel235Address}]" 9115;
+      }
+      {
+        job_name = "blackbox_exporter_235-gw";
+        scrape_interval = "15s";
+        static_configs = [{
+          targets = [ "[${tunnel235Address}]:9115" ];
+        }];
       }
       {
         job_name = "icmp_probe";
@@ -261,6 +325,12 @@ in {
         repeat_interval = "5m";
         receiver = "discord_webhook";
       };
+      inhibit_rules = [
+        {
+          source_matchers = [ ''alertname="BlackboxExporter235GwDown"'' ];
+          target_matchers = [ ''alertname="BlackboxProbe235GwScrapeFailed"'' ];
+        }
+      ];
       receivers = [
         {
           name = "discord_webhook";

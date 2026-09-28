@@ -53,3 +53,7 @@ creation_rules:
     - *soarin-host
     - *spike-host
     - *stone-host
+- path_regex: vault/terraform/live/.*\.yaml$
+  key_groups:
+  - pgp:
+    - *tristan

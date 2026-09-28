@@ -1,26 +1,67 @@
 # This file is maintained automatically by "tofu init".
 # Manual edits may be lost in future updates.
 
+provider "registry.opentofu.org/carlpett/sops" {
+  version     = "1.4.1"
+  constraints = "1.4.1"
+  hashes = [
+    "h1:++2JmC1ykEcRLHiB7kRhqq9kfxH3H28zWWCGYJt6xwE=",
+    "h1:Bxls7vaSoHFx5oLyCC4BKWkF9A24QyYI+LDR0xwjyBo=",
+    "h1:CtjK3CV+eu5920uq2ma3cJrtPXgYqAhKoyNPsjsi2cE=",
+    "h1:HyIxpskyTiLdJhGFJYzCk45IsG7zMe3K+y7em3k23BE=",
+    "h1:nTX8t1aP800EVoUFK9p7/IfSihRN3CAgTiawINe2CLY=",
+    "h1:vmBW+4J2FkW/zuDesBHYHpS4eqGZveI43AHwvDczzSw=",
+    "h1:znlUxdbGKlHDWA0hZ4E2nEW4h2x0fTsQD4pau4+KyRw=",
+    "zh:4df8dea170a4cd926ca6ef0b9fa6fd1d8c1fa9bc9e78333d544a74c24e269cf9",
+    "zh:5cf661333ec5d5cce3b7c0fc399052cf8f8c50f6cb0a50f5aec2f91d83685e1e",
+    "zh:680616383404bc836a2d740a0dfae4691c18c8616f346e8fa795a1d790a2d888",
+    "zh:8ef127e590bd676718bc82afc0f1cad8d0a93d82e935ec21b22d6ae2fc2bff9f",
+    "zh:d030531c7b61922d4f4150c45a87c48ed5c6743348dbbfe70d34191cd13f2649",
+    "zh:d8c138c2c0d7c7d4e72a4ab667772e8f96ec17e13ffe0c6fbe21457e82c140f0",
+    "zh:fd3903e0f2040b67550bbce3b58e4e615a738993bc787f71adbc41afe38df518",
+  ]
+}
+
 provider "registry.opentofu.org/hashicorp/vault" {
-  version     = "5.7.0"
+  version     = "5.12.0"
   constraints = "~> 5.0"
   hashes = [
-    "h1:iLMzDsHFFlk13OMq+hx4IvabQqAJCP++fAnRHGDOu+w=",
-    "zh:29e77f756f33f56ef9641a23d020525380957e1faa104cea67e8872f842da17c",
-    "zh:709a950dd289a68da12ca7dfae03abe71e928af09562e8efaceea3079681ed3b",
-    "zh:74c2f266380d027fde6ad54969ddd3d1ab4d7cffcaecfa8d875f60ff04d11d7a",
-    "zh:9a548570535e756cc6696e31677f72146c6a48be945383a163bb401a4f275b03",
-    "zh:b3b746b85532441de93134683aeffff3027a88ebe836a294fecd6279477f33f5",
-    "zh:c031887da48097d9f5254f83213f4cedc4d6c64481d9d7f546a68f8a8b10f2ae",
-    "zh:d4a3fda5f8ff4ebd43975a0338acaa4052aedc054fbb0b696a684122f07c2806",
-    "zh:dcd3556f4c4e05450e886938d7e9184b86687d3df6b34a89a14d7380db41e2b3",
-    "zh:f4f3bb0a9ea7581a904ad9ec76f681fea35336afe5c0824ea186914d853e5e34",
+    "h1:/IgXoZMeZzl5GOrA8QRarffyoUFxYOXZATdGFi8QD5g=",
+    "h1:05VDSpWjVxJ/h69glB75y2KuzzO2I7vg0Z2c2EAoTJg=",
+    "h1:8JwWwrWfem2Adwgr2Do4GuBEtBG0TCqowmx6BOKORog=",
+    "h1:D9ffRpCK0RztTFvkEX7CdorGdJaKiPHV67Y8HwjRfqo=",
+    "h1:DfTksrmuO9DQtNIrqPEw12VY23nteB/ZCmONytNoSHY=",
+    "h1:H9QnRxNtB7J1M2PzHfGvspdqAZpx9Kgk42/ONncBp6I=",
+    "h1:HVdhw1ShP/LlYuDOdVKmLO/kLVfngw9VHM2YfDl879Y=",
+    "h1:I1lEu2xpli7axi6M8LuqFyZcpuoIMGDg617OkfHbLOo=",
+    "h1:SJyUnHYUJKwDNE3pa1+7oNaap014o39GOt4kfnix3IY=",
+    "h1:T+iLAoRkemaJEcICeZx9U0BRLh/A4La89uyXmy2xix0=",
+    "h1:Tt/J7dzKf16SFGW3Dui4Ig800p7flwtS74xPIe6e/Z4=",
+    "h1:YZhbsRLk/lq+yhD+8SES8mnohKa720P8m7OeO7bYmtI=",
+    "h1:gM/2jgZmJjtIXUV5pSAVtHNzRdEmpvJhAiKZAK6+wGQ=",
+    "h1:oq7YuNmnzaPEEj1u5lUJk+r8tGpONFp+/YOWOmzTM3k=",
+    "h1:uHRVhZzHuGs35InPpJzgAgy4m4v0SlXPKe4dGgH8L9c=",
+    "zh:070709539eeff2dbf6af13269e6a3c14cea0ee4e5a5fff237d574805df2787e9",
+    "zh:0e017e993252c37008dcf1848deb32f15a14b303335c3e06885d7efea07fef1d",
+    "zh:1717ba0a0f8d906ced0eb5a3ed1e2a1808d824868da5095ea1da12d60904777d",
+    "zh:218f879c5f3f97564f4867bcbb419197c4aa4e41ce5bc3eed50c71926f0519f9",
+    "zh:2437d8f76d6220883c96a073801af973db957c8b1c79187256c204437f4ed08e",
+    "zh:9dce3198d2f03ce05c3fb4cb90433de5863f0d1818fc4abc3e3576f562409c85",
+    "zh:a51d00c192e6cf86d588501d8c4a2a37a258679784651909d55f64d28011b28d",
+    "zh:c99586f88b0166d5522dedfbec9d246a51efae346bbdfcaeb296ff72b5c80f94",
+    "zh:cee10cca2a295e4fd9ce2779239f7f79ab97328d9e30833924cceb349e509051",
+    "zh:d9b5cde1c02db0b211ec3f77b519122f93b442594ce9f20d386ab5d0d05ead93",
+    "zh:deafe53fa413e71dac120177a58b678e81a64279a692ba77eca09a9bce0bff1a",
+    "zh:f372b83c70ee5dabd892bd9ec1eb9127fe6331d88178b7b84fa5f52f616b59df",
+    "zh:f47e4fd82b72e62a5e1eeaaa1b72cc2709545a8431964123b24ed5c03a03e492",
+    "zh:f629a86c98be3fd2aacb58336d26ce268a76fe754b048f58a3faa0712bb4a837",
+    "zh:feaef85debc4a4a72d7a23988b18fff0b4dbc47f37e31a0b51022df071ac7b85",
   ]
 }
 
 provider "registry.opentofu.org/trozz/pocketid" {
   version     = "2.4.2"
-  constraints = "~> 0.0, 2.4.2"
+  constraints = "2.4.2"
   hashes = [
     "h1:0ezKnfCMTeiEvR26v8IHFhw+NJuTRM+TNCb5rwBWaBc=",
     "h1:FC+PASakbN5+Q6v1X6aP9qiVU03EwvY/9I+u1COgsfY=",
@@ -36,9 +77,12 @@ provider "registry.opentofu.org/trozz/pocketid" {
     "zh:341affbfa683ebed34ece23e22a00ee8ad5c8ddf446370e85d7793ccb1e0a071",
     "zh:5c2ea3c71e5dcfaa24c0aaab47df66ea59c07e7a59a46720f2b26a6a02ff4ad3",
     "zh:6404154113d4ab3bd5837f81dcd28d312c4fc22b7c46c5ae73520232fe9ace30",
+    "zh:7b0a7122b65db76e503f5c52601ebe30a85ed468b7a2fca84954ba87cf60cd11",
     "zh:7fe79ba9d8bda3845fd65b8bbb108721215fd3b41445871bfd9ac23c4f578688",
+    "zh:86f3da1674914f07097cab5491d23e187608345c1c0d4a42e3e628fbed6df3c4",
     "zh:ae10fbbca06e2d6dafa2fae5efa6d153f8762f94671a99aeeaf25f46a8ece761",
     "zh:c3728c2a6676f8d0dcbdb8ab5da3a88f0547a339f59e50bfc52c6bc301f67c90",
     "zh:f56b08bbc8f829967a7754ff791ec3cfedcb2ff886e093fc058f248b9cdcc18c",
+    "zh:f809ab383cca0a5f83072981c64208cbd7fa67e986a86ee02dd2c82333221e32",
   ]
 }

@@ -3,6 +3,20 @@ resource "pocketid_group" "sysadmin" {
   friendly_name = "Sysadmin"
 }
 
+# The pinned Pocket ID provider cannot manage API resources or M2M grants.
+resource "pocketid_client" "blackbox_monitoring" {
+  name      = "Blackbox Monitoring"
+  client_id = var.blackbox_monitoring_client_id
+  is_public = false
+
+  callback_urls = []
+
+  # Restrict interactive use; the API permission is granted in Pocket ID.
+  allowed_user_groups = [
+    pocketid_group.sysadmin.id,
+  ]
+}
+
 resource "pocketid_client" "grafana-k8s" {
   name      = "Grafana"
   is_public = false

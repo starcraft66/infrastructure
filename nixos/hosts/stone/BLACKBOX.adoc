@@ -1,0 +1,47 @@
+= Bootstrap blackbox monitoring through 235-gw
+
+Stone probes services through the blackbox exporter on 235-gw. Use this
+runbook when setting up the gateway again or adding protected websites to
+monitoring.
+
+== 1. Set up the monitoring client
+
+Apply the Terraform stack in `vault/terraform/live/235` to create the
+`blackbox-monitoring-235` client in Pocket ID. Save its client secret in a
+SOPS-encrypted secret and provision it on 235-gw at
+`/config/container/blackbox_exporter/secrets/pocket-id-client-secret`.
+Make the file readable by the exporter container and keep it out of the
+blackbox configuration file.
+
+== 2. Give the client access in Pocket ID
+
+. Open *Settings > APIs* in Pocket ID and add an API named
+  `Blackbox Probe Access` with resource `https://auth.k8s.235.tdude.co`.
+. Add the `probe:read` permission to that API.
+. Open *Settings > OIDC Clients > Blackbox Monitoring* and grant
+  `probe:read` under *Client access (M2M)* for the new API.
+. Save the client.
+
+== 3. Configure 235-gw
+
+Keep the existing `icmp`, `ssh_banner`, and `http_2xx` modules in
+`/config/container/blackbox_exporter/config/blackbox.yml`. Add an HTTP
+module named `http_2xx_pocket_id` for protected websites. It should request
+an access token from `https://id.235.tdude.co/api/oidc/token` using the
+monitoring client's ID and secret file, request `probe:read` for
+`https://auth.k8s.235.tdude.co`, and treat only a 2xx response from the
+website as healthy. Do not follow login redirects.
+
+Restart the exporter and check that Stone can reach its `/metrics` endpoint.
+
+== 4. Add and check websites
+
+Test a protected URL with the `http_2xx_pocket_id` module. Confirm that the
+probe succeeds and reaches the website itself, while a request without
+authentication does not. Then add the URL to `httpAuthenticatedTargets235`
+in `monitoring.nix` and deploy Stone.
+
+Check the Prometheus targets and `probe_success` for the new URL. The
+unprotected Pocket ID health check should also succeed. Finally, confirm
+that `BlackboxExporter235GwDown` fires if Stone loses access to the gateway
+exporter and resolves when access returns.

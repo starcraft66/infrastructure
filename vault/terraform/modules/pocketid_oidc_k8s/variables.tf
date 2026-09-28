@@ -2,6 +2,10 @@ variable "cluster_id" {
   type = string
 }
 
+variable "blackbox_monitoring_client_id" {
+  type = string
+}
+
 variable "grafana_redirect_uri" {
   type = string
 }
