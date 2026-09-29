@@ -16,10 +16,8 @@ spec:
     - sonarr.tdude.co
     - radarr.tdude.co
     - lidarr.tdude.co
-    - jackett.tdude.co
     - prowlarr.tdude.co
     - qbittorrent.tdude.co
-    - tautulli.tdude.co
     - mediaserver.tdude.co
     - requests.mediaserver.tdude.co
     - invites.mediaserver.tdude.co
@@ -65,16 +63,6 @@ spec:
             name: prowlarr
             port:
               name: http
-  - host: jackett.tdude.co
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: jackett
-            port:
-              name: http
   - host: qbittorrent.tdude.co
     http:
       paths:
@@ -83,16 +71,6 @@ spec:
         backend:
           service:
             name: qbittorrent-ui
-            port:
-              name: http
-  - host: tautulli.tdude.co
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: tautulli
             port:
               name: http
 ---

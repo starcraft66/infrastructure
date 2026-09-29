@@ -5,10 +5,8 @@ resources:
 - ./resources/sonarr.yaml
 - ./resources/radarr.yaml
 - ./resources/lidarr.yaml
-- ./resources/jackett.yaml
 - ./resources/prowlarr.yaml
 - ./resources/qbittorrent.yaml
-- ./resources/tautulli.yaml
 - ./resources/overseerr.yaml
 - ./resources/jellyfin.yaml
 - ./resources/wizarr.yaml
@@ -21,8 +19,6 @@ images:
   digest: sha256:13fffb730e53e451a6be2c649c4da3dfb252bb411802ce87f9f704d602d3a195
 - name: plexinc/pms-docker
   digest: sha256:e0ab27395614a8e1a4fdf84c6bc60ac664915cfdde70c52d030c7728a1c48e14
-- name: ghcr.io/linuxserver/jackett
-  digest: sha256:db88a0d72753c75a21156ae422af16a75963788bcd1763ea12e75cf9413ba2f0
 - name: ghcr.io/linuxserver/radarr
   digest: sha256:adb6c09d6b729ea5e642c99cea35af72702ef476bf4763f153299ac5db9f0b4f
 - name: ghcr.io/linuxserver/sonarr
@@ -33,8 +29,6 @@ images:
   newTag: develop@sha256:f0c51c56a8b781632313c06e530701a86d2cbf29fb5a529b84398cc702fc625a
 - name: ghcr.io/linuxserver/qbittorrent
   newTag: 5.2.4@sha256:b522f9f4b769f8f36d49d22d5eb6a92e9aa18904c6a1830b1439df511ec21983
-- name: ghcr.io/linuxserver/tautulli
-  digest: sha256:9e7b476ef14ae44a043b446614b5354777605eb9cb2bdbb2dbd1f99df031ac17
 - name: ghcr.io/seerr-team/seerr
   newTag: v3.5.0@sha256:27602401178d54f1964442287b9f23f67a3fa2252645ee8065839ea1c3f69e45
 - name: ghcr.io/wizarrrr/wizarr
