@@ -51,6 +51,16 @@
             "allowedVersions": "<14",
         },
         {
+            "description": "Read Immich versions from releases instead of walking the large GHCR tag list",
+            "matchFileNames": ["k8s/apps/immich/overlays/prod/kustomization.yaml"],
+            "matchManagers": ["kustomize"],
+            "matchDatasources": ["docker"],
+            "matchPackageNames": ["ghcr.io/immich-app/immich-server"],
+            "overrideDatasource": "github-releases",
+            "overridePackageName": "immich-app/immich",
+            "versioning": "semver",
+        },
+        {
             "description": "Skip changelog fetching for huge monorepos; recursive git-tree walks take minutes and stall the run",
             "matchSourceUrls": [
                 "https://github.com/bitnami/charts",

@@ -5,5 +5,13 @@
     ],
     "prConcurrentLimit": 100,
     "prHourlyLimit": 0,
-    "detectHostRulesFromEnv": true
+    "detectHostRulesFromEnv": true,
+    "hostRules": [
+        {
+            "matchHost": "ghcr.io",
+            "maxRequestsPerSecond": 1,
+            "abortOnError": true,
+            "abortIgnoreStatusCodes": [404]
+        }
+    ]
 }
