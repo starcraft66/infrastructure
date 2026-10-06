@@ -27,6 +27,12 @@ topologySpreadConstraints:
       app.kubernetes.io/name: descheduler
       app.kubernetes.io/instance: descheduler
 
+# Use the chart's opt-in PodDisruptionBudget (chart >= 0.37.0) instead of a
+# manually managed PDB resource. Only rendered when kind is Deployment.
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
 resources:
   requests:
     cpu: 100m
