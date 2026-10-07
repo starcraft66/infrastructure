@@ -29,9 +29,9 @@ images:
 - name: ghcr.io/linuxserver/prowlarr
   newTag: develop@sha256:e7a05286500b6e51084b0ba263dbbaf825db1ec7b731bf18aea30df84714e5f6
 - name: ghcr.io/autobrr/qui
-  newTag: v1.30.0
+  newTag: v1.30.0@sha256:1172ca40283330445d61189263a65a31ba703770a230b9e2a913f6e57bc2dd23
 - name: qbittorrentofficial/qbittorrent-nox
-  newTag: 5.2.4-1
+  newTag: 5.2.4-1@sha256:92bfd78d731e254ba64f62b77b0696add6447a33642ee5feda106a26b285aa7f
 - name: ghcr.io/seerr-team/seerr
   newTag: v3.5.0@sha256:27602401178d54f1964442287b9f23f67a3fa2252645ee8065839ea1c3f69e45
 - name: ghcr.io/wizarrrr/wizarr
