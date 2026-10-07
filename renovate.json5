@@ -46,11 +46,6 @@
             "pinDigests": false,
         },
         {
-            "description": "qbittorrent: ignore bogus ubuntu-versioned tags (20.x)",
-            "matchPackageNames": ["ghcr.io/linuxserver/qbittorrent"],
-            "allowedVersions": "<14",
-        },
-        {
             "description": "Read Immich versions from releases instead of walking the large GHCR tag list",
             "matchFileNames": ["k8s/apps/immich/overlays/prod/kustomization.yaml"],
             "matchManagers": ["kustomize"],
