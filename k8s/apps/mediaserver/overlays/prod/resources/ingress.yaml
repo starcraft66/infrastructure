@@ -70,7 +70,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: qbittorrent-ui
+            name: qui
             port:
               name: http
 ---

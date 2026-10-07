@@ -1,4 +1,11 @@
 ---
+# Official image (qbittorrent/docker-qbittorrent-nox): Alpine + tini, no s6.
+# Runs natively as non-root via securityContext; PUID/PGID are ignored
+# rootless by upstream, so none are set here.
+# Profile layout differs from the old linuxserver image:
+#   config: /config/qBittorrent/config/qBittorrent.conf
+#   data:   /config/qBittorrent/data/{BT_backup,GeoDB,logs,...}
+# (migrated once, 2026-10-07; see BT_backup move, not copy, for 7592 torrents)
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -23,10 +30,27 @@ spec:
         labelSelector:
           matchLabels:
             app.kubernetes.io/name: qbittorrent
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1014
+        runAsGroup: 1015
+        fsGroup: 1015
+        fsGroupChangePolicy: "OnRootMismatch"
+      # qbit needs a long time to save 7592 fastresumes on shutdown
+      # (upstream mandates 30m stop grace); the K8s default 30s caused
+      # unclean shutdowns and corrupted state.
+      terminationGracePeriodSeconds: 1800
       containers:
       - name: qbittorrent
-        image: ghcr.io/linuxserver/qbittorrent:latest
+        image: qbittorrentofficial/qbittorrent-nox:latest
         imagePullPolicy: IfNotPresent
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          runAsUser: 1014
+          runAsGroup: 1015
         ports:
         - name: "http"
           containerPort: 8080
@@ -43,28 +67,32 @@ spec:
         - name: data
           mountPath: /downloads
           subPath: torrents
-        envFrom:
-        - configMapRef:
-            name: mediaserver-permissions
+        env:
+        - name: QBT_WEBUI_PORT
+          value: "8080"
+        - name: TZ
+          value: America/Toronto
         resources:
           requests:
             cpu: "0.5"
             memory: "3Gi"
           limits:
             memory: "8Gi"
-#        readinessProbe:
-#          httpGet:
-#            path: /
-#            port: 8080
-#          periodSeconds: 30
-#          failureThreshold: 3
-#        livenessProbe:
-#          httpGet:
-#            path: /
-#            port: 8080
-#          initialDelaySeconds: 120
-#          periodSeconds: 30
-#          failureThreshold: 5
+        # TCP, not HTTP: the API needs auth. Generous thresholds because
+        # 7592 torrents on NFS take many minutes to load; a tight probe
+        # would kill slow starts forever (the s6-notifyoncheck trap).
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 15
+          failureThreshold: 40
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 900
+          periodSeconds: 60
+          failureThreshold: 5
+          timeoutSeconds: 5
       dnsConfig:
         options:
         - name: ndots

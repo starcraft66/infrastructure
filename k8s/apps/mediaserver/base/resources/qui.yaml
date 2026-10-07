@@ -1,0 +1,94 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: qui
+  labels:
+    app.kubernetes.io/name: qui
+spec:
+  serviceName: "qui"
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: qui
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: qui
+    spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: qui
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1014
+        runAsGroup: 1015
+        fsGroup: 1015
+        fsGroupChangePolicy: "OnRootMismatch"
+      containers:
+      - name: qui
+        image: ghcr.io/autobrr/qui:latest
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          runAsUser: 1014
+          runAsGroup: 1015
+        ports:
+        - name: "http"
+          containerPort: 7476
+          protocol: TCP
+        volumeMounts:
+        - name: qui-config
+          mountPath: /config
+        - name: data
+          mountPath: /downloads
+          subPath: torrents
+        env:
+        - name: QUI__HOST
+          # Must be a bare IPv4/hostname: qui builds host:port naively, so "::"
+          # is rejected upstream (":::7476: too many colons"). Go still binds
+          # dual-stack ([::]:7476) from 0.0.0.0.
+          value: "0.0.0.0"
+        - name: QUI__PORT
+          value: "7476"
+        - name: TZ
+          value: America/Toronto
+        - name: QUI__SESSION_COOKIE_SECURE
+          value: "true"
+        resources:
+          requests:
+            cpu: "0.25"
+            memory: "512Mi"
+          limits:
+            memory: "2Gi"
+        readinessProbe:
+          httpGet:
+            path: /healthz/readiness
+            port: 7476
+          periodSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /healthz/liveness
+            port: 7476
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          failureThreshold: 5
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: "kube-plex-data"
+      - name: qui-config
+        persistentVolumeClaim:
+          claimName: qui-config

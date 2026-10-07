@@ -9,6 +9,7 @@ resources:
 - ./lidarr
 - ./prowlarr
 - ./qbittorrent
+- ./qui
 - ./overseerr
 - ./jellyfin
 - ./wizarr
