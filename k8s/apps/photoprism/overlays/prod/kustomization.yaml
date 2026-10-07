@@ -9,7 +9,7 @@ resources:
 
 images:
 - name: photoprism/photoprism
-  newTag: "260919"
+  newTag: "261007"
 
 generators:
 - |-
