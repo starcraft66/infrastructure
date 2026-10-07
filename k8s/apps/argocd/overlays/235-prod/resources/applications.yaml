@@ -23,6 +23,12 @@ spec:
     syncOptions:
     - SkipDryRunOnMissingResource=true
     - ServerSideApply=true
+    # ApplicationSet CRD (~376KB) exceeds the 256KB
+    # kubectl.kubernetes.io/last-applied-configuration annotation limit, so the
+    # client-side-apply migration step fails with
+    # 'metadata.annotations: Too long: may not be more than 262144 bytes'.
+    # SSA with --force-conflicts takes field ownership without that annotation.
+    - ClientSideApplyMigration=false
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
