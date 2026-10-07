@@ -13,6 +13,8 @@ helmCharts:
   version: 0.37.0
   namespace: descheduler
   valuesFile: ./resources/values.yaml
+  apiVersions:
+  - policy/v1/PodDisruptionBudget
 
 configMapGenerator:
 - name: descheduler
