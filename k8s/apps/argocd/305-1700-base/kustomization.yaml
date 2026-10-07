@@ -5,7 +5,7 @@ resources:
 # Single-node cluster: use the non-HA upstream manifest. The HA manifest would
 # schedule 3 redis sentinels + 3 haproxy replicas which cannot be spread across
 # a single node because of the upstream hard pod anti-affinity.
-- https://github.com/argoproj/argo-cd/manifests/cluster-install?ref=v3.5.3
+- https://github.com/argoproj/argo-cd/manifests/cluster-install?ref=v3.5.4
 
 components:
 - ../components/common

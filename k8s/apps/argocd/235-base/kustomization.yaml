@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
 # Multi-node cluster: use the HA upstream manifest, which runs redis in sentinel
 # mode with a haproxy frontend and sharded application controllers.
-- https://github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v3.5.3
+- https://github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v3.5.4
 
 components:
 - ../components/common
