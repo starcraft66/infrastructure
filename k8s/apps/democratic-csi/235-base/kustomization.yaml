@@ -4,9 +4,9 @@ resources:
 - ./resources/namespace.yaml
 - ./resources/pdb.yaml
 # Snapshot stuff
-- https://github.com/kubernetes-csi/external-snapshotter/deploy/kubernetes/csi-snapshotter?ref=v8.6.0
-- https://github.com/kubernetes-csi/external-snapshotter/deploy/kubernetes/snapshot-controller?ref=v8.6.0
-- https://github.com/kubernetes-csi/external-snapshotter//client/config/crd?ref=v8.6.0
+- https://github.com/kubernetes-csi/external-snapshotter/deploy/kubernetes/csi-snapshotter?ref=v8.7.0
+- https://github.com/kubernetes-csi/external-snapshotter/deploy/kubernetes/snapshot-controller?ref=v8.7.0
+- https://github.com/kubernetes-csi/external-snapshotter//client/config/crd?ref=v8.7.0
 helmCharts:
 - name: democratic-csi
   # includeCRDs: true
