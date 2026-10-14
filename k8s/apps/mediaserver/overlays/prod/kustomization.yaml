@@ -13,6 +13,7 @@ resources:
 - ./overseerr
 - ./jellyfin
 - ./wizarr
+- ./jellyswarrm
 
 namespace: mediaserver
 
@@ -28,6 +29,7 @@ generators:
           path: ksops
   files:
   - ./secrets/plex-claim.yaml
+  - ./secrets/jellyswarrm.yaml
 
 patchesStrategicMerge:
 - ./patches/pvc-plex-data.yaml

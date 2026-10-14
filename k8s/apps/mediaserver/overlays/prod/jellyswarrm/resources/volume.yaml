@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jellyswarrm-data
+  labels:
+    app.kubernetes.io/name: jellyswarrm
+spec:
+  accessModes:
+  - "ReadWriteOnce"
+  storageClassName: truenas-iscsi-spitfire-fast
+  resources:
+    requests:
+      storage: "2Gi"
