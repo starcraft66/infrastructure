@@ -15,7 +15,7 @@ images:
 - name: funkwhale/api
   newTag: 2.0.12-legacycpu
 - name: funkwhale/front
-  newTag: 2.0.11-legacycpu
+  newTag: 2.0.12-legacycpu
 
 configMapGenerator:
 - name: funkwhale
