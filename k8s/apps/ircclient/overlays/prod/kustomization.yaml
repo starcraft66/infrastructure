@@ -24,4 +24,4 @@ images:
 - name: lscr.io/linuxserver/thelounge
   digest: sha256:af421a8254f9d1228cfa96af6bdf63a8c8306dd17d017757c16c3c0a126385c6
 - name: lscr.io/linuxserver/znc
-  digest: sha256:51e139085d594ca3b90c415ef081fee2a394387668acb54d32cc9c2852a33823
+  digest: sha256:f5187fab44a3c2cb4ece27030f4857a14d2b06a5ca739bd1d5973f2914dee6bf
