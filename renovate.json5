@@ -19,6 +19,17 @@
             "groupName": "mediaserver packages",
             "pinDigests": true,
         },
+        {
+            "description": "Pin the nextcloud image digest; the floating tag is rebuilt on base image (PHP) updates without a version bump",
+            "matchFileNames": [
+                "k8s/apps/nextcloud/**"
+            ],
+            "matchManagers": [
+                "kustomize",
+            ],
+            "matchDatasources": ["docker"],
+            "pinDigests": true,
+        },
         // home-automation packages
         {
             "description": "Group home-automation stack dependencies",
