@@ -36,4 +36,4 @@ images:
 - name: viaductoss/ksops
   newTag: "v4.5.1@sha256:4def9fdd4e2f850265740ebe9592c5455d19b76891e88e602df8b52d74b95334"
 - name: quay.io/argoproj/argocd
-  newTag: "v3.5.5@sha256:13db7b10db23283b1b36f855046602e18539a8a8204c9f6f039e8896c8897518"
+  newTag: "v3.5.6@sha256:8e5cc5bb008df8a09dba439462e58c94c55b7735888d3ebde0c25fc05e4e5335"
