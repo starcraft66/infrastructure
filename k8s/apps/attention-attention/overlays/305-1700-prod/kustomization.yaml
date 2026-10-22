@@ -20,4 +20,4 @@ generators:
 
 images:
 - name: ghcr.io/starcraft66/attention-attention/attention-attention
-  newTag: "v1.0.2-x86_64@sha256:3b7c53ebe4e6df963823dffc0900ae6957a38dfb35608959754e10c061104583"
+  newTag: "v1.0.3-x86_64@sha256:a3c312959fdcfe589b0009fb4049432ae67ba59238bd9f387a77e7e3196eaeea"
