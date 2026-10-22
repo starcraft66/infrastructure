@@ -21,7 +21,7 @@ generators:
 
 images:
 - name: ghcr.io/otakulan/lanparty-seating/lanparty-seating
-  newTag: "1.3.1"
+  newTag: "1.3.1@sha256:1abe31bc2349eaeb89d51c243626ed354c8383d2ea40f965987140617cee8fae"
 
 configMapGenerator:
 - name: lanparty-seating-config

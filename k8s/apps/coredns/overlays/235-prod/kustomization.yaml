@@ -5,4 +5,4 @@ resources:
 - resources/service.yaml
 images:
 - name: registry.k8s.io/coredns/coredns
-  newTag: v1.14.7
+  newTag: "v1.14.7@sha256:7efd3c635b03efd68c4e8398fc45f0d993d0e9ab016f72c1cefb0fd6d01aa286"

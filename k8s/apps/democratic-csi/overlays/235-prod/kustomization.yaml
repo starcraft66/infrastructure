@@ -34,7 +34,7 @@ images:
 # - name: k8s.gcr.io/sig-storage/csi-node-driver-registrar
 #   newTag: v2.4.0
 - name: docker.io/democraticcsi/democratic-csi
-  newTag: v1.9.5
+  newTag: "v1.9.5@sha256:fc3b7d7ed3a616714139525075312758e23a5d425ffb539ad12c9bd20fb6001f"
 
 patches:
 - path: ./patches/leader-election-namespace.yaml

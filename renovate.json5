@@ -8,6 +8,26 @@
     },
     "packageRules": [
         {
+            "description": "Pin docker image digests in kustomize images: (floating tags are rebuilt on base image updates without a version bump)",
+            "matchManagers": [
+                "kustomize",
+            ],
+            "matchDatasources": ["docker"],
+            "pinDigests": true,
+        },
+        {
+            "description": "Immich is versioned from GitHub releases so no docker digest is available; hedgedoc carries its tag in the image name",
+            "matchFileNames": [
+                "k8s/apps/immich/overlays/prod/kustomization.yaml",
+                "k8s/apps/ctfnote/overlays/prod/kustomization.yaml",
+            ],
+            "matchPackageNames": [
+                "ghcr.io/immich-app/immich-server",
+                "quay.io/hedgedoc/hedgedoc",
+            ],
+            "pinDigests": false,
+        },
+        {
             "description": "Group mediaserver stack dependencies which usually have no proper semver versioning",
             "matchFileNames": [
                 "k8s/apps/mediaserver/**"
@@ -17,17 +37,6 @@
                 "helm-values",
             ],
             "groupName": "mediaserver packages",
-            "pinDigests": true,
-        },
-        {
-            "description": "Pin the nextcloud image digest; the floating tag is rebuilt on base image (PHP) updates without a version bump",
-            "matchFileNames": [
-                "k8s/apps/nextcloud/**"
-            ],
-            "matchManagers": [
-                "kustomize",
-            ],
-            "matchDatasources": ["docker"],
             "pinDigests": true,
         },
         // home-automation packages

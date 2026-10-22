@@ -26,9 +26,9 @@ generators:
 
 images:
 - name: starcraft66/hpilo-letsencrypt
-  newTag: latest
+  newTag: "latest@sha256:f3b92bceff74a1ac9d7bd4aa1936a10080cfd650fe22d1dceb2e2d704fd0344f"
 - name: starcraft66/supermicro-letsencrypt
-  newTag: latest
+  newTag: "latest@sha256:bb03bc589b0a268778ddd6071d2af77f584bc6d8ff352766e79364a1df3839c4"
 
 configMapGenerator:
 - name: soarin-config

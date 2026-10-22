@@ -7,7 +7,7 @@ namespace: streetmerchant
 
 images:
 - name: ghcr.io/jef/streetmerchant
-  newTag: nightly
+  newTag: "nightly@sha256:35db14ae026055c68f35cc9c0f4aac9e1f3284e23564886113aab7904bd041af"
 
 generators:
 - |-

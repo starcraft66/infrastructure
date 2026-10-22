@@ -4,7 +4,7 @@ namespace: skyfactory4
 
 images:
 - name: itzg/minecraft-server
-  newTag: "java8-multiarch"
+  newTag: "java8-multiarch@sha256:19908d55975470439499f757db70ff7426cf80683ebdda1b9b5a534342228dab"
 
 resources:
 - ../../../base

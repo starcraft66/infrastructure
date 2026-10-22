@@ -26,7 +26,7 @@ generators:
 
 images:
 - name: argoprojlabs/argocd-image-updater
-  newTag: latest
+  newTag: "latest@sha256:5176770f8a5c7267032115f8fbb9db653b8f86264744ae401dd57d3a61d47f97"
 
 patches:
 - path: ./patches/argocd-cm-patch.yaml

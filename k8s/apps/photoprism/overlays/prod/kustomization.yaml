@@ -9,7 +9,7 @@ resources:
 
 images:
 - name: photoprism/photoprism
-  newTag: "261007"
+  newTag: "261007@sha256:0f85369636ad99ca9a1c33f2d04df6c590802d16b7c33b4a1ea026b595be06d1"
 
 generators:
 - |-

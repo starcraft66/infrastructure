@@ -13,9 +13,9 @@ namespace: redis-operator
 
 images:
 - name: funkwhale/api
-  newTag: 2.0.12-legacycpu
+  newTag: "2.0.12-legacycpu@sha256:ce3e03aa723d56e053d61cec00e44a71bc6769ec90cbb29c355b77b8ede02875"
 - name: funkwhale/front
-  newTag: 2.0.12-legacycpu
+  newTag: "2.0.12-legacycpu@sha256:198f93b332d8e38290f9720b8ccf4248380f12e173c0c1b9aca31688d3e08e95"
 
 configMapGenerator:
 - name: funkwhale

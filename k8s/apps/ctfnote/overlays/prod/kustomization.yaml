@@ -7,9 +7,9 @@ namespace: ctfnote
 
 images:
 - name: starcraft66/ctfnote
-  newTag: "latest"
+  newTag: "latest@sha256:8c5f98307dbe4c4c0fac016b1d7edb91a7740b3e05b6417866614356f69bd5cb"
 - name: ghcr.io/starcraft66/ctfnote-frontend
-  newTag: "big-uploads"
+  newTag: "big-uploads@sha256:516416e93dbe216cdfbe7ec9654c571a25a1f5dd7d02bf580bbebb0c85da2c83"
 - name: quay.io/hedgedoc/hedgedoc:1.9.0-alpine
   newTag: "1.12.0-alpine"
 
