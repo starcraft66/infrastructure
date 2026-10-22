@@ -17,3 +17,7 @@ generators:
           path: ksops
   files:
   - ./secrets/discord-token.yaml
+
+images:
+- name: ghcr.io/starcraft66/attention-attention/attention-attention
+  newTag: "v1.0.2-x86_64@sha256:3b7c53ebe4e6df963823dffc0900ae6957a38dfb35608959754e10c061104583"

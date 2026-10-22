@@ -35,3 +35,5 @@ generatorOptions:
 images:
 - name: viaductoss/ksops
   newTag: "v4.5.1@sha256:4def9fdd4e2f850265740ebe9592c5455d19b76891e88e602df8b52d74b95334"
+- name: argoproj/argocd
+  newTag: "v2.0.4@sha256:976dfbfadb817ba59f4f641597a13df7b967cd5a1059c966fa843869c9463348"

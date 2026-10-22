@@ -7,6 +7,10 @@ resources:
 
 namespace: envoy-gateway
 
+images:
+- name: hashicorp/http-echo
+  newTag: "latest@sha256:fcb75f691c8b0414d670ae570240cbf95502cc18a9ba57e982ecac589760a186"
+
 helmCharts:
 - name: gateway-crds-helm
   releaseName: envoy-gateway-crds
