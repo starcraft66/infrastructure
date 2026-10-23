@@ -38,6 +38,6 @@ images:
 - name: ghcr.io/wizarrrr/wizarr
   newTag: "v2026.10.1@sha256:5e1b78572088a4b79dc784aa4847f82a0387b5d5538ecd16d3af49bf5b5bb4b2"
 - name: ghcr.io/jellyfin/jellyfin
-  newTag: "12.2@sha256:c3efa69a22f2691fc88d6bb035e87a8560e395a6047f062fb381c61c3185e8f5"
+  newTag: "12.3@sha256:2038fe038ab3876a80f6e7b7e0aef6607b032c7dc0c9b3ad3296d0b2eba3bbb5"
 - name: ghcr.io/llukas22/jellyswarrm
   newTag: "0.3.1@sha256:cb145e7391e5cf583bd7f28b0e2d866e93ad95f603e1cdf2d88085390f7f83fa"
