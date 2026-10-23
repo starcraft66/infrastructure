@@ -4,7 +4,7 @@ namespace: nextcloud
 
 images:
 - name: docker.io/library/nextcloud
-  newTag: "35.0-apache@sha256:945f559777b5b371efb9a76787e063b01645a8c1c0becdb2781ca048028dbadb"
+  newTag: "35.0-apache@sha256:89af7ee7a96ff5e9668280566209268ae6b2d02327f6ef6d56f6d68228cf9431"
 
 resources:
 - ../../base
