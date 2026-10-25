@@ -4,7 +4,7 @@ namespace: cacaffichage
 
 images:
 - name: itzg/minecraft-server
-  newTag: "java25@sha256:3168dfa30c35fa1f99b8edde120f934a03ee780fcf905f450a1dbd9551d719f5"
+  newTag: "java25@sha256:bbc3f4d06517d38dc295cce6742679bf0b9edbb016f6fe47e0a7669378d1f9dc"
 
 resources:
 - ../../../base
