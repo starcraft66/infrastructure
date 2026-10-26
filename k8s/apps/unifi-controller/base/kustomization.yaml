@@ -8,4 +8,4 @@ images:
 - name: ghcr.io/linuxserver/unifi-controller
   digest: sha256:0ae315a3a45635e443899e30e86bd507c2c48922cb27f4bc7241777885f4650e
 - name: ghcr.io/unpoller/unpoller
-  newTag: "v5.8.0@sha256:eb20ec20e453bd5d1003cc1ec06140843c9d6deb1cde15b073f61138d1900039"
+  newTag: "v5.8.3@sha256:6a474f5202d40864affe6be9882492061331d77d474593bb1cd4a8c737dc834f"
