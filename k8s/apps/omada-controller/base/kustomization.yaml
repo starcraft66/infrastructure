@@ -9,6 +9,6 @@ helmCharts:
 - name: omada-controller
   releaseName: omada-controller
   valuesFile: ./resources/omada-controller.yaml
-  version: 20.0.6
+  version: 20.0.7
   repo: oci://oci.trueforge.org/truecharts
   namespace: omada
