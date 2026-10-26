@@ -20,13 +20,13 @@ images:
 - name: quay.io/munnerz/kube-plex
   digest: sha256:13fffb730e53e451a6be2c649c4da3dfb252bb411802ce87f9f704d602d3a195
 - name: plexinc/pms-docker
-  digest: sha256:01bdf0ad6d53198da4331540c1e73ab65db7a72e961fff97ecb0847d46055c5f
+  digest: sha256:6d778d41daae68f89115aa87a44ae14a96b23e71a2093da173b5a9aac4091336
 - name: ghcr.io/linuxserver/radarr
   digest: sha256:084b3b2ab1d0ef930660727259546a241f2bdf67c9ed085d54bf1486a6887c9b
 - name: ghcr.io/linuxserver/sonarr
   digest: sha256:48e36b608b461273b9dae857725cd0561a127f2c694b687318f6d0c5ce63e5c9
 - name: ghcr.io/linuxserver/lidarr
-  digest: sha256:d8549ff9ea29b4015c32257360652c1000c31ea471a2b3f0835ae77292faf35b
+  digest: sha256:9fddcf5c613361edfce390d4e6b7c364282e71e90a40ce7793077fed788f6e63
 - name: ghcr.io/linuxserver/prowlarr
   newTag: develop@sha256:5f2281d9ba83f1edebe8e38823e6e5b174cf7958f6deb0cb992fc5f17eb0761f
 - name: ghcr.io/autobrr/qui
