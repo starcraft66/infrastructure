@@ -28,7 +28,7 @@ images:
 - name: ghcr.io/linuxserver/lidarr
   digest: sha256:9fddcf5c613361edfce390d4e6b7c364282e71e90a40ce7793077fed788f6e63
 - name: ghcr.io/linuxserver/prowlarr
-  newTag: develop@sha256:5f2281d9ba83f1edebe8e38823e6e5b174cf7958f6deb0cb992fc5f17eb0761f
+  newTag: develop@sha256:b8b1bb2c5514b46128309411d007c20c6372e8cef09977ee135488e22b0c1962
 - name: ghcr.io/autobrr/qui
   newTag: v1.33.1@sha256:c83ce0370ab372c931ccb3f0ddd0eb1bc850026ce9eafc13ce94443f6f2a2cd3
 - name: qbittorrentofficial/qbittorrent-nox
@@ -38,6 +38,6 @@ images:
 - name: ghcr.io/wizarrrr/wizarr
   newTag: "v2026.10.1@sha256:5e1b78572088a4b79dc784aa4847f82a0387b5d5538ecd16d3af49bf5b5bb4b2"
 - name: ghcr.io/jellyfin/jellyfin
-  newTag: "12.3@sha256:2038fe038ab3876a80f6e7b7e0aef6607b032c7dc0c9b3ad3296d0b2eba3bbb5"
+  newTag: "12.4@sha256:fea863d0cd9ec445985d9c75fc6ed64e38a1d2766cf0c250a33d553f4fc1b771"
 - name: ghcr.io/llukas22/jellyswarrm
   newTag: "0.3.1@sha256:cb145e7391e5cf583bd7f28b0e2d866e93ad95f603e1cdf2d88085390f7f83fa"
