@@ -15,7 +15,7 @@ images:
   newTag: "8.1.0@sha256:170aa093ce91c76cde4cc390918307590f0f5558fcec93f913af3cb019e6562a"
 - name: ghcr.io/esphome/esphome
   newName: ghcr.io/esphome/esphome
-  newTag: "2026.10.0@sha256:1dff19a59070cdb523b76576cdc74d200f862d43c1407809088855920cf57145"
+  newTag: "2026.10.1@sha256:eab8cd6b4f51077c3883af4cedc058280ddc34a94f3b2ffee23e9d2cd5f1db64"
 
 helmCharts:
 - name: home-assistant
@@ -33,7 +33,7 @@ helmCharts:
 - name: zwavejs2mqtt
   releaseName: zwavejs2mqtt
   valuesFile: ./resources/zwavejs2mqtt.yaml
-  version: 26.1.2
+  version: 26.1.3
   repo: oci://oci.trueforge.org/truecharts
   namespace: home-automation
 - name: zigbee2mqtt
