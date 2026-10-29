@@ -4,7 +4,7 @@ namespace: ftb-academy
 
 images:
 - name: itzg/minecraft-server
-  newTag: "java8-multiarch@sha256:bd94304783c572fb34f43c18ca3e7b1e6526c4958d9c47bb8f41346871cebdbb"
+  newTag: "java8-multiarch@sha256:73cfcc725460c74ce9b66250e417d1eff5dc53ce95308ce07bca21972d4a87f3"
 
 resources:
 - ../../../base
