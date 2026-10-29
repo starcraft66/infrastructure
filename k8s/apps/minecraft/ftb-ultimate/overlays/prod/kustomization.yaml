@@ -4,7 +4,7 @@ namespace: ftb-ultimate
 
 images:
 - name: itzg/minecraft-server
-  newTag: "java8-multiarch@sha256:277c89a59b49be0277b2c2ba9c571f2b9cf9968202cde1100784949d915ab580"
+  newTag: "java8-multiarch@sha256:bd94304783c572fb34f43c18ca3e7b1e6526c4958d9c47bb8f41346871cebdbb"
 
 resources:
 - ../../../base
