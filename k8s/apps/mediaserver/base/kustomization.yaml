@@ -24,13 +24,13 @@ images:
 - name: ghcr.io/linuxserver/radarr
   digest: sha256:084b3b2ab1d0ef930660727259546a241f2bdf67c9ed085d54bf1486a6887c9b
 - name: ghcr.io/linuxserver/sonarr
-  digest: sha256:48e36b608b461273b9dae857725cd0561a127f2c694b687318f6d0c5ce63e5c9
+  digest: sha256:386c962ee6e260e3a5656b25df2ed056bcc9b6410e197d075f9547fd14c23bca
 - name: ghcr.io/linuxserver/lidarr
   digest: sha256:9fddcf5c613361edfce390d4e6b7c364282e71e90a40ce7793077fed788f6e63
 - name: ghcr.io/linuxserver/prowlarr
   newTag: develop@sha256:b8b1bb2c5514b46128309411d007c20c6372e8cef09977ee135488e22b0c1962
 - name: ghcr.io/autobrr/qui
-  newTag: v1.33.1@sha256:c83ce0370ab372c931ccb3f0ddd0eb1bc850026ce9eafc13ce94443f6f2a2cd3
+  newTag: v1.34.0@sha256:e320bfff0780caff49fee18a6738659c629f863f2dd9347f32b41d287eddde25
 - name: qbittorrentofficial/qbittorrent-nox
   newTag: 5.3.0-1@sha256:58ca75cb969c5185b7ad72fe877d9de1dc6891d0aef9d2ee20d0556b1d6ec3f9
 - name: ghcr.io/seerr-team/seerr
