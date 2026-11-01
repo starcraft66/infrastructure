@@ -7,7 +7,7 @@ namespace: renovate
 
 images:
 - name: renovate/renovate
-  newTag: "44.195.1@sha256:4fdd79853ffea9d72b519713dfc89bb6d1793b30825d36126d1d355271524441"
+  newTag: "44.199.2@sha256:0538f498be1b074e2434f8449cab7b2be30f8c0d0baf3b72814010f19db5bcfb"
 
 generators:
 - |-
