@@ -5,7 +5,7 @@ helmCharts:
 - name: gateway-crds-helm
   releaseName: gateway-api
   valuesFile: ./resources/values.yaml
-  version: v1.9.3
+  version: v1.10.0
   repo: oci://registry-1.docker.io/envoyproxy
   namespace: kube-system
   includeCRDs: true
