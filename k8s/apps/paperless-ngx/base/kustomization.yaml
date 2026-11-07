@@ -15,7 +15,7 @@ images:
 - name: ghcr.io/paperless-ngx/paperless-ngx
   # Don't upgrade to 2.15.3 until the following issue is resolved:
   # https://github.com/just-containers/s6-overlay/issues/600
-  newTag: "3.4.1@sha256:1a08d8dfc2b51a08de09652dd86ad4d0c611c362382f944533ad38b73125fbc4"
+  newTag: "3.4.2@sha256:d704e84f88300eb6ab001ab15720a2330ff99169cf9f94d6b8fcc44b63a84c84"
 - name: "gotenberg/gotenberg"
   newTag: "9.1.0@sha256:150c1dec38ccb51905f6bd29442706668f2442fb5d290d9eb234708dc054dd1a"
 - name: "apache/tika"
