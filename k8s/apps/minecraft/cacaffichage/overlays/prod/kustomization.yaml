@@ -120,10 +120,10 @@ configMapGenerator:
   # https://github.com/itzg/docker-minecraft-server/issues/1307 is found
   # - SPIGET_RESOURCES="274,18494"
   # Supposedly this should work: https://github.com/itzg/docker-minecraft-server/issues/1378#issuecomment-1380252586
-  # Spiget: BlueMap (83557, external->GitHub), DiscordSRV (18494, external->discordsrv.com), LuckPerms (28140, hosted on Spiget CDN)
-  - SPIGET_RESOURCES=83557,18494,28140
+  # Spiget: DiscordSRV (18494, external->discordsrv.com), LuckPerms (28140, hosted on Spiget CDN)
+  - SPIGET_RESOURCES=18494,28140
   # Modrinth: latest release compatible with VERSION + paper loader
-  - MODRINTH_PROJECTS=multiverse-core,multiverse-inventories,multiverse-netherportals
+  - MODRINTH_PROJECTS=bluemap,multiverse-core,multiverse-inventories,multiverse-netherportals
   # FallingOverride is only on CurseForge
   - MODS="https://mediafilez.forgecdn.net/files/3593/62/FallingOverride-1.18.1-1.0.jar"
 - name: discordsrv-config
