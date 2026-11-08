@@ -4,7 +4,7 @@ let
   addressAt = offset: cidrString:
     let
       cidr = libnet.cidr.parse cidrString;
-      network = libnet.cidr.network cidr;
+      network = libnet.cidr.networkAddress cidr;
       address =
         if libnet.cidr.isIpv4 cidr then
           libnet.ipv4.add offset network
