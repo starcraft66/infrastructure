@@ -76,6 +76,15 @@
             "versioning": "semver",
         },
         {
+            "description": "Minecraft server versions: Paper lists a version as soon as experimental builds exist, but itzg only installs STABLE builds by default",
+            "matchManagers": ["custom.regex"],
+            "matchDatasources": ["custom.papermc"],
+            "commitMessageTopic": "Minecraft {{depName}} server version",
+            "prBodyNotes": [
+                "Before merging: check https://fill.papermc.io/v3/projects/{{packageName}}/versions/{{newVersion}}/builds has a `STABLE` build (otherwise the server crash-loops with \"No build found ... channel 'default'\"), and that the server's plugins support {{newVersion}}."
+            ],
+        },
+        {
             "description": "Skip changelog fetching for huge monorepos; recursive git-tree walks take minutes and stall the run",
             "matchSourceUrls": [
                 "https://github.com/bitnami/charts",
@@ -84,7 +93,27 @@
             "fetchChangeLogs": "off",
         },
     ],
+    "customDatasources": {
+        // Minecraft versions that have Paper builds; '-rc'/'-pre' ids are dropped so only official releases remain
+        "papermc": {
+            "defaultRegistryUrlTemplate": "https://fill.papermc.io/v3/projects/{{packageName}}/versions",
+            "transformTemplates": [
+                "{\"homepage\": \"https://papermc.io/downloads/{{packageName}}\", \"releases\": [versions[$not($contains(version.id, \"-\"))].{\"version\": version.id}]}"
+            ],
+        },
+    },
     "customManagers": [
+        {
+            "description": "Track Minecraft server VERSION env vars annotated with a '# renovate:' comment",
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^k8s\\/apps\\/minecraft\\/.+\\/kustomization\\.yaml$/"
+            ],
+            "matchStrings": [
+                "#\\s*renovate:\\s*datasource=(?<datasource>\\S+)\\s+depName=(?<depName>\\S+)(?:\\s+packageName=(?<packageName>\\S+))?\\s*\\n\\s*-\\s*VERSION=(?<currentValue>\\S+)"
+            ],
+            "versioningTemplate": "loose"
+        },
         {
             "description": "Track CloudNativePG release manifests by GitHub release tag",
             "customType": "regex",

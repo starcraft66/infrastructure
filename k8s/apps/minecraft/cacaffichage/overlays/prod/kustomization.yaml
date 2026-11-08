@@ -87,6 +87,7 @@ configMapGenerator:
   literals:
   - EULA=TRUE
   - TYPE=PAPER
+  # renovate: datasource=custom.papermc depName=paper packageName=paper
   - VERSION=26.2
   - DIFFICULTY=hard
   - ICON=""
