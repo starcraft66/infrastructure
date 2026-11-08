@@ -17,7 +17,7 @@ images:
   # https://github.com/just-containers/s6-overlay/issues/600
   newTag: "3.4.2@sha256:d704e84f88300eb6ab001ab15720a2330ff99169cf9f94d6b8fcc44b63a84c84"
 - name: "gotenberg/gotenberg"
-  newTag: "9.1.0@sha256:150c1dec38ccb51905f6bd29442706668f2442fb5d290d9eb234708dc054dd1a"
+  newTag: "9.2.0@sha256:e1840b4c1ee113078cc153b8359433c9511ab544c1a15cd45b09f81c9329118a"
 - name: "apache/tika"
   newTag: "3.3.3.0@sha256:326b238b37904c94ff61fed87afe0af72e6a29fa715933b10af97b7d56f1d4cb"
 
