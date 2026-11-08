@@ -22,13 +22,13 @@ images:
 - name: plexinc/pms-docker
   digest: sha256:6d778d41daae68f89115aa87a44ae14a96b23e71a2093da173b5a9aac4091336
 - name: ghcr.io/linuxserver/radarr
-  digest: sha256:ade5937813c6ae415b29db729386e53fea3ecf067a019849bafbe2d2a6ec02ba
+  digest: sha256:51a9ac2a9eb47afc833541e5fd6c11b86eb9f810694c22fa2429e3078e9194b2
 - name: ghcr.io/linuxserver/sonarr
   digest: sha256:673dc4609a5672bc8e46069c86ffcea283a86b48d34a6c93d8da8c24a1b87571
 - name: ghcr.io/linuxserver/lidarr
   digest: sha256:d5707cfe084da21a3864c7ef0edd9c0543b5e26c79c551f84dad5ef8683af8c7
 - name: ghcr.io/linuxserver/prowlarr
-  newTag: develop@sha256:e2382127fec5c61ca6b6eb528fd4dcf8a8255ef2957ca334d782dbaf46d4c0c7
+  newTag: develop@sha256:5db7018b2f18de5f6f4265eb54e210ad3880be6692f23648b193020fdad6ad50
 - name: ghcr.io/autobrr/qui
   newTag: v1.35.0@sha256:a5b2f5faf6388cce257137c88e4b189458fd799cf9119ed476c980e5a69341b2
 - name: qbittorrentofficial/qbittorrent-nox
