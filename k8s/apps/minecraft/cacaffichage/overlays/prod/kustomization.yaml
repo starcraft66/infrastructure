@@ -120,7 +120,12 @@ configMapGenerator:
   # https://github.com/itzg/docker-minecraft-server/issues/1307 is found
   # - SPIGET_RESOURCES="274,18494"
   # Supposedly this should work: https://github.com/itzg/docker-minecraft-server/issues/1378#issuecomment-1380252586
-  - MODS="https://github.com/BlueMap-Minecraft/BlueMap/releases/download/v5.23/bluemap-5.23-spigot.jar,https://github.com/DiscordSRV/DiscordSRV/releases/download/v1.30.5/DiscordSRV-Build-1.30.5.jar,https://github.com/Multiverse/Multiverse-Core/releases/download/5.8.1/multiverse-core-5.8.1.jar,https://github.com/Multiverse/Multiverse-Inventories/releases/download/5.3.5/multiverse-inventories-5.3.5.jar,https://download.luckperms.net/1668/bukkit/loader/LuckPerms-Bukkit-5.5.81.jar,https://mediafilez.forgecdn.net/files/3593/62/FallingOverride-1.18.1-1.0.jar,https://github.com/Multiverse/Multiverse-NetherPortals/releases/download/5.1.0/multiverse-netherportals-5.1.0.jar"
+  # Spiget: BlueMap (83557, external->GitHub), DiscordSRV (18494, external->discordsrv.com), LuckPerms (28140, hosted on Spiget CDN)
+  - SPIGET_RESOURCES=83557,18494,28140
+  # Modrinth: latest release compatible with VERSION + paper loader
+  - MODRINTH_PROJECTS=multiverse-core,multiverse-inventories,multiverse-netherportals
+  # FallingOverride is only on CurseForge
+  - MODS="https://mediafilez.forgecdn.net/files/3593/62/FallingOverride-1.18.1-1.0.jar"
 - name: discordsrv-config
   files:
   - alerts.yml=files/DiscordSRV/alerts.yml
