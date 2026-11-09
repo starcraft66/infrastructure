@@ -105,12 +105,12 @@ podDisruptionBudget:
   minAvailable: 3
 
 service:
-  ipFamilyPolicy: RequireDualStack
-  ipFamilies:
-  - IPv4
-  - IPv6
   spec:
     externalTrafficPolicy: Local
+    ipFamilyPolicy: RequireDualStack
+    ipFamilies:
+    - IPv4
+    - IPv6
 
 tlsOptions:
   default:
