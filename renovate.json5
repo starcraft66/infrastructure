@@ -85,6 +85,15 @@
             ],
         },
         {
+            "description": "Minecraft vanilla server versions from Mojang",
+            "matchManagers": ["custom.regex"],
+            "matchDatasources": ["custom.mojang"],
+            "commitMessageTopic": "Minecraft {{depName}} server version",
+            "prBodyNotes": [
+                "Merging upgrades the world on next start and it can't be downgraded afterwards; make sure a recent backup of the world volume exists."
+            ],
+        },
+        {
             "description": "Skip changelog fetching for huge monorepos; recursive git-tree walks take minutes and stall the run",
             "matchSourceUrls": [
                 "https://github.com/bitnami/charts",
@@ -94,6 +103,13 @@
         },
     ],
     "customDatasources": {
+        // Official Minecraft releases (snapshots, pre-releases and RCs excluded) from Mojang's launcher manifest
+        "mojang": {
+            "defaultRegistryUrlTemplate": "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json",
+            "transformTemplates": [
+                "{\"homepage\": \"https://www.minecraft.net/en-us/download/server\", \"releases\": [versions[type = \"release\"].{\"version\": id, \"releaseTimestamp\": releaseTime}]}"
+            ],
+        },
         // Minecraft versions that have Paper builds; '-rc'/'-pre' ids are dropped so only official releases remain
         "papermc": {
             "defaultRegistryUrlTemplate": "https://fill.papermc.io/v3/projects/{{packageName}}/versions",

@@ -60,6 +60,8 @@ configMapGenerator:
   literals:
   - EULA=TRUE
   - TYPE=VANILLA
+  # renovate: datasource=custom.mojang depName=vanilla
+  - VERSION=26.3
   - DIFFICULTY=hard
   - ICON=""
   - MAX_PLAYERS=20
