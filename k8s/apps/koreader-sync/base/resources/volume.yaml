@@ -1,0 +1,14 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: koreader-sync-redis
+  labels:
+    app.kubernetes.io/name: koreader-sync
+spec:
+  accessModes:
+  - "ReadWriteOnce"
+  storageClassName: "truenas-iscsi-spitfire-fast"
+  resources:
+    requests:
+      storage: "1Gi"

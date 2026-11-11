@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: koreader-sync
+  name: koreader-sync
+spec:
+  # Upstream nginx.conf only listens on IPv4
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+  # - IPv6
+  - IPv4
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  selector:
+    app.kubernetes.io/name: koreader-sync
+  type: ClusterIP
