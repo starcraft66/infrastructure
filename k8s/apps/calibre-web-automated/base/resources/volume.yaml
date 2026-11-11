@@ -1,0 +1,46 @@
+# The Calibre library and app config are SQLite databases, so they live on
+# block storage rather than NFS to avoid WAL/locking issues.
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: calibre-web-automated-config
+  labels:
+    app.kubernetes.io/name: calibre-web-automated
+spec:
+  accessModes:
+  - "ReadWriteOnce"
+  storageClassName: "truenas-iscsi-spitfire-fast"
+  resources:
+    requests:
+      storage: "5Gi"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: calibre-web-automated-library
+  labels:
+    app.kubernetes.io/name: calibre-web-automated
+spec:
+  accessModes:
+  - "ReadWriteOnce"
+  storageClassName: "truenas-iscsi-spitfire-fast"
+  resources:
+    requests:
+      storage: "20Gi"
+# Files dropped here are imported into the library and then deleted. RWX so
+# other workloads (e.g. a book downloader) can write into it too.
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: calibre-web-automated-ingest
+  labels:
+    app.kubernetes.io/name: calibre-web-automated
+spec:
+  accessModes:
+  - "ReadWriteMany"
+  storageClassName: "truenas-nfs-spitfire-fast"
+  resources:
+    requests:
+      storage: "10Gi"
