@@ -731,24 +731,6 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: koreader-sync
-  namespace: argocd
-spec:
-  project: production
-  destination:
-    namespace: koreader-sync
-    server: https://kubernetes.default.svc
-  source:
-    repoURL: https://git.tdude.co/tristan/infrastructure.git
-    targetRevision: master
-    path: k8s/apps/koreader-sync/overlays/prod
-  syncPolicy:
-    automated:
-      selfHeal: true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
   name: calibre-web-automated
   namespace: argocd
 spec:
