@@ -24,6 +24,7 @@ generators:
           path: ksops
   files:
   - ./secrets/unifi-poller-secrets.yaml
+  - ./secrets/unifi-mongo.yaml
 
 configMapGenerator:
 - name: unifi-poller-config

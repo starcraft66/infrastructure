@@ -94,6 +94,18 @@
             ],
         },
         {
+            "description": "UniFi stopgap MongoDB: 4.4 is the last release that runs without AVX on the k8s-235 nodes",
+            "matchFileNames": ["k8s/apps/unifi-controller/**"],
+            "matchPackageNames": ["docker.io/library/mongo"],
+            "allowedVersions": "<5.0.0",
+        },
+        {
+            "description": "UniFi Network 10.6 is the final standalone release; 11 only ships inside UniFi OS Server",
+            "matchFileNames": ["k8s/apps/unifi-controller/**"],
+            "matchPackageNames": ["lscr.io/linuxserver/unifi-network-application"],
+            "allowedVersions": "<11.0.0",
+        },
+        {
             "description": "Skip changelog fetching for huge monorepos; recursive git-tree walks take minutes and stall the run",
             "matchSourceUrls": [
                 "https://github.com/bitnami/charts",

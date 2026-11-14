@@ -19,7 +19,7 @@ spec:
       targetPort: 8443
       protocol: TCP
   selector:
-    app.kubernetes.io/name: unifi-controller
+    app.kubernetes.io/name: unifi-network-application
 ---
 apiVersion: v1
 kind: Service
@@ -43,7 +43,7 @@ spec:
       targetPort: 8443
       protocol: TCP
   selector:
-    app.kubernetes.io/name: unifi-controller
+    app.kubernetes.io/name: unifi-network-application
 ---
 apiVersion: v1
 kind: Service

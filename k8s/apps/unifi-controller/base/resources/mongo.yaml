@@ -1,0 +1,96 @@
+# Stopgap database for the UniFi Network Application.
+# Pinned to MongoDB 4.4: the last release that runs on CPUs without AVX.
+# UniFi 11 moves to PostgreSQL, at which point this goes away.
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: unifi-mongo
+spec:
+  serviceName: unifi-mongo
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: unifi-mongo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: unifi-mongo
+    spec:
+      containers:
+      - name: mongo
+        image: docker.io/library/mongo
+        imagePullPolicy: IfNotPresent
+        args:
+        - --wiredTigerCacheSizeGB
+        - "0.25"
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: root
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: unifi-mongo
+              key: MONGO_ROOT_PASSWORD
+        - name: MONGO_AUTHSOURCE
+          value: admin
+        - name: MONGO_DBNAME
+          value: unifi
+        - name: MONGO_USER
+          value: unifi
+        - name: MONGO_PASS
+          valueFrom:
+            secretKeyRef:
+              name: unifi-mongo
+              key: MONGO_PASS
+        ports:
+        - name: mongo
+          containerPort: 27017
+        volumeMounts:
+        - name: data
+          mountPath: /data/db
+        - name: init
+          mountPath: /docker-entrypoint-initdb.d
+          readOnly: true
+        readinessProbe:
+          exec:
+            command: ["mongo", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+        livenessProbe:
+          tcpSocket:
+            port: mongo
+          initialDelaySeconds: 30
+          periodSeconds: 20
+        resources:
+          requests:
+            memory: 512Mi
+          limits:
+            memory: 1Gi
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: unifi-mongo-data
+      - name: init
+        configMap:
+          name: unifi-mongo-init
+          defaultMode: 0555
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unifi-mongo
+  labels:
+    app.kubernetes.io/name: unifi-mongo
+spec:
+  ipFamilyPolicy: RequireDualStack
+  ipFamilies:
+  - IPv6
+  - IPv4
+  ports:
+  - name: mongo
+    port: 27017
+    targetPort: mongo
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: unifi-mongo

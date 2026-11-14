@@ -1,3 +1,5 @@
+# Old linuxserver/unifi-controller data (bundled MongoDB 3.6). No longer mounted;
+# kept for rollback until the new controller has run cleanly for a while.
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -6,6 +8,36 @@ metadata:
     app.kubernetes.io/name: unifi-controller
 spec:
   storageClassName: truenas-nfs-spitfire-fast
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: unifi-network-application-config
+  labels:
+    app.kubernetes.io/name: unifi-network-application
+spec:
+  storageClassName: truenas-nfs-spitfire-fast
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+# Block storage on purpose: MongoDB's file locks on NFSv3 survived a
+# cluster reboot and kept the old controller down for two months.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: unifi-mongo-data
+  labels:
+    app.kubernetes.io/name: unifi-mongo
+spec:
+  storageClassName: truenas-iscsi-spitfire-fast
   accessModes:
   - ReadWriteOnce
   resources:
