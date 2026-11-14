@@ -4,7 +4,7 @@ namespace: gtnh
 
 images:
 - name: itzg/minecraft-server
-  newTag: "java25@sha256:d3415f085e10f522969d3a580247ff23b4ccd8d5b152ca08280fb13395dd15bc"
+  newTag: "java25@sha256:3b2a8e7e59baa266f1b3622efcefbbdff11999c42c303d7951c66b8e32513135"
 
 resources:
 - ../../../base
