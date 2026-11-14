@@ -40,4 +40,4 @@ images:
 - name: ghcr.io/jellyfin/jellyfin
   newTag: "12.4@sha256:fea863d0cd9ec445985d9c75fc6ed64e38a1d2766cf0c250a33d553f4fc1b771"
 - name: ghcr.io/llukas22/jellyswarrm
-  newTag: "0.3.1@sha256:cb145e7391e5cf583bd7f28b0e2d866e93ad95f603e1cdf2d88085390f7f83fa"
+  newTag: "1.0.0@sha256:d60beac8e488d47bad5bf3dad89ade0c33820b6c9ba7e2b3c02763825254271e"
