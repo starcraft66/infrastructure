@@ -15,7 +15,7 @@ images:
 - name: funkwhale/api
   newTag: "2.0.15-legacycpu@sha256:e826982bd039306c9444ea097430dabc9e159d8e937c4b8a9b45b20f9aff3f57"
 - name: funkwhale/front
-  newTag: "2.0.14-legacycpu@sha256:aa762148495e0c2e182227b40315ef7faa60f5695de0e0bf531058d23fd0fd9e"
+  newTag: "2.0.15-legacycpu@sha256:62e7dfa5031930c37dd36dddb50aa426d8958fe7b1b7905875702becf5a729c5"
 
 configMapGenerator:
 - name: funkwhale
