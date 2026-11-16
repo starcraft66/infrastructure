@@ -28,7 +28,7 @@ images:
 - name: ghcr.io/linuxserver/lidarr
   digest: sha256:a91ef0642c15c9bd7c4260fee98fa99972c61601e37c8a96411d6a9cf0e9ad40
 - name: ghcr.io/linuxserver/prowlarr
-  newTag: develop@sha256:330fda8552e6b27cb6e2d6830fdeb5bfd6cfe2d35d699bcc0772234ae9228164
+  newTag: develop@sha256:e5e7d040158a11e75e15ed60ff80ffecb2edd611a4bbe856187a22dddeb70564
 - name: ghcr.io/autobrr/qui
   newTag: v1.35.0@sha256:a5b2f5faf6388cce257137c88e4b189458fd799cf9119ed476c980e5a69341b2
 - name: qbittorrentofficial/qbittorrent-nox
