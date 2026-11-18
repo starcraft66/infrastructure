@@ -15,7 +15,7 @@ images:
   newTag: "8.1.0@sha256:170aa093ce91c76cde4cc390918307590f0f5558fcec93f913af3cb019e6562a"
 - name: ghcr.io/esphome/esphome
   newName: ghcr.io/esphome/esphome
-  newTag: "2026.10.2@sha256:4a918585150e95e7675be84a347384ff308fde1bd32d0e4472666e1252cc0e8f"
+  newTag: "2026.11.0@sha256:6351ae811202064bb3eb49dde982609b47acd523103a66d7b9c5c1431beea055"
 
 helmCharts:
 - name: home-assistant
