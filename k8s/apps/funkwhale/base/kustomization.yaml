@@ -13,7 +13,7 @@ namespace: redis-operator
 
 images:
 - name: funkwhale/api
-  newTag: "2.0.15-legacycpu@sha256:e826982bd039306c9444ea097430dabc9e159d8e937c4b8a9b45b20f9aff3f57"
+  newTag: "2.0.17-legacycpu@sha256:bb5e1c28446e4516a93475e502ba9468c3b887c372360af20ee9e64a177e4d11"
 - name: funkwhale/front
   newTag: "2.0.15-legacycpu@sha256:62e7dfa5031930c37dd36dddb50aa426d8958fe7b1b7905875702becf5a729c5"
 
