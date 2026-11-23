@@ -13,7 +13,7 @@ configMapGenerator:
 
 images:
 - name: ghcr.io/unpoller/unpoller
-  newTag: "v5.9.5@sha256:092e6ef8c388fcc9d8b52e8a5e04e6662f85b25ea3a0d4bb7d0d13e43a9b9c8d"
+  newTag: "v5.10.1@sha256:bcbdbf35b03982a2dff6e6bf768c897a78453a6be62e8af6a96e6b730dd514fe"
 - name: lscr.io/linuxserver/unifi-network-application
   newTag: "10.6.109-ls154@sha256:f782b39e005d4c104b2cfa3185594ce93b3c9bd4b0622cc6559d417844d2d037"
 # Do not let Renovate bump past 4.4: newer MongoDB needs AVX.
