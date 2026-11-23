@@ -10,7 +10,7 @@ namespace: pomf
 
 images:
 - name: nginx
-  newTag: "alpine@sha256:0563c36f94a6d3ec3584161b77859f740f7e20b4853f52c796a864ce6908e8ea"
+  newTag: "alpine@sha256:b50897d5c7b1aa08067c3d90c5e8b3e47ec4e3c91c91446f67820228f7b41e34"
 
 configMapGenerator:
 - name: pomf-nginx-config
