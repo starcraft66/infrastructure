@@ -655,6 +655,9 @@ spec:
   syncPolicy:
     automated:
       selfHeal: true
+    syncOptions:
+    - ServerSideApply=true
+    # KubeVirt CRD exceeds the 256KB last-applied annotation limit
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
