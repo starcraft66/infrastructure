@@ -19,7 +19,7 @@ images:
 - name: "gotenberg/gotenberg"
   newTag: "9.8.0@sha256:5467aaf0bb2a8b296b589a388bc7fd2a0b245fd71e63a64bb42baba63cbf3914"
 - name: "apache/tika"
-  newTag: "3.3.3.0@sha256:326b238b37904c94ff61fed87afe0af72e6a29fa715933b10af97b7d56f1d4cb"
+  newTag: "3.4.0.0@sha256:9f3e5bb9da4229a971a4839416b3204499f20668ee834fa741a6a7504bbea7bf"
 
 namespace: paperless-ngx
 
