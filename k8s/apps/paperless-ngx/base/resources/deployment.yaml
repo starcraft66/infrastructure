@@ -65,6 +65,10 @@ spec:
             httpGet:
               path: /login/
               port: http
+              # Paperless rejects Host headers not matching PAPERLESS_URL.
+              httpHeaders:
+                - name: Host
+                  value: docs.tdude.co
             timeoutSeconds: 10
             periodSeconds: 30
             failureThreshold: 6
@@ -72,6 +76,10 @@ spec:
             httpGet:
               path: /login/
               port: http
+              # Paperless rejects Host headers not matching PAPERLESS_URL.
+              httpHeaders:
+                - name: Host
+                  value: docs.tdude.co
             timeoutSeconds: 10
             periodSeconds: 30
             failureThreshold: 12
